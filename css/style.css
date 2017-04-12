@@ -1479,6 +1479,10 @@ form#newsletter input[type=submit] {
   background-color: #080808 \9;
 }
 
+.section2 h2{
+	text-align: center;
+}
+
 /* Higher than 960 (desktop devices)
 ====================================================================== */
 @media only screen and (min-width: 960px) {
