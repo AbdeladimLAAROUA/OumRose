@@ -1482,6 +1482,32 @@ form#newsletter input[type=submit] {
 .section2 h2{
 	text-align: center;
 }
+.section2 h2 span{
+	    border-bottom: 5px double #FF66CC !important;
+    padding-bottom: 1px;
+}
+.text-center{
+	text-align: center;
+}
+.btn-rose {
+    background: #ff4690;
+    color: #FFF;
+    border-radius: 0;
+    font-family: 'josefin_sanssemibold', Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    text-transform: uppercase;
+    white-space: normal;
+    width: 268px;
+    border-radius: 15px;
+    font-size: 14px;
+    padding: 10px 0;
+    display: inline-block;
+    text-align: center;
+}
+.btn-rose:hover {
+    background: #ed005f;
+    color : #fff;
+}
 
 /* Higher than 960 (desktop devices)
 ====================================================================== */
