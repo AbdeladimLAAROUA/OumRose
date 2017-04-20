@@ -1,62 +1,63 @@
 <?php
-include('config.php');
-$info["success"]=true;
-$info["response"]='';
-if(isset($_POST['email']) and isset($_POST['password'])){
-	$email = $_POST['email'];
-	$password = $_POST['password'];
-
-	//authentification
-	$user = login($conn,$email,$password);
-	
-	// si on a trouvé l'utilisateur
-	if($user != null){
-
-		$baby = getBaby($conn,$user);
-		// Date d'aujourd'hui
-		$today = new DateTime(date('Y-m-d'));
-
-		/*//Ajout de 3 mois sur la date d'aujourd'hui
-		$dateInThreeMonth = $today->add(new DateInterval('P3M'));*/
-
-		// Date de naissance du bébé
-
-		$naissance= new DateTime($baby['naissance']);
-		
-
-		$interval = date_diff($today, $naissance);
-
-		$diffJours = $interval->format('%R%a days');
-
-		if($diffJours>0 && $diffJours<92){
-				$info["response"]="Chère khalid ESSALHI, vous éligible à la box  \"Je suis enceinte\" ";
-		}
-		else if($diffJours<0 && $diffJours>-92){
-				$info["response"]="Chère khalid ESSALHI, vous éligible à la box  \"Bébé est là!\" ";
-		}
-		else if($diffJours<-183 && $diffJours>-276){
-				$info["response"]="Chère khalid ESSALHI, vous éligible à la box  \"Bébé grandit\" ";
-		}else{
-				$info["response"]= "Chère khalid ESSALHI, vous n'êtes éligible à aucune box pour le moment (du 5ème au 8ème mois de grossesse : box \"Je suis enceinte\", de la naissance à 3 mois : box \"Bébé est là!\", de 6 à 9 mois : box \"Bébé grandit\").";
-		}
-		
-		
-		$info["success"]=true;
-		
-		echo json_encode($info);
-		exit();
-	}else{
-		$info["success"]=false;
-		$info["response"]='userNotExists';
-		echo json_encode($info);
-		exit();
-	}
-}else{
-	$info["success"]=false;
-	echo json_encode($info);
-	
-}
-
-
-
+session_start();
 ?>
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+	<head>
+		<meta charset="utf-8"/>
+		<link rel="stylesheet" type="text/css" href="css/normalize.css" />
+		<link rel="stylesheet" type="text/css" href="css/demo1.css" />
+		<link rel="stylesheet" type="text/css" href="css/set2.css" />
+		<link rel="stylesheet" type="text/css" href="js/bootstrap.js">
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+		<!-- Optional theme -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+		
+	</head>
+	<body>
+		<div class="container">
+		<img src="img/bebe-maman@2x.jpg">
+			
+			<section class="content askForBox">
+				<h2>Commander votre box</h2>
+				<form method="post" action="commandeBox.php">
+				<?php
+					if(isset($_SESSION['result'])){
+						echo $_SESSION['result']['response'];
+						
+					}else{
+
+					}
+				?>
+
+				<div class="container askForBox">
+					<section class="content">
+						<span class="input input--isao">
+							<input class="input__field input__field--isao" type="text" id="input-38" name ="email" />
+							<label class="input__label input__label--isao" for="input-38" data-content="Email">
+								<span class="input__label-content input__label-content--isao">Email</span>
+							</label>
+						</span>
+						<span class="input input--isao">
+							<input class="input__field input__field--isao" type="password" id="input-39" name="password" />
+							<label class="input__label input__label--isao" for="input-39" data-content="Password">
+								<span class="input__label-content input__label-content--isao">Mot de passe</span>
+							</label>
+						</span>
+					</section>
+				</div>		
+
+				<input type="submit" value="Envoyer" class="btn btn-info">
+				</form>
+			</section>
+			
+			
+		</div><!-- /container -->
+	</body>
+</html>

@@ -48,8 +48,8 @@ function login($conn,$email,$password)
 
           if($stmt->rowCount() > 0)
           {
-            /*$_SESSION['user_session'] = $userRow['ID'];
-            $_SESSION['name'] = $userRow['name'];*/
+            $_SESSION['client_id'] = $userRow['id'];
+            $_SESSION['nom'] = $userRow['nom'];
             $userRow['naissanceBebe']="2017-03-31";
            
           }     
@@ -82,7 +82,48 @@ function getBaby($conn,$user)
            echo $e->getMessage();
        }
    }
+function reserveBox($conn,$type,$status,$client_id)
+    {
+       try
+       {
+   
+           $stmt = $conn->prepare("INSERT INTO boite(type,status,client_id) 
+                                                       VALUES(:type, :status,:client_id)");
+              
+           $stmt->bindparam(":type", $type);
+           $stmt->bindparam(":status", $status);
+           $stmt->bindparam(":client_id", $client_id);            
+           $stmt->execute(); 
+        
+           return $stmt; 
+       }
+       catch(PDOException $e)
+       {
 
+           echo $e->getMessage();
+       }    
+}
+function isBoxAlreadyOrdered($conn,$client_id){
+   {
+       try
+       {
+          $stmt = $conn->prepare("SELECT * FROM boite WHERE client_id=:client_id LIMIT 1");
+          $stmt->execute(array(':client_id'=>$client_id));
+          $row=$stmt->fetch(PDO::FETCH_ASSOC);
+         
+          if($stmt->rowCount() > 0)
+          {
+            return true;
+           
+          }     
+         return false;
+       }
+       catch(PDOException $e)
+       {
+           echo $e->getMessage();
+       }
+   }
+}
 function getAllUsers($conn){
   try
        {
