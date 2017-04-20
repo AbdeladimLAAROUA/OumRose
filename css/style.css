@@ -1497,7 +1497,7 @@ form#newsletter input[type=submit] {
     font-size: 15px;
     text-transform: uppercase;
     white-space: normal;
-    width: 268px;
+    width: 268px !important;
     border-radius: 15px;
     font-size: 14px;
     padding: 10px 0;
@@ -1507,6 +1507,33 @@ form#newsletter input[type=submit] {
 .btn-rose:hover {
     background: #ed005f;
     color : #fff;
+}
+.section1{
+	text-align: center;
+}
+.askForBox h2{
+	opacity: 0.8;
+}
+.askForBox .info{
+	margin-top: 20px;
+}
+.imgBox{
+	max-height: 250px;
+	padding: 0em 0em 1em 0em;
+	margin: 20px;
+}
+body > div.section1 > section > h2{
+	margin-bottom: 20px;
+	margin-top: 20px;
+	color: #FF66CC ;
+}
+.intro{
+	font-size: 28px;
+    max-width: 680px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 0px !important;
+    line-height: normal;
 }
 
 /* Higher than 960 (desktop devices)
