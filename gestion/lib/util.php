@@ -93,7 +93,7 @@ function getBabySex(){
 
 function db_connect(){
 	$hote   	='localhost';
-	$passDb 	='S3cr3T%44';
+	$passDb 	='';
 	$bd 		='oumdev_leads';
 	$user		='root';
 
