@@ -10,14 +10,14 @@ app.config(function($routeProvider) {
     .when("/main", {
         templateUrl : "pages/views/main.html"
     })
-    .when("/red", {
-        templateUrl : "pages/views/red.html"
+    .when("/listClient", {
+        templateUrl : "pages/views/listClient.html"
     })
-    .when("/green", {
-        templateUrl : "pages/views/green.html"
+    .when("/listBaby", {
+        templateUrl : "pages/views/listBaby.html"
     })
-    .when("/blue", {
-        templateUrl : "pages/views/blue.html"
+    .when("/listCommande", {
+        templateUrl : "pages/views/listCommande.html"
     })    
     .otherwise({
         redirectTo: '/main'

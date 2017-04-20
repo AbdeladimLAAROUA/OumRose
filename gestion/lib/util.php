@@ -9,13 +9,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			echo getCustomerVille();
 		}else if($_REQUEST['methode'] == 'getBabySex'){
 			echo getBabySex();
+		}else if($_REQUEST['methode'] == 'getClientDash'){
+			echo getClientDash();
+		}else if($_REQUEST['methode'] == 'getBabyDash'){
+			echo getBabyDash();
 		}
 	}else{
 		$array["response"] = "faux";
 		echo json_encode($array);
 	}
 }
-// echo getBabySex();
+
+// echo getBabyDash();
+
 function getCustomerType(){
 	$array = array();
 	try {
@@ -77,6 +83,44 @@ function getBabySex(){
 	try {
 		$connexion = db_connect();
 		$resultats = $connexion->prepare("SELECT sexe, ROUND(COUNT(*) / (SELECT COUNT(*) FROM `baby`) *100) AS poucentage , COUNT(*) AS nbr FROM `baby` GROUP BY sexe");
+
+		$resultats->execute();
+
+		$resultats->setFetchMode(PDO::FETCH_OBJ);
+		$resultat = $resultats->fetchAll();
+		$array['result'] = $resultat;
+	} catch (Exception $e) {
+		$array['result'] = 0;
+	}
+	
+	$connexion = null;
+	return json_encode($array);	
+}
+
+function getClientDash(){
+	$array = array();
+	try {
+		$connexion = db_connect();
+		$resultats = $connexion->prepare("SELECT c.id,c.nom,c.prenom,c.gsm,YEAR(NOW()) - YEAR(c.naissance) as age,v.name FROM `customer` c INNER JOIN ville v ON c.Ville_id = v.id ORDER BY c.creationDate DESC LIMIT 5");
+
+		$resultats->execute();
+
+		$resultats->setFetchMode(PDO::FETCH_OBJ);
+		$resultat = $resultats->fetchAll();
+		$array['result'] = $resultat;
+	} catch (Exception $e) {
+		$array['result'] = 0;
+	}
+	
+	$connexion = null;
+	return json_encode($array);	
+}
+
+function getBabyDash(){
+	$array = array();
+	try {
+		$connexion = db_connect();
+		$resultats = $connexion->prepare("SELECT b.id, b.naissance, b.prenom, b.sexe, c.nom, c.type FROM baby b INNER JOIN customer c ON c.id = b.customer_id WHERE sexe != 'NULL' ORDER BY b.id DESC LIMIT 5");
 
 		$resultats->execute();
 
