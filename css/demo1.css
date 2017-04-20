@@ -22,13 +22,7 @@ body {
 	font-size: 1.05em;
 	font-family: 'Raleway', Arial, sans-serif;
 }
-body  img{
-position: absolute;
-left: 0px;
-top: 0px;
-opacity: 0.3;
-z-index: -1;
-}
+
 
 a {
 	color: #2fa0ec;
