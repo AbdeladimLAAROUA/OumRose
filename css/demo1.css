@@ -22,12 +22,12 @@ body {
 	font-size: 1.05em;
 	font-family: 'Raleway', Arial, sans-serif;
 }
-body img{
-	position: absolute;
-	top:0px;
-	left: 0px;
-	opacity: 0.3;
-	z-index: -1;
+body  img{
+position: absolute;
+left: 0px;
+top: 0px;
+opacity: 0.3;
+z-index: -1;
 }
 
 a {
@@ -48,7 +48,6 @@ a:hover, a:focus {
 
 .content {
 	font-size: 150%;
-	padding: 3em 0;
 }
 
 .content h2 {
