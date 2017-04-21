@@ -1,3 +1,7 @@
+
+<!-- DataTables -->
+<link rel="stylesheet" href="plugins/datatables/dataTables.bootstrap.css">
+
 <!-- Content Header (Page header) -->
 <section class="content-header">
   <h1>
@@ -12,8 +16,92 @@
 
 <!-- Main content -->
 <section class="content">
-
-  <!-- Your Page Content Here -->
-  <h1>Hna ndiro détails les clients</h1>
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="box">
+        <div class="box-header">
+          <h3 class="box-title">Data Table With Full Features</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+          <table id="example1" class="table table-bordered table-striped">
+            <thead>
+            <tr>
+              <th>id</th>
+              <th>nom</th>
+              <th>prenom</th>
+              <th>email</th>
+              <th>gsm</th>
+              <th>age</th>
+              <th>adresse</th>
+              <th>name</th>
+              <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+              
+            </tbody>
+            <tfoot>
+            <tr>
+              <th>id</th>
+              <th>nom</th>
+              <th>prenom</th>
+              <th>email</th>
+              <th>gsm</th>
+              <th>age</th>
+              <th>adresse</th>
+              <th>name</th>
+              <th>Actions</th>
+            </tr>
+            </tfoot>
+          </table>
+        </div>
+        <!-- /.box-body -->
+      </div>
+      <!-- /.box -->
+    </div>
+    <!-- /.col -->
+  </div>
+  <!-- /.row -->
 </section>
 <!-- /.content -->
+
+<!-- DataTables -->
+<script src="plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="plugins/datatables/dataTables.bootstrap.min.js"></script>
+
+<script>
+  $(function () {
+    $("#example1").DataTable();
+  });
+  var obj = {'methode' : 'getAllClient'}
+  $.ajax({
+  url: './lib/util.php',
+  dataType: "json",
+  method: "post",
+  data: obj,
+  async : 'false'}).done(function(data) {
+    // console.log(data.result);
+    $.each(data.result, function(key, val) {
+      var newRow = '<tr>'+
+                  '<td>'+val.id+'</td>'+
+                  '<td>'+val.nom+'</td>'+
+                  '<td>'+val.prenom+'</td>'+
+                  '<td>'+val.email+'</td>'+
+                  '<td>'+val.gsm+'</td>'+
+                  '<td>'+val.age+'</td>'+
+                  '<td>'+val.adresse+'</td>'+
+                  '<td>'+val.name+'</td>'+
+                  '<td>Actions</td>'+
+                  '</tr>';
+      $("#example1 tbody").append(newRow);
+      console.log(val);
+    });
+
+
+  }).fail(function(xhr, textStatus, error){
+     console.log(xhr.statusText);
+     console.log(textStatus);
+     console.log(error);
+  });
+</script>
