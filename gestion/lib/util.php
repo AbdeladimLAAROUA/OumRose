@@ -13,6 +13,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			echo getClientDash();
 		}else if($_REQUEST['methode'] == 'getBabyDash'){
 			echo getBabyDash();
+		}else if($_REQUEST['methode'] == 'getAllClient'){
+			echo getAllClient();
 		}
 	}else{
 		$array["response"] = "faux";
@@ -20,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	}
 }
 
-// echo getBabyDash();
+ // echo getAllClient();
 
 function getCustomerType(){
 	$array = array();
@@ -135,6 +137,25 @@ function getBabyDash(){
 	return json_encode($array);	
 }
 
+function getAllClient(){
+	$array = array();
+	try {
+		$connexion = db_connect();
+		$resultats = $connexion->prepare("SELECT c.id,c.nom, c.prenom, c.email, c.gsm,YEAR(NOW()) - YEAR(c.naissance) as age, c.adresse, v.name FROM customer c INNER JOIN ville v ON c.Ville_id = v.id");
+
+		$resultats->execute();
+
+		$resultats->setFetchMode(PDO::FETCH_OBJ);
+		$resultat = $resultats->fetchAll();
+		$array['result'] = $resultat;
+	} catch (Exception $e) {
+		$array['result'] = 0;
+	}
+	
+	$connexion = null;
+	return json_encode($array);	
+}
+
 function db_connect(){
 	
 	/*Local*/
@@ -150,7 +171,7 @@ function db_connect(){
 	$user		='id709237_oumdev';
 	
 
-	$connexion = new PDO('mysql:host='.$hote.';dbname='.$bd, $user, $passDb);
+	$connexion = new PDO('mysql:host='.$hote.';dbname='.$bd.';charset=utf8', $user, $passDb);
 
 	return $connexion;
 }
