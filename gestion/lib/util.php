@@ -15,6 +15,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			echo getBabyDash();
 		}else if($_REQUEST['methode'] == 'getAllClient'){
 			echo getAllClient();
+		}else if($_REQUEST['methode'] == 'getClient'){
+			echo getClient($_REQUEST['id']);
+		}else if($_REQUEST['methode'] == 'deleteFullClient'){
+			echo deleteFullClient($_REQUEST['id']);
 		}
 	}else{
 		$array["response"] = "faux";
@@ -22,7 +26,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	}
 }
 
- // echo getAllClient();
+// $id = 216;
+// echo deleteFullClient($id);
 
 function getCustomerType(){
 	$array = array();
@@ -156,9 +161,68 @@ function getAllClient(){
 	return json_encode($array);	
 }
 
+function getClient($id){
+	$array = array();
+	try {
+		$connexion = db_connect();
+		$resultats = $connexion->prepare("SELECT *,c.id as id_client,c.creationDate as creationDateClient FROM customer c INNER JOIN ville v ON c.Ville_id = v.id WHERE c.id = :id");
+    	
+    	$resultats->bindParam(':id', $id);
+
+		$resultats->execute();
+
+		$resultats->setFetchMode(PDO::FETCH_OBJ);
+		$resultat = $resultats->fetchAll();
+		$array['result']['client'] = $resultat;
+
+		$resultatsBaby = $connexion->prepare("SELECT * FROM baby WHERE customer_id = :id");
+    	
+    	$resultatsBaby->bindParam(':id', $id);
+
+		$resultatsBaby->execute();
+
+		$resultatsBaby->setFetchMode(PDO::FETCH_OBJ);
+		$resultatBaby = $resultatsBaby->fetchAll();
+		$array['result']['baby'] = $resultatBaby;
+	} catch (Exception $e) {
+		$array['result'] = 0;
+	}
+	
+	$connexion = null;
+	return json_encode($array);	
+}
+
+function deleteFullClient($id){
+	$array = array();
+	try {
+		$connexion = db_connect();
+
+		$stmt = $connexion->prepare("DELETE FROM baby WHERE customer_id = :id");
+    	$stmt->bindParam(':id', $id);
+		$stmt->execute();
+		// print_r($stmt->rowCount());
+		$count_baby = $stmt->rowCount();
+
+		$stmt = $connexion->prepare("DELETE FROM customer WHERE id = :id");
+    	$stmt->bindParam(':id', $id);
+		$stmt->execute();
+		// print_r($stmt->rowCount());
+		$count_customer = $stmt->rowCount();
+		if($count_baby == 1 && $count_customer == 1){
+			$array['result'] = 'ok';
+		}
+
+	} catch (Exception $e) {
+		$array['result'] = 'ko';
+	}
+	
+	$connexion = null;
+	return json_encode($array);	
+}
+
 function db_connect(){
 	$hote   	='localhost';
-	$passDb 	='';
+	$passDb 	='S3cr3T%44';
 	$bd 		='oumdev_leads';
 	$user		='root';
 

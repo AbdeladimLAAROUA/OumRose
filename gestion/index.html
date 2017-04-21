@@ -7,7 +7,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="theme-color" content="#FF66CC" />
   <title>Oumbox | Admin</title>
+    <!-- favicon -->
+  <link rel="shortcut icon" href="../img/icons/fav.ico" />
 
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -26,7 +29,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         apply the skin class to the body tag so the changes take effect.
   -->
   <link rel="stylesheet" href="dist/css/skins/skin-purple.min.css">
-
+  <link rel="stylesheet" href="dist/css/popup.css">
 </head>
 <body class="hold-transition skin-purple sidebar-mini">
 <div class="wrapper">
@@ -219,8 +222,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <!-- Angular -->
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js"></script>
-<script src="dist/js/helper.js"></script>
+<!-- Include jQuery Popup Overlay -->
+<script src="https://cdn.rawgit.com/vast-engineering/jquery-popup-overlay/1.7.13/jquery.popupoverlay.js"></script>
 
+<script src="dist/js/helper.js"></script>
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the
      user experience. Slimscroll is required when using the
