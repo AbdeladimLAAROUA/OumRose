@@ -19,6 +19,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			echo getClient($_REQUEST['id']);
 		}else if($_REQUEST['methode'] == 'deleteFullClient'){
 			echo deleteFullClient($_REQUEST['id']);
+		}else if($_REQUEST['methode'] == 'getAllCities'){
+			echo getAllCities();
+		}else if($_REQUEST['methode'] == 'getAllTypeMoms'){
+			echo getAllTypeMoms();
 		}
 	}else{
 		$array["response"] = "faux";
@@ -27,7 +31,45 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 // $id = 216;
-// echo deleteFullClient($id);
+// echo getAllTypeMoms();
+
+function getAllCities(){
+	$array = array();
+	try {
+		$connexion = db_connect();
+		$resultats = $connexion->prepare("SELECT * FROM ville");
+
+		$resultats->execute();
+
+		$resultats->setFetchMode(PDO::FETCH_OBJ);
+		$resultat = $resultats->fetchAll();
+		$array['result'] = $resultat;
+	} catch (Exception $e) {
+		$array['result'] = 0;
+	}
+	
+	$connexion = null;
+	return json_encode($array);	
+}
+
+function getAllTypeMoms(){
+	$array = array();
+	try {
+		$connexion = db_connect();
+		$resultats = $connexion->prepare("SELECT DISTINCT type FROM customer");
+
+		$resultats->execute();
+
+		$resultats->setFetchMode(PDO::FETCH_OBJ);
+		$resultat = $resultats->fetchAll();
+		$array['result'] = $resultat;
+	} catch (Exception $e) {
+		$array['result'] = 0;
+	}
+	
+	$connexion = null;
+	return json_encode($array);	
+}
 
 function getCustomerType(){
 	$array = array();
@@ -47,6 +89,7 @@ function getCustomerType(){
 	$connexion = null;
 	return json_encode($array);	
 }
+
 function getCustomerAgeRange(){
 	$array = array();
 	try {
@@ -227,7 +270,7 @@ function db_connect(){
 	/*$hote   	='localhost';
 	$passDb 	='';
 	$hote   	='localhost';
-	$passDb 	='S3cr3T%44';
+	$passDb 	='';
 	$bd 		='oumdev_leads';
 	$user		='root';*/
 

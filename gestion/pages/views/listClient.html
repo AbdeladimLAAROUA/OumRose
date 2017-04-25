@@ -1,5 +1,7 @@
 <!-- DataTables -->
 <link rel="stylesheet" href="plugins/datatables/dataTables.bootstrap.css">
+<!-- bootstrap datepicker -->
+<link rel="stylesheet" href="plugins/datepicker/datepicker3.css">
 <style type="text/css">
 .action{
   margin-right: 2px;
@@ -175,37 +177,32 @@
             <span id="creationDate" class="form-group infos_client text-blue"></span>
           </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-xs-12">
-          <div class="box box-danger">
-            <div class="box-header with-border">
-              <h3 class="box-title">Liste des Bébés</h3>
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="box box-danger">
+              <div class="box-header with-border">
+                <h3 class="box-title">Liste des Bébés</h3>
+              </div>
+              <!-- /.box-header -->
+              <div class="box-body">
+                <table id="baby_table" class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th style="width: 10px">ID</th>
+                      <th>Prenom</th>
+                      <th>Sexe</th>
+                      <th>Naissance</th>
+                      <th>Maternité</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.box-body -->
             </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-              <table id="baby_table" class="table table-bordered">
-                <thead>
-                  <tr>
-                    <th style="width: 10px">ID</th>
-                    <th>Prenom</th>
-                    <th>Sexe</th>
-                    <th>Naissance</th>
-                    <th>Maternité</th>
-                  </tr>
-                </thead>
-                <tbody>
-                </tbody>
-              </table>
-            </div>
-            <!-- /.box-body -->
-            <!--
-              <div class="box-footer clearfix">
-              <a href="#listBaby">Afficher tous les Bébés</a>
-              </div> 
-            -->
+            <!-- /.box -->
           </div>
-          <!-- /.box -->
         </div>
       </div>
       <div class="modal-footer ">
@@ -225,14 +222,179 @@
         <h4 class="modal-title custom_align" id="Heading">Modifier client</h4>
       </div>
       <div class="modal-body">
+        <form id="myForm">
+          <div class="row">
+            <div class="col-xs-2">
+              <div class="form-group">
+                <label>ID</label>
+              </div>
+            </div>
+            <div class="col-xs-2">
+              <span id="id_client_edit" class="form-group infos_client text-blue"></span>
+            </div>
+            <div class="col-xs-2">
+              <div class="form-group">
+                <label>E-mail</label>
+              </div>
+            </div>
+            <div class="form-group has-feedback col-xs-6">
+              <div class="input-group">
+                <div class="input-group">
+                  <div class="input-group-addon">
+                    <i class="fa fa-envelope"></i>
+                  </div>
+                <input id="email_edit" type="email" class="form-control infos_client" data-required-error="veuillez renseigner ce champ" data-error="E-mail invalid" required>
+                </div>
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                <div class="help-block with-errors"></div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-2">
+              <div class="form-group">
+                <label>Prénom</label>
+              </div>
+            </div>
+            <div class="form-group has-feedback col-xs-4">
+              <div class="input-group">
+                <input id="prenom_edit" type="text" pattern="^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$" class="form-control infos_client" data-error="Prénom invalid" data-required-error="veuillez renseigner ce champ" required>
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                <div class="help-block with-errors"></div>
+              </div>
+            </div>
+            <div class="col-xs-2">
+              <div class="form-group">
+                <label>Nom</label>
+              </div>
+            </div>
+            <div class="form-group has-feedback col-xs-4">
+              <div class="input-group">
+                <input id="nom_edit" type="text" pattern="^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$" class="form-control infos_client" data-error="Nom invalid" data-required-error="veuillez renseigner ce champ" required>
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                <div class="help-block with-errors"></div>
+              </div>
+            </div>
+          </div> 
+          <div class="row">
+            <div class="col-xs-2">
+              <div class="form-group">
+                <label>GSM</label>
+              </div>
+            </div>
+            <div class="form-group has-feedback col-xs-4">
+              <div class="input-group">
+                <div class="input-group">
+                  <div class="input-group-addon">
+                    <i class="fa fa-phone"></i>
+                  </div>
+                  <input id="gsm_edit" type="tel" class="form-control infos_client" pattern="^(?:(?:\+|00)212|0)\s*[1-9](?:[\s.-]*\d{2}){4}$" data-required-error="veuillez renseigner ce champ" data-error="phone number invalid" required>
+                </div>
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                <div class="help-block with-errors"></div>
+              </div>
+            </div>
+            <div class="col-xs-2">
+              <div class="form-group">
+                <label>Naissance</label>
+              </div>
+            </div>
+            <div class="col-xs-4">
+              <div class="input-group date">
+                <div class="input-group-addon">
+                  <i class="fa fa-calendar"></i>
+                </div>
+                <input type="text" class="form-control pull-right" id="naissance_edit" readonly="true">
+              </div>
+            </div>
+          </div> 
+          <div class="row">
+            <div class="col-xs-2">
+              <div class="form-group">
+                <label>Adresse</label>
+              </div>
+            </div>
+            <div class="col-xs-4">
+              <textarea class="form-control infos_client" id="adresse_edit" rows="2"></textarea>
+            </div>
+            <div class="col-xs-2">
+              <div class="form-group">
+                <label>CP</label>
+              </div>
+            </div>
+            <div class="form-group has-feedback col-xs-4">
+              <div class="input-group">
+                <input id="CP_edit" type="NUMBER" class="form-control infos_client" data-minlength="5" data-error="Code postale invalid">
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                <div class="help-block with-errors"></div>
+              </div>
+            </div>
+          </div>   
+          <div class="row">
+            <div class="col-xs-2">
+              <div class="form-group">
+                <label>Type maman</label>
+              </div>
+            </div>
+            <div class="col-xs-4">
+              <select id="type_edit" class="form-control">
+              </select>
+              <!-- <span id="type_edit" class="form-group infos_client text-blue"></span> -->
+            </div>
+            <div class="col-xs-2">
+              <div class="form-group">
+                <label>Ville</label>
+              </div>
+            </div>
+            <div class="col-xs-4">
+              <select id="Ville_id_edit" class="form-control">
+                <option value="0">Choisir une ville</option>
+              </select>
+            </div>
+          </div>   
+          <div class="row">
+            <div class="col-xs-2">
+              <div class="form-group">
+                <label>Date de création</label>
+              </div>
+            </div>
+            <div class="col-xs-4">
+              <span id="creationDate_edit" class="form-group infos_client text-blue"></span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <button type="submit" class="btn btn-warning btn-lg" style="width: 100%;margin-bottom: 10px;"><span class="glyphicon glyphicon-ok-sign"></span>Modifier</button>
+            </div>
+          </div>
+        </form>
         <div class="row">
-          <div class="col-md-5 col-md-offset-2">
-            <img src="dist/img/en_construction.gif">
+          <div class="col-xs-12">
+            <div class="box box-danger">
+              <div class="box-header with-border">
+                <h3 class="box-title">Liste des Bébés</h3>
+              </div>
+              <!-- /.box-header -->
+              <div class="box-body">
+                <table id="baby_table" class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th style="width: 10px">ID</th>
+                      <th>Prenom</th>
+                      <th>Sexe</th>
+                      <th>Naissance</th>
+                      <th>Maternité</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
           </div>
         </div>
-      </div>
-      <div class="modal-footer ">
-        <button type="button" class="btn btn-warning btn-lg" style="width: 100%;" disabled><span class="glyphicon glyphicon-ok-sign"></span>Modifier</button>
       </div>
     </div>
     <!-- /.modal-content --> 
@@ -282,4 +444,10 @@
 <!-- DataTables -->
 <script src="plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="plugins/datatables/dataTables.bootstrap.min.js"></script>
+<!-- bootstrap datepicker -->
+<script src="plugins/datepicker/bootstrap-datepicker.js"></script>
+
+<script src="dist/js/validator.min.js"></script>
 <script src="dist/js/list.js"></script>
+<script type="text/javascript">
+</script>
