@@ -6,6 +6,7 @@ $(function () {
   //Date picker
   $('#naissance_edit').datepicker({
     autoclose: true,
+    forceParse: false,
     format: 'yyyy-mm-dd'
   });
 
@@ -165,7 +166,7 @@ $(function () {
             setTimeout(function(){$('#loading-image').popup('hide');},250);
           },
           success: function(data, textStatus, jqXHR) {
-            $.validate();
+            // $.validate();
             $('.infos_client').text('');
             $("#baby_table tbody").empty();
             $('#Ville_id_edit').val(0);
@@ -250,4 +251,57 @@ $(function () {
     });
   });
 
+  $('#myForm').validator().on('submit', function (e) {
+    if (e.isDefaultPrevented()) {
+      // handle the invalid form...
+      alert("handle the invalid form...");
+    } else {
+      // everything looks good!
+      alert("everything looks good!");
+      alert("now kahss update au niveau db!");
+      e.preventDefault();
+      var nom     = $('#nom_edit').val(),
+          prenom  = $('#prenom_edit').val(),
+          email   = $('#email_edit').val(),
+          gsm     = $('#gsm_edit').val(),
+          dof     = $('#naissance_edit').val(),
+          adresse = $('#adresse_edit').val(),
+          cp      = $('#CP_edit').val(),
+          type    = $('#type_edit').val(),
+          ville   = $('#Ville_id_edit').val();
+      var obj = {
+        'nom':nom,
+        'prenom':prenom,
+        'email':email,
+        'gsm':gsm,
+        'dof':dof,
+        'adresse':adresse,
+        'cp':cp,
+        'type':type,
+        'ville':ville
+      };
+      console.log(obj);
+      // $.ajax({
+      //   url : "./lib/util.php",
+      //   dataType: "json",
+      //   type: "POST",
+      //   data : get_client,
+      //   beforeSend: function(){
+      //     $('#loading-image').popup('show');
+      //   },
+      //   complete: function(){
+      //     $('#loading-image').popup('hide');
+      //   },
+      //   success: function(data, textStatus, jqXHR) {
+      //     // console.log(data);
+
+      //   },
+      //   error: function (jqXHR, textStatus, errorThrown) {
+      //     console.log(jqXHR);
+      //     console.log(textStatus);
+      //     console.log(errorThrown);
+      //   }
+      // });
+    }
+  });
 });
