@@ -10,7 +10,7 @@ $(function () {
     format: 'yyyy-mm-dd'
   });
 
-  var table;
+  var table,id_client;
   var obj = {'methode' : 'getAllClient'}
     $.ajax({
       url : "./lib/util.php",
@@ -250,8 +250,17 @@ $(function () {
       }
     });
   });
-
+  $('#table_clients').on( 'click', 'tbody tr', function (){
+    console.log(this);
+    var id = $(this).attr('id');
+    console.log('id : '+id);
+    var res = id.split("_");
+    id_client = res[1];
+    console.log('id_client click :'+id_client);
+    //myTable.row( this ).edit();
+  });
   $('#myForm').validator().on('submit', function (e) {
+    console.log('id_client submit      :'+id_client);
     if (e.isDefaultPrevented()) {
       // handle the invalid form...
       alert("handle the invalid form...");
