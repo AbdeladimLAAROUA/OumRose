@@ -957,6 +957,7 @@ a.buy:hover {
 	font-weight: normal;
 }
 
+
 /* Color Schemes
 =================================================================== */
 
@@ -1535,7 +1536,42 @@ body > div.section1 > section > h2{
     padding: 0px !important;
     line-height: normal;
 }
+#jssor_1{
+	background : linear-gradient(40deg,#df5b79, #7e669b);
+}
+.imgSlider{
+	
+    opacity: 0.2;
 
+}
+@font-face {
+    font-family: Raleway;
+    src: url(fonts/Raleway-Black.ttf);
+}
+.title1{
+	position:absolute;
+	left: 19%;;
+	top:25%;
+	font-weight: 800;
+	z-index:0;
+	line-height:60px;
+	font-size: 3rem;
+	color: #eceeef;
+	font-family: "Raleway", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
+}
+.title2{
+	position: absolute;
+    font-family: "Raleway", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
+    top: 44%;
+    left: 8%;
+    color: #eceeef;
+    height: 120px;
+    z-index: 0;
+    color: #ffffff;
+    font-size: 1.7rem;
+    line-height: 1.5;
+    font-weight: lighter;
+}
 /* Higher than 960 (desktop devices)
 ====================================================================== */
 @media only screen and (min-width: 960px) {

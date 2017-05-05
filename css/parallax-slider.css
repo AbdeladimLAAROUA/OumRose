@@ -29,12 +29,12 @@
 
 .da-slide{
 	position: absolute;
-	width: 960px;
+	width: 100%;
 	height: 100%;
-	left: 50%;
+	
 	font-family: 'BebasNeueRegular', 'Arial Narrow', Arial, sans-serif;
 	text-align: left;
-	margin-left: -480px;
+	
 }
 .da-slide-current{
 	z-index: 10;

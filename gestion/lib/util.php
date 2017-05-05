@@ -267,18 +267,18 @@ function db_connect(){
 
 	
 	/*Local*/
-	/*$hote   	='localhost';
+	$hote   	='localhost';
 	$passDb 	='';
 	$hote   	='localhost';
 	$passDb 	='';
 	$bd 		='oumdev_leads';
-	$user		='root';*/
+	$user		='root';
 
 	/*Distant*/
-	$hote   	='localhost';
+	/*$hote   	='localhost';
 	$passDb 	='oumdev';
 	$bd 		='id709237_oumdev_leads';
-	$user		='id709237_oumdev';
+	$user		='id709237_oumdev';*/
 	
 
 	$connexion = new PDO('mysql:host='.$hote.';dbname='.$bd.';charset=utf8', $user, $passDb);
