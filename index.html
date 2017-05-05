@@ -192,11 +192,23 @@
         .jssora22l, .jssora22r {
             display: block;
             position: absolute;
+
             /* size of arrow element */
             width: 40px;
             height: 58px;
             cursor: pointer;
             background: url('img/a22.png') center center no-repeat;
+            overflow: hidden;
+        }
+        .InscriptionButton{
+        	display: block;
+            position: absolute;
+            top: 60%;
+            left: 39%;
+            /* size of arrow element */
+            width: 400px;
+            height: 558px;
+            cursor: pointer;
             overflow: hidden;
         }
         .jssora22l { background-position: -10px -31px; }
@@ -219,9 +231,14 @@
         	    <img data-u="image" src="img/bebe1.jpg" class="imgSlider" />
         	    <div class="title1">Oumbox chouchoute les mamans</div>
         	    <div class="title2">Depuis la grossesse jusqu'aux 12 mois de bébés profitez des avantages du programme.</div>
+        	    <section class="InscriptionButton">
+				<p>
+					<button class="btn btn-4 btn-4a">Inscrivez-vous</button>
+				</p>
+			</section>
         	    
         	</div>
-            <div>
+            <!-- <div>
                 <img data-u="image" src="img/red.jpg" />
                 <div style="position:absolute;top:30px;left:30px;width:480px;height:120px;z-index:0;font-size:50px;color:#ffffff;line-height:60px;">Oumbox</div>
                 <div style="position:absolute;top:300px;left:30px;width:480px;height:120px;z-index:0;font-size:30px;color:#ffffff;line-height:38px;">Build your slider with anything, includes image, content, text, html, photo, picture</div>
@@ -234,10 +251,18 @@
                     <img style="position:absolute;top:4px;left:45px;width:379px;height:213px;z-index:0;" src="img/4bebes.jpg" />
                     <img data-u="caption" data-t="2" style="position:absolute;top:476px;left:454px;width:63px;height:77px;z-index:0;" src="img/hand.png" />
                 </div>
-            </div>
+            </div> -->
             <div>
-                <img data-u="image" src="img/4bebes.jpg" class="imgSlider" />
-            </div>
+        	    <img data-u="image" src="img/4bebes.jpg" class="imgSlider" />
+        	    <div class="title3">Gratuit et sans obligation d'achat</div>
+        	    <div class="title4">Accédez sans tarder à tous vos avantages en vous inscrivant.</div>
+        	    <section class="InscriptionButton">
+				<p>
+					<button class="btn btn-4 btn-4a">Inscrivez-vous Maintenant</button>
+				</p>
+			</section>
+        	    
+        	</div>
             
         </div>
         <!-- Bullet Navigator -->
@@ -249,6 +274,7 @@
         <span data-u="arrowleft" class="jssora22l" style="top:0px;left:8px;width:40px;height:58px;" data-autocenter="2"></span>
         <span data-u="arrowright" class="jssora22r" style="top:0px;right:8px;width:40px;height:58px;" data-autocenter="2"></span>
     </div>
+
     <script type="text/javascript">jssor_1_slider_init();</script>
     <!-- #endregion Jssor Slider End -->
 	<!-- start: Slider -->

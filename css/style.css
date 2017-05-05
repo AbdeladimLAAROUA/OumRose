@@ -1559,6 +1559,17 @@ body > div.section1 > section > h2{
 	color: #eceeef;
 	font-family: "Raleway", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
 }
+.title3{
+	position:absolute;
+	left: 22%;;
+	top:25%;
+	font-weight: 800;
+	z-index:0;
+	line-height:60px;
+	font-size: 3rem;
+	color: #eceeef;
+	font-family: "Raleway", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
+}
 .title2{
 	position: absolute;
     font-family: "Raleway", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
@@ -1572,6 +1583,130 @@ body > div.section1 > section > h2{
     line-height: 1.5;
     font-weight: lighter;
 }
+.title4{
+	position: absolute;
+    font-family: "Raleway", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
+    top: 44%;
+    left: 22%;
+    color: #eceeef;
+    height: 120px;
+    z-index: 0;
+    color: #ffffff;
+    font-size: 1.7rem;
+    line-height: 1.5;
+    font-weight: lighter;
+}
+/* General button style (reset) */
+@font-face {
+	font-family: 'icomoon';
+	src:url('../fonts/icomoon/icomoon.eot');
+	src:url('../fonts/icomoon/icomoon.eot?#iefix') format('embedded-opentype'),
+		url('../fonts/icomoon/icomoon.woff') format('woff'),
+		url('../fonts/icomoon/icomoon.ttf') format('truetype'),
+		url('../fonts/icomoon/icomoon.svg#icomoon') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+ .btn-4 {
+	border: none;
+	font-family: inherit;
+	font-size: inherit;
+	color: inherit;
+	background: none;
+	cursor: pointer;
+	padding: 15px 50px;
+	display: inline-block;
+	margin: 15px 30px;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	font-weight: 700;
+	outline: none;
+	position: relative;
+	border-radius: 50px;
+	border: 1px solid #fff;
+	color: #fff;
+	overflow: hidden;
+	-webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+	transition: all 0.3s;
+}
+
+.btn:after {
+	content: '';
+	position: absolute;
+	z-index: -1;
+	-webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+	transition: all 0.3s;
+}
+
+/* Pseudo elements for icons */
+.btn:before,
+.icon-heart:after,
+.icon-star:after,
+.icon-plus:after,
+.icon-file:before {
+	font-family: 'icomoon';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	position: relative;
+	-webkit-font-smoothing: antialiased;
+}
+
+
+
+/* Filled star */
+
+
+.icon-arrow-right:before {
+	content: "\e00d";
+}
+
+.icon-arrow-left:before {
+	content: "\e003";
+}
+
+@import url(http://fonts.googleapis.com/css?family=Lato:300,400,700);
+/* Button 4 */
+
+
+.btn-4:active {
+	border-color: #17954c;
+	color: #17954c;
+}
+
+.btn-4:hover {
+	background: rgba(255, 255, 255, 0.5);
+	color: #FFFFFF;
+}
+
+.btn-4:before {
+	position: absolute;
+	height: 100%;
+	font-size: 125%;
+	line-height: 3.5;
+	color: #fff;
+	left: 130%;
+	top: 0;
+	-webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+	transition: all 0.3s;
+}
+
+.btn-4:active:before {
+	color: #17954c;
+}
+
+.btn-4a:hover:before {
+	left: 80%;
+}
+
+
+
 /* Higher than 960 (desktop devices)
 ====================================================================== */
 @media only screen and (min-width: 960px) {
