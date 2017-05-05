@@ -10,7 +10,7 @@ $(function () {
     format: 'yyyy-mm-dd'
   });
 
-  var table;
+  var table,id_client;
   var obj = {'methode' : 'getAllClient'}
     $.ajax({
       url : "./lib/util.php",
@@ -250,17 +250,26 @@ $(function () {
       }
     });
   });
-
+  $('#table_clients').on( 'click', 'tbody tr', function (){
+    console.log(this);
+    var id = $(this).attr('id');
+    console.log('id : '+id);
+    var res = id.split("_");
+    id_client = res[1];
+    console.log('id_client click :'+id_client);
+    //myTable.row( this ).edit();
+  });
   $('#myForm').validator().on('submit', function (e) {
+    console.log('id_client submit      :'+id_client);
     if (e.isDefaultPrevented()) {
       // handle the invalid form...
       alert("handle the invalid form...");
     } else {
       // everything looks good!
-      alert("everything looks good!");
-      alert("now kahss update au niveau db!");
+      // console.log("everything looks good!");
       e.preventDefault();
       var nom     = $('#nom_edit').val(),
+          id  = $('#id_client_edit').text(),
           prenom  = $('#prenom_edit').val(),
           email   = $('#email_edit').val(),
           gsm     = $('#gsm_edit').val(),
@@ -269,39 +278,35 @@ $(function () {
           cp      = $('#CP_edit').val(),
           type    = $('#type_edit').val(),
           ville   = $('#Ville_id_edit').val();
-      var obj = {
-        'nom':nom,
-        'prenom':prenom,
-        'email':email,
-        'gsm':gsm,
-        'dof':dof,
-        'adresse':adresse,
-        'cp':cp,
-        'type':type,
-        'ville':ville
-      };
-      console.log(obj);
-      // $.ajax({
-      //   url : "./lib/util.php",
-      //   dataType: "json",
-      //   type: "POST",
-      //   data : get_client,
-      //   beforeSend: function(){
-      //     $('#loading-image').popup('show');
-      //   },
-      //   complete: function(){
-      //     $('#loading-image').popup('hide');
-      //   },
-      //   success: function(data, textStatus, jqXHR) {
-      //     // console.log(data);
+      var obj = {'id':id,'nom':nom,'prenom':prenom,'email':email,'gsm':gsm,'dof':dof,'adresse':adresse,'cp':cp,'type':type,'ville':ville};
+      var update_client = {'methode':'updateClient','client':obj};
+      // console.log(obj);
+      $.ajax({
+        url : "./lib/util.php",
+        dataType: "json",
+        type: "POST",
+        data : update_client,
+        beforeSend: function(){
+          $('#loading-image').popup('show');
+        },
+        complete: function(){
+          $('#loading-image').popup('hide');
+        },
+        success: function(data, textStatus, jqXHR) {
+          console.log(data);
+          if(data.result == 'success'){
+            console.log('Client bien modifier !!');
+          }else{
+            console.log('Something went wrong !!');            
+          }
 
-      //   },
-      //   error: function (jqXHR, textStatus, errorThrown) {
-      //     console.log(jqXHR);
-      //     console.log(textStatus);
-      //     console.log(errorThrown);
-      //   }
-      // });
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+          console.log(jqXHR);
+          console.log(textStatus);
+          console.log(errorThrown);
+        }
+      });
     }
   });
 });

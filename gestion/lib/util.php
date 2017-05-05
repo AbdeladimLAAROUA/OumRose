@@ -23,10 +23,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			echo getAllCities();
 		}else if($_REQUEST['methode'] == 'getAllTypeMoms'){
 			echo getAllTypeMoms();
+		}else if($_REQUEST['methode'] == 'updateClient'){
+			echo updateClient($_REQUEST['client']);
+		}else{
+			echo json_encode(array('result'=>'method_not_exist'));
 		}
 	}else{
-		$array["response"] = "faux";
-		echo json_encode($array);
+		echo json_encode(array('result'=>'no_method_selected'));
 	}
 }
 
@@ -204,6 +207,26 @@ function getAllClient(){
 	return json_encode($array);	
 }
 
+
+function getClientWithEligibility(){
+	$array = array();
+	try {
+		$connexion = db_connect();
+		$resultats = $connexion->prepare("SELECT *, CASE WHEN age >=-3 AND age <=0 THEN 'BOX1' WHEN age >=1 AND age <=3 THEN 'BOX2' WHEN age >=6 AND age <=9 THEN 'BOX3' ELSE 'NON_ELIGIBLE' END AS eleg FROM ( SELECT *,PERIOD_DIFF(DATE_FORMAT(NOW(),'%Y%m'),DATE_FORMAT(naissance,'%Y%m')) as age FROM baby ) t INNER JOIN customer c ON c.id = t.customer_id INNER JOIN ville v ON c.Ville_id = v.id");
+
+		$resultats->execute();
+
+		$resultats->setFetchMode(PDO::FETCH_OBJ);
+		$resultat = $resultats->fetchAll();
+		$array['result'] = $resultat;
+	} catch (Exception $e) {
+		$array['result'] = 0;
+	}
+	
+	$connexion = null;
+	return json_encode($array);	
+}
+
 function getClient($id){
 	$array = array();
 	try {
@@ -237,19 +260,18 @@ function getClient($id){
 
 function deleteFullClient($id){
 	$array = array();
+
 	try {
 		$connexion = db_connect();
 
 		$stmt = $connexion->prepare("DELETE FROM baby WHERE customer_id = :id");
-    	$stmt->bindParam(':id', $id);
+		$stmt->bindParam(':id', $id);
 		$stmt->execute();
-		// print_r($stmt->rowCount());
 		$count_baby = $stmt->rowCount();
 
 		$stmt = $connexion->prepare("DELETE FROM customer WHERE id = :id");
-    	$stmt->bindParam(':id', $id);
+		$stmt->bindParam(':id', $id);
 		$stmt->execute();
-		// print_r($stmt->rowCount());
 		$count_customer = $stmt->rowCount();
 		if($count_baby == 1 && $count_customer == 1){
 			$array['result'] = 'ok';
@@ -260,6 +282,53 @@ function deleteFullClient($id){
 	}
 	
 	$connexion = null;
+	return json_encode($array);	
+}
+
+
+function updateClient($client){
+	$array = array();
+
+	$array['id'] = $client['id'];
+	$array['nom'] = $client['nom'];
+	$array['prenom'] = $client['prenom'];
+	$array['email'] = $client['email'];
+	$array['gsm'] = $client['gsm'];
+	$array['naissance'] = $client['dof'];
+	$array['adresse'] = $client['adresse'];
+	$array['cp'] = $client['cp'];
+	$array['type'] = $client['type'];
+	$array['Ville_id'] = $client['ville'];
+
+	try {
+		$connexion = db_connect();
+
+		$stmt = $connexion->prepare("UPDATE customer SET nom = :nom,prenom = :prenom,email = :email,gsm = :gsm,naissance = :naissance,adresse = :adresse,CP = :cp,type = :type,Ville_id = :Ville_id WHERE id = :id ");
+		
+		$stmt->bindValue(':id', $client['id']);
+		$stmt->bindValue(':nom', $client['nom']);
+		$stmt->bindValue(':prenom', $client['prenom']);
+		$stmt->bindValue(':email', $client['email']);
+		$stmt->bindValue(':gsm', $client['gsm']);
+		$stmt->bindValue(':naissance', $client['dof']);
+		$stmt->bindValue(':adresse', $client['adresse']);
+		$stmt->bindValue(':cp', $client['cp']);
+		$stmt->bindValue(':type', $client['type']);
+		$stmt->bindValue(':Ville_id', $client['ville']);
+
+		$stmt->execute();
+
+		if($stmt->rowCount()) {
+			$array['result'] = 'success';
+		} else {
+			$array['result'] = 'failed';
+		}
+	} catch (Exception $e) {
+		$array['result'] = 'ko';
+	}
+	
+	$connexion = null;
+
 	return json_encode($array);	
 }
 
