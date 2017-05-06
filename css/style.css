@@ -1706,6 +1706,151 @@ body > div.section1 > section > h2{
 }
 
 
+/*Login button*/
+.btn-login {
+	background: #e6e6e6;
+    color: #ff4690;
+    border: 0px;
+    border-radius: 4;
+    font-weight: bold;
+    font-family: 'josefin_sanssemibold', Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    text-transform: uppercase;
+    white-space: normal;
+    width: 120px !important;
+    /* border-radius: 8px; */
+    font-size: 14px;
+    padding: 12px 0;
+    display: inline-block;
+    text-align: center;
+    height: 100%;
+    text-shadow: 0 0 10px #ffffff, 0 0 2px #ffffff , 0 0 20px #ffffff, 0 0 30px #ffffff;
+}
+.btn-signup {
+	background: #ff4690;
+    color: #fff;
+    border-radius: 4;
+    font-weight: bold;
+    font-family: 'josefin_sanssemibold', Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    text-transform: uppercase;
+    white-space: normal;
+    width: 120px !important;
+    /* border-radius: 8px; */
+    font-size: 14px;
+    padding: 12px 0;
+    display: inline-block;
+    text-align: center;
+    height: 100%;
+    
+}
+.loginContainer {
+	margin-top: 8px;
+}
+.btn-login:hover{
+	background: #ff4690;
+	color: #fff;
+	text-shadow:none;
+}
+.logo{
+
+	 margin-left: 60px;
+}
+
+.part2{
+	text-align: center;
+	width: 100%;
+	padding: 20px;
+	background: rgb(252,252,252);
+	padding-top: 50px;
+}
+.part2 .title{
+	border-bottom: 0px;
+	color: rgb(123,137,148);
+	font-size: 40px;
+	padding 10px;
+	margin-bottom: 42px;
+}
+.part2 .block{
+	padding: 30px;
+}
+.part2 .subtitle{
+	color: rgb(48,128,163);
+	font-size: 20px;
+	margin: 20px;
+}
+.part2 .description1{
+	color: #df5b79;
+    margin-bottom: 5px;
+    font-size: 1.5rem;
+    line-height: 1.2;
+    font-weight: 600;
+    margin-bottom: 17px;
+}
+.part2 .description2{
+	margin-top: 10px;
+    color: rgb(108,108,108);
+    font-size: 15px;
+    font-family: "Raleway";
+    font-weight: lighter;
+}
+.part2 .goTop{
+	color: rgb(230,76,52);
+	display: inherit;
+	
+}
+.goTopLink{
+	color: rgb(230,76,52);
+	display: inherit;
+	text-decoration: none;
+}
+.goTopLink:hover{
+	color: rgb(230,76,52);
+	display: inherit;
+	text-decoration: none;
+}
+.part2 .logoProgramme{
+	width: 80px;
+	height:100px;
+	margin-bottom: 20px;
+}
+.part3{
+	text-align: center;
+	padding: 20px;
+	background: black;
+}
+.part3 .title{
+
+	color: white;
+	font-size: 30px;
+}
+.part3 img{
+	float: left;
+	position: relative;
+	right: 8px;
+	margin-right: 1px;
+
+}
+
+.part3 .subtitle{
+	color: rgb(48,128,163);
+	font-size: 15px;
+	font-weight: bold;
+}
+.part3 .block{
+	border : solid 1px black;
+	padding: 30px;
+}
+.part3 .description1{
+	color: rgb(61,141,174);
+	font-weight: bold;
+}
+.part3 .description2{
+	margin-top: 10px;
+	color: white;
+	font-weight: bold;
+	font-size: 12px;
+}
 
 /* Higher than 960 (desktop devices)
 ====================================================================== */
