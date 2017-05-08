@@ -6,6 +6,9 @@
 .action{
   margin-right: 2px;
 }
+.hide-me{
+  display: none;
+}
 </style>
 <!-- Content Header (Page header) -->
 <section class="content-header">
@@ -222,6 +225,12 @@
         <h4 class="modal-title custom_align" id="Heading">Modifier client</h4>
       </div>
       <div class="modal-body">
+        <div id="alert_recover_ok" class="alert alert-success hide-me">
+          Modifications effectées
+        </div>
+        <div id="alert_recover_ko" class="alert alert-warning hide-me">
+          Quelque chose a mal tourné
+        </div>
         <form id="myForm">
           <div class="row">
             <div class="col-xs-2">

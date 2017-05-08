@@ -255,12 +255,12 @@ $(function () {
     var id = $(this).attr('id');
     console.log('id : '+id);
     var res = id.split("_");
-    id_client = res[1];
+    id_client = id;
     console.log('id_client click :'+id_client);
     //myTable.row( this ).edit();
   });
   $('#myForm').validator().on('submit', function (e) {
-    console.log('id_client submit      :'+id_client);
+    console.log('id_client submit:'+id_client);
     if (e.isDefaultPrevented()) {
       // handle the invalid form...
       alert("handle the invalid form...");
@@ -269,7 +269,7 @@ $(function () {
       // console.log("everything looks good!");
       e.preventDefault();
       var nom     = $('#nom_edit').val(),
-          id  = $('#id_client_edit').text(),
+          id      = $('#id_client_edit').text(),
           prenom  = $('#prenom_edit').val(),
           email   = $('#email_edit').val(),
           gsm     = $('#gsm_edit').val(),
@@ -295,9 +295,26 @@ $(function () {
         success: function(data, textStatus, jqXHR) {
           console.log(data);
           if(data.result == 'success'){
-            console.log('Client bien modifier !!');
+            console.log('Client bien modifier !! '+id_client);
+            $('#alert_recover_ok').css('visibility','visible').fadeIn(1500);
+            $('#'+id_client+' td:nth-child(2)').html(nom);
+            $('#'+id_client+' td:nth-child(3)').html(prenom);
+            $('#'+id_client+' td:nth-child(4)').html(email);
+            $('#'+id_client+' td:nth-child(5)').html(gsm);
+            $('#'+id_client+' td:nth-child(6)').html(getAge(dof));
+            $('#'+id_client+' td:nth-child(7)').html(adresse);
+            $('#'+id_client+' td:nth-child(8)').html($('#Ville_id_edit option:selected').text());
+            setTimeout(function(){
+              $('#edit').modal('toggle');
+              $('#alert_recover_ok').css('visibility','hidden');
+            }, 2000);
           }else{
-            console.log('Something went wrong !!');            
+            console.log('Something went wrong !!');
+            $('#alert_recover_ko').css('visibility','visible').fadeIn(1500);
+            setTimeout(function(){
+              $('#edit').modal('toggle');
+              $('#alert_recover_ko').css('visibility','hidden');
+            }, 2000);
           }
 
         },
@@ -310,3 +327,9 @@ $(function () {
     }
   });
 });
+function getAge(dateString) {
+    var today = new Date();
+    var birthDate = new Date(dateString);
+    var age = today.getFullYear() - birthDate.getFullYear();
+    return age;
+}
