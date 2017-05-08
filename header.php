@@ -39,7 +39,7 @@
 
 				<div class="text-center loginContainer">
 
-					<a href="#" class="btn btn-login text-uppercase btn-infos">Connexion</a>
+					<a href="login.php" class="btn btn-login text-uppercase btn-infos">Connexion</a>
 					<a href="#" class="btn btn-signup text-uppercase btn-infos">Inscription</a>
 				</div>
 				
