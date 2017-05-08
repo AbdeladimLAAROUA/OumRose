@@ -33,6 +33,10 @@
 	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Boogaloo">
 	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Economica:700,400italic">
 
+	<link rel="stylesheet" href="css/movieBase.css">
+     <link rel="stylesheet" href="css/movieVendor.css"> <!---->
+    <link rel="stylesheet" href="css/movieMain.css">
+
 	<link rel="stylesheet" type="text/css" href="css/demo.css" />
     <link rel="stylesheet" type="text/css" href="css/set1.css" />
 	<link rel="stylesheet" type="text/css" href="css/component.css" />
@@ -42,6 +46,8 @@
     <link href="css/bootstrap-responsive.css" rel="stylesheet">
 	<link href="css/style.css" rel="stylesheet">
 	<!-- end: CSS -->
+
+	 <script src="js/movieModernizr.js"></script>
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -107,6 +113,7 @@
             <a class="goTopLink" href="#">-Go-to-top-</a>
            </div>
             
+        <?php include('movie.php'); ?>
 		<!--start: Container -->
     	<div class="container">
 	       
@@ -419,6 +426,8 @@
 <script src="js/jquery.cslider.js"></script>
 <script src="js/slider.js"></script>
 <script defer="defer" src="js/custom.js"></script>
+<script src="js/moviePlugins.js"></script>
+<script src="js/movieMain.js"></script>
 <script type="text/javascript">
 	var fixmeTop = $('.fixme').offset().top;
 	$(window).scroll(function() {
