@@ -25,6 +25,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			echo getAllTypeMoms();
 		}else if($_REQUEST['methode'] == 'updateClient'){
 			echo updateClient($_REQUEST['client']);
+		}else if($_REQUEST['methode'] == 'getAllBox'){
+			echo getAllBox();
+		}else if($_REQUEST['methode'] == 'getAllProduct'){
+			echo getAllProduct();
 		}else{
 			echo json_encode(array('result'=>'method_not_exist'));
 		}
@@ -34,7 +38,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 // $id = 216;
-// echo getAllTypeMoms();
+// echo getAllBox();
+// echo getAllProduct();
 
 function getAllCities(){
 	$array = array();
@@ -329,6 +334,44 @@ function updateClient($client){
 	
 	$connexion = null;
 
+	return json_encode($array);	
+}
+
+function getAllBox(){
+	$array = array();
+	try {
+		$connexion = db_connect();
+		$resultats = $connexion->prepare("SELECT * FROM box");
+
+		$resultats->execute();
+
+		$resultats->setFetchMode(PDO::FETCH_OBJ);
+		$resultat = $resultats->fetchAll();
+		$array['result'] = $resultat;
+	} catch (Exception $e) {
+		$array['result'] = 0;
+	}
+	
+	$connexion = null;
+	return json_encode($array);	
+}
+
+function getAllProduct(){
+	$array = array();
+	try {
+		$connexion = db_connect();
+		$resultats = $connexion->prepare("SELECT *,p.id as id_product FROM product p INNER JOIN box b ON b.id = p.id_box INNER JOIN shop s ON p.id_shop = s.id");
+
+		$resultats->execute();
+
+		$resultats->setFetchMode(PDO::FETCH_OBJ);
+		$resultat = $resultats->fetchAll();
+		$array['result'] = $resultat;
+	} catch (Exception $e) {
+		$array['result'] = 0;
+	}
+	
+	$connexion = null;
 	return json_encode($array);	
 }
 

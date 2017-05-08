@@ -18,6 +18,9 @@ app.config(function($routeProvider) {
     })
     .when("/listCommande", {
         templateUrl : "pages/views/listCommande.html"
+    })
+    .when("/listArticle", {
+        templateUrl : "pages/views/listArticle.html"
     })    
     .otherwise({
         redirectTo: '/main'
