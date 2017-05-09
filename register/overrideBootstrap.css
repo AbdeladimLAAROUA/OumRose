@@ -1,0 +1,68 @@
+.register .row{
+	    margin-left: 0px !important;
+}
+
+
+.register input{
+	border:0px !important;
+	box-shadow: none !important;
+}
+.register input
+{
+	box-shadow: 0 1px 0 0 rgb(158, 158, 158) !important;
+}
+.register input:focus
+{
+	box-shadow: 0 1px 0 0 #26a69a !important;
+}
+.register input[readonly] {
+     cursor: inherit !important;
+     background: none !important;
+}
+
+.register .btn{
+	padding: 1px 50px;
+	color: white;
+	text-shadow:none;
+	background-image: none !important; 
+	background-color: #26a69a;
+}
+
+#divsex > div > input{
+	display: none;
+}
+#sexe{
+	display: none;
+}
+
+#lichild > div.collapsible-body > div > div.input-field.col.s5 > div > input{
+	display: none;
+}
+
+#sexeenfant{
+	display: none;
+}
+.register .caret{
+	border-top:0px !important;
+}
+
+select,
+textarea,
+input[type="text"],
+input[type="password"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="date"],
+input[type="month"],
+input[type="time"],
+input[type="week"],
+input[type="number"],
+input[type="email"],
+input[type="url"],
+input[type="search"],
+input[type="tel"],
+input[type="color"],
+.uneditable-input {
+	 height: 50px !important;
+     padding: 0px 0px !important;
+}
