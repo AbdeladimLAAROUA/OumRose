@@ -1,0 +1,135 @@
+<!-- DataTables -->
+<link rel="stylesheet" href="plugins/datatables/dataTables.bootstrap.css">
+<!-- bootstrap datepicker -->
+<link rel="stylesheet" href="plugins/datepicker/datepicker3.css">
+<style type="text/css">
+.action{
+  margin-right: 2px;
+}
+.hide-me{
+  display: none;
+}
+</style>
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1>
+    Oumbox
+    <small>Liste des clients</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="#main"><i class="fa fa-dashboard"></i>Tableau de bord</a></li>
+    <li class="active">Liste des clients</li>
+  </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="box">
+        <div class="box-header">
+          <h3 class="box-title">Liste des articles père</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+          <table id="table_acrticles_p" class="table table-bordered table-striped">
+            <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nom</th>
+              <th>Description</th>
+              <th>Debut</th>
+              <th>Fin</th>
+              <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+              
+            </tbody>
+            <tfoot>
+            <tr>
+              <th>ID</th>
+              <th>Nom</th>
+              <th>Description</th>
+              <th>Debut</th>
+              <th>Fin</th>
+              <th>Action</th>
+            </tr>
+            </tfoot>
+          </table>
+        </div>
+        <!-- /.box-body -->
+      </div>
+      <!-- /.box -->
+    </div>
+    <!-- /.col -->
+  </div>
+  <!-- /.row -->
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="box">
+        <div class="box-header">
+          <h3 class="box-title">Liste des articles fils</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+          <table id="table_acrticles_f" class="table table-bordered table-striped">
+            <thead>
+            <tr>
+              <th>ID</th>
+              <th>Type produit</th>
+              <th>Shop</th>
+              <th>Réf Box</th>
+              <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+              
+            </tbody>
+            <tfoot>
+            <tr>
+              <th>ID</th>
+              <th>Type produit</th>
+              <th>Shop</th>
+              <th>Réf Box</th>
+              <th>Action</th>
+            </tr>
+            </tfoot>
+          </table>
+        </div>
+        <!-- /.box-body -->
+      </div>
+      <!-- /.box -->
+    </div>
+    <!-- /.col -->
+  </div>
+  <!-- /.row -->
+
+<!-- Add content to the popup -->
+<div id="loading-image" class="row">
+  <div class="main col-md-5 col-md-offset-6">
+    <div id="cssload-pgloading">
+      <div class="cssload-loadingwrap">
+        <ul class="cssload-bokeh">
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+<!-- /.content -->
+
+<!-- DataTables -->
+<script src="plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="plugins/datatables/dataTables.bootstrap.min.js"></script>
+<!-- bootstrap datepicker -->
+<script src="plugins/datepicker/bootstrap-datepicker.js"></script>
+
+<script src="dist/js/validator.min.js"></script>
+<script src="dist/js/listArticle.js"></script>
+<script type="text/javascript">
+</script>
