@@ -29,6 +29,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			echo getAllBox();
 		}else if($_REQUEST['methode'] == 'getAllProduct'){
 			echo getAllProduct();
+		}else if($_REQUEST['methode'] == 'getAllShop'){
+			echo getAllShop();
+		}else if($_REQUEST['methode'] == 'getBoxById'){
+			echo getBoxById($_REQUEST['id']);
+		}else if($_REQUEST['methode'] == 'getProductById'){
+			echo getProductById($_REQUEST['id']);
 		}else{
 			echo json_encode(array('result'=>'method_not_exist'));
 		}
@@ -40,6 +46,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 // $id = 216;
 // echo getAllBox();
 // echo getAllProduct();
+// echo getAllShop();
+// echo getBoxById(1);
+// echo getProductById(1);
 
 function getAllCities(){
 	$array = array();
@@ -373,6 +382,67 @@ function getAllProduct(){
 	
 	$connexion = null;
 	return json_encode($array);	
+}
+
+function getAllShop(){
+	$array = array();
+	try {
+		$connexion = db_connect();
+		$resultats = $connexion->prepare("SELECT *,s.id as id_shop FROM `shop` s INNER JOIN ville v ON s.Ville_id = v.id");
+
+		$resultats->execute();
+
+		$resultats->setFetchMode(PDO::FETCH_OBJ);
+		$resultat = $resultats->fetchAll();
+		$array['result'] = $resultat;
+	} catch (Exception $e) {
+		$array['result'] = 0;
+	}
+	
+	$connexion = null;
+	return json_encode($array);	
+}
+function getBoxById($id){
+	$array = array();
+	try {
+		$connexion = db_connect();
+		$resultats = $connexion->prepare("SELECT * FROM `box`WHERE id = :id");
+    	
+    	$resultats->bindParam(':id', $id);
+
+		$resultats->execute();
+
+		$resultats->setFetchMode(PDO::FETCH_OBJ);
+		$resultat = $resultats->fetchAll();
+		$array['result'] = $resultat;
+
+	} catch (Exception $e) {
+		$array['result'] = 0;
+	}
+	
+	$connexion = null;
+	return json_encode($array);
+}
+function getProductById($id){
+	$array = array();
+	try {
+		$connexion = db_connect();
+		$resultats = $connexion->prepare("SELECT *, p.id as id_product FROM `product` p INNER JOIN box b ON b.id = p.id_box INNER JOIN shop s ON s.id = p.id_shop WHERE p.id = :id");
+    	
+    	$resultats->bindParam(':id', $id);
+
+		$resultats->execute();
+
+		$resultats->setFetchMode(PDO::FETCH_OBJ);
+		$resultat = $resultats->fetchAll();
+		$array['result'] = $resultat;
+
+	} catch (Exception $e) {
+		$array['result'] = 0;
+	}
+	
+	$connexion = null;
+	return json_encode($array);
 }
 
 function db_connect(){
