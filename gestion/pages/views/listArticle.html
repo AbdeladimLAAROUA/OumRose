@@ -14,11 +14,11 @@
 <section class="content-header">
   <h1>
     Oumbox
-    <small>Liste des clients</small>
+    <small>Liste des articles</small>
   </h1>
   <ol class="breadcrumb">
     <li><a href="#main"><i class="fa fa-dashboard"></i>Tableau de bord</a></li>
-    <li class="active">Liste des clients</li>
+    <li class="active">Liste des articles</li>
   </ol>
 </section>
 
@@ -32,6 +32,9 @@
         </div>
         <!-- /.box-header -->
         <div class="box-body">
+          <div style="margin-bottom:20px;">
+            <button type="submit" id="add_parent_btn" class="btn btn-primary" data-type="add_parent" data-toggle="modal" data-target="#add_parent">Ajouter un Article</button>
+          </div>
           <table id="table_acrticles_p" class="table table-bordered table-striped">
             <thead>
             <tr>
@@ -73,6 +76,9 @@
         </div>
         <!-- /.box-header -->
         <div class="box-body">
+          <div style="margin-bottom:20px;">
+            <button type="submit" id="add_fils_btn" class="btn btn-primary" data-type="add_fils" data-toggle="modal" data-target="#add_fils">Ajouter un Article Fils</button>
+          </div>
           <table id="table_acrticles_f" class="table table-bordered table-striped">
             <thead>
             <tr>
@@ -104,6 +110,497 @@
     <!-- /.col -->
   </div>
   <!-- /.row -->
+
+<div class="modal fade" id="view" tabindex="-1" role="dialog" aria-labelledby="view" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+        <h4 class="modal-title custom_align" id="Heading">Les details d'article</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-xs-3">
+            <div class="form-group">
+              <label>ID</label>
+            </div>
+          </div>
+          <div class="col-xs-3">
+            <span id="id_article_p" class="form-group infos_ar_p text-blue"></span>
+          </div>
+          <div class="col-xs-2">
+            <div class="form-group">
+              <label>Nom</label>
+            </div>
+          </div>
+          <div class="col-xs-4">
+            <span id="nom_article_p" class="form-group infos_ar_p text-blue"></span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-3">
+            <div class="form-group">
+              <label>Debut</label>
+            </div>
+          </div>
+          <div class="col-xs-3">
+            <span id="debut_article_p" class="form-group infos_ar_p text-blue"></span> j
+          </div>
+          <div class="col-xs-3">
+            <div class="form-group">
+              <label>Fin</label>
+            </div>
+          </div>
+          <div class="col-xs-3">
+            <span id="fin_article_p" class="form-group infos_ar_p text-blue"></span> j
+          </div>
+        </div> 
+        <div class="row">
+          <div class="col-xs-3">
+            <div class="form-group">
+              <label>Description</label>
+            </div>
+          </div>
+          <div class="col-xs-3">
+            <span id="description_article_p" class="form-group infos_ar_p text-blue"></span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer ">
+        <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>Fermer</button>
+      </div>
+    </div>
+    <!-- /.modal-content --> 
+  </div>
+  <!-- /.modal-dialog --> 
+</div>
+
+
+
+<div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="delete" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+        <h4 class="modal-title custom_align" id="Heading">Supprimer l'article</h4>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span> Êtes-vous sûr de vouloir supprimer cet article ?</div>
+      </div>
+      <div class="modal-footer ">
+        <button id="conf_supp_p" type="button" data-id="0" class="btn btn-success" ><span class="glyphicon glyphicon-ok-sign"></span>Oui</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>Non</button>
+      </div>
+    </div>
+    <!-- /.modal-content --> 
+  </div>
+  <!-- /.modal-dialog --> 
+</div>
+
+<div class="modal fade" id="add_parent" tabindex="-1" role="dialog" aria-labelledby="add_parent" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+        <h4 class="modal-title custom_align" id="Heading">Ajouter un article</h4>
+      </div>
+      <div class="modal-body">
+        <div id="alert_recover_ok_add_p" class="alert alert-success hide-me">
+          Article Ajouté
+        </div>
+        <div id="alert_recover_ko_add_p" class="alert alert-warning hide-me">
+          Quelque chose a mal tourné
+        </div>
+        <form id="addParentForm">
+          <div class="row">
+            <div class="col-xs-2">
+              <div class="form-group">
+                <label>Nom</label>
+              </div>
+            </div>
+            <div class="form-group has-feedback col-xs-4">
+              <div class="input-group">
+                <input id="nom_add_p" type="text" class="form-control" data-required-error="Entrez le nom" required>
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                <div class="help-block with-errors"></div>
+              </div>
+            </div>
+            <div class="col-xs-2">
+              <div class="form-group">
+                <label>Description</label>
+              </div>
+            </div>
+            <div class="form-group has-feedback col-xs-4">
+              <div class="input-group">
+                <textarea class="form-control" id="description_add_p" rows="2"></textarea>
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                <div class="help-block with-errors"></div>
+              </div>
+            </div>
+          </div> 
+          <div class="row">
+            <div class="col-xs-3">
+              <div class="form-group">
+                <label>Eligibilité :: Entre</label>
+              </div>
+            </div>
+            <div class="form-group has-feedback col-xs-3">
+              <div class="input-group">
+                <input id="debut_add" type="NUMBER" class="form-control infos_client" data-error="Entrez le debut" required>
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                <div class="help-block with-errors"></div>
+              </div>
+            </div>
+            <div class="form-group has-feedback col-xs-3">
+              <div class="input-group">
+                <input id="fin_add" type="NUMBER" data-greater="#debut_add" class="form-control infos_client" data-error="Entrez la fin" required>
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                <div class="help-block with-errors"></div>
+              </div>
+            </div>
+            <div class="col-xs-3">
+              <div class="form-group">
+                <label>Par jours</label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;margin-bottom: 10px;"><span class="glyphicon glyphicon-ok-sign"></span>Ajouter</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- /.modal-content --> 
+  </div>
+  <!-- /.modal-dialog --> 
+</div>
+
+
+<div class="modal fade" id="edit_parent" tabindex="-1" role="dialog" aria-labelledby="edit_parent" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+        <h4 class="modal-title custom_align" id="Heading">Modifier un article</h4>
+      </div>
+      <div class="modal-body">
+        <div id="alert_recover_ok_edit_p" class="alert alert-success hide-me">
+          Article bien Modifier
+        </div>
+        <div id="alert_recover_ko_edit_p" class="alert alert-warning hide-me">
+          Quelque chose a mal tourné
+        </div>
+        <form id="editParentForm">
+          <div class="row">
+            <div class="col-xs-3">
+              <div class="form-group">
+                <label>ID</label>
+              </div>
+            </div>
+            <div class="col-xs-3">
+              <span id="id_box_edit_p" class="form-group infos_ar_p text-blue"></span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-2">
+              <div class="form-group">
+                <label>Nom</label>
+              </div>
+            </div>
+            <div class="form-group has-feedback col-xs-4">
+              <div class="input-group">
+                <input id="nom_edit_p" type="text" class="form-control" data-required-error="Entrez le nom" required>
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                <div class="help-block with-errors"></div>
+              </div>
+            </div>
+            <div class="col-xs-2">
+              <div class="form-group">
+                <label>Description</label>
+              </div>
+            </div>
+            <div class="form-group has-feedback col-xs-4">
+              <div class="input-group">
+                <textarea class="form-control" id="description_edit_p" rows="2"></textarea>
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                <div class="help-block with-errors"></div>
+              </div>
+            </div>
+          </div> 
+          <div class="row">
+            <div class="col-xs-3">
+              <div class="form-group">
+                <label>Eligibilité :: Entre</label>
+              </div>
+            </div>
+            <div class="form-group has-feedback col-xs-3">
+              <div class="input-group">
+                <input id="debut_edit" type="NUMBER" class="form-control" data-error="Entrez le debut" required>
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                <div class="help-block with-errors"></div>
+              </div>
+            </div>
+            <div class="form-group has-feedback col-xs-3">
+              <div class="input-group">
+                <input id="fin_edit" type="NUMBER" data-greater="#debut_edit" class="form-control" data-error="Entrez la fin" required>
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                <div class="help-block with-errors"></div>
+              </div>
+            </div>
+            <div class="col-xs-3">
+              <div class="form-group">
+                <label>Par jours</label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <button type="submit" class="btn btn-warning btn-lg" style="width: 100%;margin-bottom: 10px;"><span class="glyphicon glyphicon-ok-sign"></span>Modifier</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- /.modal-content --> 
+  </div>
+  <!-- /.modal-dialog --> 
+</div>
+
+
+<div class="modal fade" id="view_fils" tabindex="-1" role="dialog" aria-labelledby="view_fils" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+        <h4 class="modal-title custom_align" id="Heading">Les details du produit</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-xs-3">
+            <div class="form-group">
+              <label>ID</label>
+            </div>
+          </div>
+          <div class="col-xs-3">
+            <span id="id_article_f" class="form-group infos_ar_f text-blue"></span>
+          </div>
+          <div class="col-xs-3">
+            <div class="form-group">
+              <label>Réf Produit</label>
+            </div>
+          </div>
+          <div class="col-xs-3">
+            <span id="ref_article_p" class="form-group infos_ar_f text-blue"></span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-3">
+            <div class="form-group">
+              <label>Type produit</label>
+            </div>
+          </div>
+          <div class="col-xs-3">
+            <span id="type_article_f" class="form-group infos_ar_f text-blue"></span>
+          </div>
+          <div class="col-xs-3">
+            <div class="form-group">
+              <label>Description</label>
+            </div>
+          </div>
+          <div class="col-xs-3">
+            <span id="description_ar_p" class="form-group infos_ar_f text-blue"></span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-3">
+            <div class="form-group">
+              <label>Shop</label>
+            </div>
+          </div>
+          <div class="col-xs-3">
+            <span id="shop" class="form-group infos_ar_f text-blue"></span>
+          </div>
+          <div class="col-xs-3">
+            <div class="form-group">
+              <label>Status Shop</label>
+            </div>
+          </div>
+          <div class="col-xs-3">
+            <span id="status_shop" class="form-group infos_ar_f text-blue"></span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer ">
+        <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>Fermer</button>
+      </div>
+    </div>
+    <!-- /.modal-content --> 
+  </div>
+  <!-- /.modal-dialog --> 
+</div>
+
+<div class="modal fade" id="delete_fils" tabindex="-1" role="dialog" aria-labelledby="delete_fils" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+        <h4 class="modal-title custom_align" id="Heading">Supprimer le produit</h4>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span> Êtes-vous sûr de vouloir supprimer ce produit ?</div>
+      </div>
+      <div class="modal-footer ">
+        <button id="conf_supp_f" type="button" data-id="0" class="btn btn-success" ><span class="glyphicon glyphicon-ok-sign"></span>Oui</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>Non</button>
+      </div>
+    </div>
+    <!-- /.modal-content --> 
+  </div>
+  <!-- /.modal-dialog --> 
+</div>
+
+
+
+<div class="modal fade" id="add_fils" tabindex="-1" role="dialog" aria-labelledby="add_fils" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+        <h4 class="modal-title custom_align" id="Heading">Ajouter un article fils</h4>
+      </div>
+      <div class="modal-body">
+        <div id="alert_recover_ok_add_f" class="alert alert-success hide-me">
+          Article Ajouté
+        </div>
+        <div id="alert_recover_ko_add_f" class="alert alert-warning hide-me">
+          Quelque chose a mal tourné
+        </div>
+        <form id="addFilsForm">
+          <div class="row">
+            <div class="col-xs-2">
+              <div class="form-group">
+                <label>Réf produit</label>
+              </div>
+            </div>
+            <div class="form-group has-feedback col-xs-4">
+              <div class="input-group">
+                <input id="ref_add_f" type="text" class="form-control" data-required-error="Entrez la référence" required>
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                <div class="help-block with-errors"></div>
+              </div>
+            </div>
+            <div class="col-xs-2">
+              <div class="form-group">
+                <label>Article père</label>
+              </div>
+            </div>
+            <div class="form-group col-xs-4">
+              <select id="article_p_add" class="form-control" data-required-error="Entrez le nom" required>
+                <option value="0">Choisir un produit</option>
+              </select>
+            </div>
+          </div> 
+          <div class="row">
+            <div class="col-xs-2">
+              <div class="form-group">
+                <label>Shop</label>
+              </div>
+            </div>
+            <div class="form-group col-xs-4">
+              <select id="shop_add" class="form-control" data-required-error="Entrez le nom" required>
+                <option value="0">Choisir la boutique</option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;margin-bottom: 10px;"><span class="glyphicon glyphicon-ok-sign"></span>Ajouter</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- /.modal-content --> 
+  </div>
+  <!-- /.modal-dialog --> 
+</div>
+
+
+<div class="modal fade" id="edit_fils" tabindex="-1" role="dialog" aria-labelledby="edit_fils" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+        <h4 class="modal-title custom_align" id="Heading">Modifier un article fils</h4>
+      </div>
+      <div class="modal-body">
+        <div id="alert_recover_ok_edit_f" class="alert alert-success hide-me">
+          Article Modifié
+        </div>
+        <div id="alert_recover_ko_edit_f" class="alert alert-warning hide-me">
+          Quelque chose a mal tourné
+        </div>
+        <form id="editFilsForm">
+          <div class="row">
+            <div class="col-xs-3">
+              <div class="form-group">
+                <label>ID</label>
+              </div>
+            </div>
+            <div class="col-xs-3">
+              <span id="id_product_edit_f" class="form-group infos_ar_p text-blue"></span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-2">
+              <div class="form-group">
+                <label>Réf produit</label>
+              </div>
+            </div>
+            <div class="form-group has-feedback col-xs-4">
+              <div class="input-group">
+                <input id="ref_edit_f" type="text" class="form-control" data-required-error="Entrez le nom" required>
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                <div class="help-block with-errors"></div>
+              </div>
+            </div>
+            <div class="col-xs-2">
+              <div class="form-group">
+                <label>Article père</label>
+              </div>
+            </div>
+            <div class="form-group col-xs-4">
+              <select id="article_p_edit" class="form-control" data-required-error="Entrez le nom" required>
+                <option value="0">Choisir un produit</option>
+              </select>
+            </div>
+          </div> 
+          <div class="row">
+            <div class="col-xs-2">
+              <div class="form-group">
+                <label>Shop</label>
+              </div>
+            </div>
+            <div class="form-group col-xs-4">
+              <select id="shop_edit" class="form-control" data-required-error="Entrez le nom" required>
+                <option value="0">Choisir la boutique</option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <button type="submit" class="btn btn-warning btn-lg" style="width: 100%;margin-bottom: 10px;"><span class="glyphicon glyphicon-ok-sign"></span>Modifier</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- /.modal-content --> 
+  </div>
+  <!-- /.modal-dialog --> 
+</div>
 
 <!-- Add content to the popup -->
 <div id="loading-image" class="row">
