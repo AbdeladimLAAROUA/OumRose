@@ -1,3 +1,6 @@
+<?php 
+session_start();
+ ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -45,6 +48,7 @@
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/bootstrap-responsive.css" rel="stylesheet">
 	<link href="css/style.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="css/header.css">
 	<!-- end: CSS -->
 
 	 <script src="js/movieModernizr.js"></script>
@@ -428,6 +432,7 @@
 <script defer="defer" src="js/custom.js"></script>
 <script src="js/moviePlugins.js"></script>
 <script src="js/movieMain.js"></script>
+<script type="text/javascript" src="js/header.js"></script>
 <script type="text/javascript">
 	var fixmeTop = $('.fixme').offset().top;
 	$(window).scroll(function() {

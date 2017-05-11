@@ -1,17 +1,17 @@
 <?php
 
 /*Local*/
-/*$servername = "localhost";
+$servername = "localhost";
 $username = "root";
-$password = "";*/
+$password = "";
 
 /*Distant*/
-$servername = "essalhi-impr.000webhostapp.com";
+/*$servername = "essalhi-impr.000webhostapp.com";
 $username = "id709237_oumdev";
-$password = "oumdev";
+$password = "oumdev";*/
 
 try {
-    $conn = new PDO("mysql:host=$servername;dbname=id709237_oumdev_leads", $username, $password);
+    $conn = new PDO("mysql:host=$servername;dbname=oumdev_leads", $username, $password);
     // set the PDO error mode to exception
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
    
@@ -47,7 +47,7 @@ function register($conn,$firstname,$email,$password)
 function login($conn,$email,$password)
     {
        try
-       {
+       {  
           $stmt = $conn->prepare("SELECT * FROM customer WHERE email=:email and password =:password LIMIT 1");
           $stmt->execute(array(':email'=>$email, ':password'=>$password));
           $userRow=$stmt->fetch(PDO::FETCH_ASSOC);

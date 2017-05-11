@@ -24,10 +24,10 @@
 }
 
 body {
-	font-family: 'Droid Sans';
+	/*font-family: 'Droid Sans';*/
 	font-size: 12px;
 	color: #666;
-	margin-top: 10px;
+	margin-top: 0px;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -1550,14 +1550,14 @@ body > div.section1 > section > h2{
 }
 .title1{
 	position:absolute;
-	left: 19%;;
+	left: 14%;;
 	top:25%;
 	font-weight: 800;
 	z-index:0;
 	line-height:60px;
 	font-size: 3rem;
 	color: #eceeef;
-	font-family: "Raleway", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
+	/*font-family: "Raleway", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;*/
 }
 .title3{
 	position:absolute;
@@ -1572,7 +1572,7 @@ body > div.section1 > section > h2{
 }
 .title2{
 	position: absolute;
-    font-family: "Raleway", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
+   /* font-family: "Raleway", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;*/
     top: 44%;
     left: 8%;
     color: #eceeef;
@@ -1858,7 +1858,7 @@ body > div.section1 > section > h2{
 	
 	header {
 		height: 64px;
-    	padding-bottom: 80px;
+    	padding-bottom: 73px; /*80*/
 	}
 	
 	#wrapper {

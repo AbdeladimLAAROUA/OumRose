@@ -50,6 +50,7 @@
   <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/bootstrap-responsive.css" rel="stylesheet">
   <link href="css/style.css" rel="stylesheet">
+  <link href="css/header.css" rel="stylesheet">
   <!-- end: CSS -->
 
 </head>

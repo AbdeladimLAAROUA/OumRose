@@ -13,11 +13,11 @@ body {
 nav a {
 	position: relative;
 	display: inline-block;
-	margin: 15px 25px;
+	margin: 15px 0px;
 	outline: none;
 	color: #fff;
 	text-decoration: none;
-	text-transform: uppercase;
+	/*text-transform: uppercase;*/
 	letter-spacing: 1px;
 	font-weight: 400;
 	text-shadow: 0 0 1px rgba(255,255,255,0.3);
