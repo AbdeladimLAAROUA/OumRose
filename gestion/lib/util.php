@@ -35,6 +35,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			echo getBoxById($_REQUEST['id']);
 		}else if($_REQUEST['methode'] == 'getProductById'){
 			echo getProductById($_REQUEST['id']);
+		}else if($_REQUEST['methode'] == 'addProduct'){
+			echo addProduct($_REQUEST['product']);
+		}else if($_REQUEST['methode'] == 'addBox'){
+			echo addBox($_REQUEST['box']);
+		}else if($_REQUEST['methode'] == 'deleteBox'){
+			echo deleteBox($_REQUEST['id']);
+		}else if($_REQUEST['methode'] == 'deleteProduct'){
+			echo deleteProduct($_REQUEST['id']);
+		}else if($_REQUEST['methode'] == 'updateBox'){
+			echo updateBox($_REQUEST['box']);
+		}else if($_REQUEST['methode'] == 'updateProduct'){
+			echo updateProduct($_REQUEST['product']);
 		}else{
 			echo json_encode(array('result'=>'method_not_exist'));
 		}
@@ -49,6 +61,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 // echo getAllShop();
 // echo getBoxById(1);
 // echo getProductById(1);
+// $json_test = '{"refProduct": "fd", "id_box": "2", "id_shop": "1"}';
+// $res = json_decode($json_test);
+// echo addProduct($res);
 
 function getAllCities(){
 	$array = array();
@@ -299,7 +314,6 @@ function deleteFullClient($id){
 	return json_encode($array);	
 }
 
-
 function updateClient($client){
 	$array = array();
 
@@ -402,6 +416,7 @@ function getAllShop(){
 	$connexion = null;
 	return json_encode($array);	
 }
+
 function getBoxById($id){
 	$array = array();
 	try {
@@ -423,6 +438,7 @@ function getBoxById($id){
 	$connexion = null;
 	return json_encode($array);
 }
+
 function getProductById($id){
 	$array = array();
 	try {
@@ -445,16 +461,194 @@ function getProductById($id){
 	return json_encode($array);
 }
 
+function addProduct($product){
+	$array = array();
+	try {
+		$connexion = db_connect();
+		$sql = "INSERT INTO `product`(`id_box`, `id_shop`, `RefBox`) VALUES (:id_box, :id_shop, :RefBox)";
+		
+		//Prepare our statement.
+		$statement = $connexion->prepare($sql);
+		
+		//Bind our values to our parameters (we called them :make and :model).
+		$statement->bindValue(':id_box', $product['id_box']);
+		$statement->bindValue(':id_shop', $product['id_shop']);
+		$statement->bindValue(':RefBox', $product['refProduct']);
+		 
+		//Execute the statement and insert our values.
+		$inserted = $statement->execute();
+		 
+		//Because PDOStatement::execute returns a TRUE or FALSE value,
+		//we can easily check to see if our insert was successful.
+		if($inserted){
+			$indertedId = $connexion->lastInsertId();
+			$array['inserted_id'] = $indertedId;
+			$array['result'] = 1;
+		}
+
+	} catch (Exception $e) {
+		$array['result'] = 0;
+	}
+	
+	$connexion = null;
+	return json_encode($array);
+}
+
+function addBox($box){
+	$array = array();
+	try {
+		$connexion = db_connect();
+		$sql = "INSERT INTO `box` (`name`, `debut`, `fin`, `description`) VALUES (:name, :debut, :fin, :description)";
+		
+		//Prepare our statement.
+		$statement = $connexion->prepare($sql);
+		
+		//Bind our values to our parameters (we called them :make and :model).
+		$statement->bindValue(':name', $box['name']);
+		$statement->bindValue(':debut', $box['debut']);
+		$statement->bindValue(':fin', $box['fin']);
+		$statement->bindValue(':description', $box['description']);
+		 
+		//Execute the statement and insert our values.
+		$inserted = $statement->execute();
+		 
+		//Because PDOStatement::execute returns a TRUE or FALSE value,
+		//we can easily check to see if our insert was successful.
+		if($inserted){
+			$indertedId = $connexion->lastInsertId();
+			$array['inserted_id'] = $indertedId;
+			$array['result'] = 1;
+		}
+
+	} catch (Exception $e) {
+		$array['result'] = 0;
+	}
+	
+	$connexion = null;
+	return json_encode($array);
+}
+
+function updateBox($box){
+	$array = array();
+
+	try {
+		$connexion = db_connect();
+
+		$stmt = $connexion->prepare("UPDATE `box` SET `name`= :name,`debut`= :debut,`fin`= :fin,`description`= :description WHERE id = :id ");
+		
+		$stmt->bindValue(':id', $box['id']);
+		$stmt->bindValue(':name', $box['name']);
+		$stmt->bindValue(':debut', $box['debut']);
+		$stmt->bindValue(':fin', $box['fin']);
+		$stmt->bindValue(':description', $box['description']);
+
+		$stmt->execute();
+
+		if($stmt->rowCount()) {
+			$array['result'] = 'success';
+		} else {
+			$array['result'] = 'failed';
+		}
+	} catch (Exception $e) {
+		$array['result'] = 'ko';
+	}
+	
+	$connexion = null;
+
+	return json_encode($array);	
+}
+
+function updateProduct($product){
+	$array = array();
+
+	try {
+		$connexion = db_connect();
+
+		$stmt = $connexion->prepare("UPDATE `product` SET `id_box`= :id_box,`id_shop`= :id_shop,`RefBox`= :RefBox WHERE id = :id ");
+		
+		$stmt->bindValue(':id', $product['id']);
+		$stmt->bindValue(':id_box', $product['id_box']);
+		$stmt->bindValue(':id_shop', $product['id_shop']);
+		$stmt->bindValue(':RefBox', $product['RefBox']);
+
+		$stmt->execute();
+
+		if($stmt->rowCount()) {
+			$array['result'] = 'success';
+		} else {
+			$array['result'] = 'failed';
+		}
+	} catch (Exception $e) {
+		$array['result'] = 'ko';
+	}
+	
+	$connexion = null;
+
+	return json_encode($array);	
+}
+
+function deleteBox($id){
+	$array = array();
+	$array['result'] = 0;
+
+	try {
+		$connexion = db_connect();
+
+		$stmt = $connexion->prepare("DELETE FROM `box` WHERE id = :id");
+		$stmt->bindParam(':id', $id);
+		$stmt->execute();
+		$count = $stmt->rowCount();
+
+		if($count == 1){
+			$array['result'] = 1;
+		}
+
+	} catch (Exception $e) {
+		$array['result'] = 0;
+	}
+	
+	$connexion = null;
+	return json_encode($array);	
+}
+
+function deleteProduct($id){
+	$array = array();
+	$array['result'] = 0;
+
+	try {
+		$connexion = db_connect();
+
+		$stmt = $connexion->prepare("DELETE FROM `product` WHERE id = :id");
+		$stmt->bindParam(':id', $id);
+		$stmt->execute();
+		$count = $stmt->rowCount();
+
+		if($count == 1){
+			$array['result'] = 1;
+		}
+
+	} catch (Exception $e) {
+		$array['result'] = 0;
+	}
+	
+	$connexion = null;
+	return json_encode($array);	
+}
+
 function db_connect(){
 
 	
-	/*Local*/
+	/*Local Kindy*/
 	$hote   	='localhost';
-	$passDb 	='';
-	$hote   	='localhost';
-	$passDb 	='';
+	$passDb 	='S3cr3T%44';
 	$bd 		='oumdev_leads';
-	$user		='root';
+	$user		='root';	
+
+	/*Local*/
+	// $hote   	='localhost';
+	// $passDb 	='';
+	// $bd 		='oumdev_leads';
+	// $user		='root';
 
 	/*Distant*/
 	/*$hote   	='localhost';

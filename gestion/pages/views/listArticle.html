@@ -33,7 +33,7 @@
         <!-- /.box-header -->
         <div class="box-body">
           <div style="margin-bottom:20px;">
-            <button type="submit" class="btn btn-primary" data-type="add_parent" data-toggle="modal" data-target="#add_parent">Ajouter un Article</button>
+            <button type="submit" id="add_parent_btn" class="btn btn-primary" data-type="add_parent" data-toggle="modal" data-target="#add_parent">Ajouter un Article</button>
           </div>
           <table id="table_acrticles_p" class="table table-bordered table-striped">
             <thead>
@@ -77,7 +77,7 @@
         <!-- /.box-header -->
         <div class="box-body">
           <div style="margin-bottom:20px;">
-            <button type="submit" class="btn btn-primary" data-type="add_parent" data-toggle="modal" data-target="#add_fils">Ajouter un Article Fils</button>
+            <button type="submit" id="add_fils_btn" class="btn btn-primary" data-type="add_fils" data-toggle="modal" data-target="#add_fils">Ajouter un Article Fils</button>
           </div>
           <table id="table_acrticles_f" class="table table-bordered table-striped">
             <thead>
@@ -126,7 +126,7 @@
             </div>
           </div>
           <div class="col-xs-3">
-            <span id="id_article_p" class="form-group infos_client text-blue"></span>
+            <span id="id_article_p" class="form-group infos_ar_p text-blue"></span>
           </div>
           <div class="col-xs-2">
             <div class="form-group">
@@ -134,7 +134,7 @@
             </div>
           </div>
           <div class="col-xs-4">
-            <span id="nom_article_p" class="form-group infos_client text-blue"></span>
+            <span id="nom_article_p" class="form-group infos_ar_p text-blue"></span>
           </div>
         </div>
         <div class="row">
@@ -144,7 +144,7 @@
             </div>
           </div>
           <div class="col-xs-3">
-            <span id="debut_article_p" class="form-group infos_client text-blue"></span>
+            <span id="debut_article_p" class="form-group infos_ar_p text-blue"></span> j
           </div>
           <div class="col-xs-3">
             <div class="form-group">
@@ -152,7 +152,7 @@
             </div>
           </div>
           <div class="col-xs-3">
-            <span id="fin_article_p" class="form-group infos_client text-blue"></span>
+            <span id="fin_article_p" class="form-group infos_ar_p text-blue"></span> j
           </div>
         </div> 
         <div class="row">
@@ -162,7 +162,7 @@
             </div>
           </div>
           <div class="col-xs-3">
-            <span id="description_article_p" class="form-group infos_client text-blue"></span>
+            <span id="description_article_p" class="form-group infos_ar_p text-blue"></span>
           </div>
         </div>
       </div>
@@ -188,7 +188,7 @@
         <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span> Êtes-vous sûr de vouloir supprimer cet article ?</div>
       </div>
       <div class="modal-footer ">
-        <button id="conf_supp" type="button" data-id="0" class="btn btn-success" ><span class="glyphicon glyphicon-ok-sign"></span>Oui</button>
+        <button id="conf_supp_p" type="button" data-id="0" class="btn btn-success" ><span class="glyphicon glyphicon-ok-sign"></span>Oui</button>
         <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>Non</button>
       </div>
     </div>
@@ -205,10 +205,10 @@
         <h4 class="modal-title custom_align" id="Heading">Ajouter un article</h4>
       </div>
       <div class="modal-body">
-        <div id="alert_recover_ok" class="alert alert-success hide-me">
+        <div id="alert_recover_ok_add_p" class="alert alert-success hide-me">
           Article Ajouté
         </div>
-        <div id="alert_recover_ko" class="alert alert-warning hide-me">
+        <div id="alert_recover_ko_add_p" class="alert alert-warning hide-me">
           Quelque chose a mal tourné
         </div>
         <form id="addParentForm">
@@ -232,7 +232,7 @@
             </div>
             <div class="form-group has-feedback col-xs-4">
               <div class="input-group">
-                <textarea class="form-control" id="adresse_add_p" rows="2"></textarea>
+                <textarea class="form-control" id="description_add_p" rows="2"></textarea>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>
               </div>
@@ -253,7 +253,7 @@
             </div>
             <div class="form-group has-feedback col-xs-3">
               <div class="input-group">
-                <input id="fin_add" type="NUMBER" class="form-control infos_client" data-error="Entrez la fin" required>
+                <input id="fin_add" type="NUMBER" data-greater="#debut_add" class="form-control infos_client" data-error="Entrez la fin" required>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>
               </div>
@@ -286,13 +286,23 @@
         <h4 class="modal-title custom_align" id="Heading">Modifier un article</h4>
       </div>
       <div class="modal-body">
-        <div id="alert_recover_ok" class="alert alert-success hide-me">
+        <div id="alert_recover_ok_edit_p" class="alert alert-success hide-me">
           Article bien Modifier
         </div>
-        <div id="alert_recover_ko" class="alert alert-warning hide-me">
+        <div id="alert_recover_ko_edit_p" class="alert alert-warning hide-me">
           Quelque chose a mal tourné
         </div>
         <form id="editParentForm">
+          <div class="row">
+            <div class="col-xs-3">
+              <div class="form-group">
+                <label>ID</label>
+              </div>
+            </div>
+            <div class="col-xs-3">
+              <span id="id_box_edit_p" class="form-group infos_ar_p text-blue"></span>
+            </div>
+          </div>
           <div class="row">
             <div class="col-xs-2">
               <div class="form-group">
@@ -313,7 +323,7 @@
             </div>
             <div class="form-group has-feedback col-xs-4">
               <div class="input-group">
-                <textarea class="form-control" id="adresse_edit_p" rows="2"></textarea>
+                <textarea class="form-control" id="description_edit_p" rows="2"></textarea>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>
               </div>
@@ -334,7 +344,7 @@
             </div>
             <div class="form-group has-feedback col-xs-3">
               <div class="input-group">
-                <input id="fin_edit" type="NUMBER" class="form-control" data-error="Entrez la fin" required>
+                <input id="fin_edit" type="NUMBER" data-greater="#debut_edit" class="form-control" data-error="Entrez la fin" required>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>
               </div>
@@ -374,33 +384,51 @@
             </div>
           </div>
           <div class="col-xs-3">
-            <span id="id_article_f" class="form-group infos_client text-blue"></span>
+            <span id="id_article_f" class="form-group infos_ar_f text-blue"></span>
           </div>
-          <div class="col-xs-3">
-            <div class="form-group">
-              <label>Type produit</label>
-            </div>
-          </div>
-          <div class="col-xs-3">
-            <span id="type_article_f" class="form-group infos_client text-blue"></span>
-          </div>
-        </div>
-        <div class="row">
           <div class="col-xs-3">
             <div class="form-group">
               <label>Réf Produit</label>
             </div>
           </div>
           <div class="col-xs-3">
-            <span id="ref_article_p" class="form-group infos_client text-blue"></span>
+            <span id="ref_article_p" class="form-group infos_ar_f text-blue"></span>
           </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-3">
+            <div class="form-group">
+              <label>Type produit</label>
+            </div>
+          </div>
+          <div class="col-xs-3">
+            <span id="type_article_f" class="form-group infos_ar_f text-blue"></span>
+          </div>
+          <div class="col-xs-3">
+            <div class="form-group">
+              <label>Description</label>
+            </div>
+          </div>
+          <div class="col-xs-3">
+            <span id="description_ar_p" class="form-group infos_ar_f text-blue"></span>
+          </div>
+        </div>
+        <div class="row">
           <div class="col-xs-3">
             <div class="form-group">
               <label>Shop</label>
             </div>
           </div>
           <div class="col-xs-3">
-            <span id="shop" class="form-group infos_client text-blue"></span>
+            <span id="shop" class="form-group infos_ar_f text-blue"></span>
+          </div>
+          <div class="col-xs-3">
+            <div class="form-group">
+              <label>Status Shop</label>
+            </div>
+          </div>
+          <div class="col-xs-3">
+            <span id="status_shop" class="form-group infos_ar_f text-blue"></span>
           </div>
         </div>
       </div>
@@ -424,7 +452,7 @@
         <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span> Êtes-vous sûr de vouloir supprimer ce produit ?</div>
       </div>
       <div class="modal-footer ">
-        <button id="conf_supp" type="button" data-id="0" class="btn btn-success" ><span class="glyphicon glyphicon-ok-sign"></span>Oui</button>
+        <button id="conf_supp_f" type="button" data-id="0" class="btn btn-success" ><span class="glyphicon glyphicon-ok-sign"></span>Oui</button>
         <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>Non</button>
       </div>
     </div>
@@ -443,10 +471,10 @@
         <h4 class="modal-title custom_align" id="Heading">Ajouter un article fils</h4>
       </div>
       <div class="modal-body">
-        <div id="alert_recover_ok" class="alert alert-success hide-me">
+        <div id="alert_recover_ok_add_f" class="alert alert-success hide-me">
           Article Ajouté
         </div>
-        <div id="alert_recover_ko" class="alert alert-warning hide-me">
+        <div id="alert_recover_ko_add_f" class="alert alert-warning hide-me">
           Quelque chose a mal tourné
         </div>
         <form id="addFilsForm">
@@ -508,13 +536,23 @@
         <h4 class="modal-title custom_align" id="Heading">Modifier un article fils</h4>
       </div>
       <div class="modal-body">
-        <div id="alert_recover_ok" class="alert alert-success hide-me">
+        <div id="alert_recover_ok_edit_f" class="alert alert-success hide-me">
           Article Modifié
         </div>
-        <div id="alert_recover_ko" class="alert alert-warning hide-me">
+        <div id="alert_recover_ko_edit_f" class="alert alert-warning hide-me">
           Quelque chose a mal tourné
         </div>
         <form id="editFilsForm">
+          <div class="row">
+            <div class="col-xs-3">
+              <div class="form-group">
+                <label>ID</label>
+              </div>
+            </div>
+            <div class="col-xs-3">
+              <span id="id_product_edit_f" class="form-group infos_ar_p text-blue"></span>
+            </div>
+          </div>
           <div class="row">
             <div class="col-xs-2">
               <div class="form-group">
