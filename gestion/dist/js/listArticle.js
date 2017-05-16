@@ -27,7 +27,7 @@ $(function () {
                       '<td>'+val.description+'</td>'+
                       '<td>'+val.debut+'</td>'+
                       '<td>'+val.fin+'</td>'+
-                      '<td width="25%" align="center">'+
+                      '<td width="25%">'+
                       '<button class="btn btn-primary btn-xs action" data-type="add_fils" data-id="'+val.id+'" data-toggle="modal" data-target="#add_fils" ><span class="glyphicon glyphicon-plus"></span></button>'+
                       '<button class="btn btn-default btn-xs action" data-type="view" data-id="'+val.id+'" data-toggle="modal" data-target="#view" ><span class="glyphicon glyphicon-eye-open"></span></button>'+
                       '<button class="btn btn-primary btn-xs action" data-type="edit" data-id="'+val.id+'" data-toggle="modal" data-target="#edit_parent" ><span class="glyphicon glyphicon-pencil"></span></button>'+
@@ -67,7 +67,7 @@ $(function () {
                       '<td>'+val.name+'</td>'+
                       '<td>'+val.Name+'</td>'+
                       '<td>'+val.RefBox+'</td>'+
-                      '<td width="25%" align="center">'+
+                      '<td width="25%">'+
                       '<button class="btn btn-default btn-xs action" data-type="view" data-id="'+val.id_product+'" data-toggle="modal" data-target="#view_fils" ><span class="glyphicon glyphicon-eye-open"></span></button>'+
                       '<button class="btn btn-primary btn-xs action" data-type="edit" data-id="'+val.id_product+'" data-toggle="modal" data-target="#edit_fils" ><span class="glyphicon glyphicon-pencil"></span></button>'+
                       '<button class="btn btn-danger btn-xs action" data-type="delete" data-id="'+val.id_product+'" data-toggle="modal" data-target="#delete_fils" ><span class="glyphicon glyphicon-trash"></span></button>'+
