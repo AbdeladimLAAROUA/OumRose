@@ -639,11 +639,19 @@ function db_connect(){
 
 	
 	/*Local Kindy*/
+<<<<<<< HEAD
 	// $hote   	='localhost';
 	// $passDb 	='S3cr3T%44';
 	// $bd 		='oumdev_leads';
 	// $user		='root';	
 
+=======
+	/*$hote   	='localhost';
+	$passDb 	='S3cr3T%44';
+	$bd 		='oumdev_leads';
+	$user		='root';	
+*/
+>>>>>>> 60396ddcfcee912a53f01bf07b2b525befcbe0a3
 	/*Local*/
 	$hote   	='localhost';
 	$passDb 	='';

@@ -47,7 +47,7 @@
 						<li class="activee" >
 							
 							<a href="index.php">
-								<svg class="logo" width="107px" height="46px" viewBox="0 0 107 23" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+								<!-- <svg class="logo" width="107px" height="46px" viewBox="0 0 107 23" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 								   
 								    <title>oumbox white</title>
 								    <desc>Created with Sketch.</desc>
@@ -67,7 +67,8 @@
 								        </g>
 								    </g>
 								Oumbox
-								</svg>
+								</svg> -->
+								<img class="logo" src="img/logo.png" />
 							</a>
 						</li>
 						<li class="activee">
@@ -83,30 +84,8 @@
 
 							</a>
 						</li>
-						<li>
-
-							<?php 
-									if(isset($_SESSION['client_id']))
-									{
-										echo '<a href="user/logout.php">Déconnexion</a>';	
-									}else{
-										echo '<a href="login.php">Connexion</a>';
-									}
-							?>		 
-						</li>
-						<li>
-							<a href="register.php">Créer un compte</a>
-						</li>
-			  
-	   
-
-	          <li style="">
-	           <a href="#">Historique</a>
-	          </li>
-
-	          <li style="">
-	           <a href="#">Mon compte</a>
-	          </li>
+						
+						
 
 	          <li class="drop-down" style="">
 					<a href="#">Programme</a>
@@ -165,7 +144,29 @@
 				</div> -->
 		 
 				</li>
+				<li class="activee">
+					<a href="#">Nos partenaires</a>
+				</li>
+				<li class="activee">
+					<a href="#">Articles</a>
+				</li>
+				<li class="activee">
+					<a href="#">Contactez-nous</a>
+				</li>
+				<li class="alignRight">
 
+					<?php 
+							if(isset($_SESSION['client_id']))
+							{
+								echo '<a href="user/logout.php">Déconnexion</a>';	
+							}else{
+								echo '<a href="login.php">S\'identifier</a>';
+							}
+					?>		 
+				</li>
+				<li class="alignRight">
+					<a href="register.php">S'inscrire</a>
+				</li>
 
 					</ul>
 				</nav>

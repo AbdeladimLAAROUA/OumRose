@@ -36,9 +36,9 @@ session_start();
 	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Boogaloo">
 	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Economica:700,400italic">
 
-	<link rel="stylesheet" href="css/movieBase.css">
-     <link rel="stylesheet" href="css/movieVendor.css"> <!---->
-    <link rel="stylesheet" href="css/movieMain.css">
+	<!-- <link rel="stylesheet" href="css/movieBase.css">
+     <link rel="stylesheet" href="css/movieVendor.css"> 
+    <link rel="stylesheet" href="css/movieMain.css"> -->
 
 	<link rel="stylesheet" type="text/css" href="css/demo.css" />
     <link rel="stylesheet" type="text/css" href="css/set1.css" />
@@ -51,7 +51,7 @@ session_start();
 	<link rel="stylesheet" type="text/css" href="css/header.css">
 	<!-- end: CSS -->
 
-	 <script src="js/movieModernizr.js"></script>
+	<!-- <script src="js/movieModernizr.js"></script> -->
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -117,9 +117,11 @@ session_start();
             <a class="goTopLink" href="#">-Go-to-top-</a>
            </div>
             
-        <?php include('movie.php'); ?>
+        <?php 
+        /*include('movie.php'); */
+        ?>
 		<!--start: Container -->
-    	<div class="container">
+    	<div class="">
 	       
       		<!-- start: Hero Unit - Main hero unit for a primary marketing message or call to action -->
       		
@@ -127,7 +129,7 @@ session_start();
 				
 			      <h2><span>Nos partenaires</span></h2>
 			   
-        		<div class="span4">
+        		<div class="col-md-4">
           			<div class="view view-first">
                     <img src="img/magasin.jpg" />
                     <div class="mask">
@@ -138,7 +140,7 @@ session_start();
                 </div>  
         		</div>
 
-        		<div class="span4">
+        		<div class="col-md-4">
           			 <div class="view view-first">
                     <img src="img/docteur.jpg" />
                     <div class="mask">
@@ -149,7 +151,7 @@ session_start();
                 </div>  
         		</div>
 
-        		<div class="span4">
+        		<div class="col-md-4">
           			<div class="view view-first">
                     <img src="img/hopital.jpg" />
                     <div class="mask">
@@ -171,70 +173,75 @@ session_start();
 			      <h2><span>Derniers articles</span></h2>
 			   
         		
-				<div class="grid span4">
+				<div class="grid col-md-4">
 					<figure class="effect-sarah">
-						<img src="img/1.jpg" alt="img1"/>
-						<figcaption>
-							<h2>Titre de l'article</h2>
+						<img src="img/Toxoplasmose listeriose.jpg" alt="img1"/>
+						<!-- <figcaption>
 							<p>Mettre une description ici </p>
 							<a href="#">View more</a>
-						</figcaption>			
+						</figcaption>	 -->		
 					</figure>
+					<h4>Comment prévenir la listériose et la toxoplasmose?</h4 >
 				</div>
 
-        		<div class="grid span4">
+        		<div class="grid col-md-4">
 					<figure class="effect-sarah">
-						<img src="img/2.jpg" alt="img1"/>
-						<figcaption>
-							<h2>Titre de l'article</h2>
+						<img src="img/valise-maternite1x.jpeg" alt="img1"/>
+						<!-- <figcaption>
+							<h2>La valise de maternité</h2>
 							<p>Mettre une description ici </p>
 							<a href="#">View more</a>
-						</figcaption>		
+						</figcaption>		 -->
 					</figure>
+					<h4>La valise de maternité</h4 >
 				</div>
 
-        		<div class="grid span4">
+        		<div class="grid col-md-4">
 					<figure class="effect-sarah">
-						<img src="img/3.jpg" alt="img1"/>
-						<figcaption>
-							<h2>Titre de l'article</h2>
+						<img src="img/chambre-bebe1x.jpeg" alt="img1"/>
+						<!-- <figcaption>
+							<h2>Checklist chambre de bébé</h2>
 							<p>Mettre une description ici </p>
 							<a href="#">View more</a>
-						</figcaption>			
+						</figcaption>		 -->	
 					</figure>
+					<h4>Checklist chambre de bébé</h4>
+
 				</div>
 
-				<div class="grid span4">
+				<div class="grid col-md-4">
 					<figure class="effect-sarah">
-						<img src="img/4.gif" alt="img1"/>
-						<figcaption>
-							<h2>Titre de l'article</h2>
+						<img src="img/vie sexuelle après bébé.jpg" alt="img1"/>
+						<!-- <figcaption>
+							<h2>Sexualité après l'accouchement</h2>
 							<p>Mettre une description ici </p>
 							<a href="#">View more</a>
-						</figcaption>			
+						</figcaption>	 -->		
 					</figure>
+					<h4>Sexualité après l'accouchement</h4>
 				</div>
 
-        		<div class="grid span4">
+        		<div class="grid col-md-4">
 					<figure class="effect-sarah">
-						<img src="img/5.jpg" alt="img1"/>
-						<figcaption>
-							<h2>Titre de l'article</h2>
+						<img src="img/prise-poids1x.jpeg" alt="img1"/>
+						<!-- <figcaption>
+							
 							<p>Mettre une description ici </p>
 							<a href="#">View more</a>
-						</figcaption>		
+						</figcaption>	 -->	
 					</figure>
+					<h4>Retrouver les formes en gardant la forme</h4>
 				</div>
 
-        		<div class="grid span4">
+        		<div class="grid col-md-4">
 					<figure class="effect-sarah">
-						<img src="img/6.png" alt="img1"/>
-						<figcaption>
-							<h2>Titre de l'article</h2>
-							<p>Mettre une description ici </p>
+						<img src="img/sport-maman1x.jpeg" alt="img1"/>
+						<!-- <figcaption>
+							<p>En savoir plus </p>
 							<a href="#">View more</a>
-						</figcaption>			
+						</figcaption>		 -->	
 					</figure>
+					<h4>Tonifier son périnée</h4>
 				</div>
 
 				
@@ -270,67 +277,7 @@ session_start();
 			<hr>
 			
 			<!-- start: Row -->
-			<div class="row section2">
-				 <h2><span>Notre programme</span></h2>
-				<!-- start: Icon Boxes -->
-				<div class="icons-box-vert-container">
-
-					<!-- start: Icon Box Start -->
-					<div class="span6">
-						<div class="icons-box-vert">
-							<i class="ico-ok ico-color circle-color big"></i>
-							<div class="icons-box-vert-info">
-								<h3>Etape 1</h3>
-								<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
-							</div>
-							<div class="clear"></div>
-						</div>
-					</div>
-					<!-- end: Icon Box-->
-
-					<!-- start: Icon Box Start -->
-					<div class="span6">
-						<div class="icons-box-vert">
-							<i class="ico-cup  ico-white circle-color-full big-color"></i>
-							<div class="icons-box-vert-info">
-								<h3>Etape 3</h3>
-								<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
-							</div>
-							<div class="clear"></div>
-						</div>
-					</div>
-					<!-- end: Icon Box -->
-
-					<!-- start: Icon Box Start -->
-					<div class="span6">
-						<div class="icons-box-vert">
-							<i class="ico-ipad ico-color circle-color big"></i>
-							<div class="icons-box-vert-info">
-								<h3>Etape 2</h3>
-								<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
-							</div>
-							<div class="clear"></div>
-						</div>
-					</div>
-					<!-- end: Icon Box -->
-
-					<!-- start: Icon Box Start -->
-					<div class="span6">
-						<div class="icons-box-vert">
-							<i class="ico-thumbs-up  ico-white circle-color-full big-color"></i>
-							<div class="icons-box-vert-info">
-								<h3>Etape 4</h3>
-								<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
-							</div>
-							<div class="clear"></div>
-						</div>
-					</div>
-					<!-- end: Icon Box -->
-
-				</div>
-				<!-- end: Icon Boxes -->
-				<div class="clear"></div>
-			</div>
+			
 			<!-- end: Row -->
 			
 			<hr>
