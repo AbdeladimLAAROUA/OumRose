@@ -13,6 +13,9 @@ app.config(function($routeProvider) {
     .when("/listClient", {
         templateUrl : "pages/views/listClient.html"
     })
+    .when("/listClient2", {
+        templateUrl : "pages/views/listClient2.html"
+    })
     .when("/listBaby", {
         templateUrl : "pages/views/listBaby.html"
     })

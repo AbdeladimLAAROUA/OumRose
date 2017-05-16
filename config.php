@@ -1,17 +1,25 @@
 <?php
 
 /*Local*/
-$servername = "localhost";
+/*$servername = "localhost";
 $username = "root";
 $password = "";
+$dbname="oumdev_leads";*/
 
 /*Distant*/
 /*$servername = "essalhi-impr.000webhostapp.com";
 $username = "id709237_oumdev";
 $password = "oumdev";*/
 
+
+/*Server dev*/
+$servername = "sql.k4mshost.odns.fr";
+$username = "k4mshost_oumdev";
+$password = "!!oumb0x";
+$dbname="k4mshost_oumdev";
+
 try {
-    $conn = new PDO("mysql:host=$servername;dbname=oumdev_leads", $username, $password);
+    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     // set the PDO error mode to exception
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
    
@@ -148,7 +156,33 @@ function getAllUsers($conn){
        }
        return  $users;
 }
+function getUserByEmail($conn,$email){
+  try
+  {  
+     $stmt = $conn->prepare("SELECT * FROM customer WHERE email=:email LIMIT 1");
+     $stmt->execute(array(':email'=>$email));
+     $userRow=$stmt->fetch(PDO::FETCH_ASSOC);
 
+    return $userRow;
+  }
+  catch(PDOException $e)
+  {
+      echo $e->getMessage();
+  }
+}
+public function addRefBox($conn,$box,$email)
+{
+  if($box=="box1"){
+          $stmt = $conn->prepare("UPDATE leads SET REF_BOX1=:REF_BOX1 WHERE email=:email");
+          $stmt->execute(array(':REF_BOX1'=>"REF_BOX1",':email'=>$email));
+  }else if($box=="box2"){
+          $stmt = $conn->prepare("UPDATE leads SET REF_BOX2=:REF_BOX2 WHERE email=:email");
+          $stmt->execute(array(':REF_BOX2'=>"REF_BOX2",':email'=>$email));
+  }else id($box=="box3"){
+          $stmt = $conn->prepare("UPDATE leads SET REF_BOX3=:REF_BOX3 WHERE email=:email");
+          $stmt->execute(array(':REF_BOX3'=>"REF_BOX3",':email'=>$email));
+  }
+}
 function deleteUser($conn, $id){
   try
        {

@@ -126,7 +126,7 @@
         	    <div class="title2">Depuis la grossesse jusqu'aux 12 mois de bébés profitez des avantages du programme.</div>
         	    <section class="InscriptionButton">
 				<p>
-					<button class="btn btn-4 btn-4a">Inscrivez-vous</button>
+					<button class="btn btn-4 btn-4a inscriptionBtn">Inscrivez-vous</button>
 				</p>
 			</section>
         	    
@@ -146,14 +146,8 @@
                 </div>
             </div> -->
             <div>
-        	    <img data-u="image" src="img/4bebes.jpg" class="imgSlider" />
-        	    <div class="title3">Gratuit et sans obligation d'achat</div>
-        	    <div class="title4">Accédez sans tarder à tous vos avantages en vous inscrivant.</div>
-        	    <section class="InscriptionButton">
-				<p>
-					<button class="btn btn-4 btn-4a">Inscrivez-vous Maintenant</button>
-				</p>
-			</section>
+        	   <iframe width="100%" height="100%" src="https://www.youtube.com/embed/XGSy3_Czz8k?autoplay=0">
+</iframe>
         	    
         	</div>
             

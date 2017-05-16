@@ -440,11 +440,14 @@ $("#myForm").submit(function(e) {
             Materialize.toast("Votre demande n'a pu être envoyée avec succès. Veuillez svp vérifier les données et renouveler l'envoi.",4000);
             },
             202: function() {
+            console.log('error 202');
+            document.location.href="index.php"; 
             $("#content").hide();
             $("#incent").hide();
             $("#status").html('Bienvenue!<br>Votre inscription a été effectuée avec succès.').show();
             },
             200: function() {
+            document.location.href="index.php"; 
             $("#content").hide();
             $("#incent").hide();
             //$("#status").html('Bienvenue!<br>Votre inscription a été effectuée avec succès.').show();

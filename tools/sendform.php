@@ -90,7 +90,23 @@ if (count($_POST)>7){
         $ok = TRUE;
         $info['SendingBlue'] = 'Non inscrit';
 
-       /* if (!strstr($_POST["EMAIL"],"@nomail.com")){
+        // Logging class initialization
+
+        require_once('../Logging.php');
+
+        $log = new Logging();
+
+        // set path and name of log file (optional)
+        $log->lfile('mylog.txt');
+
+        // write message to the log file
+       
+
+        // close log file
+        $log->lclose();
+
+        $log->lwrite('SendForm Partie emails');
+        if (!strstr($_POST["EMAIL"],"@nomail.com")){
 
             // add user to sendinblue 
             require_once('Mailin.php');
@@ -103,14 +119,22 @@ if (count($_POST)>7){
             );
             $res= $mailin->create_update_user($data);
 
+           
+            $log->lwrite('SendForm avant d\'envoyer le message');
             if ($res['code']=='success'){
 
 
             $listSaved = TRUE;
             $info['SendingBlue'] = 'Inscrit';
+            $log->lwrite('SendForm message envoyé avec succès');
+            // close log file
+            $log->lclose();
             
             }
             else{
+                $log->lwrite('SendForm echec d\'envoie du message');
+                // close log file
+                $log->lclose();
                 echo '\najout utilisateur : ';
                 var_dump($res);
                 header("HTTP/1.0 503 Service Unavailable",503);
@@ -124,26 +148,26 @@ if (count($_POST)>7){
             header("HTTP/1.0 202 Accepted",202);
             exit();
         }
-*/
-       /* if ($ok){
+
+        /*if ($ok){
              
         
                 // send notification mail internally
             
         $res = notification_email(array_merge($_POST,$info));
               //  echo $res;
-        }*/
-        // if (!$listSaved){
-        //         header("HTTP/1.0 202 Accepted",202);
-        //         exit();
-        // }
-        //}
-    //     else{
-    //         echo '\najout utilisateur : ';
-    //         var_dump($res);
-    //         header("HTTP/1.0 503 Service Unavailable",503);
-    //         exit();
-    // }
+        }
+        if (!$listSaved){
+                header("HTTP/1.0 202 Accepted",202);
+                exit();
+        }
+        }
+        else{
+            echo '\najout utilisateur : ';
+            var_dump($res);
+            header("HTTP/1.0 503 Service Unavailable",503);
+            exit();
+    }*/
     }
     else{
         header("HTTP/1.0 404 Not Found",404);
