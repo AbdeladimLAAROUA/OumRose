@@ -42,6 +42,7 @@ session_start();
 
 	<link rel="stylesheet" type="text/css" href="css/demo.css" />
     <link rel="stylesheet" type="text/css" href="css/set1.css" />
+    <link rel="stylesheet" type="text/css" href="css/programme.css">
 	<link rel="stylesheet" type="text/css" href="css/component.css" />
 	<link rel="stylesheet" type="text/css" href="css/style_common.css">
 	<link rel="stylesheet" type="text/css" href="css/style1.css">
@@ -51,6 +52,7 @@ session_start();
 	<link rel="stylesheet" type="text/css" href="css/header.css">
 	<!-- end: CSS -->
 
+	<script type="text/javascript" src="js/jquery-1.8.2.js"></script>
 	<!-- <script src="js/movieModernizr.js"></script> -->
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -74,7 +76,7 @@ session_start();
 			
 	<!--start: Wrapper-->
 	<div id="wrapper">
-				
+	<?php include('programme2.php'); ?>		
 	<div class="container part2">
             <div class="title">Comment ça marche ?</div>
             <div class="subtitle">Vous pouvez mettre une petite description ici. Comment ça marche </div>
@@ -170,7 +172,7 @@ session_start();
 			<!-- start: Row -->
       		<div class="row section2"  >
 				
-			      <h2><span>Derniers articles</span></h2>
+			      <h2><span class="change">Derniers articles</span></h2>
 			   
         		
 				<div class="grid col-md-4">
@@ -274,13 +276,13 @@ session_start();
 			</div>
 			<!-- end Clients List -->
 		
-			<hr>
+			
 			
 			<!-- start: Row -->
 			
 			<!-- end: Row -->
 			
-			<hr>
+			
 			
 		</div>
 		<!--end: Container-->
