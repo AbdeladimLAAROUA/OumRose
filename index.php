@@ -49,6 +49,8 @@ session_start();
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/bootstrap-responsive.css" rel="stylesheet">
 	<link href="css/style.css" rel="stylesheet">
+	
+	<!-- header -->
 	<link rel="stylesheet" type="text/css" href="css/header.css">
 	<!-- end: CSS -->
 
