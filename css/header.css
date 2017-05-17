@@ -3,6 +3,7 @@
 
 .header2 ol,.header2 ul {
 	list-style: none;
+	padding-left: 0px;
 }
 .header2 blockquote,.header2 q {
 	quotes: none;

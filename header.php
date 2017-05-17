@@ -148,7 +148,7 @@
 					<a href="#">Nos partenaires</a>
 				</li>
 				<li class="activee">
-					<a href="#">Articles</a>
+					<a href="blog.php">Articles</a>
 				</li>
 				<li class="activee">
 					<a href="#">Contactez-nous</a>

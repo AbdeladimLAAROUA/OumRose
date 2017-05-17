@@ -10,9 +10,9 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */
 
 body{background:#f5f5f5}
-ul{padding:0; margin:0; list-style:none}
-a{text-decoration:none; color:#2f2f2f}
-a:hover{color:#646464; text-decoration:none}
+ul{margin:0; list-style:none;}
+a{text-decoration:none; color:#2f2f2f;font-family: "avenir";}
+a:hover{color:#646464; text-decoration:none;font-family: "avenir";}
 a:focus{outline:none; text-decoration:none}
 h1, h2, h3, h4, h5, h6{font-family:'Oswald',sans-serif}
 h2{line-height:23px}
@@ -113,10 +113,10 @@ img:hover{opacity:0.75}
 .slick-prev{ background-image:url(images/slider_prev.png); background-repeat:no-repeat; background-position:center; left:10px}
 .slick-next:before{ content:""}
 .slick-next{ background-image:url(images/slider_next.png); background-repeat:no-repeat; background-position:center; left:60px}
-.slick-prev, .slick-next{background-color:#000; top:10%; width:40px; height:40px}
+.slick-prev, .slick-next{background-color:#d083cf; top:10%; width:40px; height:40px}
 .slick-prev:hover, .slick-next:hover{opacity:0.5}
 .latest_post{float:left; display:inline; width:100%}
-.latest_post > h2{background:none repeat scroll 0 0 #151515; color:#fff; font-family:'Oswald',sans-serif; font-size:18px; margin-top:5px; font-weight:400; margin-bottom:10px; margin-left:0; padding:0; position:relative; text-align:center; text-transform:uppercase}
+.latest_post > h2{background:none repeat scroll 0 0 #6cc; color:#fff; font-family:'Oswald',sans-serif; font-size:18px; margin-top:5px; font-weight:400; margin-bottom:10px; margin-left:0; padding:0; position:relative; text-align:center; text-transform:uppercase}
 .latest_post > h2 span{padding:4px 10px}
 .latest_postnav{height:auto !important; margin-top:20px}
 .latest_postnav li{margin-bottom:10px; float:left; width:100%}
@@ -127,22 +127,22 @@ img:hover{opacity:0.75}
 #contentSection{float:left; display:inline; width:100%; background-color:#fff; padding:0 30px}
 .left_content{float:left; display:inline; width:100%}
 .single_post_content{float:left; display:inline; width:100%; margin-bottom:20px}
-.single_post_content > h2{background:none repeat scroll 0 0 #151515; color:#fff; font-family:'Oswald',sans-serif; font-size:18px; font-weight:400; margin-bottom:10px; margin-left:0; margin-top:5px; padding:0; position:relative; text-align:center; text-transform:uppercase; margin-bottom:20px}
+.single_post_content > h2{background:none repeat scroll 0 0 #6cc; color:#fff; font-family:'Oswald',sans-serif; font-size:18px; font-weight:400; margin-bottom:10px; margin-left:0; margin-top:5px; padding:0; position:relative; text-align:center; text-transform:uppercase; margin-bottom:20px}
 .single_post_content > h2 span{padding:4px 10px}
 .single_post_content_left{float:left; display:inline; width:49%}
 .business_catgnav{}
 .business_catgnav li{float:left; display:block; width:100%}
 .bsbig_fig{width:100%}
 .bsbig_fig > a{display:block}
-.bsbig_fig > a img{width:100%}
-.bsbig_fig figcaption{color:#333; font-family:"Oswald",sans-serif; font-size:23px; font-weight:300; margin-top:10px; margin-bottom:10px}
+.bsbig_fig > a img{width:100%;height: 272px;}
+.bsbig_fig figcaption{height:60px;color:#333; font-family:"Oswald",sans-serif; font-size:23px; font-weight:300; margin-top:10px; margin-bottom:10px}
 .single_post_content_right{float:right; display:inline; width:48%}
 .right_content{float:left; display:inline; width:100%; min-height:300px}
 .spost_nav{}
 .spost_nav li{float:left; display:block; width:100%; margin-bottom:10px}
 .spost_nav .media-left{width:100px; height:80px}
-.media-left > img{height:70px; width:90px}
-.spost_nav .media-body > a{font-family:"Oswald",sans-serif}
+.media-left > img{height:70px; width:90px;border: solid 1px #d083cf;}
+/*.spost_nav .media-body > a{font-family:"Oswald",sans-serif}*/
 .featured_img{position:relative}
 .overlay:hover{ background:none repeat scroll 0 0 rgba(0,0,0,0.4)}
 .overlay{ bottom:0; display:block; left:0; position:absolute; width:100%; z-index:2; height:100%; -webkit-transition:all 0.5s; -mz-transition:all 0.5s; -ms-transition:all 0.5s; -o-transition:all 0.5s; transition:all 0.5s}
@@ -175,8 +175,8 @@ figure.effect-layla:hover figcaption::before, figure.effect-layla:hover figcapti
 figure.effect-layla:hover h2{padding-top:26%}
 figure.effect-layla:hover h2, figure.effect-layla:hover a{opacity:1; -webkit-transform:translate3d(0,-35px,0); transform:translate3d(0,-35px,0)}
 figure.effect-layla:hover figcaption::after, figure.effect-layla:hover h2, figure.effect-layla:hover a, figure.effect-layla:hover img{-webkit-transition-delay:0.15s; transition-delay:0.15s}
-.single_sidebar{float:left; display:inline; width:100%; margin-bottom:20px}
-.single_sidebar > h2{background:none repeat scroll 0 0 #151515; color:#fff; font-family:"Oswald",sans-serif; font-size:18px; font-weight:400; margin-bottom:10px; margin-left:0; margin-top:5px; padding:0; position:relative; text-align:center; text-transform:uppercase}
+.single_sidebar{float:left; display:inline; width:100%; margin-bottom:20px;height: 540px;}
+.single_sidebar > h2{background:none repeat scroll 0 0 #6cc; color:#fff; font-family:"Oswald",sans-serif; font-size:18px; font-weight:400; margin-bottom:10px; margin-left:0; margin-top:5px; padding:0; position:relative; text-align:center; text-transform:uppercase}
 .single_sidebar > h2 span{padding:4px 10px}
 .cat-item a{background:none repeat scroll 0 0 #e4e4e4; color:#888; display:block; float:left; border-bottom:none !important; font-size:13px; line-height:12px; margin:0 2px 2px 0; padding:12px 17px; -webkit-transition:all 0.5s; -mz-transition:all 0.5s; -ms-transition:all 0.5s; -o-transition:all 0.5s; transition:all 0.5s}
 .cat-item a:hover{color:#fff; text-decoration:none !important}
@@ -270,6 +270,13 @@ figure.effect-layla:hover figcaption::after, figure.effect-layla:hover h2, figur
 .contact_form input[type="text"], .contact_form input[type="email"], .contact_form textarea{border-radius:0; margin-bottom:30px}
 .contact_form input[type="submit"]{border:medium none; color:#fff; height:35px; padding:5px 10px; -webkit-transition:all 0.5s; -o-transition:all 0.5s; transition:all 0.5s}
 .contact_form input[type="submit"]:hover{border:1px solid #d083cf}
+.catBlogDescrition{height: 100px;}
+#contentSection .content{line-height: 2;}
+#contentSection h2{text-align: center;margin: 20px 0px;}
+#contentSection ul{list-style: inherit !important;}
+#contentSection p, #contentSection li {font-size: 17px;font-family: "avenir" !important;} 
+#contentSection ul{padding:15px;}
+
 @media(max-width:1199px ){.logo_area{width:34%}.add_banner{width:580px}.nav-tabs > li{width:32.3%}.photograph_nav li{width:31.5%}
 @media(max-width:991px ){.add_banner{display:none}.logo_area{width:100%}.nav > li > a{padding:8px 8px}.latest_post_container{height:380px;overflow:hidden}#next-button{bottom:-2px}.single_iteam{height:415px}.photograph_nav li{width:47.7%}.related_post .spost_nav li{width:100%}.nav-tabs > li{width:31.9%}.nav-tabs > li > a{font-size:13px;padding-left:0 !important;padding-right:0 !important;text-align:center}}
 @media(max-width:767px ){.navbar-collapse{padding-left:15px}.mobile-show{display:block}.desktop-home{display:none}.navbar-inverse .navbar-nav > li > a{display:block}.header_top_left{width:100%}.header_top_right > p{display:none}.social_area{display:none}.single_iteam a{height:100%}.single_iteam a > img{height:100%}.error_page > a{margin-bottom:25px}.nav-tabs > li{width:32.6%}}
