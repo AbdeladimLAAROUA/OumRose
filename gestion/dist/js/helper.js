@@ -25,6 +25,9 @@ app.config(function($routeProvider) {
     .when("/listArticle", {
         templateUrl : "pages/views/listArticle.html"
     })    
+    .when("/gestionBlog", {
+        templateUrl : "pages/views/gestionBlog.html"
+    })    
     .otherwise({
         redirectTo: '/main'
     });
