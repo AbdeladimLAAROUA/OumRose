@@ -47,6 +47,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			echo updateBox($_REQUEST['box']);
 		}else if($_REQUEST['methode'] == 'updateProduct'){
 			echo updateProduct($_REQUEST['product']);
+		}else if($_REQUEST['methode'] == 'getNumberPostsByCat'){
+			echo getNumberPostsByCat();
+		}else if($_REQUEST['methode'] == 'getPostsByCatId'){
+			echo getPostsByCatId($_REQUEST['id']);
 		}else{
 			echo json_encode(array('result'=>'method_not_exist'));
 		}
@@ -629,6 +633,48 @@ function deleteProduct($id){
 
 	} catch (Exception $e) {
 		$array['result'] = 0;
+	}
+	
+	$connexion = null;
+	return json_encode($array);	
+}
+
+function getNumberPostsByCat(){
+	$array = array();
+	try {
+		$connexion = db_connect();
+		$resultats = $connexion->prepare("SELECT bc.catID, bc.catTitle, COUNT(*) as nombre FROM `blog_post_cats` bpc INNER JOIN `blog_cats` bc ON bpc.catID = bc.catID GROUP BY bc.catID");
+
+		$resultats->execute();
+
+		$resultats->setFetchMode(PDO::FETCH_OBJ);
+		$resultat = $resultats->fetchAll();
+		$array['result'] = $resultat;
+		$array['status'] = 'success';
+	} catch (Exception $e) {
+		$array['status'] = 'failed';
+	}
+	
+	$connexion = null;
+	return json_encode($array);	
+}
+
+function getPostsByCatId($id){
+	$array = array();
+	try {
+		$connexion = db_connect();
+		$resultats = $connexion->prepare("SELECT bps.postID, bps.postTitle, bps.postDate FROM `blog_posts_seo` bps INNER JOIN `blog_post_cats` bpc ON bps.postID = bpc.postID WHERE bpc.catID = :id");
+
+		$resultats->bindParam(':id', $id);
+
+		$resultats->execute();
+
+		$resultats->setFetchMode(PDO::FETCH_OBJ);
+		$resultat = $resultats->fetchAll();
+		$array['result'] = $resultat;
+		$array['status'] = 'success';
+	} catch (Exception $e) {
+		$array['status'] = 'failed';
 	}
 	
 	$connexion = null;
