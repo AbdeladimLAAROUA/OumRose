@@ -9,16 +9,30 @@
 .hide-me{
   display: none;
 }
+td.details-control {
+    background: url('dist/img/details_open.png') no-repeat center center;
+    cursor: pointer;
+}
+tr.shown td.details-control {
+    background: url('dist/img/details_close.png') no-repeat center center;
+}
+.table_cat tbody{
+  background-color: rgba(243, 18, 208, 0.16);
+}
+/*.i-am-centered { 
+  margin: auto; 
+  max-width: 300px;
+}*/
 </style>
 <!-- Content Header (Page header) -->
 <section class="content-header">
   <h1>
     Oumbox
-    <small>Gestion des posts</small>
+    <small>Gestion blog</small>
   </h1>
   <ol class="breadcrumb">
     <li><a href="#main"><i class="fa fa-dashboard"></i>Tableau de bord</a></li>
-    <li class="active">Gestion des posts</li>
+    <li class="active">Gestion blog</li>
   </ol>
 </section>
 
@@ -26,43 +40,279 @@
 <section class="content">
   <div class="row">
     <div class="col-xs-12">
-      <div class="box">
-        <div class="box-header">
-          <h3 class="box-title">Liste des posts</h3>
-        </div>
-        <!-- /.box-header -->
-        <div class="box-body">
-          <div style="margin-bottom:20px;">
-            <button type="submit" id="add" class="btn btn-primary" data-type="add" data-toggle="modal" data-target="#add_parent">Ajouter un post</button>
+
+    </div>
+    <!-- /.col -->
+  </div>
+  <!-- /.row -->
+  <div class="row">
+    <div class="col-xs-12">
+      <h2 class="page-header">Gestion blog</h2>
+
+          <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs">
+              <li class="active"><a href=".tab_1" data-toggle="tab">Liste des posts</a></li>
+              <li><a href=".tab_2" data-toggle="tab">Liste des catégories</a></li>
+              <!-- <li class="pull-right"><a href="#" class="text-muted"><i class="fa fa-gear"></i></a></li> -->
+            </ul>
+            <div class="tab-content">
+              <div class="tab-pane tab_1 active" id="tab_1">
+                <div class="box">
+                  <div class="box-header">
+                    <h3 class="box-title">Liste des posts</h3>
+                  </div>
+                  <!-- /.box-header -->
+                  <div class="box-body">
+                    <div style="margin-bottom:20px;">
+                      <button type="submit" id="add_post_btn" class="btn btn-primary" data-type="add_post" data-toggle="modal" data-target="#add_post">Ajouter un post</button>
+                    </div>
+                    <table id="table_categorie_post" class="table table-bordered table-striped">
+                      <thead>
+                      <tr>
+                        <th></th>
+                        <th>Catégorie</th>
+                        <th>Nombre de posts</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                        
+                      </tbody>
+                      <tfoot>
+                      <tr>
+                        <th></th>
+                        <th>Catégorie</th>
+                        <th>Nombre de posts</th>
+                      </tr>
+                      </tfoot>
+                    </table>
+                  </div>
+                  <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+              </div>
+              <!-- /.tab-pane -->
+              <div class="tab-pane tab_2" id="tab_2">
+                <div class="box">
+                  <div class="box-header">
+                    <h3 class="box-title">Liste des Catégorie</h3>
+                  </div>
+                  <!-- /.box-header -->
+                  <div class="box-body">
+                    <div style="margin-bottom:20px;">
+                      <button type="submit" id="add" class="btn btn-primary" data-type="add" data-toggle="modal" data-target="#add_cat">Ajouter une catégorie</button>
+                    </div>
+                    <table id="table_categories" class="table table-bordered table-striped">
+                      <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>Title</th>
+                        <th>Action</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                        
+                      </tbody>
+                      <tfoot>
+                      <tr>
+                        <th>ID</th>
+                        <th>Title</th>
+                        <th>Action</th>
+                      </tr>
+                      </tfoot>
+                    </table>
+                  </div>
+                  <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+              </div>
+              <!-- /.tab-pane -->
+            </div>
+            <!-- /.tab-content -->
           </div>
-          <table id="table_posts" class="table table-bordered table-striped">
-            <thead>
-            <tr>
-              <th>Title</th>
-              <th>Date de publication</th>
-              <th>Action</th>
-            </tr>
-            </thead>
-            <tbody>
-              
-            </tbody>
-            <tfoot>
-            <tr>
-              <th>Title</th>
-              <th>Date de publication</th>
-              <th>Action</th>
-            </tr>
-            </tfoot>
-          </table>
-        </div>
-        <!-- /.box-body -->
-      </div>
-      <!-- /.box -->
+          <!-- nav-tabs-custom -->
     </div>
     <!-- /.col -->
   </div>
   <!-- /.row -->
   
+<div class="modal fade" id="add_cat" tabindex="-1" role="dialog" aria-labelledby="add_cat" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+        <h4 class="modal-title custom_align" id="Heading">Ajouter une catégorie</h4>
+      </div>
+      <div class="modal-body">
+        <div id="alert_recover_ok_add_cat" class="alert alert-success hide-me">
+          Catégorie Ajoutée
+        </div>
+        <div id="alert_recover_ko_add_cat" class="alert alert-warning hide-me">
+          Quelque chose a mal tourné
+        </div>
+        <form id="addCatForm">
+          <div class="row">
+            <div class="col-xs-2">
+              <div class="form-group">
+                <label>Nom</label>
+              </div>
+            </div>
+            <div class="form-group has-feedback col-xs-4">
+              <div class="input-group">
+                <input id="nom_add_cat" type="text" class="form-control" data-required-error="Entrez le nom" required>
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                <div class="help-block with-errors"></div>
+              </div>
+            </div>
+          </div> 
+          <div class="row">
+            <div class="col-xs-12">
+              <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;margin-bottom: 10px;"><span class="glyphicon glyphicon-ok-sign"></span>Ajouter</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- /.modal-content --> 
+  </div>
+  <!-- /.modal-dialog --> 
+</div>
+
+<div class="modal fade" id="edit_cat" tabindex="-1" role="dialog" aria-labelledby="edit_cat" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+        <h4 class="modal-title custom_align" id="Heading">Modifier un article</h4>
+      </div>
+      <div class="modal-body">
+        <div id="alert_recover_ok_edit_cat" class="alert alert-success hide-me">
+          Catégorie bien Modifiée
+        </div>
+        <div id="alert_recover_ko_edit_cat" class="alert alert-warning hide-me">
+          Quelque chose a mal tourné
+        </div>
+        <form id="editCatForm">
+          <div class="row">
+            <div class="col-xs-3">
+              <div class="form-group">
+                <label>ID</label>
+              </div>
+            </div>
+            <div class="col-xs-3">
+              <span id="id_cat_edit" class="form-group infos_ar_p text-blue"></span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-2">
+              <div class="form-group">
+                <label>Nom</label>
+              </div>
+            </div>
+            <div class="form-group has-feedback col-xs-6">
+              <div class="input-group">
+                <input id="nom_edit_cat" type="text" class="form-control" data-required-error="Entrez le nom" required>
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                <div class="help-block with-errors"></div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <button type="submit" class="btn btn-warning btn-lg" style="width: 100%;margin-bottom: 10px;"><span class="glyphicon glyphicon-ok-sign"></span>Modifier</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- /.modal-content --> 
+  </div>
+  <!-- /.modal-dialog --> 
+</div>
+
+<div class="modal fade" id="delete_cat" tabindex="-1" role="dialog" aria-labelledby="delete_cat" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+        <h4 class="modal-title custom_align" id="Heading">Supprimer la catégorie</h4>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span> Êtes-vous sûr de vouloir supprimer cette catégorie ?</div>
+      </div>
+      <div class="modal-footer ">
+        <button id="conf_supp_cat" type="button" data-id="0" class="btn btn-success" ><span class="glyphicon glyphicon-ok-sign"></span>Oui</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>Non</button>
+      </div>
+    </div>
+    <!-- /.modal-content --> 
+  </div>
+  <!-- /.modal-dialog --> 
+</div>
+
+
+<div class="modal fade" id="add_post" tabindex="-1" role="dialog" aria-labelledby="add_post" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+        <h4 class="modal-title custom_align" id="Heading">Ajouter un Post</h4>
+      </div>
+      <div class="modal-body">
+        <div id="alert_recover_ok_add_post" class="alert alert-success hide-me">
+          Post Ajouté
+        </div>
+        <div id="alert_recover_ko_add_post" class="alert alert-warning hide-me">
+          Quelque chose a mal tourné
+        </div>
+        <form id="addPostForm">
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="form-group">
+                <label>Description</label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="form-group has-feedback">
+                <div class="input-group col-xs-12">
+                  <textarea id="description_post" data-required-error="Entrez la description" required></textarea>
+                  <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                  <div class="help-block with-errors"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="form-group">
+                <label>Contenu</label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="form-group has-feedback">
+                <div class="input-group col-xs-12">
+                  <textarea id="contenu_post" data-required-error="Entrez le contenu" required></textarea>
+                  <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                  <div class="help-block with-errors"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;margin-bottom: 10px;"><span class="glyphicon glyphicon-ok-sign"></span>Ajouter</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- /.modal-content --> 
+  </div>
+  <!-- /.modal-dialog --> 
+</div>
 <!-- Add content to the popup -->
 <div id="loading-image" class="row">
   <div class="main col-md-5 col-md-offset-6">
@@ -84,8 +334,7 @@
 <!-- DataTables -->
 <script src="plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="plugins/datatables/dataTables.bootstrap.min.js"></script>
-<!-- bootstrap datepicker -->
-<script src="plugins/datepicker/bootstrap-datepicker.js"></script>
+<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
 
 <script src="dist/js/validator.min.js"></script>
 <script src="dist/js/gestionBlog.js"></script>
