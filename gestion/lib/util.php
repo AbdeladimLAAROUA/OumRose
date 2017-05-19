@@ -47,6 +47,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			echo updateBox($_REQUEST['box']);
 		}else if($_REQUEST['methode'] == 'updateProduct'){
 			echo updateProduct($_REQUEST['product']);
+		}else if($_REQUEST['methode'] == 'getAllCats'){
+			echo getAllCats();
+		}else if($_REQUEST['methode'] == 'getCatById'){
+			echo getCatById($_REQUEST['id']);
+		}else if($_REQUEST['methode'] == 'addCat'){
+			echo addCat($_REQUEST['cat']);
+		}else if($_REQUEST['methode'] == 'updateCat'){
+			echo updateCat($_REQUEST['cat']);
+		}else if($_REQUEST['methode'] == 'deleteCat'){
+			echo deleteCat($_REQUEST['id']);
 		}else{
 			echo json_encode(array('result'=>'method_not_exist'));
 		}
@@ -635,15 +645,155 @@ function deleteProduct($id){
 	return json_encode($array);	
 }
 
+
+function getAllCats(){
+	$array = array();
+
+	try {
+		$connexion = db_connect();
+		$resultats = $connexion->prepare("SELECT * FROM `blog_cats`");
+
+		$resultats->execute();
+
+		$resultats->setFetchMode(PDO::FETCH_OBJ);
+		$resultat = $resultats->fetchAll();
+		$array['status'] = 'success';
+		$array['result'] = $resultat;
+	} catch (Exception $e) {
+		$array['status'] = 'failed';
+		$array['result'] = 0;
+	}
+	
+	$connexion = null;
+	return json_encode($array);	
+}
+
+
+function getCatById($id){
+	$array = array();
+
+	try {
+		$connexion = db_connect();
+		$resultats = $connexion->prepare("SELECT * FROM `blog_cats` WHERE catID = :id");
+		
+		$resultats->bindParam(':id', $id);
+
+		$resultats->execute();
+
+		$resultats->setFetchMode(PDO::FETCH_OBJ);
+		$resultat = $resultats->fetchAll();
+		$array['status'] = 'success';
+		$array['result'] = $resultat;
+
+	} catch (Exception $e) {
+		$array['result'] = 0;
+		$array['status'] = 'failed';
+	}
+
+	$connexion = null;
+	return json_encode($array);
+	}
+
+
+function addCat($cat){
+	$array = array();
+	$catSlug = strtolower($cat['catTitle']);
+
+	try {
+		$connexion = db_connect();
+		$sql = "INSERT INTO `blog_cats`(`catTitle`, `catSlug`) VALUES (:catTitle, :catSlug)";
+		
+		//Prepare our statement.
+		$statement = $connexion->prepare($sql);
+		
+		//Bind our values to our parameters (we called them :make and :model).
+		$statement->bindValue(':catTitle', $cat['catTitle']);
+		$statement->bindValue(':catSlug', $catSlug);
+		 
+		//Execute the statement and insert our values.
+		$inserted = $statement->execute();
+		 
+		//Because PDOStatement::execute returns a TRUE or FALSE value,
+		//we can easily check to see if our insert was successful.
+		if($inserted){
+			$indertedId = $connexion->lastInsertId();
+			$array['status'] = 'success';
+			$array['inserted_id'] = $indertedId;
+		}
+
+	} catch (Exception $e) {
+		$array['status'] = 'failed';
+	}
+	
+	$connexion = null;
+	return json_encode($array);
+}
+
+
+function updateCat($cat){
+	$array = array();
+	$catSlug = strtolower($cat['catTitle']);
+
+	try {
+		$connexion = db_connect();
+
+		$stmt = $connexion->prepare("UPDATE `blog_cats` SET `catTitle` = :catTitle,`catSlug` = :catSlug WHERE catID = :id ");
+		
+		$stmt->bindValue(':id', $cat['id']);
+		$stmt->bindValue(':catTitle', $cat['catTitle']);
+		$stmt->bindValue(':catSlug', $catSlug);
+
+		$stmt->execute();
+
+		if($stmt->rowCount()) {
+			$array['result'] = 'success';
+		} else {
+			$array['result'] = 'failed';
+		}
+	} catch (Exception $e) {
+		$array['result'] = 'failed';
+	}
+	
+	$connexion = null;
+
+	return json_encode($array);	
+}
+
+
+function deleteCat($id){
+	$array = array();
+	$array['result'] = 0;
+
+	try {
+		$connexion = db_connect();
+
+		$stmt = $connexion->prepare("DELETE FROM `blog_cats` WHERE catID = :id");
+		$stmt->bindParam(':id', $id);
+		$stmt->execute();
+		$count = $stmt->rowCount();
+
+		if($count == 1){
+			$array['result'] = 'success';
+		}else{
+			$array['result'] = 'failed';
+		}
+	} catch (Exception $e) {
+		$array['result'] = 'failed';
+	}
+	
+	$connexion = null;
+	return json_encode($array);	
+}
+
 function db_connect(){
 
 	
 	/*Local Kindy*/
 
-	// $hote   	='localhost';
-	// $passDb 	='S3cr3T%44';
-	// $bd 		='oumdev_leads';
-	// $user		='root';	
+	$hote   	='localhost';
+	$passDb 	='S3cr3T%44';
+	$bd 		='oumdev_leads';
+	$user		='root';	
 
 
 	/*$hote   	='localhost';
@@ -653,10 +803,10 @@ function db_connect(){
 */
 
 	/*Local*/
-	$hote   	='localhost';
-	$passDb 	='';
-	$bd 		='oumdev_leads';
-	$user		='root';
+	// $hote   	='localhost';
+	// $passDb 	='';
+	// $bd 		='oumdev_leads';
+	// $user		='root';
 
 	/*Distant*/
 	/*$hote   	='localhost';
