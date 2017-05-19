@@ -1,0 +1,164 @@
+<!-- DataTables -->
+<link rel="stylesheet" href="plugins/datatables/dataTables.bootstrap.css">
+<!-- bootstrap datepicker -->
+<link rel="stylesheet" href="plugins/datepicker/datepicker3.css">
+<style type="text/css">
+.action{
+  margin-right: 2px;
+}
+.hide-me{
+  display: none;
+}
+td.details-control {
+    background: url('dist/img/details_open.png') no-repeat center center;
+    cursor: pointer;
+}
+tr.shown td.details-control {
+    background: url('dist/img/details_close.png') no-repeat center center;
+}
+.table_cat tbody{
+  background-color: rgba(243, 18, 208, 0.16);
+}
+</style>
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1>
+    Oumbox
+    <small>Gestion des posts</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="#main"><i class="fa fa-dashboard"></i>Tableau de bord</a></li>
+    <li class="active">Gestion des posts</li>
+  </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="box">
+        <div class="box-header">
+          <h3 class="box-title">Liste des posts</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+          <div style="margin-bottom:20px;">
+            <button type="submit" id="add_post_btn" class="btn btn-primary" data-type="add_post" data-toggle="modal" data-target="#add_post">Ajouter un post</button>
+          </div>
+          <table id="table_categorie_post" class="table table-bordered table-striped">
+            <thead>
+            <tr>
+              <th></th>
+              <th>Catégorie</th>
+              <th>Nombre de posts</th>
+            </tr>
+            </thead>
+            <tbody>
+              
+            </tbody>
+            <tfoot>
+            <tr>
+              <th></th>
+              <th>Catégorie</th>
+              <th>Nombre de posts</th>
+            </tr>
+            </tfoot>
+          </table>
+        </div>
+        <!-- /.box-body -->
+      </div>
+      <!-- /.box -->
+    </div>
+    <!-- /.col -->
+  </div>
+  <!-- /.row -->
+  <div class="modal fade" id="add_post" tabindex="-1" role="dialog" aria-labelledby="add_post" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+        <h4 class="modal-title custom_align" id="Heading">Ajouter un Post</h4>
+      </div>
+      <div class="modal-body">
+        <div id="alert_recover_ok_add_post" class="alert alert-success hide-me">
+          Post Ajouté
+        </div>
+        <div id="alert_recover_ko_add_post" class="alert alert-warning hide-me">
+          Quelque chose a mal tourné
+        </div>
+        <form id="addPostForm">
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="form-group">
+                <label>Description</label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="form-group has-feedback">
+                <div class="input-group col-xs-12">
+                  <textarea id="description_post" data-required-error="Entrez la description" required></textarea>
+                  <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                  <div class="help-block with-errors"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="form-group">
+                <label>Contenu</label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="form-group has-feedback">
+                <div class="input-group col-xs-12">
+                  <textarea id="contenu_post" data-required-error="Entrez le contenu" required></textarea>
+                  <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                  <div class="help-block with-errors"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;margin-bottom: 10px;"><span class="glyphicon glyphicon-ok-sign"></span>Ajouter</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- /.modal-content --> 
+  </div>
+  <!-- /.modal-dialog --> 
+</div>
+<!-- Add content to the popup -->
+<div id="loading-image" class="row">
+  <div class="main col-md-5 col-md-offset-6">
+    <div id="cssload-pgloading">
+      <div class="cssload-loadingwrap">
+        <ul class="cssload-bokeh">
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+<!-- /.content -->
+
+<!-- DataTables -->
+<script src="plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="plugins/datatables/dataTables.bootstrap.min.js"></script>
+<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+
+<script src="dist/js/validator.min.js"></script>
+<script src="dist/js/gestionBlog.js"></script>
+<script type="text/javascript">
+</script>
