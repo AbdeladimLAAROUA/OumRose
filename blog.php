@@ -404,11 +404,10 @@
           <div class="single_sidebar wow fadeInDown">
             <h2><span>Categories</span></h2>
             <select class="catgArchive">
-              <option>Select Category</option>
-              <option>Life styles</option>
-              <option>Sports</option>
-              <option>Technology</option>
-              <option>Treads</option>
+              <option>Choisissez une catégorie</option>
+              <option>Bébé</option>
+              <option>Grossesse</option>
+              <option>Maman</option>
             </select>
           </div>
           <!-- <div class="single_sidebar wow fadeInDown">

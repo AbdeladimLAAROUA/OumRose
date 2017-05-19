@@ -145,7 +145,7 @@
 		 
 				</li>
 				<li class="activee">
-					<a href="#">Nos partenaires</a>
+					<a href="partenaires.php">Nos partenaires</a>
 				</li>
 				<li class="activee">
 					<a href="blog.php">Articles</a>

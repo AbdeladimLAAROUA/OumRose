@@ -271,7 +271,7 @@ figure.effect-layla:hover figcaption::after, figure.effect-layla:hover h2, figur
 .contact_form input[type="submit"]{border:medium none; color:#fff; height:35px; padding:5px 10px; -webkit-transition:all 0.5s; -o-transition:all 0.5s; transition:all 0.5s}
 .contact_form input[type="submit"]:hover{border:1px solid #d083cf}
 .catBlogDescrition{height: 100px;}
-#contentSection .content{line-height: 2;}
+#contentSection .content{line-height: 2;padding: 0px 80px;}
 #contentSection h2{text-align: center;margin: 20px 0px;}
 #contentSection ul{list-style: inherit !important;}
 #contentSection p, #contentSection li {font-size: 17px;font-family: "avenir" !important;} 

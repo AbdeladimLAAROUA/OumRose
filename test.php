@@ -53,10 +53,10 @@
 	$log->lclose();
 	*/
 
-	require('tools/mailin.php');
+	/*require('tools/mailin.php');
     $mailin = new Mailin("https://api.sendinblue.com/v2.0","YUAxmzIyZSO4EJw9");
     $data = array( "email" => "salimelqalbfz@gmail.com","listid" => array(34));
- 	var_dump($mailin->get_user($data));
+ 	var_dump($mailin->get_user($data));*/
 
 
 	
@@ -108,3 +108,53 @@ $headers .= "Return-path: " . $email;
 $message = "Your password is ".'password'.".";
 mail($email, $subject, $message, $headers);*/
 ?>
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Leaflet debug page</title>
+
+	<link rel="stylesheet" href="../../dist/leaflet.css" />
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link rel="stylesheet" href="../css/screen.css" />
+
+	<script src="../leaflet-include.js"></script>
+</head>
+<body>
+
+	<p><a href="#" onclick="ShowMap(this)">map</a></p>
+
+	<script type="text/javascript">
+	function ShowMap(e) {
+		var xpos = AbsoluteX(e);
+		var ypos = AbsoluteY(e);
+		alert(xpos+", "+ypos);
+		// now move map to location xpos, ypos
+	}
+
+
+	// find absolute x co-ordinate of element
+	function AbsoluteX(element) {
+		var pos = 0;
+		if (element && typeof element.offsetLeft != 'undefined') {
+			pos = element.offsetLeft;
+			while ((element = element.offsetParent)) pos += element.offsetLeft;
+		}
+		return pos;
+	}
+
+
+	// find absolute y co-ordinate of element
+	function AbsoluteY(element) {
+		var pos = 0;
+		if (element && typeof element.offsetTop != 'undefined') {
+			pos = element.offsetTop;
+			while ((element = element.offsetParent)) pos += element.offsetTop;
+		}
+		return pos;
+	}
+	</script>
+</body>
+</html
