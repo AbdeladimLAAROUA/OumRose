@@ -47,7 +47,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			echo updateBox($_REQUEST['box']);
 		}else if($_REQUEST['methode'] == 'updateProduct'){
 			echo updateProduct($_REQUEST['product']);
-<<<<<<< HEAD
 		}else if($_REQUEST['methode'] == 'getAllCats'){
 			echo getAllCats();
 		}else if($_REQUEST['methode'] == 'getCatById'){
@@ -58,12 +57,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			echo updateCat($_REQUEST['cat']);
 		}else if($_REQUEST['methode'] == 'deleteCat'){
 			echo deleteCat($_REQUEST['id']);
-=======
 		}else if($_REQUEST['methode'] == 'getNumberPostsByCat'){
 			echo getNumberPostsByCat();
 		}else if($_REQUEST['methode'] == 'getPostsByCatId'){
 			echo getPostsByCatId($_REQUEST['id']);
->>>>>>> 6a813df94339234d7d2cf00f834257d8eccbb27d
 		}else{
 			echo json_encode(array('result'=>'method_not_exist'));
 		}
@@ -252,7 +249,6 @@ function getAllClient(){
 	$connexion = null;
 	return json_encode($array);	
 }
-
 
 function getClientWithEligibility(){
 	$array = array();
@@ -652,45 +648,27 @@ function deleteProduct($id){
 	return json_encode($array);	
 }
 
-<<<<<<< HEAD
-
 function getAllCats(){
 	$array = array();
 
 	try {
 		$connexion = db_connect();
 		$resultats = $connexion->prepare("SELECT * FROM `blog_cats`");
-=======
-function getNumberPostsByCat(){
-	$array = array();
-	try {
-		$connexion = db_connect();
-		$resultats = $connexion->prepare("SELECT bc.catID, bc.catTitle, COUNT(*) as nombre FROM `blog_post_cats` bpc INNER JOIN `blog_cats` bc ON bpc.catID = bc.catID GROUP BY bc.catID");
->>>>>>> 6a813df94339234d7d2cf00f834257d8eccbb27d
 
 		$resultats->execute();
 
 		$resultats->setFetchMode(PDO::FETCH_OBJ);
 		$resultat = $resultats->fetchAll();
-<<<<<<< HEAD
 		$array['status'] = 'success';
 		$array['result'] = $resultat;
 	} catch (Exception $e) {
 		$array['status'] = 'failed';
 		$array['result'] = 0;
-=======
-		$array['result'] = $resultat;
-		$array['status'] = 'success';
-	} catch (Exception $e) {
-		$array['status'] = 'failed';
->>>>>>> 6a813df94339234d7d2cf00f834257d8eccbb27d
 	}
 	
 	$connexion = null;
 	return json_encode($array);	
 }
-
-<<<<<<< HEAD
 
 function getCatById($id){
 	$array = array();
@@ -699,21 +677,12 @@ function getCatById($id){
 		$connexion = db_connect();
 		$resultats = $connexion->prepare("SELECT * FROM `blog_cats` WHERE catID = :id");
 		
-=======
-function getPostsByCatId($id){
-	$array = array();
-	try {
-		$connexion = db_connect();
-		$resultats = $connexion->prepare("SELECT bps.postID, bps.postTitle, bps.postDate FROM `blog_posts_seo` bps INNER JOIN `blog_post_cats` bpc ON bps.postID = bpc.postID WHERE bpc.catID = :id");
-
->>>>>>> 6a813df94339234d7d2cf00f834257d8eccbb27d
 		$resultats->bindParam(':id', $id);
 
 		$resultats->execute();
 
 		$resultats->setFetchMode(PDO::FETCH_OBJ);
 		$resultat = $resultats->fetchAll();
-<<<<<<< HEAD
 		$array['status'] = 'success';
 		$array['result'] = $resultat;
 
@@ -724,8 +693,7 @@ function getPostsByCatId($id){
 
 	$connexion = null;
 	return json_encode($array);
-	}
-
+}
 
 function addCat($cat){
 	$array = array();
@@ -753,19 +721,13 @@ function addCat($cat){
 			$array['inserted_id'] = $indertedId;
 		}
 
-=======
-		$array['result'] = $resultat;
-		$array['status'] = 'success';
->>>>>>> 6a813df94339234d7d2cf00f834257d8eccbb27d
 	} catch (Exception $e) {
 		$array['status'] = 'failed';
 	}
 	
 	$connexion = null;
-<<<<<<< HEAD
 	return json_encode($array);
 }
-
 
 function updateCat($cat){
 	$array = array();
@@ -819,8 +781,43 @@ function deleteCat($id){
 	}
 	
 	$connexion = null;
-=======
->>>>>>> 6a813df94339234d7d2cf00f834257d8eccbb27d
+	return json_encode($array);	
+}
+
+function getNumberPostsByCat(){
+	$array = array();
+	try {
+		$connexion = db_connect();
+		$resultats = $connexion->prepare("SELECT bc.catID, bc.catTitle, COUNT(*) as nombre FROM `blog_post_cats` bpc INNER JOIN `blog_cats` bc ON bpc.catID = bc.catID GROUP BY bc.catID");
+		$resultats->execute();
+		$resultats->setFetchMode(PDO::FETCH_OBJ);
+		$resultat = $resultats->fetchAll();
+		$array['result'] = $resultat;
+		$array['status'] = 'success';
+	} catch (Exception $e) {
+		$array['status'] = 'failed';
+	}
+	
+	$connexion = null;
+	return json_encode($array);	
+}
+
+function getPostsByCatId($id){
+	$array = array();
+	try {
+		$connexion = db_connect();
+		$resultats = $connexion->prepare("SELECT bps.postID, bps.postTitle, bps.postDate FROM `blog_posts_seo` bps INNER JOIN `blog_post_cats` bpc ON bps.postID = bpc.postID WHERE bpc.catID = :id");
+		$resultats->bindParam(':id', $id);
+		$resultats->execute();
+		$resultats->setFetchMode(PDO::FETCH_OBJ);
+		$resultat = $resultats->fetchAll();
+		$array['result'] = $resultat;
+		$array['status'] = 'success';
+	} catch (Exception $e) {
+		$array['status'] = 'failed';
+	}
+	
+	$connexion = null;
 	return json_encode($array);	
 }
 
