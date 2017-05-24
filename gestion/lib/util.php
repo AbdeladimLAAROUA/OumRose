@@ -415,7 +415,7 @@ function getAllShop(){
 	$array = array();
 	try {
 		$connexion = db_connect();
-		$resultats = $connexion->prepare("SELECT *,s.id as id_shop FROM `shop` s INNER JOIN ville v ON s.Ville_id = v.id");
+		$resultats = $connexion->prepare("SELECT s.*,s.id as id_shop, v.name as ville_name FROM `shop` s INNER JOIN ville v ON s.Ville_id = v.id");
 
 		$resultats->execute();
 
@@ -826,10 +826,10 @@ function db_connect(){
 	
 	/*Local Kindy*/
 
-	$hote   	='localhost';
+/*	$hote   	='localhost';
 	$passDb 	='S3cr3T%44';
 	$bd 		='oumdev_leads';
-	$user		='root';	
+	$user		='root';	*/
 
 
 	/*$hote   	='localhost';
@@ -839,10 +839,10 @@ function db_connect(){
 */
 
 	/*Local*/
-	// $hote   	='localhost';
-	// $passDb 	='';
-	// $bd 		='oumdev_leads';
-	// $user		='root';
+	$hote   	='localhost';
+	$passDb 	='';
+	$bd 		='oumdev_leads';
+	$user		='root';
 
 	/*Distant*/
 	/*$hote   	='localhost';

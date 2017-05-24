@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html  ng-app="oumbox">
 <head>
 <meta charset="utf-8"/>
 <style>
@@ -23,7 +23,7 @@
     background-color: rgba(255,255,255,0.3);
    }
   .tbl-content{
-    height:300px;
+    height:510px;
     overflow-x:auto;
     margin-top: 0px;
     border: 1px solid rgba(255,255,255,0.3);
@@ -51,8 +51,9 @@
 
 
   body section{
-    background: -webkit-linear-gradient(left, #25c481, #25b7c4);
-    background: linear-gradient(to right, #25c481, #25b7c4);
+   /* background: -webkit-linear-gradient(left, #25c481, #25b7c4);
+    background: linear-gradient(to right, #25c481, #25b7c4);*/
+    background: linear-gradient(40deg,#df5b79, #7e669b);
     font-family: 'Roboto', sans-serif;
   }
   section{
@@ -60,8 +61,63 @@
   }
 
 
+  /*map style*/
 
-
+    /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      .partenaires h1{
+        margin: 30px;
+      }
+      .searchPartner{
+        margin: 10px 5px;
+      }
+      .searchPartner input{
+        height: 30px !important;
+        width: 99%;
+      }
+      .searchPartner label{
+       color: white;
+      }
+      .searchPartner select{
+        height: 30px !important;
+        width: 99%;
+      }
+      .searchPartner {
+        height: 60px !important;
+      }
+      .searchPartnerList button{
+        background: #6cc;
+        width: 95%;
+        margin: auto;
+       
+      }
+      .partenaires .description{
+        width: 68%;
+        color: white;
+        margin: auto;
+        margin-bottom: 30px;
+        font-size: 15px;
+      }
+      .searchPartnerList td{
+      
+      }
+      .separ1{
+        height: 40px;
+        background: #6cc;
+      }
+      .separ2{
+        height: 40px;
+        background: #c36eaa;
+      }
   /* for custom scrollbar for webkit browser*/
 
   ::-webkit-scrollbar {
@@ -85,25 +141,57 @@
 
 
 </head>
-<body>
+<body ng-controller="oumboxController">
 
 <?php include('header.php'); ?>
 
-<section>
+
+<section class="partenaires">
 
   <!--for demo wrap-->
+  
+  <!-- <div style="text-align:center;"> <img src="img/logo.png"/></div> -->
   <h1 style="text-align:center;">Nos partenaires</h1>
+  <p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+  tempor incididunt ut labore et dolore magna aliqua.</p>
 
-  <form class="form-inline">
-    <div class="form-group">
-      <label for="exampleInputName2">Name</label>
-      <input type="text" class="form-control" id="exampleInputName2" placeholder="Jane Doe">
-    </div>
-    <div class="form-group">
-      <label for="exampleInputEmail2">Email</label>
-      <input type="email" class="form-control" id="exampleInputEmail2" placeholder="jane.doe@example.com">
-    </div>
-    <button type="submit" class="btn btn-default">Send invitation</button>
+  <form class="searchPartner">
+   
+     <div class="row">
+        <div class="col-md-3">
+           <label for="exampleInputName2">Nom</label>
+        <input type="text" class="form-control" id="myInput" onkeyup="myFunction()" > 
+        </div>
+
+       <div class="col-md-3">
+         <label for="exampleInputName2">Adresse</label>
+         <input type="text" class="form-control" id="adresse" onkeyup="myFunction2()">
+       </div>
+       <div class="col-md-3">
+         <label>Ville</label>
+         <select id="ville" onchange="myFunction3()">
+           <option>--</option>
+           <option value="Casablaca">Casablaca</option>
+           <option value="Rabat">Rabat</option>
+           <option value="Tanger">Tanger</option>
+         </select>
+
+       </div>
+       <div class="col-md-3">
+        <label>Type</label>
+         <select>
+           <option>--</option>
+           <option>Médedin</option>
+           <option>Clinique</option>
+           <option>Point de retrait</option>
+         </select>
+       </div>       
+     </div>
+     
+     
+
+    
+    
   </form>
 
   <div class="tbl-header" style="padding-right: 6px;">
@@ -120,143 +208,71 @@
     </table>
   </div>
   <div class="tbl-content">
-    <table cellpadding="0" cellspacing="0" border="0" id="myTable">
+    <table cellpadding="0" cellspacing="0" border="0" id="myTable" class="searchPartnerList">
       <tbody>
-        <tr>
-          <td>Abdelwahab LEMSEFFER</td>
-          <td>301 bd Ghandi, 20390 Casablanca</td>
-          <td>05 22 98 55 02</td>
-          <td>Médecin</td>
-          <td><button type="button" class="btn btn-primary">Localiser</button></td>
-        </tr>
-        <tr>
-          <td>Clinique Ghandi</td>
-          <td>54 bd Ghandi, Casablanca</td>
-          <td>05 22 36 74 05</td>
-          <td>Clinique</td>
-          <td><button type="button" class="btn btn-primary">Localiser</button></td>
-        </tr>
-        <tr>
-          <td>Oumbox</td>
-          <td>77bis bd Abdelmoumen, Casablanca. Sur RDV</td>
-          <td>05 22 22 58 50</td>
-          <td>Points de retrait</td>
-          <td><button type="button" class="btn btn-primary">Localiser</button></td>
-        </tr> <tr>
-          <td>Abdelwahab LEMSEFFER</td>
-          <td>301 bd Ghandi, 20390 Casablanca</td>
-          <td>05 22 98 55 02</td>
-          <td>Médecin</td>
-          <td><button type="button" class="btn btn-primary">Localiser</button></td>
-        </tr>
-        <tr>
-          <td>Clinique Ghandi</td>
-          <td>54 bd Ghandi, Casablanca</td>
-          <td>05 22 36 74 05</td>
-          <td>Clinique</td>
-          <td><button type="button" class="btn btn-primary">Localiser</button></td>
-        </tr>
-        <tr>
-          <td>Oumbox</td>
-          <td>77bis bd Abdelmoumen, Casablanca. Sur RDV</td>
-          <td>05 22 22 58 50</td>
-          <td>Points de retrait</td>
-          <td><button type="button" class="btn btn-primary">Localiser</button></td>
-        </tr> <tr>
-          <td>Abdelwahab LEMSEFFER</td>
-          <td>301 bd Ghandi, 20390 Casablanca</td>
-          <td>05 22 98 55 02</td>
-          <td>Médecin</td>
-          <td><button type="button" class="btn btn-primary">Localiser</button></td>
-        </tr>
-        <tr>
-          <td>Clinique Ghandi</td>
-          <td>54 bd Ghandi, Casablanca</td>
-          <td>05 22 36 74 05</td>
-          <td>Clinique</td>
-          <td><button type="button" class="btn btn-primary">Localiser</button></td>
-        </tr>
-        <tr>
-          <td>Oumbox</td>
-          <td>77bis bd Abdelmoumen, Casablanca. Sur RDV</td>
-          <td>05 22 22 58 50</td>
-          <td>Points de retrait</td>
-          <td><button type="button" class="btn btn-primary">Localiser</button></td>
-        </tr> <tr>
-          <td>Abdelwahab LEMSEFFER</td>
-          <td>301 bd Ghandi, 20390 Casablanca</td>
-          <td>05 22 98 55 02</td>
-          <td>Médecin</td>
-          <td><button type="button" class="btn btn-primary">Localiser</button></td>
-        </tr>
-        <tr>
-          <td>Clinique Ghandi</td>
-          <td>54 bd Ghandi, Casablanca</td>
-          <td>05 22 36 74 05</td>
-          <td>Clinique</td>
-          <td><button type="button" class="btn btn-primary">Localiser</button></td>
-        </tr>
-        <tr>
-          <td>Oumbox</td>
-          <td>77bis bd Abdelmoumen, Casablanca. Sur RDV</td>
-          <td>05 22 22 58 50</td>
-          <td>Points de retrait</td>
-          <td><button type="button" class="btn btn-primary">Localiser</button></td>
-        </tr> <tr>
-          <td>Abdelwahab LEMSEFFER</td>
-          <td>301 bd Ghandi, 20390 Casablanca</td>
-          <td>05 22 98 55 02</td>
-          <td>Médecin</td>
-          <td><button type="button" class="btn btn-primary">Localiser</button></td>
-        </tr>
-        <tr>
-          <td>Clinique Ghandi</td>
-          <td>54 bd Ghandi, Casablanca</td>
-          <td>05 22 36 74 05</td>
-          <td>Clinique</td>
-          <td><button type="button" class="btn btn-primary">Localiser</button></td>
-        </tr>
-        <tr>
-          <td>Oumbox</td>
-          <td>77bis bd Abdelmoumen, Casablanca. Sur RDV</td>
-          <td>05 22 22 58 50</td>
-          <td>Points de retrait</td>
-          <td><button type="button" class="btn btn-primary">Localiser</button></td>
-        </tr> <tr>
-          <td>Abdelwahab LEMSEFFER</td>
-          <td>301 bd Ghandi, 20390 Casablanca</td>
-          <td>05 22 98 55 02</td>
-          <td>Médecin</td>
-          <td><button type="button" class="btn btn-primary">Localiser</button></td>
-        </tr>
-        <tr>
-          <td>Clinique Ghandi</td>
-          <td>54 bd Ghandi, Casablanca</td>
-          <td>05 22 36 74 05</td>
-          <td>Clinique</td>
-          <td><button type="button" class="btn btn-primary">Localiser</button></td>
-        </tr>
-        <tr>
-          <td>Oumbox</td>
-          <td>77bis bd Abdelmoumen, Casablanca. Sur RDV</td>
-          <td>05 22 22 58 50</td>
-          <td>Points de retrait</td>
-          <td><button type="button" class="btn btn-primary">Localiser</button></td>
-        </tr>
-       
+        <tr ng-repeat="partenaire in partenaires" >
+          <td>{{partenaire.Name}}</td>
+          <td>{{partenaire.adresse}}</td>
+          <td>{{partenaire.fixe}}</td>
+          <td>{{partenaire.type}}</td>
+          <td><button type="button" class="btn btn-primary" scroll-On-Click="{{ $index }}" > Localiser</button></td>
+        </tr>       
       </tbody>
     </table>
   </div>
 </section>
 
-
-
-<div class="row">
+<!-- <div class="row myMap">
   <div><iframe class="col-md-12"  height="500px" frameborder="0" scrolling="yes" marginheight="0" marginwidth="0" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d830.9964799260239!2d-7.625237066526706!3d33.57971483992227!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xda7d2b11a0f11d5%3A0x1ca6d976ea310f70!2sOUMBOX!5e0!3m2!1sfr!2sfr!4v1492113064260"></iframe></div>
-</div>
-  
+</div> -->
+
+<div class="separ1">Trouver notre partenaire le plus proche de vous </div>
+<div id="map"></div>
+<div class="separ2"></div>
+    
   
 <?php include('footer.php'); ?>
+    <script>
+
+      function initMap() {
+        var myLatLng = {lat: 33.5687931, lng: -7.6455561};
+        
+        var myLatLng2= {lat:33.5688719, lng:-7.6454603};
+       
+       
+
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 13,
+          center: myLatLng
+        });
+
+        var marker = new google.maps.Marker({
+          position: myLatLng,
+          map: map,
+          title: 'Hello World!'
+        });
+        
+        var marker2 = new google.maps.Marker({
+          position: myLatLng2,
+          map: map,
+          title: 'Hello World!'
+        });
+
+      }
+    </script>
+    
+   
+<script type="text/javascript" src="js/jquery-1.8.2.js"></script>
+<script type="text/javascript">
+
+  $(".btn").click(function() {
+
+      $('html,body').animate({
+          scrollTop: $("#map").offset().top},
+          'slow');
+  });
+</script>
 <script>
 function myFunction() {
   var input, filter, table, tr, td, i;
@@ -275,7 +291,49 @@ function myFunction() {
     }       
   }
 }
-</script>
+function myFunction2() {
+  var adresse, filter, table, tr, td, i;
+  adresse = document.getElementById("adresse");
+  filter = adresse.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[1];
+    if (td) {
+      if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }       
+  }
+}
+function myFunction3() {
 
+  /*var ville, filter, table, tr, td, i;
+  ville = document.getElementById("adresse");
+
+  filter = ville.value.toUpperCase();
+  console.log(filter);
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[1];
+    if (td) {
+      if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }       
+  }*/
+}
+</script>
+    <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.5.2/angular.min.js"></script>
+     <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBrZqwoiE2SFo32PmyTGZo3D-jvfw5Y10">
+    </script>
+    <script src="js/oumbox.js"></script>
+    
 </body>
 </html>

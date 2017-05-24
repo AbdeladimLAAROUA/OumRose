@@ -146,7 +146,7 @@
                 </div>
             </div> -->
             <div>
-        	   <iframe width="100%" height="100%" src="https://www.youtube.com/embed/XGSy3_Czz8k?autoplay=0">
+        	   <iframe width="100%" height="100%" src="https://www.youtube.com/embed/SjVvk6KFpBw?rel=0&autoplay=0">
 </iframe>
         	    
         	</div>

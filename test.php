@@ -108,53 +108,47 @@ $headers .= "Return-path: " . $email;
 $message = "Your password is ".'password'.".";
 mail($email, $subject, $message, $headers);*/
 ?>
-
 <!DOCTYPE html>
 <html>
-<head>
-	<title>Leaflet debug page</title>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Simple markers</title>
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script>
 
-	<link rel="stylesheet" href="../../dist/leaflet.css" />
+      function initMap() {
+        var myLatLng = {lat: -25.363, lng: 131.044};
 
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 4,
+          center: myLatLng
+        });
 
-	<link rel="stylesheet" href="../css/screen.css" />
-
-	<script src="../leaflet-include.js"></script>
-</head>
-<body>
-
-	<p><a href="#" onclick="ShowMap(this)">map</a></p>
-
-	<script type="text/javascript">
-	function ShowMap(e) {
-		var xpos = AbsoluteX(e);
-		var ypos = AbsoluteY(e);
-		alert(xpos+", "+ypos);
-		// now move map to location xpos, ypos
-	}
-
-
-	// find absolute x co-ordinate of element
-	function AbsoluteX(element) {
-		var pos = 0;
-		if (element && typeof element.offsetLeft != 'undefined') {
-			pos = element.offsetLeft;
-			while ((element = element.offsetParent)) pos += element.offsetLeft;
-		}
-		return pos;
-	}
-
-
-	// find absolute y co-ordinate of element
-	function AbsoluteY(element) {
-		var pos = 0;
-		if (element && typeof element.offsetTop != 'undefined') {
-			pos = element.offsetTop;
-			while ((element = element.offsetParent)) pos += element.offsetTop;
-		}
-		return pos;
-	}
-	</script>
-</body>
-</html
+        var marker = new google.maps.Marker({
+          position: myLatLng,
+          map: map,
+          title: 'Hello World!'
+        });
+      }
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBrZqwoiE2SFo32PmyTGZo3D-jvfw5Y10&callback=initMap">
+    </script>
+  </body>
+</html>
