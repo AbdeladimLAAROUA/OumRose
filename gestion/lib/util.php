@@ -826,17 +826,18 @@ function db_connect(){
 	
 	/*Local Kindy*/
 
+
 /*	$hote   	='localhost';
 	$passDb 	='S3cr3T%44';
 	$bd 		='oumdev_leads';
 	$user		='root';	*/
 
+	// $hote   	='localhost';
+	// $passDb 	='S3cr3T%44';
+	// $bd 		='oumdev_leads';
+	// $user		='root';	
 
-	/*$hote   	='localhost';
-	$passDb 	='S3cr3T%44';
-	$bd 		='oumdev_leads';
-	$user		='root';	
-*/
+
 
 	/*Local*/
 	$hote   	='localhost';
