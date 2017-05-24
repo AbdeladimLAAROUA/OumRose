@@ -267,9 +267,27 @@ tr.shown td.details-control {
         <form id="addPostForm">
           <div class="row">
             <div class="col-xs-12">
-              <div class="form-group">
+              <!-- <div class="form-group"> -->
+                <label>Titre Post</label>
+              <!-- </div> -->
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="form-group has-feedback col-xs-12">
+                <div class="input-group col-xs-12">
+                  <input id="title_post" type="text" class="form-control input-lg" data-required-error="Entrez le titre" required>
+                  <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                  <div class="help-block with-errors"></div>
+                </div>
+              </div>              
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <!-- <div class="form-group"> -->
                 <label>Description</label>
-              </div>
+              <!-- </div> -->
             </div>
           </div>
           <div class="row">
@@ -285,9 +303,9 @@ tr.shown td.details-control {
           </div>
           <div class="row">
             <div class="col-xs-12">
-              <div class="form-group">
+              <!-- <div class="form-group"> -->
                 <label>Contenu</label>
-              </div>
+              <!-- </div> -->
             </div>
           </div>
           <div class="row">
@@ -298,6 +316,39 @@ tr.shown td.details-control {
                   <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                   <div class="help-block with-errors"></div>
                 </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <!-- <div class="form-group"> -->
+                <label>Catégorie</label>
+              <!-- </div> -->
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <div id="cat_div" class="form-group">
+                  <div class="checkbox">
+                    <label>
+                      <input type="checkbox" name="categorie">
+                      Checkbox 1
+                    </label>
+                  </div>
+
+                  <div class="checkbox">
+                    <label>
+                      <input type="checkbox" name="categorie">
+                      Checkbox 2
+                    </label>
+                  </div>
+
+                  <div class="checkbox">
+                    <label>
+                      <input type="checkbox" name="categorie">
+                      Checkbox 3  
+                    </label>
+                  </div>
               </div>
             </div>
           </div>

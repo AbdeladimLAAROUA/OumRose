@@ -46,10 +46,25 @@ $(function () {
 			console.log("handle the invalid form...");
 		} else {
 			// everything looks good!
+      var catArray = [];
+      $("input:checkbox[name=categorie]:checked").each(function(){
+        catArray.push($(this).val());
+      });
 			console.log("everything looks good!");
-			// console.log(tinyMCE.getContent('description_post'));
-			// console.log(tinyMCE.getContent('contenu_post'));
-			get_editor_content();
+      console.log(get_editor_content('description_post'));
+      console.log(get_editor_content('contenu_post'));
+      console.log($('#title_post').val());
+      console.log(catArray);
+      console.log(catArray.length);
+      if(catArray.length == 0){
+        alert('Veuillez choisir une catégorie ou plus !');
+      }else{
+        var desc      = get_editor_content('description_post');
+        var content   = get_editor_content('contenu_post');
+        var title     = $('#title_post').val();
+        var post = {'title':title,'desc':desc,'content':content,'catArray':catArray};
+        addPost(post);
+      }
 		}
 	});
 	
@@ -62,7 +77,20 @@ $(function () {
 				"insertdatetime media table contextmenu paste"
 			],
 			toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
-		});
+
+	   });
+
+
+    tinymce.get('description_post').on('blur', function(e) {
+
+          $('#addPostForm').validator('validate');
+    });
+    tinymce.get('contenu_post').on('blur', function(e) {
+
+          $('#addPostForm').validator('validate');
+    });
+
+    addCatList();
 	});
 
 	$('#addCatForm').validator().on('submit', function (e) {
@@ -162,13 +190,14 @@ $(function () {
 	});
 });
 
-function get_editor_content() {
+function get_editor_content(id) {
   // Get the HTML contents of the currently active editor
-  console.debug(tinyMCE.activeEditor.getContent());
+  // console.debug(tinyMCE.activeEditor.getContent());
   //method1 getting the content of the active editor
-  alert(tinyMCE.activeEditor.getContent());
+  // alert(tinyMCE.activeEditor.getContent());
   //method2 getting the content by id of a particular textarea
-  alert(tinyMCE.get('description_post').getContent());
+  // alert(tinyMCE.get(id).getContent());
+  return tinyMCE.get(id).getContent();
 }
 
 function fillTablesCats(data){
@@ -306,4 +335,17 @@ function getPostsTableByCat(id){
             '</tfoot>'+
             '</table>';
   return table;
+}
+
+function addCatList(){
+  var cats = getAllCats()['result'];
+
+  $( "#cat_div" ).empty();
+
+  $.each(cats, function(key, val) {
+    var checkbox = '<div class="checkbox"><label><input type="checkbox" name="categorie" value="'+val.catID+'">'+val.catTitle+'</label></div>';
+    $( "#cat_div" ).append(checkbox);
+    console.log(val);
+  });
+
 }
