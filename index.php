@@ -49,14 +49,14 @@ session_start();
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/bootstrap-responsive.css" rel="stylesheet">
 	<link href="css/style.css" rel="stylesheet">
+
 	
 	<!-- header -->
 	<link rel="stylesheet" type="text/css" href="css/header.css">
 	<!-- end: CSS -->
 
-	<script type="text/javascript" src="js/jquery-1.8.2.js"></script>
 	<!-- <script src="js/movieModernizr.js"></script> -->
-
+	<script src="js/jquery-1.8.2.js"></script>
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -85,26 +85,30 @@ session_start();
             
             <div>
                 <div class="col-md-4">
-                    <div class="block">
-                        <img class="logoProgramme" src="img/avatar_femme.png">
-                        <div class="description1">
-                            Je m'inscris, c'est gratuit!
-                        </div>
-                        <div class="description2">
-                            Je renseigne mes informations pour accéder à mes avantages.
-                        </div>
-                    </div>
+                    <a href="login.php">
+                    	<div class="block">
+                    	    <img class="logoProgramme" src="img/avatar_femme.png">
+                    	    <div class="description1">
+                    	        Je m'inscris, c'est gratuit!
+                    	    </div>
+                    	    <div class="description2">
+                    	        Je renseigne mes informations pour accéder à mes avantages.
+                    	    </div>
+                    	</div>
+                    </a>
                 </div>
                 <div class="col-md-4">
-                    <div class="block">
-                        <img class="logoProgramme" src="img/guide1.png">
-                        <div class="description1">
-                            Je découvre le programme
-                        </div>
-                        <div class="description2">
-                            Je consulte les conseils, tutos, bons plans et offres personnalisées .
-                        </div>
-                    </div>
+                    <a href="oxProgramme.php">
+                    	<div class="block">
+                    	    <img class="logoProgramme2" src="img/simulation guide+box oumbox.png">
+                    	    <div class="description1">
+                    	        Je découvre le programme
+                    	    </div>
+                    	    <div class="description2">
+                    	        Je consulte les conseils, tutos, bons plans et offres personnalisées .
+                    	    </div>
+                    	</div>
+                    </a>
                 </div>
                 <div class="col-md-4">
                     <div class="block">
@@ -129,45 +133,47 @@ session_start();
 	       
       		<!-- start: Hero Unit - Main hero unit for a primary marketing message or call to action -->
       		
-      		<div class="row section2"  >
-				
-			      <h2><span>Nos partenaires</span></h2>
-			   
-        		<div class="col-md-4">
-          			<div class="view view-first">
-                    <img src="img/magasin.jpg" />
-                    <div class="mask">
-                        <h2>Magasins</h2>
-                        <p>A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart.</p>
-                        <a href="#" class="info">Localiser</a>
-                    </div>
-                </div>  
-        		</div>
+      		<div class="container">
+      			      		<div class="row section2"  >
+      							
+      						      <h2><span>Nos partenaires médicaux</span></h2>
+      						   
+      			        		<!-- <div class="col-md-4">
+      			          			<div class="view view-first">
+      			                    <img src="img/magasin.jpg" />
+      			                    <div class="mask">
+      			                        <h2>Magasins</h2>
+      			                        <p>A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart.</p>
+      			                        <a href="#" class="info">Localiser</a>
+      			                    </div>
+      			                </div>  
+      			        		</div> -->
 
-        		<div class="col-md-4">
-          			 <div class="view view-first">
-                    <img src="img/docteur.jpg" />
-                    <div class="mask">
-                        <h2>Médecins</h2>
-                        <p>A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart.</p>
-                        <a href="#" class="info">Localiser</a>
-                    </div>
-                </div>  
-        		</div>
+      			        		<div class="col-md-6">
+      			          			 <div class="view view-first">
+      			                    <img src="img/docteur.jpg" />
+      			                    <div class="mask">
+      			                        <h2>Médecins</h2>
+      			                        <p>A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart.</p>
+      			                        <a href="partenaires.php" class="info">Localiser</a>
+      			                    </div>
+      			                </div>  
+      			        		</div>
 
-        		<div class="col-md-4">
-          			<div class="view view-first">
-                    <img src="img/hopital.jpg" />
-                    <div class="mask">
-                        <h2>Cliniques</h2>
-                        <p>A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart.</p>
-                        <a href="#" class="info">Localiser</a>
-                    </div>
-                </div>  
-        		</div>
+      			        		<div class="col-md-6">
+      			          			<div class="view view-first">
+      			                    <img src="img/hopital.jpg" />
+      			                    <div class="mask">
+      			                        <h2>Cliniques</h2>
+      			                        <p>A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart.</p>
+      			                        <a href="partenaires.php" class="info">Localiser</a>
+      			                    </div>
+      			                </div>  
+      			        		</div>
 
 
 
+      			      		</div>
       		</div>
 			<!-- end: Row -->
 			<hr>
@@ -264,7 +270,7 @@ session_start();
 			
 			<hr>
 			<!-- start Clients List -->	
-			<div class="clients-carousel">
+			<!-- <div class="clients-carousel">
 		
 				<ul class="slides clients">
 					<li><img src="img/logos/1.png" alt=""/></li>
@@ -279,7 +285,7 @@ session_start();
 					<li><img src="img/logos/10.png" alt=""/></li>		
 				</ul>
 		
-			</div>
+			</div> -->
 			<!-- end Clients List -->
 		
 			
@@ -378,7 +384,7 @@ session_start();
 
 <!-- start: Java Script -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="js/jquery-1.8.2.js"></script>
+
 <script src="js/bootstrap.js"></script>
 <script src="js/flexslider.js"></script>
 <script src="js/carousel.js"></script>
@@ -408,5 +414,18 @@ session_start();
 </script>
 <!-- end: Java Script -->
 
+	<script type="text/javascript">   
+
+       $(".inscriptionBtn").click(function() {
+	   window.location.replace('register.php');
+	});
+	</script>
+	<script type="text/javascript">
+		$(".goTopLink").click(function() {
+		    $('html, body').animate({
+		        scrollTop: $("header").offset().top
+			}, 1000);
+		});
+	</script>
 </body>
 </html>

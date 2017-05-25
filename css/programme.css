@@ -4,12 +4,12 @@ body {
 
 .timeline-wrapper {
   display: block;
-  width: 90%;
+  width: 83%;
   height: 15rem;
   position: relative;
   color: #6cc;/*white*/
   text-align: center;
-  margin: 50px auto;
+  margin: 50px 50px;
 }
 .timeline-wrapper .timeline-line {
   display: block;
@@ -110,12 +110,12 @@ body {
   color: #c36eaa; /*white*/
  /* text-shadow: 0 0 2px rgba(0, 0, 0, 0.5), 0 0 1px black;*/
 }
-.timeline-wrapper .timeline-content-item .timeline-content-item-reveal a span:after {
+/*.timeline-wrapper .timeline-content-item .timeline-content-item-reveal a span:after {
   content: "\203A";
   margin-left: .3em;
-}
+}*/
 .timeline-wrapper .timeline-content-item.active {
-  width: 20%;
+  width: 18%;
 }
 .timeline-wrapper .timeline-content-item.active .timeline-content-item-reveal {
   display: block;

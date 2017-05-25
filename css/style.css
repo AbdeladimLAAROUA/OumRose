@@ -24,10 +24,10 @@
 }
 
 body {
-	font-family: 'avenir';
+	font-family: 'avenir' !important;
 	font-size: 12px;
 	color: #666;
-	margin-top: 0px;
+	margin: 0px;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -122,7 +122,9 @@ header {
 	font-size: 16px;
 
 }
-
+a:hover{
+	text-decoration: none;
+}
 .navbar .nav > li > a:focus,
 .navbar .nav > li > a:hover {
 	border-top:4px solid #FF66CC;
@@ -1847,6 +1849,10 @@ body > div.section1 > section > h2{
 	height:100px;
 	margin-bottom: 20px;
 }
+.part2 .logoProgramme2{
+	height:100px;
+	margin-bottom: 20px;
+}
 .part3{
 	text-align: center;
 	padding: 20px;
@@ -1890,6 +1896,14 @@ body > div.section1 > section > h2{
 }
 iframe.video video{
 
+}
+
+#footer .container{
+	width: 1000px !important;
+}
+
+#footer > div > div > div.span5{
+	width: 350px !important;
 }
 
 /* Higher than 960 (desktop devices)

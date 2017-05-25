@@ -227,7 +227,12 @@
 </div> -->
 
 <div class="separ1">Trouver notre partenaire le plus proche de vous </div>
-<div id="map"></div>
+<!-- <div class="col-md-6">
+  nom : <br/>
+  adresse : <br/>
+  type : <br/>
+</div> -->
+<div id="map" ></div>
 <div class="separ2"></div>
     
   

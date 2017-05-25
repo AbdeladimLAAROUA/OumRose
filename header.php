@@ -71,7 +71,7 @@
 								<img class="logo" src="img/logo.png" />
 							</a>
 						</li>
-						<li class="activee">
+						<!-- <li class="activee">
 							<a href="#" class="welcomeNav">
 								<?php 
 									if(isset($_SESSION['client_id']))
@@ -83,12 +83,12 @@
 								 ?>
 
 							</a>
-						</li>
+						</li> -->
 						
 						
 
 	          <li class="drop-down" style="">
-					<a href="#">Programme</a>
+					<a href="oxProgramme.php">Programme</a>
 				 
 					<!-- <div class="mega-menu fadeIn animated">
 						<div class="mm-6column">
@@ -148,7 +148,13 @@
 					<a href="partenaires.php">Nos partenaires</a>
 				</li>
 				<li class="activee">
-					<a href="blog.php">Articles</a>
+					<a href="blog.php">Grossesse</a>
+				</li>
+				<li class="activee">
+					<a href="blog.php">Maman</a>
+				</li>
+				<li class="activee">
+					<a href="blog.php">Bébé</a>
 				</li>
 				<li class="activee">
 					<a href="#">Contactez-nous</a>
