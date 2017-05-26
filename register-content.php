@@ -1,27 +1,65 @@
 
-
-  <div class="row" id="content">
+  
+  <div class="row" id="content" >
       <form class="col s12 m8 offset-m2 l6 offset-l3 left-alert" id="myForm" novalidate="novalidate">
       <ul class="collapsible collapsible-expandable" data-collapsible="expandable">
-       <li class="active">
+        
+
+      <li id="libaby0"  >
+        <div id="headbaby" class="collapsible-header teal lighten-2 white-text waves-effect waves-light active"><!-- <i class="material-icons">child_care</i>  -->Inscription</div>
+            <div class="collapsible-body" style="display: block;">
+            <div class="row">
+             <div class="input-field col s12" >
+              <span class="micons-mail prefix"></span>
+              <input id="email" type="email" name="EMAIL" class="validate" required="true" aria-required="true" pattern="^.*@[a-zA-Z\.]+\.[a-zA-Z]{2,}$">
+              <label for="email" data-error="email invalide" data-success="" class="">Email</label>
+            </div>
+            <div class="input-field col s6">
+              <span class="micons-padlock prefix"></span>
+              <input id="password" type="password" name="PASSWORD" pattern=".{2,}" minlength="6" class="validate" required="required" aria-required="true">
+              <label for="password" data-error="invalide" class="">Password</label>
+            </div>
+            <div class="input-field col s6">
+              <input id="passconf" name="passconf" type="password" pattern=".{2,}" minlength="6" class="validate" required="required" aria-required="true">
+              <label for="passconf" data-error="Password incorrect" class="">Confirmation</label>
+            </div>
+            <div class="sparator">
+              <label>Ou</label>
+            </div>
+            <div class="col s6 text-center">
+               <button type="button" class="btn btn-primary signupFB" >S'inscrire avec Facebook</button>
+            </div>
+             <div class="col s6 text-center">
+               <button type="button" class="btn btn-primary signupGmail">S'inscrire avec Gmail</button>
+            </div>
+             <div class="col s12 text-center">
+               <button type="button" class="btn btn-primary continueBtn">Continuer</button>
+            </div>
+
+        </div>
+      </div>
+    </li>
+
+
+       <li class="active maman" hidden>
       <div class="collapsible-header pink lighten-2 white-text waves-effect waves-light active"><i class="material-icons">face</i> Maman</div>
       <div class="collapsible-body" style="display: block;">
         <div class="row">
 
-         <div class="input-field col s12">
-<span class="micons-mail prefix"></span>
+        <!--  <div class="input-field col s12 part1" >
+          <span class="micons-mail prefix"></span>
           <input id="email" type="email" name="EMAIL" class="validate" required="true" aria-required="true" pattern="^.*@[a-zA-Z\.]+\.[a-zA-Z]{2,}$">
           <label for="email" data-error="email invalide" data-success="" class="">Email</label>
         </div>
-        <div class="input-field col s6">
-<span class="micons-padlock prefix"></span>
+        <div class="input-field col s6 part1" >
+          <span class="micons-padlock prefix"></span>
           <input id="password" type="password" name="PASSWORD" pattern=".{2,}" minlength="6" class="validate" required="required" aria-required="true">
           <label for="password" data-error="invalide" class="">Password</label>
         </div>
-        <div class="input-field col s6">
+        <div class="input-field col s6 part1">
           <input id="passconf" name="passconf" type="password" pattern=".{2,}" minlength="6" class="validate" required="required" aria-required="true">
           <label for="passconf" data-error="Password incorrect" class="">Confirmation</label>
-        </div>
+        </div> -->
              <div class="input-field col s6">
 <span class="micons-user prefix"></span>
           <input id="prenom" type="text" name="PRENOM" pattern=".{2,}" minlength="2" class="validate" required="required" aria-required="true">
@@ -49,8 +87,27 @@
          </div>
            <div class="input-field col s8">
 <span class="micons-building prefix"></span>
-          <input id="city" name="VILLE" type="text" pattern=".{3,}" minlength="3" required="required" class="validate" aria-required="true">
-                    <label for="city" data-error="invalide">Ville</label>
+          <!-- <input id="city" name="VILLE" type="text" pattern=".{3,}" minlength="3" required="required" class="validate" aria-required="true"> -->
+
+          <select id="ville" name="VILLE" class="initialized">
+            <option value="0" disabled="" selected="">Ville</option>
+            <option value="1">Casablanca</option>
+            <option value="2">Rabat</option>
+            <option value="3">Larache</option>
+            <option value="4">Mohammdia</option>
+            <option value="5">Nouaceur</option>
+            <option value="6">El Jadida</option>
+            <option value="7">Harhoura</option>
+            <option value="8">Tanger</option>
+            <option value="9">Fès</option>
+            <option value="10">Ain Harrouda</option>
+            <option value="11">Bouskoura</option>
+            <option value="12">Agadir</option>
+            <option value="13">Temara</option>
+            <option value="14">Berrechid</option>
+          </select>
+
+          
 
         </div>
   <div class="input-field col s4">
@@ -84,11 +141,15 @@
     <div class="input-field col s5" id="divsex" style="display: none;">
     <span class="fa fa-venus-mars prefix"></span>
 
-    <div class="select-wrapper"><span class="caret">▼</span><input type="text" class="select-dropdown" readonly="true" data-activates="select-options-677afea1-502a-067a-aa73-df57f305e464" value="Sexe" pattern=".{5,}"><ul id="select-options-677afea1-502a-067a-aa73-df57f305e464" class="dropdown-content select-dropdown "><li class="disabled "><span>Sexe</span></li><li class=""><span>Garçon</span></li><li class=""><span>Fille</span></li></ul><select id="sexe" name="SEXE_BEBE" class="initialized">
+    <div class="select-wrapper">
+    <span class="caret">▼</span><input type="text" class="select-dropdown" readonly="true" data-activates="select-options-677afea1-502a-067a-aa73-df57f305e464" value="Sexe" pattern=".{5,}"><ul id="select-options-677afea1-502a-067a-aa73-df57f305e464" class="dropdown-content select-dropdown "><li class="disabled "><span>Sexe</span></li><li class=""><span>Garçon</span></li><li class=""><span>Fille</span></li></ul>
+
+    <select id="sexe" name="SEXE_BEBE" class="initialized">
       <option value="" disabled="" selected="">Sexe</option>
       <option value="G">Garçon</option>
       <option value="F">Fille</option>
-    </select></div>
+    </select>
+    </div>
     </div>
     <div class="input-field col s7" id="divmat">
     <span class="fa fa-hospital-o prefix"></span>
@@ -528,6 +589,91 @@ $(function() {
     });
 </script>
    
+<script type="text/javascript">
+  
+  $('.continueBtn').click(function() {
+    $("li.active.maman").removeAttr( "hidden" );
+    $("#libaby0").attr( "hidden",'' );
+  }); 
 
+</script>
+
+        <script>
+  // Load the SDK asynchronously
+  (function(thisdocument, scriptelement, id) {
+    var js, fjs = thisdocument.getElementsByTagName(scriptelement)[0];
+    if (thisdocument.getElementById(id)) return;
+    
+    js = thisdocument.createElement(scriptelement); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js"; //you can use 
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+    
+  window.fbAsyncInit = function() {
+  FB.init({
+    appId      : '143410559536671', //Your APP ID
+    cookie     : true,  // enable cookies to allow the server to access 
+                        // the session
+    xfbml      : true,  // parse social plugins on this page
+    version    : 'v2.1' // use version 2.1
+  });
+
+  // These three cases are handled in the callback function.
+  FB.getLoginStatus(function(response) {
+    statusChangeCallback(response);
+  });
+
+  };
+    
+  // This is called with the results from from FB.getLoginStatus().
+  function statusChangeCallback(response) {
+    if (response.status === 'connected') {
+      // Logged into your app and Facebook.
+      /*_i();*/
+    } else if (response.status === 'not_authorized') {
+      // The person is logged into Facebook, but not your app.
+      document.getElementById('status').innerHTML = 'Please log ' +
+        'into this app.';
+    }
+  }  
+  
+  $("button.signupFB").click(function() {
+    
+     function _login() {
+       FB.login(function(response) {
+          // handle the response
+          console.log(response);
+          if(response.status==='connected') {
+           _i();
+          }
+        }, {scope: 'public_profile,email'});
+    }
+    _login();
+    
+  });
+  
+ 
+ function _i(){
+     var url = '/me?fields=gender,first_name,last_name,email';
+     FB.api(url, function(response) {
+
+        $("li.active.maman").removeAttr( "hidden" );
+        $("#libaby0").attr( "hidden",'' );
+
+        $("#prenom").val(response.first_name);
+        $("#nom").val(response.last_name);
+
+        $("#email").val("default@gmail.com");
+        $("#password").val("default");
+        $("#passconf").val("default");
+
+       /* $(".part1").hide();*/
+
+         $("#myForm > ul > li.active.maman > div.collapsible-body > div > div:nth-child(1) > label").addClass("active");
+         $("#myForm > ul > li.active.maman > div.collapsible-body > div > div:nth-child(2) > label").addClass("active");
+    });
+ }
+
+</script>
 
 <div class="hiddendiv common"></div><input type="hidden" value="mata-inactive-38.png" id="mata-icon-name"><div class="ha"></div>

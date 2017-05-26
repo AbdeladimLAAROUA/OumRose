@@ -15,7 +15,7 @@ if (count($_POST)>7){
         $_POST['TYPE'] == ("enceinte" || "maman") &&
         mb_strlen($_POST['NOM']) >1 &&
         mb_strlen($_POST['PRENOM']) >1 &&
-        mb_strlen($_POST['VILLE']) >1 ){
+        mb_strlen($_POST['VILLE']) >0 ){
 
         // check optional fields
         if ( mb_strlen($_POST['ADRESSE'])>150 ||
@@ -33,7 +33,8 @@ if (count($_POST)>7){
         $customer['gsm']=htmlspecialchars($_POST['GSM']);
         $customer['adresse']=htmlspecialchars($_POST['ADRESSE']);
         $customer['type']=htmlspecialchars($_POST['TYPE']);
-        $customer['ville_id']=htmlspecialchars("1");
+        $customer['ville_id']=htmlspecialchars($_POST['VILLE']);
+        echo htmlspecialchars($_POST['VILLE']);
         $customer['naissance']=htmlspecialchars($_POST['DATE_NAISSANCE']);
         $customer['cp']=htmlspecialchars($_POST['CP']);
 
@@ -43,6 +44,11 @@ if (count($_POST)>7){
 
         // connect to DB 
 
+       /* $servername = "sql.k4mshost.odns.fr";
+        $username = "k4mshost_oumdev";
+        $password = "!!oumb0x";
+        $dbname="k4mshost_oumdev";*/
+        
         $mydb = mysqli_connect("localhost","root","","oumdev_leads");
         if (mysqli_connect_errno()) {
         //printf("Connect failed: %s\n", mysqli_connect_error());

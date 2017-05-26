@@ -1,77 +1,77 @@
 <?php
-	/*echo $today = date("ymd");*/
-	// Date d'aujourd'hui
-	/*$today = new DateTime(date('Y-m-d'));
-	
-	
-	/*$today2 = new DateTime(date('Y-m-d'));*/
+  /*echo $today = date("ymd");*/
+  // Date d'aujourd'hui
+  /*$today = new DateTime(date('Y-m-d'));
+  
+  
+  /*$today2 = new DateTime(date('Y-m-d'));*/
 
-	/*$dateInSixMonth = $today->add(new DateInterval('P9M'));*/
-	/*
-	$naissance =  new DateTime('2017-7-20');
-
-
-	$interval = date_diff($today, $naissance);
+  /*$dateInSixMonth = $today->add(new DateInterval('P9M'));*/
+  /*
+  $naissance =  new DateTime('2017-7-20');
 
 
-	$diffJours =  $interval->format('%R%a days');
+  $interval = date_diff($today, $naissance);
 
-	if($diffJours>0 && $diffJours<92){
-			echo "box1 :".$diffJours;
-	}
-	else if($diffJours<0 && $diffJours>-92){
-			echo "box2 : ".$diffJours;
-	}
-	else if($diffJours<-183 && $diffJours>-276){
-			echo "box3 : ".$diffJours;	
-	}else{
-		echo "aucune box";
-	}*/
-/*	//Ajout de 3 mois sur la date d'aujourd'hui
-		$dateInThreeMonth = $today->add(new DateInterval('P3M'));
+
+  $diffJours =  $interval->format('%R%a days');
+
+  if($diffJours>0 && $diffJours<92){
+      echo "box1 :".$diffJours;
+  }
+  else if($diffJours<0 && $diffJours>-92){
+      echo "box2 : ".$diffJours;
+  }
+  else if($diffJours<-183 && $diffJours>-276){
+      echo "box3 : ".$diffJours;  
+  }else{
+    echo "aucune box";
+  }*/
+/*  //Ajout de 3 mois sur la date d'aujourd'hui
+    $dateInThreeMonth = $today->add(new DateInterval('P3M'));
 */
 /*
-	$khalid['a']="b";
-	$khalid['b']="c";
-	echo json_encode($khalid);*/
+  $khalid['a']="b";
+  $khalid['b']="c";
+  echo json_encode($khalid);*/
 
 
 
-/*	require_once('Logging.php');
+/*  require_once('Logging.php');
 
-	$log = new Logging();
+  $log = new Logging();
 
-	// set path and name of log file (optional)
-	$log->lfile('mylog.txt');
+  // set path and name of log file (optional)
+  $log->lfile('mylog.txt');
 
-	// write message to the log file
-	$log->lwrite('Test message1');
-	$log->lwrite('Test message2');
-	$log->lwrite('Test message3');
+  // write message to the log file
+  $log->lwrite('Test message1');
+  $log->lwrite('Test message2');
+  $log->lwrite('Test message3');
 
-	// close log file
-	$log->lclose();
-	*/
+  // close log file
+  $log->lclose();
+  */
 
-	/*require('tools/mailin.php');
+  /*require('tools/mailin.php');
     $mailin = new Mailin("https://api.sendinblue.com/v2.0","YUAxmzIyZSO4EJw9");
     $data = array( "email" => "salimelqalbfz@gmail.com","listid" => array(34));
- 	var_dump($mailin->get_user($data));*/
+  var_dump($mailin->get_user($data));*/
 
 
-	
+  
 
 
- /*	require('tools/mailin.php');
+ /* require('tools/mailin.php');
     $mailin = new Mailin("https://api.sendinblue.com/v2.0","YUAxmzIyZSO4EJw9");
- 	$data = array( "email" => "khalid.essalhi8@gmail.com",
+  $data = array( "email" => "khalid.essalhi8@gmail.com",
         "attributes" => array("GYNECO"=>"none"),
         "listid" => array(34)
     ); 
     var_dump($mailin->create_update_user($data));*/
 
-	
-/*	function notification_email ($data){
+  
+/*  function notification_email ($data){
     
         $semi_rand = md5(time());
         $mime_boundary = "Oumbx_Mpart_Bound_x{$semi_rand}x";
@@ -96,10 +96,10 @@
     return $ok;
 }
 
-	$data["nom"]="khalid";
-	notification_email($data);*/
+  $data["nom"]="khalid";
+  notification_email($data);*/
 
-	/*$emailFrom = "khalid.essalhi8@gmail.com"; // match this to the domain you are sending email from
+  /*$emailFrom = "khalid.essalhi8@gmail.com"; // match this to the domain you are sending email from
 $email = "khalid.essalhi8@gmail.com";
 $subject = "Email Request";
 $headers = 'From:' . 'khalid' . "\r\n";
@@ -108,7 +108,7 @@ $headers .= "Return-path: " . $email;
 $message = "Your password is ".'password'.".";
 mail($email, $subject, $message, $headers);*/
 ?>
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
   <head>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
@@ -151,4 +151,99 @@ mail($email, $subject, $message, $headers);*/
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBrZqwoiE2SFo32PmyTGZo3D-jvfw5Y10&callback=initMap">
     </script>
   </body>
+</html> -->
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+ 
+</head>
+<body>
+  <form class="form-signin" role="form">
+             <div id="status"></div>
+         <h2 class="form-signin-heading">User Registration</h2>
+         
+         <label for="inputFname" class="sr-only">First Name</label>
+             <input type="text" id="inputFname" class="form-control" placeholder="First Name" required autofocus>
+         
+         <label for="inputLname" class="sr-only">First Name</label>
+             <input type="text" id="inputLname" class="form-control" placeholder="Last Name" required >
+             
+         <label for="inputEmail" class="sr-only">Email address</label>
+         <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required >
+         
+         <label for="inputPassword" class="sr-only">Password</label>
+         <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+         <div class="checkbox">
+           <label>
+             <input type="checkbox" value="remember-me"> Remember me
+           </label>
+         </div>
+         
+         <button class="btn btn-sm btn-primary btn-block" type="submit">Sign Up</button> <button class="btn btn-sm btn-primary btn-block" onclick="_login();" type="submit">Sign Up using Facebook</button>
+       </form>
+
+        <script>
+  // Load the SDK asynchronously
+  (function(thisdocument, scriptelement, id) {
+    var js, fjs = thisdocument.getElementsByTagName(scriptelement)[0];
+    if (thisdocument.getElementById(id)) return;
+    
+    js = thisdocument.createElement(scriptelement); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js"; //you can use 
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+    
+  window.fbAsyncInit = function() {
+  FB.init({
+    appId      : '143410559536671', //Your APP ID
+    cookie     : true,  // enable cookies to allow the server to access 
+                        // the session
+    xfbml      : true,  // parse social plugins on this page
+    version    : 'v2.1' // use version 2.1
+  });
+
+  // These three cases are handled in the callback function.
+  FB.getLoginStatus(function(response) {
+    statusChangeCallback(response);
+  });
+
+  };
+    
+  // This is called with the results from from FB.getLoginStatus().
+  function statusChangeCallback(response) {
+    if (response.status === 'connected') {
+      // Logged into your app and Facebook.
+      _i();
+    } else if (response.status === 'not_authorized') {
+      // The person is logged into Facebook, but not your app.
+      document.getElementById('status').innerHTML = 'Please log ' +
+        'into this app.';
+    }
+  }  
+  
+  function _login() {
+    FB.login(function(response) {
+       // handle the response
+      console.log(response);
+       if(response.status==='connected') {
+        _i();
+       }
+     }, {scope: 'public_profile,email'});
+ }
+ 
+ function _i(){
+     var url = '/me?fields=gender,first_name,last_name,email';
+     FB.api(url, function(response) {
+
+        console.log(response);
+        document.getElementById("inputFname").value = response.first_name;
+        document.getElementById("inputLname").value = response.last_name;
+        document.getElementById("inputEmail").value = response.email;
+    });
+ }
+
+</script>
+</body>
 </html>

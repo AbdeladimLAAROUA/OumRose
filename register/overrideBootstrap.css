@@ -73,3 +73,28 @@ input[type="color"],
 	left: 0% !important;
 	margin: auto !important;
 }
+.sparator{
+	margin: 20px;
+	text-align: center;
+}
+.continueBtn{
+	margin: 20px;
+}
+.signupFB{
+	background-color: #3b5998 !important;
+    border-radius: 21px !important;
+    width: 90% !important;
+    text-transform: none !important; 
+    padding: 1px 40px !important;
+}
+.signupGmail{
+	background-color: #ff3d00 !important;
+    border-radius: 21px !important;
+    width: 90% !important;
+    text-transform: none !important; 
+    padding: 1px 40px !important;
+}
+
+select#ville{
+	display: none;
+}
