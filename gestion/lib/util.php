@@ -61,6 +61,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			echo getNumberPostsByCat();
 		}else if($_REQUEST['methode'] == 'getPostsByCatId'){
 			echo getPostsByCatId($_REQUEST['id']);
+		}else if($_REQUEST['methode'] == 'addPost'){
+			echo addPost($_REQUEST['post']);
+		}else if($_REQUEST['methode'] == 'deletePost'){
+			echo deletePost($_REQUEST['id']);
+		}else if($_REQUEST['methode'] == 'getCatsByPostId'){
+			echo getCatsByPostId($_REQUEST['id']);
+		}else if($_REQUEST['methode'] == 'getPostById'){
+			echo getPostById($_REQUEST['id']);
+		}else if($_REQUEST['methode'] == 'updatePost'){
+			echo updatePost($_REQUEST['post']);
+		}else if($_REQUEST['methode'] == 'addPostCat'){
+			echo addPostCat($_REQUEST['id_post'],$_REQUEST['id_cat']);
+		}else if($_REQUEST['methode'] == 'deleteCatPost'){
+			echo deleteCatPost($_REQUEST['id_post']);
+		}else if($_REQUEST['methode'] == 'deletePostCatUp'){
+			echo deleteCatPostUpdatePost($_REQUEST['id_post'],$_REQUEST['id_cat']);
 		}else{
 			echo json_encode(array('result'=>'method_not_exist'));
 		}
@@ -697,7 +713,7 @@ function getCatById($id){
 
 function addCat($cat){
 	$array = array();
-	$catSlug = strtolower($cat['catTitle']);
+	$catSlug = slug($cat['catTitle']);
 
 	try {
 		$connexion = db_connect();
@@ -731,7 +747,7 @@ function addCat($cat){
 
 function updateCat($cat){
 	$array = array();
-	$catSlug = strtolower($cat['catTitle']);
+	$catSlug = slug($cat['catTitle']);
 
 	try {
 		$connexion = db_connect();
@@ -757,7 +773,6 @@ function updateCat($cat){
 
 	return json_encode($array);	
 }
-
 
 function deleteCat($id){
 	$array = array();
@@ -821,9 +836,236 @@ function getPostsByCatId($id){
 	return json_encode($array);	
 }
 
+function addPost($post){
+	$array = array();
+	$postSlug = slug($post['title']);
+
+	try {
+		$connexion = db_connect();
+		$sql = "INSERT INTO `blog_posts_seo`(`postTitle`, `postSlug`, `postDesc`, `postCont`) VALUES (:postTitle, :postSlug, :postDesc, :postCont)";
+		
+		//Prepare our statement.
+		$statement = $connexion->prepare($sql);
+		
+		//Bind our values to our parameters (we called them :make and :model).
+		$statement->bindValue(':postTitle', $post['title']);
+		$statement->bindValue(':postSlug', $postSlug);
+		$statement->bindValue(':postDesc', $post['desc']);
+		$statement->bindValue(':postCont', $post['content']);
+		 
+		//Execute the statement and insert our values.
+		$inserted = $statement->execute();
+		 
+		//Because PDOStatement::execute returns a TRUE or FALSE value,
+		//we can easily check to see if our insert was successful.
+		if($inserted){
+			$indertedId = $connexion->lastInsertId();
+
+			foreach ($post['catArray'] as $catId) {
+				addPostCat($indertedId,$catId);
+			}
+			
+			$array['status'] = 'success';
+			$array['inserted_id'] = $indertedId;
+		}
+
+	} catch (Exception $e) {
+		$array['status'] = 'failed';
+	}
+	
+	$connexion = null;
+	return json_encode($array);
+}
+
+function addPostCat($postId, $catId){
+	$array = array();
+	try {
+		$connexion = db_connect();
+		$sql = "INSERT INTO `blog_post_cats`(`postID`, `catID`) VALUES (:postID,:catID)";
+		
+		//Prepare our statement.
+		$statement = $connexion->prepare($sql);
+		
+		//Bind our values to our parameters (we called them :make and :model).
+		$statement->bindValue(':postID', $postId);
+		$statement->bindValue(':catID', $catId);
+		 
+		//Execute the statement and insert our values.
+		$inserted = $statement->execute();
+		 
+		//Because PDOStatement::execute returns a TRUE or FALSE value,
+		//we can easily check to see if our insert was successful.
+		if($inserted){
+			// $indertedId = $connexion->lastInsertId();
+			// $array['inserted_id'] = $indertedId;
+			$array['result'] = 'success';
+		}
+
+	} catch (Exception $e) {
+		$array['result'] = 0;
+	}
+	
+	$connexion = null;
+	return json_encode($array);
+}
+
+function deletePost($id){
+	$array = array();
+	$array['result'] = 0;
+
+	try {
+		$connexion = db_connect();
+
+		$stmt = $connexion->prepare("DELETE FROM `blog_posts_seo` WHERE `postID` = :postID");
+		$stmt->bindParam(':postID', $id);
+		$stmt->execute();
+		$count = $stmt->rowCount();
+
+		if($count == 1){
+			$res = deleteCatPost($id);
+		}else{
+			$array['result'] 	= 'empty';
+			$res 				= json_encode($array);
+		}
+	} catch (Exception $e) {
+		$array['result'] 	= 'failed';
+		$res 				= json_encode($array);
+	}
+	
+	$connexion = null;
+	return $res;	
+}
+
+function deleteCatPost($id){
+	$array = array();
+	$array['result'] = 0;
+
+	try {
+		$connexion = db_connect();
+
+		$stmtCat = $connexion->prepare("DELETE FROM `blog_post_cats` WHERE `postID` = :postID");
+		$stmtCat->bindParam(':postID', $id);
+		$stmtCat->execute();
+		$countCat = $stmtCat->rowCount();
+		if($countCat >= 1){
+			$array['result'] = 'success';
+		}else{
+			$array['result'] = 'failed';
+		}
+	} catch (Exception $e) {
+		$array['result'] = 'failed';
+	}
+	
+	$connexion = null;
+	return json_encode($array);	
+}
+
+function deleteCatPostUpdatePost($idPost, $idCat){
+	$array = array();
+	$array['result'] = 0;
+
+	try {
+		$connexion = db_connect();
+
+		$stmtCat = $connexion->prepare("DELETE FROM `blog_post_cats` WHERE `postID` = :postID AND `catID` = :catID");
+		$stmtCat->bindParam(':postID', $idPost);
+		$stmtCat->bindParam(':catID', $idCat);
+		$stmtCat->execute();
+		$countCat = $stmtCat->rowCount();
+		if($countCat >= 1){
+			$array['result'] = 'success';
+		}else{
+			$array['result'] = 'failed';
+		}
+	} catch (Exception $e) {
+		$array['result'] = 'failed';
+	}
+	
+	$connexion = null;
+	return json_encode($array);	
+}
+
+function getCatsByPostId($id){
+	$array = array();
+	try {
+		$connexion = db_connect();
+		$resultats = $connexion->prepare("SELECT `catID` FROM `blog_post_cats` WHERE `postID` = :postID");
+		$resultats->bindParam(':postID', $id);
+		$resultats->execute();
+		$resultats->setFetchMode(PDO::FETCH_OBJ);
+		$resultat = $resultats->fetchAll();
+
+		if($resultat > 0){
+			$array['result'] = $resultat;
+			$array['status'] = 'success';
+		}else{
+			$array['status'] = 'empty';
+		}
+	} catch (Exception $e) {
+		$array['status'] = 'failed';
+	}
+	
+	$connexion = null;
+	return json_encode($array);	
+}
+
+function getPostById($id){
+	$array = array();
+	try {
+		$connexion = db_connect();
+		$resultats = $connexion->prepare("SELECT * FROM `blog_posts_seo` WHERE `postID`= :postID");
+		$resultats->bindParam(':postID', $id);
+		$resultats->execute();
+		$resultats->setFetchMode(PDO::FETCH_OBJ);
+		$resultat = $resultats->fetchAll();
+		if($resultat > 0){
+			$array['result'] = $resultat;
+			$array['status'] = 'success';
+		}else{
+			$array['status'] = 'empty';			
+		}
+	} catch (Exception $e) {
+		$array['status'] = 'failed';
+	}
+	
+	$connexion = null;
+	return json_encode($array);	
+}
+
+
+function updatePost($post){
+	$array = array();
+	$postSlug = slug($post['title']);
+
+	try {
+		$connexion = db_connect();
+
+		$stmt = $connexion->prepare("UPDATE `blog_posts_seo` SET `postTitle`= :postTitle, `postSlug`= :postSlug, `postDesc`= :postDesc, `postCont`= :postCont WHERE `postID` = :postID");
+		
+		$stmt->bindValue(':postTitle', $post['title']);
+		$stmt->bindValue(':postSlug', $postSlug);
+		$stmt->bindValue(':postDesc', $post['desc']);
+		$stmt->bindValue(':postCont', $post['content']);
+		$stmt->bindValue(':postID', $post['postId']);
+
+		$stmt->execute();
+
+		if($stmt->rowCount()) {
+			$array['result'] = 'success';
+		} else {
+			$array['result'] = 'failed';
+		}
+	} catch (Exception $e) {
+		$array['result'] = 'failed';
+	}
+	
+	$connexion = null;
+
+	return json_encode($array);	
+}
+
 function db_connect(){
 
-	
 	/*Local Kindy*/
 
 
@@ -838,21 +1080,46 @@ function db_connect(){
 	// $user		='root';	
 
 
-
 	/*Local*/
-	$hote   	='localhost';
+
+	$hote 		='localhost';
 	$passDb 	='';
 	$bd 		='oumdev_leads';
 	$user		='root';
 
 	/*Distant*/
-	/*$hote   	='localhost';
-	$passDb 	='oumdev';
-	$bd 		='id709237_oumdev_leads';
-	$user		='id709237_oumdev';*/
-	
+
+	// $hote 		='localhost';
+	// $passDb 	='oumdev';
+	// $bd 		='id709237_oumdev_leads';
+	// $user		='id709237_oumdev';
 
 	$connexion = new PDO('mysql:host='.$hote.';dbname='.$bd.';charset=utf8', $user, $passDb);
 
 	return $connexion;
+}
+
+
+function slug($text){ 
+	// replace non letter or digits by -
+	$text = preg_replace('~[^\\pL\d]+~u', '-', $text);
+
+	// trim
+	$text = trim($text, '-');
+
+	// transliterate
+	$text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
+
+	// lowercase
+	$text = strtolower($text);
+
+	// remove unwanted characters
+	$text = preg_replace('~[^-\w]+~', '', $text);
+
+	if (empty($text))
+	{
+		return 'n-a';
+	}
+
+	return $text;
 }

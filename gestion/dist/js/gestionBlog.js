@@ -4,93 +4,76 @@ $(function () {
 		blur: false
 	});
 
-	var table_cat,table_post;
-	var cats = getAllCats();
-	if(cats.status == 'success'){
-		// console.log('success');
-		// console.log(cats.result);
-		fillTablesCats(cats.result);
-		table_cat = $("#table_categories").DataTable();
-	}
-
+	var table_cat;
 	var table_cat_n,table_temp;
-	var postsByCat = getPotsByCat();
-	console.log(postsByCat);
-	if(postsByCat.status == 'success'){
-		fillCatTable(postsByCat['result']);
-		table_cat_n = $("#table_categorie_post").DataTable();
-	}
+	var id_post,arrCats = [];
+
+	table_cat 	= fillCats(table_cat);
+
+	fillCatsPosts(table_cat_n);
+
+	table_cat_n = $("#table_categorie_post").DataTable();
+
 
 	// Add event listener for opening and closing details
 	$('#table_categorie_post tbody').on('click', 'td.details-control', function () {
 		var tr = $(this).closest('tr');
-		var row = table_cat_n.row( tr );
+		// console.log(tr);
+		var row = table_cat_n.row(tr);
+		// console.log(row);
 
 		if ( row.child.isShown() ) {
 			// This row is already open - close it
+			// console.log('close');
 			row.child.hide();
 			tr.removeClass('shown');
 		} else {
 			// Open this row
+			// console.log('Open');
 			var id = $(this).data("id");
-			row.child( getPostsTableByCat(id)).show();
+			// console.log(id);
+			row.child(getPostsTableByCat(id)).show().draw();
+			// console.log(getPostsTableByCat(id));
 			tr.addClass('shown');
 			table_temp = $("#table_categorie_"+id).DataTable();
 		}
 	});
-
-	$('#addPostForm').validator().on('submit', function (e) {
-		if (e.isDefaultPrevented()) {
-			// handle the invalid form...
-			// alert("handle the invalid form...");
-			console.log("handle the invalid form...");
-		} else {
-			// everything looks good!
-      var catArray = [];
-      $("input:checkbox[name=categorie]:checked").each(function(){
-        catArray.push($(this).val());
-      });
-			console.log("everything looks good!");
-      console.log(get_editor_content('description_post'));
-      console.log(get_editor_content('contenu_post'));
-      console.log($('#title_post').val());
-      console.log(catArray);
-      console.log(catArray.length);
-      if(catArray.length == 0){
-        alert('Veuillez choisir une catégorie ou plus !');
-      }else{
-        var desc      = get_editor_content('description_post');
-        var content   = get_editor_content('contenu_post');
-        var title     = $('#title_post').val();
-        var post = {'title':title,'desc':desc,'content':content,'catArray':catArray};
-        addPost(post);
-      }
-		}
-	});
 	
 	$("#add_post_btn").on("click", function() {
+
 		tinymce.init({
-			selector: "textarea",
+			selector: "#description_post",
+			setup: function (editor) {
+				editor.on('change', function () {
+					tinymce.triggerSave();
+					$('#description_post').trigger('input');
+				});
+			},
 			plugins: [
 				"advlist autolink lists link image charmap print preview anchor",
 				"searchreplace visualblocks code fullscreen",
 				"insertdatetime media table contextmenu paste"
 			],
-			toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+			toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image preview"
+		});
+		
+		tinymce.init({
+			selector: "#contenu_post",
+			setup: function (editor) {
+				editor.on('change', function () {
+					tinymce.triggerSave();
+					$('#contenu_post').trigger('input');
+				});
+			},
+			plugins: [
+				"advlist autolink lists link image charmap print preview anchor",
+				"searchreplace visualblocks code fullscreen",
+				"insertdatetime media table contextmenu paste"
+			],
+			toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image preview"
+		});
 
-	   });
-
-
-    tinymce.get('description_post').on('blur', function(e) {
-
-          $('#addPostForm').validator('validate');
-    });
-    tinymce.get('contenu_post').on('blur', function(e) {
-
-          $('#addPostForm').validator('validate');
-    });
-
-    addCatList();
+		addCatList('#cat_div');
 	});
 
 	$('#addCatForm').validator().on('submit', function (e) {
@@ -157,6 +140,133 @@ $(function () {
 		}
 	});
 
+	$('#addPostForm').validator().on('submit', function (e) {
+		if (e.isDefaultPrevented()) {
+			// handle the invalid form...
+			console.log("handle the invalid form...");
+		} else {
+			// everything looks good!
+			console.log("everything looks good!");
+
+			var catArray = [];
+			$("#cat_div input:checkbox[name=categorie]:checked").each(function(){
+				catArray.push($(this).val());
+			});
+
+			// console.log(get_editor_content('description_post'));
+			// console.log(get_editor_content('contenu_post'));
+			// console.log($('#title_post').val());
+			// console.log(catArray);
+			// console.log(catArray.length);
+
+			if(catArray.length == 0){
+				alert('Veuillez choisir une catégorie ou plus !');
+			}else{
+				var desc 	= get_editor_content('description_post');
+				var content = get_editor_content('contenu_post');
+				var title 	= $('#title_post').val();
+				var post 	= {'title':title,'desc':desc,'content':content,'catArray':catArray};
+				var res		= addPost(post);
+				// console.log(res);
+				if(res.status == 'success'){
+					var id = res.inserted_id;
+					$('#alert_recover_ok_add_post').css('visibility','visible').fadeIn(1500);
+
+					// $( ".details-control" ).each(function( index ) {
+					// 	console.log( index + ": " + $( this ).text() );
+					// 	console.log('test');
+					// });
+
+					resetCatsPostsTable();
+
+					setTimeout(function(){
+						$('#add_post').modal('toggle');
+						$('#alert_recover_ok_add_post').css('visibility','hidden');
+					}, 2000);
+				}else{
+					$('#alert_recover_ko_add_post').css('visibility','visible').fadeIn(1500);
+
+					setTimeout(function(){
+						$('#add_post').modal('toggle');
+						$('#alert_recover_ko_add_post').css('visibility','hidden');
+					}, 2000);
+				}
+			}
+		}
+	});
+
+	$('#editPostForm').validator().on('submit', function (e) {
+		if (e.isDefaultPrevented()) {
+			// handle the invalid form...
+			console.log("parent handle the invalid form...");
+		} else {
+			// everything looks good!
+			console.log("parent everything looks good!");
+
+			var catArray = [];
+			$("#edit_cat_div input:checkbox[name=categorie]:checked").each(function(){
+				catArray.push($(this).val());
+			});
+
+			if(catArray.length == 0){
+				alert('Veuillez choisir une catégorie ou plus !');
+			}else{
+				var desc 	= get_editor_content('description_post_edit');
+				var content = get_editor_content('contenu_post_edit');
+				var title 	= $('#title_post_edit').val();
+				var post 	= {'title':title,'desc':desc,'content':content,'catArray':catArray, 'postId':id_post};
+				var res		= updatePost(post);
+				var status  = res.status;
+				if($(catArray).not(arrCats).length === 0 && $(arrCats).not(catArray).length === 0){
+					alert("The same !!");
+				}else{
+					var etat, diff = [];
+					if(catArray.length > arrCats.length){
+						diff = $(catArray).not(arrCats).get();
+						etat = 'add';
+					}else{
+						diff = $(arrCats).not(catArray).get();
+						etat = 'delete';
+					}
+
+					$.each(diff, function(ind, val) {
+						switch (etat){
+							case 'add' :
+								resultat 	= addPostCat(id_post,val);
+								status 		= resultat.result;
+								break;
+							case 'delete' :
+								resultat 	= deletePostCatUp(id_post,val);
+								status 		= resultat.result;
+								break;
+							default :
+							break;
+						}
+					});
+				}
+
+				if(status == 'success'){
+					var id = res.inserted_id;
+					$('#alert_recover_ok_edit_post').css('visibility','visible').fadeIn(1500);
+
+					resetCatsPostsTable();
+
+					setTimeout(function(){
+						$('#edit_post').modal('toggle');
+						$('#alert_recover_ok_edit_post').css('visibility','hidden');
+					}, 2000);
+				}else{
+					$('#alert_recover_ko_edit_post').css('visibility','visible').fadeIn(1500);
+
+					setTimeout(function(){
+						$('#edit_post').modal('toggle');
+						$('#alert_recover_ko_edit_post').css('visibility','hidden');
+					}, 2000);
+				}
+			}
+		}
+	});
+
 	$("#table_categories tbody" ).on( "click", 'button',function() {
 		var type  = $(this).data("type"),
 			id    = $(this).data("id");
@@ -181,29 +291,108 @@ $(function () {
 	$("#conf_supp_cat").on("click", function() {
 		var id = $(this).data("id"),
 			res = deleteCat(id);
-		console.log(res);
+		// console.log(id);
+		// console.log(res);
 		if(res.result == 'success'){
 			var tr = $("#cat_"+id);
 			table_cat.row(tr).remove().draw();
 			$("#delete_cat").modal('toggle');
 		}
 	});
+
+	$('#table_categorie_post tbody').on('click', 'button', function() {
+	// Do something on an existent or future .dynamicElement
+		var type  = $(this).data("type"),
+			id    = $(this).data("id");
+		console.log(type+" - "+id);
+		switch (type){
+			case 'edit_post' :
+				addCatList('#edit_cat_div');
+				var post = getPostById(id).result[0];
+				var cats = getCatsByPostId(id).result;
+
+				id_post = post.postID;
+				$('#title_post_edit').val(post.postTitle);
+				$('#description_post_edit').val(post.postDesc);
+				$('#contenu_post_edit').val(post.postCont);
+
+
+				$.each(cats, function(key, val) {
+					$("#edit_cat_div input:checkbox[value="+val.catID+"]").attr("checked", true);
+					// console.log(val);
+					arrCats.push(val.catID);
+				});
+
+				tinymce.init({
+					selector: "#description_post_edit",
+					setup: function (editor) {
+						editor.on('change', function () {
+							tinymce.triggerSave();
+							$('#description_post_edit').trigger('input');
+						});
+					},
+					plugins: [
+						"advlist autolink lists link image charmap print preview anchor",
+						"searchreplace visualblocks code fullscreen",
+						"insertdatetime media table contextmenu paste"
+					],
+					toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+				});
+				
+				tinymce.init({
+					selector: "#contenu_post_edit",
+					setup: function (editor) {
+						editor.on('change', function () {
+							tinymce.triggerSave();
+							$('#contenu_post_edit').trigger('input');
+						});
+					},
+					plugins: [
+						"advlist autolink lists link image charmap print preview anchor",
+						"searchreplace visualblocks code fullscreen",
+						"insertdatetime media table contextmenu paste"
+					],
+					toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+				});
+
+				$('#editPostForm').validator('validate');
+				break;
+			case 'delete_post' :
+				$("#conf_supp_post").data("id",id);
+				break;
+			default :
+
+			break;
+		}
+	});
+
+	$("#conf_supp_post").on("click", function() {
+		var id = $(this).data("id"),
+			res = deletePost(id);
+		// console.log(id);
+		// console.log(res);
+		if(res.result == 'success'){
+			resetCatsPostsTable();
+			$("#delete_post").modal('toggle');
+		}
+	});
+
 });
 
 function get_editor_content(id) {
-  // Get the HTML contents of the currently active editor
-  // console.debug(tinyMCE.activeEditor.getContent());
-  //method1 getting the content of the active editor
-  // alert(tinyMCE.activeEditor.getContent());
-  //method2 getting the content by id of a particular textarea
-  // alert(tinyMCE.get(id).getContent());
-  return tinyMCE.get(id).getContent();
+	// Get the HTML contents of the currently active editor
+	// console.debug(tinyMCE.activeEditor.getContent());
+	//method1 getting the content of the active editor
+	// alert(tinyMCE.activeEditor.getContent());
+	//method2 getting the content by id of a particular textarea
+	// alert(tinyMCE.get(id).getContent());
+	return tinyMCE.get(id).getContent();
 }
 
 function fillTablesCats(data){
-		console.log(data);
+		// console.log(data);
 	$.each(data, function(key, val) {
-		console.log(val);
+		// console.log(val);
 		var newRow = '<tr id="cat_'+val.catID+'">'+
 		'<td>'+val.catID+'</td>'+
 		'<td>'+val.catTitle+'</td>'+
@@ -217,15 +406,15 @@ function fillTablesCats(data){
 }
 
 function fillCatTable(data){
-  $.each(data, function(key, val) {
-    var newRow = '<tr id="cat_'+val.catID+'">'+
-                '<td class=" details-control" data-id="'+val.catID+'"></td>'+
-                '<td>'+val.catTitle+'</td>'+
-                '<td>'+val.nombre+'</td>'+
-                '</tr>';
-    $("#table_categorie_post tbody").append(newRow);
-    console.log(val);
-  });
+	$.each(data, function(key, val) {
+		var newRow = 	'<tr id="cat_'+val.catID+'">'+
+						'<td class=" details-control" data-id="'+val.catID+'"></td>'+
+						'<td>'+val.catTitle+'</td>'+
+						'<td>'+val.nombre+'</td>'+
+						'</tr>';
+		$("#table_categorie_post tbody").append(newRow);
+		// console.log(val);
+	});
 }
 
 function getAllCats() {
@@ -253,7 +442,7 @@ function updateCat(cat) {
 }
 
 function deleteCat(id) {
-	var res,obj = {'methode' : 'updateCat', 'id': id };
+	var res,obj = {'methode' : 'deleteCat', 'id': id };
 	res = AjaxRequest(obj);
 	return res;
 }
@@ -265,9 +454,58 @@ function getPotsByCat() {
 }
 
 function getPotsByIdCat(id) {
-  var res,obj = {'methode' : 'getPostsByCatId', 'id': id};
-  res = AjaxRequest(obj);
-  return res;
+	var res,obj = {'methode' : 'getPostsByCatId', 'id': id};
+	res = AjaxRequest(obj);
+	return res;
+}
+
+function addPost(post) {
+	var res,obj = {'methode' : 'addPost', 'post': post};
+	res = AjaxRequest(obj);
+	return res;
+}
+
+function getCatsByPostId(id) {
+	var res,obj = {'methode' : 'getCatsByPostId', 'id': id};
+	res = AjaxRequest(obj);
+	return res;
+}
+
+function getPostById(id) {
+	var res,obj = {'methode' : 'getPostById', 'id': id};
+	res = AjaxRequest(obj);
+	return res;
+}
+
+function deletePost(id) {
+	var res,obj = {'methode' : 'deletePost', 'id': id};
+	res = AjaxRequest(obj);
+	return res;
+}
+
+function updatePost(post) {
+	var res,obj = {'methode' : 'updatePost', 'post': post};
+	res = AjaxRequest(obj);
+	return res;
+}
+
+function addPostCat(id_post,id_cat) {
+	var res,obj = {'methode' : 'addPostCat', 'id_cat': id_cat,'id_post':id_post};
+	res = AjaxRequest(obj);
+	return res;
+}
+
+function deletePostCat(id_post) {
+	var res,obj = {'methode' : 'deletePostCat', 'id_post': id_post};
+	res = AjaxRequest(obj);
+	return res;
+}
+
+
+function deletePostCatUp(id_post,id_cat) {
+	var res,obj = {'methode' : 'deletePostCatUp', 'id_cat': id_cat,'id_post':id_post};
+	res = AjaxRequest(obj);
+	return res;
 }
 
 function AjaxRequest(obj) {
@@ -303,49 +541,79 @@ function getCatFromViewEdit(){
 }
 
 function getPostsTableByCat(id){
-  console.log(id);
-  var table = '<table id="table_categorie_'+id+'" class="table table_cat">'+
-              '<thead>'+
-              '<tr>'+
-              '<th>ID</th>'+
-              '<th>Titre</th>'+
-              '<th>Date de publication</th>'+
-              '</tr>'+
-              '</thead>'+
-              '<tbody>';
-  var posts = getPotsByIdCat(id)['result'];
-  console.log(posts);
+	// console.log(id);
+	var table = '<table id="table_categorie_'+id+'" class="table table_cat">'+
+				'<thead>'+
+				'<tr>'+
+				'<th>ID</th>'+
+				'<th>Titre</th>'+
+				'<th>Date de publication</th>'+
+				'<th>Actions</th>'+
+				'</tr>'+
+				'</thead>'+
+				'<tbody>';
+	var posts = getPotsByIdCat(id)['result'];
+	// conf_supp_postle.log(posts);
 
-  $.each(posts, function(key, val) {
-    var newRow =  '<tr id="post_'+id+'_'+val.postID+'">'+
-                  '<td>'+val.postID+'</td>'+
-                  '<td>'+val.postTitle+'</td>'+
-                  '<td>'+val.postDate+'</td>'+
-                  '</tr>';
-    table += newRow;
-    console.log(val);
-  });
-  table +=  '</tbody>'+
-            '<tfoot>'+
-            '<tr>'+
-            '<th>ID</th>'+
-            '<th>Titre</th>'+
-            '<th>Date de publication</th>'+
-            '</tr>'+
-            '</tfoot>'+
-            '</table>';
-  return table;
+	$.each(posts, function(key, val) {
+		var newRow =  	'<tr id="post_'+id+'_'+val.postID+'">'+
+						'<td>'+val.postID+'</td>'+
+						'<td>'+val.postTitle+'</td>'+
+						'<td>'+val.postDate+'</td>'+
+						'<td>'+
+						'<button class="btn btn-primary btn-xs action" data-type="edit_post" data-id="'+val.postID+'" data-toggle="modal" data-target="#edit_post" ><span class="glyphicon glyphicon-pencil"></span></button>'+
+						'<button class="btn btn-danger btn-xs action" data-type="delete_post" data-id="'+val.postID+'" data-toggle="modal" data-target="#delete_post" ><span class="glyphicon glyphicon-trash"></span></button>'+
+						'</td>'+
+						'</tr>';
+		table += newRow;
+	});
+	table += 	'</tbody>'+
+				'<tfoot>'+
+				'<tr>'+
+				'<th>ID</th>'+
+				'<th>Titre</th>'+
+				'<th>Date de publication</th>'+
+				'<th>Actions</th>'+
+				'</tr>'+
+				'</tfoot>'+
+				'</table>';
+
+	return table;
 }
 
-function addCatList(){
-  var cats = getAllCats()['result'];
+function addCatList(id_div){
+	var cats = getAllCats()['result'];
 
-  $( "#cat_div" ).empty();
+	$(id_div).empty();
 
-  $.each(cats, function(key, val) {
-    var checkbox = '<div class="checkbox"><label><input type="checkbox" name="categorie" value="'+val.catID+'">'+val.catTitle+'</label></div>';
-    $( "#cat_div" ).append(checkbox);
-    console.log(val);
-  });
+	$.each(cats, function(key, val) {
+		var checkbox = '<div class="checkbox"><label><input type="checkbox" name="categorie" value="'+val.catID+'">'+val.catTitle+'</label></div>';
+		$(id_div).append(checkbox);
+		// console.log(val);
+	});
+}
 
+function fillCats(table_cat){
+	var cats = getAllCats();
+	if(cats.status == 'success'){
+		fillTablesCats(cats.result);
+		table_cat = $("#table_categories").DataTable();
+	}
+	return table_cat;
+}
+
+function fillCatsPosts (){
+	var postsByCat = getPotsByCat();
+	// console.log(postsByCat);
+	if(postsByCat.status == 'success'){
+		fillCatTable(postsByCat['result']);
+		$("#table_categorie_post").DataTable();
+	}
+}
+
+function resetCatsPostsTable(){
+
+	$('#table_categorie_post tbody').empty();
+	
+	fillCatsPosts ();
 }

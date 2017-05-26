@@ -249,7 +249,6 @@ tr.shown td.details-control {
   <!-- /.modal-dialog --> 
 </div>
 
-
 <div class="modal fade" id="add_post" tabindex="-1" role="dialog" aria-labelledby="add_post" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -322,39 +321,18 @@ tr.shown td.details-control {
           <div class="row">
             <div class="col-xs-12">
               <!-- <div class="form-group"> -->
-                <label>Catégorie</label>
+                <label>Catégories</label>
               <!-- </div> -->
             </div>
           </div>
           <div class="row">
             <div class="col-xs-12">
-              <div id="cat_div" class="form-group">
-                  <div class="checkbox">
-                    <label>
-                      <input type="checkbox" name="categorie">
-                      Checkbox 1
-                    </label>
-                  </div>
-
-                  <div class="checkbox">
-                    <label>
-                      <input type="checkbox" name="categorie">
-                      Checkbox 2
-                    </label>
-                  </div>
-
-                  <div class="checkbox">
-                    <label>
-                      <input type="checkbox" name="categorie">
-                      Checkbox 3  
-                    </label>
-                  </div>
-              </div>
+              <div id="cat_div" class="form-group"></div>
             </div>
           </div>
           <div class="row">
             <div class="col-xs-12">
-              <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;margin-bottom: 10px;"><span class="glyphicon glyphicon-ok-sign"></span>Ajouter</button>
+              <button id="add_post_sub" type="submit" class="btn btn-primary btn-lg" style="width: 100%;margin-bottom: 10px;"><span class="glyphicon glyphicon-ok-sign"></span>Ajouter</button>
             </div>
           </div>
         </form>
@@ -364,6 +342,121 @@ tr.shown td.details-control {
   </div>
   <!-- /.modal-dialog --> 
 </div>
+
+<div class="modal fade" id="edit_post" tabindex="-1" role="dialog" aria-labelledby="edit_post" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+        <h4 class="modal-title custom_align" id="Heading">Modifier un Post</h4>
+      </div>
+      <div class="modal-body">
+        <div id="alert_recover_ok_edit_post" class="alert alert-success hide-me">
+          Post Mofifié
+        </div>
+        <div id="alert_recover_ko_edit_post" class="alert alert-warning hide-me">
+          Quelque chose a mal tourné
+        </div>
+        <form id="editPostForm">
+          <div class="row">
+            <div class="col-xs-12">
+              <!-- <div class="form-group"> -->
+                <label>Titre Post</label>
+              <!-- </div> -->
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="form-group has-feedback col-xs-12">
+                <div class="input-group col-xs-12">
+                  <input id="title_post_edit" type="text" class="form-control input-lg" data-required-error="Entrez le titre" required>
+                  <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                  <div class="help-block with-errors"></div>
+                </div>
+              </div>              
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <!-- <div class="form-group"> -->
+                <label>Description</label>
+              <!-- </div> -->
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="form-group has-feedback">
+                <div class="input-group col-xs-12">
+                  <textarea id="description_post_edit" data-required-error="Entrez la description" required></textarea>
+                  <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                  <div class="help-block with-errors"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <!-- <div class="form-group"> -->
+                <label>Contenu</label>
+              <!-- </div> -->
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="form-group has-feedback">
+                <div class="input-group col-xs-12">
+                  <textarea id="contenu_post_edit" data-required-error="Entrez le contenu" required></textarea>
+                  <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                  <div class="help-block with-errors"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <!-- <div class="form-group"> -->
+                <label>Catégories</label>
+              <!-- </div> -->
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <div id="edit_cat_div" class="form-group"></div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <button id="edit_post_sub" type="submit" class="btn btn-warning btn-lg" style="width: 100%;margin-bottom: 10px;"><span class="glyphicon glyphicon-ok-sign"></span>Modifier</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- /.modal-content --> 
+  </div>
+  <!-- /.modal-dialog --> 
+</div>
+
+<div class="modal fade" id="delete_post" tabindex="-1" role="dialog" aria-labelledby="delete_post" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+        <h4 class="modal-title custom_align" id="Heading">Supprimer le post</h4>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span> Êtes-vous sûr de vouloir supprimer ce post ?</div>
+      </div>
+      <div class="modal-footer ">
+        <button id="conf_supp_post" type="button" data-id="0" class="btn btn-success" ><span class="glyphicon glyphicon-ok-sign"></span>Oui</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>Non</button>
+      </div>
+    </div>
+    <!-- /.modal-content --> 
+  </div>
+  <!-- /.modal-dialog --> 
+</div>
+
 <!-- Add content to the popup -->
 <div id="loading-image" class="row">
   <div class="main col-md-5 col-md-offset-6">

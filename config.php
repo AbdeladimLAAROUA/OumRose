@@ -13,10 +13,17 @@ $password = "oumdev";*/
 
 
 /*Server dev*/
+<<<<<<< HEAD
 /*$servername = "sql.k4mshost.odns.fr";
 $username = "k4mshost_oumdev";
 $password = "!!oumb0x";
 $dbname="k4mshost_oumdev";*/
+=======
+// $servername = "sql.k4mshost.odns.fr";
+// $username = "k4mshost_oumdev";
+// $password = "!!oumb0x";
+// $dbname="k4mshost_oumdev";
+>>>>>>> f805307dda7c623dc698596ddf2676e8971233da
 
 try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
@@ -170,8 +177,13 @@ function getUserByEmail($conn,$email){
       echo $e->getMessage();
   }
 }
+<<<<<<< HEAD
  function addRefBox($conn,$box,$email)
 {
+=======
+
+function addRefBox($conn,$box,$email){
+>>>>>>> f805307dda7c623dc698596ddf2676e8971233da
   if($box=="box1"){
           $stmt = $conn->prepare("UPDATE leads SET REF_BOX1=:REF_BOX1 WHERE email=:email");
           $stmt->execute(array(':REF_BOX1'=>"REF_BOX1",':email'=>$email));
