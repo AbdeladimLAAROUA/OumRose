@@ -1,4 +1,6 @@
-
+<?php 
+session_start();
+ ?>
 <!--start: Container -->
 		<div class="">
 			
@@ -11,7 +13,7 @@
 
 				<!-- Ecrean xs -->
 				<div class="xs-menu-cont">
-				<a id="menutoggle"><i class="fa fa-align-justify"></i> </a>
+				<!-- <a id="menutoggle"><i class="fa fa-align-justify"></i> </a> -->
 					<nav class="xs-menu displaynone">
 						<ul>
 							<li class="active">

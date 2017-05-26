@@ -1,10 +1,10 @@
 <?php
 
 /*Local*/
-/*$servername = "localhost";
+$servername = "localhost";
 $username = "root";
 $password = "";
-$dbname="oumdev_leads";*/
+$dbname="oumdev_leads";
 
 /*Distant*/
 /*$servername = "essalhi-impr.000webhostapp.com";
@@ -13,10 +13,10 @@ $password = "oumdev";*/
 
 
 /*Server dev*/
-$servername = "sql.k4mshost.odns.fr";
-$username = "k4mshost_oumdev";
-$password = "!!oumb0x";
-$dbname="k4mshost_oumdev";
+// $servername = "sql.k4mshost.odns.fr";
+// $username = "k4mshost_oumdev";
+// $password = "!!oumb0x";
+// $dbname="k4mshost_oumdev";
 
 try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
@@ -170,15 +170,15 @@ function getUserByEmail($conn,$email){
       echo $e->getMessage();
   }
 }
-public function addRefBox($conn,$box,$email)
-{
+
+function addRefBox($conn,$box,$email){
   if($box=="box1"){
           $stmt = $conn->prepare("UPDATE leads SET REF_BOX1=:REF_BOX1 WHERE email=:email");
           $stmt->execute(array(':REF_BOX1'=>"REF_BOX1",':email'=>$email));
   }else if($box=="box2"){
           $stmt = $conn->prepare("UPDATE leads SET REF_BOX2=:REF_BOX2 WHERE email=:email");
           $stmt->execute(array(':REF_BOX2'=>"REF_BOX2",':email'=>$email));
-  }else id($box=="box3"){
+  }else if($box=="box3"){
           $stmt = $conn->prepare("UPDATE leads SET REF_BOX3=:REF_BOX3 WHERE email=:email");
           $stmt->execute(array(':REF_BOX3'=>"REF_BOX3",':email'=>$email));
   }
