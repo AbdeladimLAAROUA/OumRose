@@ -1,4 +1,5 @@
 <?php
+session_start();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	if(isset($_REQUEST['methode'])){
 		if($_REQUEST['methode'] == 'getCustomerType'){
@@ -77,6 +78,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			echo deleteCatPost($_REQUEST['id_post']);
 		}else if($_REQUEST['methode'] == 'deletePostCatUp'){
 			echo deleteCatPostUpdatePost($_REQUEST['id_post'],$_REQUEST['id_cat']);
+		}else if($_REQUEST['methode'] == 'updateVilles'){
+			echo updateVilles();
+		}else if($_REQUEST['methode'] == 'getRelaisListByVille'){
+			echo getRelaisListByVille($_REQUEST['id_ville']);
+		}else if($_REQUEST['methode'] == 'getRelaisById'){
+			echo getRelaisById($_REQUEST['id_relais']);
+		}else if($_REQUEST['methode'] == 'addLivraison'){
+			echo addLivraison($_REQUEST['livraison']);
 		}else{
 			echo json_encode(array('result'=>'method_not_exist'));
 		}
@@ -744,6 +753,92 @@ function addCat($cat){
 	$connexion = null;
 	return json_encode($array);
 }
+function addLivraison($livraison){
+	$array = array();
+	$commande['BC']="default";
+	$commande['product_id']="1";
+	$commande['customer_id']=$_SESSION['client_id'];
+	$resultJS = addCommande($commande);
+	$result = json_decode($resultJS,true);
+	$id_commande = $result['inserted_id'];
+
+	try {
+		$connexion = db_connect();
+		$sql="";
+		if($livraison['relais']=='NULL'){
+			$sql = "INSERT INTO livraison (adresseLivraison, commande_id, type, quartier) 
+			VALUES (:adresseLivraison, :commande_id, :type, :quartier)";	
+		}
+		else{
+			$sql = "INSERT INTO livraison (adresseLivraison,shop_id, commande_id, type, quartier) 
+			VALUES (:adresseLivraison, :shop_id, :commande_id, :type, :quartier)";	
+		}
+		//Prepare our statement.
+		$statement = $connexion->prepare($sql);
+		
+		//Bind our values to our parameters (we called them :make and :model).
+		$statement->bindValue(':adresseLivraison', $livraison['adresse']);
+		if($livraison['relais']!='NULL')
+		$statement->bindValue(':shop_id', $livraison['relais']);
+		$statement->bindValue(':commande_id', $id_commande);
+		$statement->bindValue(':type', $livraison['type']);
+		$statement->bindValue(':quartier', $livraison['quartier']);
+		 
+		//Execute the statement and insert our values.
+		$inserted = $statement->execute();
+		 
+		//Because PDOStatement::execute returns a TRUE or FALSE value,
+		//we can easily check to see if our insert was successful.
+		if($inserted){
+			$indertedId = $connexion->lastInsertId();
+			$array['status'] = 'success';
+			$array['inserted_id'] = $indertedId;
+		}else{
+			echo 'error';
+		}
+
+	} catch (Exception $e) {
+		$array['status'] = 'failed';
+	}
+	
+	$connexion = null;
+	return json_encode($array);
+}
+function addCommande($commande){
+	$array = array();
+
+	try {
+		$connexion = db_connect();
+		$sql = "INSERT INTO commande(customer_id, product_id, BC) VALUES (:customer_id, :product_id, :BC)";
+		
+		//Prepare our statement.
+		$statement = $connexion->prepare($sql);
+		
+		//Bind our values to our parameters (we called them :make and :model).
+		$statement->bindValue(':customer_id', $commande['customer_id']);
+		$statement->bindValue(':product_id', $commande['product_id']);
+		$statement->bindValue(':BC', $commande['BC']);
+		 
+
+		//Execute the statement and insert our values.
+		$inserted = $statement->execute();
+		 
+
+		//Because PDOStatement::execute returns a TRUE or FALSE value,
+		//we can easily check to see if our insert was successful.
+		if($inserted){
+			$indertedId = $connexion->lastInsertId();
+			$array['status'] = 'success';
+			$array['inserted_id'] = $indertedId;
+		}
+
+	} catch (Exception $e) {
+		$array['status'] = 'failed';
+	}
+	
+	$connexion = null;
+	return json_encode($array);
+}
 
 function updateCat($cat){
 	$array = array();
@@ -1033,6 +1128,8 @@ function getPostById($id){
 }
 
 
+
+
 function updatePost($post){
 	$array = array();
 	$postSlug = slug($post['title']);
@@ -1061,6 +1158,61 @@ function updatePost($post){
 	
 	$connexion = null;
 
+	return json_encode($array);	
+}
+
+function updateVilles(){
+	$array = array();
+	$villes=$_POST['villes'];
+
+	try {
+		$connexion = db_connect();
+		$requet="INSERT INTO ville (name)
+				SELECT * FROM (SELECT :villeName) AS tmp
+				WHERE NOT EXISTS (
+				    SELECT name FROM ville WHERE name = :villeName
+				) LIMIT 1;";
+		foreach ($villes as $key => $villeName) {
+			$stmt = $connexion->prepare($requet);
+
+			echo $stmt->bindValue(':villeName', $villeName);
+			$stmt->execute();
+
+			if($stmt->rowCount()) {
+				$array['result'] = 'success';
+			} else {
+				$array['result'] = 'failed --> error';
+			}
+		}
+	} catch (Exception $e) {
+		$array['result'] = 'failed --> exception';
+	}
+	
+	$connexion = null;
+
+	return json_encode($array);	
+}
+
+function getRelaisListByVille($id){
+	$array = array();
+	try {
+		$connexion = db_connect();
+		$resultats = $connexion->prepare("SELECT * FROM `relais` WHERE `id_ville`= :id");
+		$resultats->bindParam(':id', $id);
+		$resultats->execute();
+		$resultats->setFetchMode(PDO::FETCH_OBJ);
+		$resultat = $resultats->fetchAll();
+		if($resultat > 0){
+			$array['result'] = $resultat;
+			$array['status'] = 'success';
+		}else{
+			$array['status'] = 'empty';			
+		}
+	} catch (Exception $e) {
+		$array['status'] = 'failed';
+	}
+	
+	$connexion = null;
 	return json_encode($array);	
 }
 

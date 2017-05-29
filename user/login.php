@@ -16,7 +16,7 @@ if(isset($_POST['email']) and isset($_POST['password']) ){
 	if($user != null){
 		$info["success"]=true;
 		$_SESSION['result1']=$info;
-		header('Location:../index.php');
+		header('Location:../espace.php');
 		
 	}else{
 		$info["success"]=false;

@@ -508,7 +508,7 @@ $("#myForm").submit(function(e) {
             $("#status").html('Bienvenue!<br>Votre inscription a été effectuée avec succès.').show();
             },
             200: function() {
-            document.location.href="index.php"; 
+            document.location.href="espace.php"; 
             $("#content").hide();
             $("#incent").hide();
             //$("#status").html('Bienvenue!<br>Votre inscription a été effectuée avec succès.').show();

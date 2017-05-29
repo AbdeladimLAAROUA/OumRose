@@ -1,5 +1,5 @@
 <?php 
-session_start();
+//session_start();
  ?>
 <!--start: Container -->
 		<div class="">
@@ -173,7 +173,15 @@ session_start();
 					?>		 
 				</li>
 				<li class="alignRight">
-					<a href="register.php">S'inscrire</a>
+					
+					<?php 
+							if(isset($_SESSION['client_id']))
+							{
+								echo '<a href="espace.php">Bienvenue '.$_SESSION['nom'].'</a>';	
+							}else{
+								echo '<a href="register.php">S\'inscrire</a>';
+							}
+					?>		 
 				</li>
 
 					</ul>

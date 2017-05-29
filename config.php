@@ -13,17 +13,17 @@ $password = "oumdev";*/
 
 
 /*Server dev*/
-<<<<<<< HEAD
+
 /*$servername = "sql.k4mshost.odns.fr";
 $username = "k4mshost_oumdev";
 $password = "!!oumb0x";
 $dbname="k4mshost_oumdev";*/
-=======
+
 // $servername = "sql.k4mshost.odns.fr";
 // $username = "k4mshost_oumdev";
 // $password = "!!oumb0x";
 // $dbname="k4mshost_oumdev";
->>>>>>> f805307dda7c623dc698596ddf2676e8971233da
+
 
 try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
@@ -177,13 +177,10 @@ function getUserByEmail($conn,$email){
       echo $e->getMessage();
   }
 }
-<<<<<<< HEAD
- function addRefBox($conn,$box,$email)
-{
-=======
+
 
 function addRefBox($conn,$box,$email){
->>>>>>> f805307dda7c623dc698596ddf2676e8971233da
+
   if($box=="box1"){
           $stmt = $conn->prepare("UPDATE leads SET REF_BOX1=:REF_BOX1 WHERE email=:email");
           $stmt->execute(array(':REF_BOX1'=>"REF_BOX1",':email'=>$email));
@@ -204,5 +201,61 @@ function deleteUser($conn, $id){
        {
            echo $e->getMessage();
        }
+}
+
+function getAllCities($conn){
+  try
+       {
+          $stmt = $conn->prepare("SELECT * FROM ville");
+          $stmt->execute();
+          $villes = array();
+          if ($stmt->execute()) {
+              while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                  $villes[] = $row;
+              }
+          }
+       }
+       catch(PDOException $e)
+       {
+           echo $e->getMessage();
+       }
+       return  $villes;
+}
+
+function getAllRelais($conn){
+  try
+       {
+          $stmt = $conn->prepare("SELECT * FROM relais");
+          $stmt->execute();
+          $relais = array();
+          if ($stmt->execute()) {
+              while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                  $relais[] = $row;
+              }
+          }
+       }
+       catch(PDOException $e)
+       {
+           echo $e->getMessage();
+       }
+       return  $relais;
+}
+function getAllQuartiers($conn){
+  try
+       {
+          $stmt = $conn->prepare("SELECT * FROM quartier");
+          $stmt->execute();
+          $quartiers = array();
+          if ($stmt->execute()) {
+              while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                  $quartiers[] = $row;
+              }
+          }
+       }
+       catch(PDOException $e)
+       {
+           echo $e->getMessage();
+       }
+       return  $quartiers;
 }
 ?> 

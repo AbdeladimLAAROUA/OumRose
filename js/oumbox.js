@@ -2,7 +2,7 @@ var app = angular.module('oumbox', ['oumboxModule']);
 var oumboxModule = angular.module('oumboxModule',[]);
 oumboxModule.controller('oumboxController',function($scope,dataService) {
 
-    $scope.identifiant="";
+    $scope.identifiant="11111";
     $scope.user = {
        Nom: "ESSALHI",
        Prenom: "Khalid",
@@ -14,6 +14,23 @@ oumboxModule.controller('oumboxController',function($scope,dataService) {
         $scope.partenaires = dataResponse['result'];
         console.log($scope.partenaires);
     });
+});
+oumboxModule.controller('oumboxControllerMaBox',function($scope,SBListeVilleService) {
+
+
+    $scope.villes=null;
+     SBListeVilleService.getData(function(dataResponse) {
+         $scope.villes=dataResponse;
+          
+       /*  for (var i = 0; i < dataResponse.length; i++) {
+         $("#ville ul ").append('<li class=""><span>'+dataResponse[i]+'</span></li>');
+         };*/
+
+         /*$("#ville ul ").append('<li class=""><span>'+dataResponse[1]+'</span></li>');
+         $("#ville ul ").append('<li class=""><span>'+dataResponse[1]+'</span></li>');*/
+    });
+
+   
 });
 oumboxModule.service('dataService', function($http) {
     delete $http.defaults.headers.common['X-Requested-With'];
@@ -30,6 +47,26 @@ oumboxModule.service('dataService', function($http) {
             // With the data succesfully returned, call our callback
             callbackFunc(data);
             initMap(data['result']);
+        }).error(function(){
+            alert("error");
+        });
+     }
+
+});
+oumboxModule.service('SBListeVilleService', function($http) {
+    
+    this.getData = function(callbackFunc) {
+        $http({
+            method: 'GET',
+            url: 'https://api.speedbox.ma/api/listevilles/'
+        }).success(function(data){
+            /*$('#ville select option').remove();
+            $('#ville select').append('<option value="0" disabled="" selected="">Ville</option>');
+            for (var i=1; i<=data.length; i++) {
+               $('#ville select').append('<option value="'+i+'">'+data[i]+'</option>');
+            }*/
+            callbackFunc(data);
+
         }).error(function(){
             alert("error");
         });

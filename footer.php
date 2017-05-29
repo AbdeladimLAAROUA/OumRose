@@ -7,7 +7,7 @@
 			<div class="row">
 
 				<!-- start: About -->
-				<div class="col-md-4">
+				<div class="col-md-4 col-xs-6 col-sm-12">
 					
 					<h3>About Us</h3>
 					<p>
@@ -15,10 +15,10 @@
 					</p>
 						
 				</div>
-				<!-- end: About -->
-
+			
+			<!-- end: About -->
 				<!-- start: Photo Stream -->
-				<div class="col-md-4">
+				<div class="col-md-4 col-xs-6 col-sm-12">
 					
 					<h3>We are here!</h3>
 					<div id="small-map-container"><a href="contact.html"></a></div>
@@ -26,8 +26,9 @@
 					
 				</div>
 				<!-- end: Photo Stream -->
+				
 
-				<div class="col-md-4">
+				<div class="col-md-4 col-xs-6 col-sm-12">
 				
 					<!-- start: Follow Us -->
 					<h3>Follow Us!</h3>
@@ -102,8 +103,6 @@
 					<!-- end: Newsletter -->
 				
 				</div>
-				
-			</div>
 			<!-- end: Row -->	
 			
 		</div>

@@ -1905,6 +1905,16 @@ iframe.video video{
 #footer > div > div > div.span5{
 	width: 350px !important;
 }
+#relaisList{
+	display: none;
+}
+
+select[name="VILLE"],select[name="quartiersList"]{
+	display: none;
+}
+.coordonnee{
+	height: 230px;
+}
 
 /* Higher than 960 (desktop devices)
 ====================================================================== */
