@@ -20,3 +20,6 @@
 [26/May/2017:03:15:10] (sendform) SendForm Partie emails
 [26/May/2017:03:15:10] (sendform) SendForm avant d'envoyer le message
 [26/May/2017:03:15:10] (sendform) SendForm message envoyé avec succès
+[01/Jun/2017:05:12:29] (sendform) SendForm Partie emails
+[01/Jun/2017:05:12:32] (sendform) SendForm avant d'envoyer le message
+[01/Jun/2017:05:12:32] (sendform) SendForm message envoyé avec succès

@@ -80,6 +80,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			echo deleteCatPostUpdatePost($_REQUEST['id_post'],$_REQUEST['id_cat']);
 		}else if($_REQUEST['methode'] == 'updateVilles'){
 			echo updateVilles();
+		}else if($_REQUEST['methode'] == 'updateRelais'){
+			echo updateRelais($_REQUEST['relais']);
 		}else if($_REQUEST['methode'] == 'getRelaisListByVille'){
 			echo getRelaisListByVille($_REQUEST['id_ville']);
 		}else if($_REQUEST['methode'] == 'getRelaisById'){
@@ -532,6 +534,37 @@ function addProduct($product){
 	return json_encode($array);
 }
 
+function addProduct2($product){
+	$array = array();
+	try {
+		$connexion = db_connect();
+		$sql = "INSERT INTO `product`(`id_box`) VALUES (:id_box)";
+		
+		//Prepare our statement.
+		$statement = $connexion->prepare($sql);
+		
+		//Bind our values to our parameters (we called them :make and :model).
+		$statement->bindValue(':id_box', $product['id_box']);
+		 
+		//Execute the statement and insert our values.
+		$inserted = $statement->execute();
+		 
+		//Because PDOStatement::execute returns a TRUE or FALSE value,
+		//we can easily check to see if our insert was successful.
+		if($inserted){
+			$indertedId = $connexion->lastInsertId();
+			$array['inserted_id'] = $indertedId;
+			$array['result'] = 1;
+			return $indertedId;
+		}
+
+	} catch (Exception $e) {
+		$array['result'] = 0;
+	}
+	
+	$connexion = null;
+}
+
 function addBox($box){
 	$array = array();
 	try {
@@ -755,9 +788,14 @@ function addCat($cat){
 }
 function addLivraison($livraison){
 	$array = array();
+	
+	$product['id_box']=$_SESSION['eligibleToBox'];
+	$_SESSION['eligibleToBox']=0;// le client n'est plus éligible 
+	$idProduct = addProduct2($product);
+
 	$commande['BC']="default";
-	$commande['product_id']="1";
-	$commande['customer_id']=$_SESSION['client_id'];
+	$commande['product_id']  = $idProduct;
+	$commande['customer_id'] = $_SESSION['client_id'];
 	$resultJS = addCommande($commande);
 	$result = json_decode($resultJS,true);
 	$id_commande = $result['inserted_id'];
@@ -766,12 +804,12 @@ function addLivraison($livraison){
 		$connexion = db_connect();
 		$sql="";
 		if($livraison['relais']=='NULL'){
-			$sql = "INSERT INTO livraison (adresseLivraison, commande_id, type, quartier) 
-			VALUES (:adresseLivraison, :commande_id, :type, :quartier)";	
+			$sql = "INSERT INTO livraison (adresseLivraison, commande_id, type, quartier,gsm) 
+			VALUES (:adresseLivraison, :commande_id, :type, :quartier,:gsm)";	
 		}
 		else{
-			$sql = "INSERT INTO livraison (adresseLivraison,shop_id, commande_id, type, quartier) 
-			VALUES (:adresseLivraison, :shop_id, :commande_id, :type, :quartier)";	
+			$sql = "INSERT INTO livraison (adresseLivraison,shop_id, commande_id, type, quartier,gsm) 
+			VALUES (:adresseLivraison, :shop_id, :commande_id, :type, :quartier,:gsm)";	
 		}
 		//Prepare our statement.
 		$statement = $connexion->prepare($sql);
@@ -783,6 +821,7 @@ function addLivraison($livraison){
 		$statement->bindValue(':commande_id', $id_commande);
 		$statement->bindValue(':type', $livraison['type']);
 		$statement->bindValue(':quartier', $livraison['quartier']);
+		$statement->bindValue(':gsm', $livraison['gsm']);
 		 
 		//Execute the statement and insert our values.
 		$inserted = $statement->execute();
@@ -1192,6 +1231,64 @@ function updateVilles(){
 
 	return json_encode($array);	
 }
+function updateRelais($relais){
+	$array = array();
+	$villeJS=getVilleIdByName($relais['ville']);
+	$ville = json_decode($villeJS,true);
+	$id_ville =  $ville['result'][0]['id'];
+	try {
+		$connexion = db_connect();
+		$requet="INSERT INTO relais (gps_lat,gps_lng,nom,adresse,id_relais,id_ville)
+					values(:gps_lat,:gps_lng,:nom,:adresse,:id_relais,:id_ville)";
+				  
+		foreach ($relais['relaisList'] as $key => $relaisElement) {
+			$stmt = $connexion->prepare($requet);
+
+			$stmt->bindValue(':gps_lat', $relaisElement['gps_lat']);
+			$stmt->bindValue(':gps_lng', $relaisElement['gps_lng']);
+			$stmt->bindValue(':nom', $relaisElement['nom']);
+			$stmt->bindValue(':adresse', $relaisElement['adresse']);
+			$stmt->bindValue(':id_relais', $relaisElement['id']);
+			$stmt->bindValue(':id_ville', $id_ville);
+			$stmt->execute();
+
+			if($stmt->rowCount()) {
+				$array['result'] = 'success';
+			} else {
+				$array['result'] = 'failed --> error';
+			}
+		}
+	} catch (Exception $e) {
+		$array['result'] = 'failed --> exception';
+	}
+	
+	$connexion = null;
+
+	return json_encode($array);	
+}
+
+function getVilleIdByName($name){
+	$array = array();
+	try {
+		$connexion = db_connect();
+		$resultats = $connexion->prepare("SELECT id FROM ville WHERE name= :name");
+		$resultats->bindParam(':name', $name);
+		$resultats->execute();
+		$resultats->setFetchMode(PDO::FETCH_OBJ);
+		$resultat = $resultats->fetchAll();
+		if($resultat > 0){
+			$array['result'] = $resultat;
+			$array['status'] = 'success';
+		}else{
+			$array['status'] = 'empty';			
+		}
+	} catch (Exception $e) {
+		$array['status'] = 'failed';
+	}
+	
+	$connexion = null;
+	return json_encode($array);	
+}
 
 function getRelaisListByVille($id){
 	$array = array();
@@ -1245,6 +1342,12 @@ function db_connect(){
 	// $passDb 	='oumdev';
 	// $bd 		='id709237_oumdev_leads';
 	// $user		='id709237_oumdev';
+
+	/*oumtest*/
+	/*$hote = "sql.k4mshost.odns.fr";
+	$user = "k4mshost_oumdev";
+	$passDb = "!!oumb0x";
+	$bd="k4mshost_oumdev";*/
 
 	$connexion = new PDO('mysql:host='.$hote.';dbname='.$bd.';charset=utf8', $user, $passDb);
 

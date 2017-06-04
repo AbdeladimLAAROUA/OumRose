@@ -49,7 +49,7 @@ function register($conn,$firstname,$email,$password)
            $stmt->bindparam(":email", $email);
            $stmt->bindparam(":password", $password);            
            $stmt->execute(); 
-   			
+        
            return $stmt; 
        }
        catch(PDOException $e)
@@ -63,7 +63,7 @@ function login($conn,$email,$password)
     {
        try
        {  
-          $stmt = $conn->prepare("SELECT * FROM customer WHERE email=:email and password =:password LIMIT 1");
+          $stmt = $conn->prepare("SELECT * FROM customer WHERE email=:email and password =:password and status='approved' LIMIT 1");
           $stmt->execute(array(':email'=>$email, ':password'=>$password));
           $userRow=$stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -71,10 +71,59 @@ function login($conn,$email,$password)
           {
             $_SESSION['client_id'] = $userRow['id'];
             $_SESSION['nom'] = $userRow['nom'];
+            $_SESSION['nomComplet']=$userRow['nom']." ".$userRow['prenom'];           
+          }     
+         return $userRow;
+       }
+       catch(PDOException $e)
+       {
+           echo $e->getMessage();
+       }
+   }
+
+   function loginByEmail($conn,$email)
+    {
+       try
+       {  
+          $stmt = $conn->prepare("SELECT * FROM customer WHERE email=:email LIMIT 1");
+          $stmt->execute(array(':email'=>$email));
+          $userRow=$stmt->fetch(PDO::FETCH_ASSOC);
+
+          if($stmt->rowCount() > 0)
+          {
+            $_SESSION['client_id'] = $userRow['id'];
+            $_SESSION['nom'] = $userRow['nom'];
+            $_SESSION['nomComplet']=$userRow['nom']." ".$userRow['prenom'];
             $userRow['naissanceBebe']="2017-03-31";
            
           }     
          return $userRow;
+       }
+       catch(PDOException $e)
+       {
+           echo $e->getMessage();
+       }
+   }
+   function registerByEmail($conn,$email,$password)
+    {
+       try
+       {  
+
+          $stmt = $conn->prepare("UPDATE customer c SET c.password=:password where email=:email and status='not_approved'");
+          $stmt->bindparam(":password", $password);
+          $stmt->bindparam(":email", $email);
+          $stmt->execute();
+          //$userRow=$stmt->fetch(PDO::FETCH_ASSOC);
+
+         /* if($stmt->rowCount() > 0)
+          {
+            $_SESSION['client_id'] = $userRow['id'];
+            $_SESSION['nom'] = $userRow['nom'];
+            $_SESSION['nomComplet']=$userRow['nom']." ".$userRow['prenom'];
+            $userRow['naissanceBebe']="2017-03-31";
+           
+          }*/     
+         return $stmt;
        }
        catch(PDOException $e)
        {
@@ -221,7 +270,6 @@ function getAllCities($conn){
        }
        return  $villes;
 }
-
 function getAllRelais($conn){
   try
        {
@@ -239,6 +287,42 @@ function getAllRelais($conn){
            echo $e->getMessage();
        }
        return  $relais;
+}
+
+function getClientBox($conn,$user){
+  try
+       {
+
+          $stmt = $conn->prepare("SELECT product_id FROM commande where customer_id=:id");
+          $stmt->execute(array(':id'=>$user['id']));
+          $clientCommandesId = array();
+          if ($stmt->execute()) {
+              while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                  $clientCommandesId[] = $row['product_id'];
+              }
+          }
+           $boxList = array();
+          if( count($clientCommandesId)){
+               $qMarks = str_repeat('?,', count($clientCommandesId) - 1) . '?';
+            $sth = $conn->prepare("SELECT id_box FROM product WHERE id IN ($qMarks)");
+           
+           
+            
+            if ($sth->execute($clientCommandesId)) {
+                while ($row = $sth->fetch(PDO::FETCH_ASSOC)) {
+                    $boxList[] = $row['id_box'];
+                }
+            }else{
+
+            }
+          }
+         
+       }
+       catch(PDOException $e)
+       {
+           echo $e->getMessage();
+       }
+       return  $boxList;
 }
 function getAllQuartiers($conn){
   try

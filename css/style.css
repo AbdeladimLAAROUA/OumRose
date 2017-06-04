@@ -1912,10 +1912,12 @@ iframe.video video{
 select[name="VILLE"],select[name="quartiersList"]{
 	display: none;
 }
-.coordonnee{
-	height: 230px;
+/*.coordonnee{
+	height: 250px;
+}*/
+.gsmLabel{
+	margin-left: 65px !important;
 }
-
 /* Higher than 960 (desktop devices)
 ====================================================================== */
 @media only screen and (min-width: 960px) {

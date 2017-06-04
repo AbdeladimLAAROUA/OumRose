@@ -149,7 +149,7 @@
 				<li class="activee">
 					<a href="partenaires.php">Nos partenaires</a>
 				</li>
-				<li class="activee">
+				<!-- <li class="activee">
 					<a href="blog.php">Grossesse</a>
 				</li>
 				<li class="activee">
@@ -157,9 +157,9 @@
 				</li>
 				<li class="activee">
 					<a href="blog.php">Bébé</a>
-				</li>
+				</li> -->
 				<li class="activee">
-					<a href="#">Contactez-nous</a>
+					<a href="contact.html">Contactez-nous</a>
 				</li>
 				<li class="alignRight">
 

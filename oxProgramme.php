@@ -7,16 +7,21 @@
 	<head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Outline &mdash; A Free HTML5 Responsive Template by FREEHTML5.CO</title>
+	<title>Oumbox</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="Free HTML5 Template by FREEHTML5.CO" />
-	<meta name="keywords" content="free html5, free template, free bootstrap, html5, css3, mobile first, responsive" />
+	<meta name="description" content="Programme maman" />
+	<meta name="keywords" content="Oumbox, maman," />
 	<meta name="author" content="FREEHTML5.CO" />
 
 	<style type="text/css">
 	.myImage{
 		width: 250px;
 		height: 250px;
+		position: relative;
+		bottom: 50px;
+	}
+	.journal{
+		width: 162px;
 	}
 	</style>
 
@@ -73,22 +78,29 @@
 								<p class="fh5co-sub to-animate programmeDescription">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
 							</div>
 
-							<div class="col-md-4 col-sm-6 col-xs-6 col-xxs-12">
+							<div class="col-md-3 col-sm-6 col-xs-6 col-xxs-12">
+								<a href="#" class="fh5co-feature to-animate" style="padding-top: 25px;">
+									<img class="journal" src="img/guide1.png">
+									<h3 class="fh5co-feature-lead" style="margin-top: 65px;">Journal de Grossesse</h3><br/>
+									<p class="fh5co-feature-text">Un guide qui vous accompagnera tout au long de votre grossesse.</p>
+								</a>
+							</div>
+							<div class="col-md-3 col-sm-6 col-xs-6 col-xxs-12">
 								<a href="#" class="fh5co-feature to-animate">
 									<img class="myImage" src="img/guide1box.png">
-									<h3 class="fh5co-feature-lead">Box Grossesse</h3>
+									<h3 class="fh5co-feature-lead">Box Grossesse</h3><br/>
 									<p class="fh5co-feature-text">Equipez vous pour l'arrivée du prochain bébé</p>
 								</a>
 							</div>
 							<!-- <div class="clearfix visible-sm-block"></div> -->
-							<div class="col-md-4 col-sm-6 col-xs-6 col-xxs-12">
+							<div class="col-md-3 col-sm-6 col-xs-6 col-xxs-12">
 								<a href="#" class="fh5co-feature to-animate">
 									<img class="myImage" src="img/guide2box.png">
 									<h3 class="fh5co-feature-lead">Box et Guide « Bébé est là ! »</h3>
 									<p class="fh5co-feature-text">Destinée à conserver tous les précieux souvenirs de l’arrivée de bébé</p>
 								</a>
 							</div>
-							<div class="col-md-4 col-sm-6 col-xs-6 col-xxs-12">
+							<div class="col-md-3 col-sm-6 col-xs-6 col-xxs-12">
 								<a href="#" class="fh5co-feature to-animate">
 									<img class="myImage" src="img/guide3box.png">
 									<h3 class="fh5co-feature-lead">Box « Bébé grandit »</h3>
@@ -101,7 +113,7 @@
 							<div class="fh5co-spacer fh5co-spacer-sm"></div>
 
 							<div class="col-md-4 col-md-offset-4 text-center to-animate">
-								<a href="#" class="btn btn-primary">Inscrivez-vous au programme	</a>
+								<a href="register.php" class="btn btn-primary">Inscrivez-vous au programme	</a>
 							</div>
 			        	</div>
 			       </div>
@@ -117,12 +129,12 @@
 								<p class="fh5co-sub animate-single features3-animate-2">Journal de Grossesse</p>
 							</div>
 
-							<div class="col-md-4 col-sm-6 text-center fh5co-text-wrap">
+							<div class="col-md-3 col-sm-12 text-center fh5co-text-wrap">
 								<div class="fh5co-text to-animate">
 				    				<img src="img/3mois.png" class="myImage"/>
 								</div>
 							</div>
-							<div class="col-md-8 col-sm-6  fh5co-text-wrap">
+							<div class="col-md-6 col-sm-12  fh5co-text-wrap">
 								<div class="fh5co-text to-animate">
 									<p>Mon Journal de Grossesse, by Oumbox vous accompagnera tout au long de votre grossesse.Tel un carnet de santé, vous y noterez vos dates de rdv, résultats d’analyses et échographies, contact en cas d’urgence, questions à poser lors de vos rdv… Ce guide vous aidera également à bien vivre votre grossesse, vous équiper pour l’arrivée de votre bébé et vous préparer à l’accouchement.
 									<ul>
@@ -134,6 +146,11 @@
 									</p>
 								</div>
 							</div>
+							<div class="col-md-3 col-sm-12 text-center fh5co-text-wrap">
+								<div class="fh5co-text to-animate">
+				    				<img class="myImage" src="img/guide1box.png">
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -143,7 +160,12 @@
 							<div class="col-md-8 col-md-offset-2 fh5co-section-heading text-center">
 								<p class="fh5co-sub animate-single features4-animate-1">Box Grossesse</p>
 							</div>
-							<div class="col-md-8 col-sm-6 fh5co-text-wrap">
+							<div class="col-md-3 col-sm-12 text-center fh5co-text-wrap">
+								<div class="fh5co-text to-animate">
+				    				<img class="myImage" src="img/guide1box.png">
+								</div>
+							</div>
+							<div class="col-md-6 col-sm-12 fh5co-text-wrap">
 								<div class="fh5co-text to-animate">
 									<p>Ce premier coffret vous aidera à vous équiper pour l’arrivée de votre bébé.</p>
 									<ul>
@@ -155,7 +177,7 @@
 									
 								</div>
 							</div>
-							<div class="col-md-4 col-sm-6 text-center fh5co-text-wrap">
+							<div class="col-md-3 col-sm-12 text-center fh5co-text-wrap">
 								<div class="fh5co-text to-animate">
 				    				<img src="img/5mois.png" class="myImage">
 								</div>
@@ -169,16 +191,21 @@
 							<div class="col-md-8 col-md-offset-2 fh5co-section-heading text-center">
 								<p class="fh5co-sub animate-single features5-animate-1">Box et Guide « Bébé est là ! »</p>
 							</div>
-							<div class="col-md-4 col-sm-6 text-center fh5co-text-wrap">
+							<div class="col-md-3 col-sm-12 text-center fh5co-text-wrap">
 								<div class="fh5co-text to-animate">
 				    				<img src="img/naissance.png" class="myImage">
 								</div>
 							</div>		
-							<div class="col-md-8 col-sm-6 fh5co-text-wrap">
+							<div class="col-md-6 col-sm-12 fh5co-text-wrap">
 								<div class="fh5co-text to-animate">
 									<p>Votre box « Bébé est là ! » :Destinée à conserver tous les précieux souvenirs de l’arrivée de bébé, elle est remplie de surprises, de beaux échantillons et de bons de réductions.</p>
 
 									<p>Votre guide « Bébé est là ! » :De votre accouchement jusqu’au premiers pas de votre enfant, Ce guide couvre plusieurs thématiques pour vous accompagner et vous guider durant la première année de votre bébé : suites de couches, retour à la vie active, allaitements, soins et hygiène de votre bébé, développement psychomoteur, éveil et sécurité, diversification alimentaire, fiches pratiques, etc.</p>
+								</div>
+							</div>
+							<div class="col-md-3 col-sm-12 text-center fh5co-text-wrap">
+								<div class="fh5co-text to-animate">
+				    				<img class="myImage" src="img/guide2box.png">
 								</div>
 							</div>	
 						</div>
@@ -190,12 +217,17 @@
 							<div class="col-md-8 col-md-offset-2 fh5co-section-heading text-center">
 								<p class="fh5co-sub animate-single features6-animate-1">Box « Bébé grandit »</p>
 							</div>
-							<div class="col-md-7 col-sm-6 fh5co-text-wrap">
+							<div class="col-md-3 col-sm-12 text-center fh5co-text-wrap">
+								<div class="fh5co-text to-animate">
+				    				<img class="myImage" src="img/guide3box.png">
+								</div>
+							</div>
+							<div class="col-md-6 col-sm-12 fh5co-text-wrap">
 								<div class="fh5co-text to-animate">
 									<p>Votre bébé a maintenant quelques mois.À chaque stade ses besoins! Ce coffret contient des surprises, des échantillons, et bons plans adaptés pour vous et votre enfant.</p>
 								</div>
 							</div>
-							<div class="col-md-4 col-sm-6 text-center fh5co-text-wrap">
+							<div class="col-md-3 col-sm-12 text-center fh5co-text-wrap">
 								<div class="fh5co-text to-animate">
 				    				<img src="img/6mois.png" class="myImage">
 								</div>
@@ -233,17 +265,23 @@
 
      $("#fh5co-features > div > div > div:nth-child(2) > a").click(function() {
 	    $('html, body').animate({
+	        scrollTop: $("#fh5co-features-3").offset().top
+		}, 1000);
+	});
+
+     $("#fh5co-features > div > div > div:nth-child(3) > a").click(function() {
+	    $('html, body').animate({
 	        scrollTop: $("#fh5co-features-4").offset().top
 		}, 1000);
 	});
 
-      $("#fh5co-features > div > div > div:nth-child(3) > a").click(function() {
+      $("#fh5co-features > div > div > div:nth-child(4) > a").click(function() {
 	    $('html, body').animate({
 	        scrollTop: $("#fh5co-features-5").offset().top
 		}, 1000);
 	});
 
-       $("#fh5co-features > div > div > div:nth-child(4) > a").click(function() {
+       $("#fh5co-features > div > div > div:nth-child(5) > a").click(function() {
 	    $('html, body').animate({
 	        scrollTop: $("#fh5co-features-6").offset().top
 		}, 1000);

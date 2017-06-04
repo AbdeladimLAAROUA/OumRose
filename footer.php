@@ -11,7 +11,7 @@
 					
 					<h3>About Us</h3>
 					<p>
-						Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
+						Parce que vos besoins et vos préoccupations en tant que femme et jeune maman évoluent suivant le développement de votre bébé, le programme OUMBOX vous apporte les bonnes réponses et vous accompagne de la grossesse au 12mois de bébé.
 					</p>
 						
 				</div>
@@ -38,10 +38,10 @@
 								<div class="social-info-wrap">
 									<div class="social-info">
 										<div class="social-info-front social-twitter">
-											<a href="http://twitter.com"></a>
+											<a href="https://www.instagram.com/oumboxma/"></a>
 										</div>
 										<div class="social-info-back social-twitter-hover">
-											<a href="http://twitter.com"></a>
+											<a href="https://www.instagram.com/oumboxma/"></a>
 										</div>	
 									</div>
 								</div>
@@ -52,16 +52,16 @@
 								<div class="social-info-wrap">
 									<div class="social-info">
 										<div class="social-info-front social-facebook">
-											<a href="http://facebook.com"></a>
+											<a href="https://www.facebook.com/oumbox/"></a>
 										</div>
 										<div class="social-info-back social-facebook-hover">
-											<a href="http://facebook.com"></a>
+											<a href="https://www.facebook.com/oumbox/"></a>
 										</div>
 									</div>
 								</div>
 							</div>
 						</li>
-						<li>
+						<!-- <li>
 							<div class="social-item">				
 								<div class="social-info-wrap">
 									<div class="social-info">
@@ -74,7 +74,7 @@
 									</div>
 								</div>
 							</div>
-						</li>
+						</li> -->
 						<!-- <li>
 							<div class="social-item">				
 								<div class="social-info-wrap">
@@ -93,13 +93,13 @@
 					<!-- end: Follow Us -->
 				
 					<!-- start: Newsletter -->
-					<form id="newsletter">
+					<!-- <form id="newsletter">
 						<h3>Newsletter</h3>
 						<p>Please leave us your email</p>
 						<label for="newsletter_input">@:</label>
 						<input type="text" id="newsletter_input"/>
 						<input type="submit" id="newsletter_submit" value="submit">
-					</form>
+					</form> -->
 					<!-- end: Newsletter -->
 				
 				</div>

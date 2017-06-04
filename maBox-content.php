@@ -1,19 +1,19 @@
 
 <?php 
-	if($_POST['type_livraison']=="SB")
-	{
+  if($_POST['type_livraison']=="SB")
+  {
  ?>
 <div class="row content1" id="content" >
-    <h1 class="text-center">SpeedBox</h1>
+    <h1 class="text-center">Vous avez choisi livraison en point relais SpeedBox</h1>
     <div class="col-md-7 col-xs-12  left-alert" id="myForm" novalidate="novalidate">
       <ul class="collapsible collapsible-expandable" data-collapsible="expandable">
        <li class="active maman">
-        <div class="collapsible-header pink lighten-2 white-text waves-effect waves-light active">Choisissez le point relais le plus proche de vous</div>
+        <div class="collapsible-header pink lighten-2 white-text waves-effect waves-light active infos">Choisissez le point relais le plus proche de vous</div>
         <div class="collapsible-body" style="display: block;">
         <div class="row coordonnee">  
 
-        	 <!-- Liste des villes -->
-           <div id="ville" class="input-field col-md-8 col-sm-8 col-xs-12">
+           <!-- Liste des villes -->
+           <div id="ville" class="input-field col-md-6 col-sm-6 col-xs-12">
               <span class="micons-building prefix"></span>
           <!-- <input id="city" name="VILLE" type="text" pattern=".{3,}" minlength="3" required="required" class="validate" aria-required="true"> -->
             <select  name="VILLE" class="initialized">
@@ -27,10 +27,10 @@
               <option value="<?php echo $infos['id']; ?>"><?php echo $infos['name']; ?></option>
               <?php } ?>
             </select>
-       	   </div>
+           </div>
 
          <!-- List des points relais -->
-        <div id="relais" class="input-field col-md-4 col-sm-4 col-xs-12" hidden>
+        <div id="relais" class="input-field col-md-6 col-sm-6 col-xs-12" hidden>
               <select id="relaisList" name="relaisList" class="initialized">
                 <option value="0" disabled="" selected="">Point relais</option>
                 <?php  
@@ -40,6 +40,14 @@
                   <?php } ?>
               </select>
          </div>
+    </div>
+    <div class="row">
+         <div class="input-field col-md-6 col-sm-6 col-xs-12">
+          <span class="micons-mobile prefix"></span>
+          <input id="gsm" name="GSM" type="text" pattern="^(0|00\s?212\s?|\(?\+212\)?\s?(\(0\))?)[67]([\s\-\.]?[0-9]{2}){4}$" class="validate" required="required" aria-required="true">
+          <label for="gsm" data-error="numéro invalide" class="gsmLabel">Tél. portable</label>
+         </div>
+
 
          <!-- Adresse du point relais -->
          <div id="adresseRelais" class="input-field col-md-12" style="color: #9e9e9e;font-size: 1rem;" hidden>
@@ -47,7 +55,8 @@
            <?php  
              foreach ($relais as $key => $infos) { 
            ?>
-             <p class="text-center <?php echo "relais".$infos['id']; ?>" value="<?php echo $infos['id']; ?>" >Adresse : <?php echo $infos['adresse']; ?></p>
+             <p class="text-center <?php echo "relais".$infos['id']; ?>" value="<?php echo $infos['id']; ?>" ><b>Adresse :</b> <?php echo $infos['adresse']; ?> <br/> Horaire ramadan : du lundi au samedi de 9h à 17h30</p>
+             <div id="error2" class="text-center"></div>
              <?php } ?>
 
              <div class="text-center">
@@ -66,15 +75,16 @@
 else if($_POST['type_livraison']=="LD"){
  ?>
 <div class="row content2" id="content" >
-    <h1 class="text-center">Livraison à domicile</h1>
+    <h1 class="text-center">Vous avez choisi Livraison à domicile</h1>
+    <h3 class="text-center">Livraison limitée au centre de Casablanca</h3>
     <div class="col s12 m7 offset-m2 left-alert" id="myForm" novalidate="novalidate">
       <ul class="collapsible collapsible-expandable" data-collapsible="expandable">
        <li class="active maman">
-        <div class="collapsible-header pink lighten-2 white-text waves-effect waves-light active"> Choisissez le quartier le plus proche de vous</div>
+        <div class="collapsible-header pink lighten-2 white-text waves-effect waves-light active infos">Choisissez votre quartier sur la liste (HORAIRE DE TRAVAIL)</div>
         <div class="collapsible-body" style="display: block;">
         <div class="row coordonnee">  
 
-        	 <!-- Liste des quartiers -->
+           <!-- Liste des quartiers -->
            <div id="quartiersCasablanca" class="input-field col s12">
               <span class="micons-building prefix"></span>
           <!-- <input id="city" name="VILLE" type="text" pattern=".{3,}" minlength="3" required="required" class="validate" aria-required="true"> -->
@@ -88,16 +98,31 @@ else if($_POST['type_livraison']=="LD"){
               <option value="<?php echo $infos['id']; ?>"><?php echo $infos['nom']; ?></option>
               <?php } ?>
             </select>
-       	   </div>
+           </div>
 
          <!-- List des points relais -->
-        <div id="adresseClient" class="input-field col s12">
+        <!-- <div id="adresseClient" class="input-field col s12" minlength="6" class="validate" required="required" aria-required="true">
+              <span class="micons-building prefix"></span>
               <label>Adresse de livraison</label><input type="text"/>
+         </div> -->
+        
+
+         <div id="adresseClient" class="input-field col-md-12 col-sm-12 col-xs-12">
+          <span class="micons-building prefix"></span>
+          <input id="adresseClientInput" name="adresseClientInput" type="text"  class="validate" required="required" aria-required="true">
+          <label for="adresseClientInput" class="gsmLabel">Adresse de livraison</label>
+         </div>
+
+         <div class="input-field col-md-12 col-sm-12 col-xs-12">
+          <span class="micons-mobile prefix"></span>
+          <input id="gsm2" name="GSM" type="text" pattern="^(0|00\s?212\s?|\(?\+212\)?\s?(\(0\))?)[67]([\s\-\.]?[0-9]{2}){4}$" class="validate" required="required" aria-required="true">
+          <label for="gsm2" data-error="numéro invalide" class="gsmLabel">Tél. portable</label>
          </div>
 
          <!-- Adresse du point relais -->
          <div id="adresseRelais" class="input-field col s12" style="color: #9e9e9e;font-size: 1rem;" >
              <div class="text-center">
+               <div id="error"></div>
                <button class="send2 waves-effect waves-light btn lighten-1">CONFIRMER</button>
              </div>
          </div>   
@@ -116,27 +141,73 @@ else if($_POST['type_livraison']=="LD"){
 }
 ?>
 <div class="container">
-	<div class="row content3" >
-		<div class="alert alert-info col-md-12 col-sm-12 col-xs-12 content">
-		    <!-- <p><span style="font-size:10.5pt;line-height:107%;font-family:Helvetica, sans-serif;background-image:initial;background-attachment:initial;background-size:initial;background-origin:initial;background-clip:initial;background-position:initial;background-repeat:initial;"> -->
-		    <h3 class="text-center">
-		    	Votre demande a été envoyé avec succès.
-		    </h3>
-		    <p class="text-center">
-		    	Détails de votre commande : 
-		    </p>
+  <div class="row content3" >
+    <div class="alert alert-info col-md-12 col-sm-12 col-xs-12 content">
+        <!-- <p><span style="font-size:10.5pt;line-height:107%;font-family:Helvetica, sans-serif;background-image:initial;background-attachment:initial;background-size:initial;background-origin:initial;background-clip:initial;background-position:initial;background-repeat:initial;"> -->
+        <h3 class="text-center">
+          Votre demande a été envoyée avec succès.
+        </h3>
+        <p class="text-center">
+          Détails de votre commande : 
+        </p>
 
-		    <div class="commandeDetails">
-		    	<div class="row"><div class="col-md-6">Client :</div><div class="infoLivraison"> Nom prénom</div></div>
-		    	<div class="row"><div class="col-md-6">Type de livraison :</div><div class="infoLivraison" >SpeedBox</div></div>
-		    	<div class="row"><div class="col-md-6">Ville :</div><div class="infoLivraison">Casablanca</div></div>
-		    	<div class="row"><div class="col-md-6">Point relais :</div><div class="infoLivraison">Sidi Maarouf</div></div>
-		    </div>
-		    
+        <div class="commandeDetails">
+          <div class="row"><div class="col-md-6">Client :</div><div class="infoLivraison"><?php echo $_SESSION['nomComplet']; ?> </div></div>
+          <div class="row"><div class="col-md-6">Type de livraison :</div><div class="infoLivraison" >SpeedBox</div></div>
+          <div class="row"><div class="col-md-6">Ville :</div><div id="infos3" class="infoLivraison"></div></div>
+          <div class="row"><div class="col-md-6">Point relais :</div><div id="infos4" class="infoLivraison"></div></div>
+          <div class="row"><div class="col-md-6">Téléphone :</div><div id="infosTel1" class="infoLivraison"></div></div>
+        </div>
+        
 
-		    </span></p>
-		</div>
-	</div>	
+        </span></p>
+    </div>
+    <div class="alert alert-info col-md-12 col-sm-12 col-xs-12 content">
+          <p>
+            <ul>
+              <li>1.  Vous allez recevoir un SMS quand votre box est livrée au point relais choisi</li>
+              <li>2.  Présentez-vous au point relais choisi avec votre CIN et 25 dh pour récupérer votre box</li>
+              <li>3.  Vous aurez après 7 a 10 j pour récupérer la box; sinon elle ne sera plus disponible</li>
+            </ul>
+          </p>
+          </span></p>
+      </div>
+  </div>  
+</div>
+<div class="container">
+  <div class="row content4" >
+    <div class="alert alert-info col-md-12 col-sm-12 col-xs-12 content">
+        <!-- <p><span style="font-size:10.5pt;line-height:107%;font-family:Helvetica, sans-serif;background-image:initial;background-attachment:initial;background-size:initial;background-origin:initial;background-clip:initial;background-position:initial;background-repeat:initial;"> -->
+        <h3 class="text-center">
+          Votre demande a été envoyée avec succès.
+        </h3>
+        <p class="text-center">
+          Détails de votre commande : 
+        </p>
+
+        <div class="commandeDetails">
+          <div class="row"><div class="col-md-6">Client :</div><div class="infoLivraison"><?php echo $_SESSION['nomComplet']; ?> </div></div>
+          <div class="row"><div class="col-md-6">Type de livraison :</div><div class="infoLivraison" >Livraison à domicile</div></div>
+          <div class="row"><div class="col-md-6">Ville :</div><div id="infos7" class="infoLivraison">Casablanca</div></div>
+          <div class="row"><div class="col-md-6">Adresse :</div><div id="infos8" class="infoLivraison"></div></div>
+          <div class="row"><div class="col-md-6">Téléphone :</div><div id="infosTel2" class="infoLivraison"></div></div>
+        </div>
+        
+
+        </span></p>
+    </div>
+
+    <div class="alert alert-info col-md-12 col-sm-12 col-xs-12 content">
+        <p>
+          <ul>
+            <li>1. Vous allez recevoir un appel de notre livreur pour programmer la livraison.</li>
+            <li>2. Présentez votre CIN à notre livreur et 20 dhs pour récupérer votre box.</li>
+          </ul>
+        </p>
+        </span></p>
+    </div>
+
+  </div>  
 </div>
  
 
@@ -214,17 +285,25 @@ $(function() {
 
 <script type="text/javascript">
   $('.content3').hide();
-  
+  $('.content4').hide();
+  var markers = new Array(); 
   $('select[name=VILLE]').change(function() { 
     
     //val = id ville 
     var id ;
+    
     if($(this).val()>0){
-
+      markers=[];
       id = $(this).val();
        //Afficher la liste des points relais 
       $("#relais").removeAttr( "hidden" );
-      
+
+      /*$("#relais ul li:nth-child(1)").removeClass("disabled");
+      $("#relais ul li:nth-child(1)").addClass("active");
+       $("#relais ul li:nth-child(1)").addClass("selected");*/
+      $("#relaisList input:text").val('Point relais');
+       
+      $('#infos3').html( $("#ville ul li.active span").text());
 
       //Afficher tous les points relais existant
       $("#relais ul li").removeAttr( "hidden" );
@@ -232,6 +311,9 @@ $(function() {
 
       //cacher l'adresse
       $("#adresseRelais").attr( "hidden", "" );
+
+      $("#relais input").trigger('click');
+      
 
 
       //Cacher la liste de points relais qui font pas partie de la ville sélectionnée
@@ -245,13 +327,15 @@ $(function() {
             // attribut hidden de option 
             var attr = $(current).attr('hidden');
 
+
+
             // si option a un attribut hidden alor li doit avoir un attribut hidden 
             if (typeof attr == typeof undefined ) {
                
             }else{
                if(index!=0){
-               		var newIndex= index+1;
-               		$("#relais ul li:nth-child("+newIndex+")").attr("hidden","");	
+                  var newIndex= index+1;
+                  $("#relais ul li:nth-child("+newIndex+")").attr("hidden",""); 
                }
                
             }
@@ -277,6 +361,7 @@ $(function() {
               map: map,
               title: json['result'][0].nom
             });
+         markers.push(marker);
          for (var i = 1; i < json['result'].length; i++) {
 
             var myLatLng = {lat: parseFloat(json['result'][i].gps_lat), lng: parseFloat(json['result'][i].gps_lng)};
@@ -287,6 +372,7 @@ $(function() {
               map: map,
               title: json['result'][i].nom
             });
+            markers.push(marker);
          };
         },
         error:function(data) { 
@@ -301,6 +387,25 @@ $(function() {
   var id_relais;
 
   $('select[name=relaisList]').change(function() { 
+    var selectedCity= $("select[name=relaisList] option:selected").text();
+    $("#adresseRelais p").trigger('click');
+    for (var i = 0; i < markers.length; i++) {
+     if(selectedCity== markers[i]['title']){
+      
+       var map = new google.maps.Map(document.getElementById('map'), {
+         zoom: 14,
+         center: markers[i]['position']
+       });
+       var marker = new google.maps.Marker({
+            position: markers[i]['position'],
+            map: map,
+            title: markers[i]['title']
+      });
+
+     }
+     
+    };
+    $('#infos4').html($('#relais ul li.active span').text());
     if($(this).val()>0){
       id_relais=$(this).val();
       $("#adresseRelais").removeAttr( "hidden" );
@@ -311,40 +416,73 @@ $(function() {
 
 
   $("button.send1").click(function(){
-   	var myQuartier = "NULL";
-   	var myAdresse = "NULL";
-   	var livraison = {livraison:{type:'SB',quartier:myQuartier,relais:id_relais,adresse:myAdresse},methode:'addLivraison'};
-   	$.ajax({
-   		url:'gestion/lib/util.php',
-   		type:'POST',
-   		data:livraison,
-   		success: function(data){
-   			$( ".content1" ).fadeOut( "slow", function() {
-   			    	$( ".content3" ).fadeIn("slow");
-   			  });
-   		},
-   		error : function(data){
-   			console.log(data);
-   		}
-   	});
+    var myQuartier = "NULL";
+    var myAdresse = "NULL";
+    var myTel = $("#gsm").val();
+    $("#infosTel1").html(myTel);
+     if(myQuartier==""){
+       $('#error').html("Merci de choisir un quartier");
+    }
+    else if(myAdresse==""){
+      $('#error').html("Merci de nous renseigner votre adresse"); 
+    }else if(myTel==""){
+      $('#error2').html("Merci de nous renseigner votre Téléphone"); 
+    }else if(myTel.length<10){
+      $('#error2').html("Numéro de téléphone invalide"); 
+      console.log(myTel.length);
+    }else{
+      var livraison = {livraison:{type:'SB',quartier:myQuartier,relais:id_relais,adresse:myAdresse,gsm:myTel},methode:'addLivraison'};
+    $.ajax({
+      url:'gestion/lib/util.php',
+      type:'POST',
+      data:livraison,
+      success: function(data){
+        console.log(data);
+        $( ".content1" ).fadeOut( "slow", function() {
+              $( ".content3" ).fadeIn("slow");
+          });
+      },
+      error : function(data){
+        console.log(data);
+      }
+    });
+    }
+    
   });
    $("button.send2").click(function(){
-  	var myQuartier = $("#quartiersCasablanca ul li.active").text();
-  	var myAdresse = $("#adresseClient input").val();
-  	var livraison = {livraison:{type:'LD',quartier:myQuartier,relais:'NULL',adresse:myAdresse},methode:'addLivraison'};
-  	$.ajax({
-  		url:'gestion/lib/util.php',
-  		type:'POST',
-  		data:livraison,
-  		success: function(data){
-  			$( ".content2" ).fadeOut( "slow", function() {
-   			    	$( ".content3" ).fadeIn("slow");
-   			  });
-  		},
-  		error : function(data){
-  			console.log(data);
-  		}
-  	});
+    var myQuartier = $("#quartiersCasablanca ul li.active").text();
+    var myAdresse = $("#adresseClient input").val();
+    var tel = $("#gsm2").val();
+    $("#infosTel2").html(tel);
+
+    $('#infos7').html( myQuartier);
+    $('#infos8').html( myAdresse);
+    if(myQuartier==""){
+       $('#error').html("Merci de choisir un quartier");
+    }
+    else if(myAdresse==""){
+      $('#error').html("Merci de nous renseigner votre adresse"); 
+    }else if(tel==""){
+      $('#error').html("Merci de nous renseigner votre Téléphone"); 
+    }else if(tel.length<10){
+      $('#error').html("Numéro de téléphone invalide"); 
+    }else{
+      var livraison = {livraison:{type:'LD',quartier:myQuartier,relais:'NULL',adresse:myAdresse,gsm:tel},methode:'addLivraison'};
+    $.ajax({
+      url:'gestion/lib/util.php',
+      type:'POST',
+      data:livraison,
+      success: function(data){
+        $( ".content2" ).fadeOut( "slow", function() {
+              $( ".content4" ).fadeIn("slow");
+          });
+      },
+      error : function(data){
+        console.log(data);
+      }
+    });
+    }
+    
   });
 </script>
 

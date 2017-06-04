@@ -47,7 +47,7 @@ session_start();
 
 	  		 ?>
 	  	</h3>
-	  		<form method="post" action="user/login.php">
+	  	
 	  			 <div class="content">
 	  			 	 <div class="loginpanel">
 	  			  <div class="txt">
@@ -58,11 +58,23 @@ session_start();
 	  			    <input id="pwd" name="password" type="password" placeholder="Password" />
 	  			    <label for="pwd" class="entypo-lock"></label>
 	  			  </div>
+	  			  <div class="txt">
+	  			    <input id="pwdConf" name="passwordConf" type="password" placeholder="Confirmation" />
+	  			    <label for="pwdConf" class="entypo-lock"></label>
+	  			  </div>
+	  			  <p class="text-center error">
+	  			  	<?php 
+	  			  		if (isset($_SESSION['errorRegisterByEmail'])) {
+	  			  			echo $_SESSION['errorRegisterByEmail'];
+							session_unset($_SESSION['errorRegisterByEmail']);
+	  			  		}
+	  			  	 ?>
+	  			  </p>
 	  			  <div class="buttons">
-	  			    <input type="submit" value="Je me connecte" id="connect" />
-	  			    <span>
+	  			    <input type="submit" value="Activer mon compte" id="connect" />
+	  			   <!--  <span>
 	  			      <a href="register.php" class="entypo-user-add register">Je m'inscris</a>
-	  			    </span>
+	  			    </span> -->
 	  			  </div>
 	  			 </div>
 	  			  
@@ -77,13 +89,53 @@ session_start();
 	  			    <a href="javascript:void(0)" class="twitterLogin"></a>
 	  			    <a href="javascript:void(0)" class="googleplusLogin"></a>
 	  			  </div> -->
-	  			</form>
+	  			</div>
 		  
 	</div>
 
   <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
   <script type="text/javascript" src="js/header.js"></script>
-  
+  <script type="text/javascript">
+  	$("#connect").click(function() {
 
+  		if(checkform()){
+  			$.ajax({
+  				url:'user/register.php',
+  				type:'POST',
+  				dataType: "json",
+  				data:{email: $("#user").val(), password:$("#pwd").val()},
+  				success: function(data) {	
+  					console.log(data);
+  					if(data['code']=="1" || data['code']=="3"|| data['code']=="0"){
+  						//$(".content").hide();
+  						$(".error").html(data['response']);
+
+  					}
+  					console.log(data['code']);
+  				},
+  				error: function(data){
+  					console.log("error "+data);
+  				}
+  			});
+  		}
+  		
+  	});
+  	function checkform() {
+  	    if($("#user").val() == "") {
+  	        $(".error").html("L'email est obligatoire");
+  	        return false;
+  	    }else if($("#pwd").val() == ""){
+  	    	$(".error").html("Le password est obligatoire");
+  	    	 return false;
+  	    }else if($("#pwd").val() != $("#pwdConf").val()){
+  	    	$(".error").html("Password incorrect");
+  	    	 return false;
+  	    }else{
+  	    	return true;
+  	    }
+  	   
+  	}
+  </script>
+<?php include('footer.php'); ?>
 </body>
 </html>

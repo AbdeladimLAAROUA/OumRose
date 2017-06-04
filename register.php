@@ -52,7 +52,20 @@
   <link href="css/style.css" rel="stylesheet">
   <link href="css/header.css" rel="stylesheet">
   <!-- end: CSS -->
+  <style type="text/css">
+  label[for='naissance']::after{
+    top: 32px;
+  }
+  .selectCity > span:nth-child(3) {
+    bottom: 23px;
+    position: relative;
+    color: red;
+    left: 50px;
+    display: none
+   
 
+}
+  </style>
 </head>
 <body>
 <?php include('header.php'); ?>

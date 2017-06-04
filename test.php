@@ -1,32 +1,42 @@
 <?php
   /*echo $today = date("ymd");*/
   // Date d'aujourd'hui
-  /*$today = new DateTime(date('Y-m-d'));
+ // $today = new DateTime(date('Y-m-d'));
+  
   
   
   /*$today2 = new DateTime(date('Y-m-d'));*/
 
   /*$dateInSixMonth = $today->add(new DateInterval('P9M'));*/
-  /*
-  $naissance =  new DateTime('2017-7-20');
+  
+  $today = new DateTime('2017-6-4');
+  $naissance =  new DateTime('2017-12-06');
 
 
   $interval = date_diff($today, $naissance);
 
 
-  $diffJours =  $interval->format('%R%a days');
+  $diffJours =  $interval->format('%R%a jours ');
 
-  if($diffJours>0 && $diffJours<92){
+  if($diffJours>=7 && $diffJours<=146){
       echo "box1 :".$diffJours;
   }
-  else if($diffJours<0 && $diffJours>-92){
+  else if($diffJours<=-7 && $diffJours>=-122){
       echo "box2 : ".$diffJours;
   }
-  else if($diffJours<-183 && $diffJours>-276){
+  else if($diffJours<=-183 && $diffJours>=-305){
       echo "box3 : ".$diffJours;  
   }else{
-    echo "aucune box";
-  }*/
+
+    echo $diffJours."aucune box <br/> ";
+  }
+
+/*  include('config.php');
+  $product['id_box']=3;
+  $idProduct = addProduct2($product['id_box']);
+  echo $idProduct;*/
+
+ 
 /*  //Ajout de 3 mois sur la date d'aujourd'hui
     $dateInThreeMonth = $today->add(new DateInterval('P3M'));
 */
@@ -108,7 +118,7 @@ $headers .= "Return-path: " . $email;
 $message = "Your password is ".'password'.".";
 mail($email, $subject, $message, $headers);*/
 ?>
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
   <head>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
@@ -157,4 +167,49 @@ mail($email, $subject, $message, $headers);*/
 
 </script>
 </body>
-</html>
+</html> -->
+<?php 
+/*$id = intval(base64_decode('MjQ5'));
+echo $id;*/
+
+/*validateByEmail("khalid",111);
+
+function validateByEmail($email,$id){
+
+   try {
+$myId=base64_encode($id);
+$message = <<<EOT
+'<html>
+    <head>
+        <title>Email Verification</title>
+    </head>
+    <body>
+        <h1>Hi ESSALHI!</h1>
+        <p><a href="oumtest.k4mshost.odns.fr/activate.php?id=$myId">CLICK TO ACTIVATE YOUR ACCOUNT</a>
+    </body>
+</html>'        
+EOT;
+
+echo $message;
+
+        $semi_rand = md5(time());
+        $mime_boundary = "Oumbx_Mpart_Bound_x{$semi_rand}x";
+        $headers= "Sender: khalid.essalhi8@gmail.com\n";
+//      $headers.= "Return-Path: lead@dclabs.fr\n";
+        $headers.= "From: khalid.essalhi8@gmail.com\n";
+
+        $headers .= "MIME-Version: 1.0\n" .
+             "Content-Type: text/html; charset=UTF-8;format=flowed\n" .
+                 "Content-Transfer-Encoding: 8bit\n".
+                                 "X-Mailer: PHP\n".
+                                 " boundary=\"{$mime_boundary}\"";
+  
+        $subj = "Confirmation du mot de passe";
+        $to ="khalid.essalhi8@gmail.com";
+        $ok = mail($to, $subj, $message, $headers);
+        return $ok;
+    } catch (Exception $ex) {
+      echo $msg = $ex->getMessage();
+    }
+}*/
+ ?>

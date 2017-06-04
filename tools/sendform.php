@@ -1,7 +1,6 @@
 <?php
 
-
-
+ 
 
 // rapid check of number of fields
 if (count($_POST)>7){
@@ -44,12 +43,19 @@ if (count($_POST)>7){
 
         // connect to DB 
 
-       /* $servername = "sql.k4mshost.odns.fr";
+        $servername = "sql.k4mshost.odns.fr";
         $username = "k4mshost_oumdev";
         $password = "!!oumb0x";
-        $dbname="k4mshost_oumdev";*/
+        $dbname="k4mshost_oumdev"; 
+
+        /*$servername = "localhost";
+        $username = "root";
+        $password = "";
+        $dbname="oumdev_leads";*/
+
+
         
-        $mydb = mysqli_connect("localhost","root","","oumdev_leads");
+        $mydb = mysqli_connect($servername,$username,$password,$dbname);
         if (mysqli_connect_errno()) {
         //printf("Connect failed: %s\n", mysqli_connect_error());
                 header("HTTP/1.0 503 Service Unavailable",503);
@@ -68,6 +74,7 @@ if (count($_POST)>7){
         
         $db->query($sql,$customer);
         $id = $db->insertId();
+        $idUser=$id;
 
 
         echo "InsertedId : ".$id;
@@ -89,6 +96,8 @@ if (count($_POST)>7){
         $id = $db->insertId();
 
         mysqli_close($mydb);
+        validateByEmail($idUser,$customer['nom']);
+         
 
 
         //check if real mail
@@ -105,6 +114,8 @@ if (count($_POST)>7){
         // set path and name of log file (optional)
         $log->lfile('mylog.txt');
 
+        $log->lwrite($email);
+
         // write message to the log file
        
 
@@ -112,7 +123,7 @@ if (count($_POST)>7){
         $log->lclose();
 
         $log->lwrite('SendForm Partie emails');
-        if (!strstr($_POST["EMAIL"],"@nomail.com")){
+        if (!strstr($_POST["EMAIL"],"@nomail.com")){/*
 
             // add user to sendinblue 
             require_once('Mailin.php');
@@ -147,13 +158,13 @@ if (count($_POST)>7){
                 $ok=FALSE;
                 //exit();
             }
-        } else{
+        */} else{/*
             $res = notification_email(array_merge($_POST,$info));
             echo '\nnomail.com, notif mail '.$res;
 
             header("HTTP/1.0 202 Accepted",202);
             exit();
-        }
+        */}
 
         /*if ($ok){
              
@@ -210,3 +221,45 @@ function notification_email ($data){
     $ok = mail($to, $subj, $message, $headers);
     return $ok;
 }
+
+function validateByEmail($id,$nom){
+
+
+try {
+
+$myId=base64_encode($id);
+$message1 = <<<EOT
+<html>
+    <head>
+        <title>Email Verification</title>
+    </head>
+    <body>
+        <h1>Bonjour $nom!</h1>
+        <p><a href="oumtest.k4mshost.odns.fr/activate.php?id=$myId">Cliquz ici pour confirmer votre inscription au programme</a>
+        <p>Si vous avez reçu cet email par erreur, supprimez le simplement, vous n'allez pas être inscrit au programme si vous n'avez pas cliquer sur le lien ci-dessus</p>
+    </body>
+</html>
+EOT;
+    echo $message1;
+    $semi_rand = md5(time());
+        $mime_boundary = "Oumbx_Mpart_Bound_x{$semi_rand}x";
+        $headers= "Sender: khalid.essalhi8@gmail.com\n";
+//      $headers.= "Return-Path: lead@dclabs.fr\n";
+        $headers.= "From: khalid.essalhi8@gmail.com\n";
+
+        $headers .= "MIME-Version: 1.0\n" .
+             "Content-Type: text/html; charset=UTF-8;format=flowed\n" .
+                 "Content-Transfer-Encoding: 8bit\n".
+                                 "X-Mailer: PHP\n".
+                                 " boundary=\"{$mime_boundary}\"";
+  
+      $subj = "Merci de confirmer votre email";
+      $to ="khalid.essalhi8@gmail.com";
+      $ok = mail($to, $subj, $message1, $headers);
+    return $ok;
+  } catch (Exception $ex) {
+    echo $msg = $ex->getMessage();
+  }
+
+}
+?>

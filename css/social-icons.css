@@ -680,11 +680,11 @@
 }
 
 .social-twitter { 
-	background: #f6f6f6 url(../img/icons/social_big/twitter_grey.png) no-repeat;
+	background: #f6f6f6 url(../img/icons/social_big/twitter_grey2.png) no-repeat;
 }
 
 .social-twitter-hover { 
-	background: #48c4d2 url(../img/icons/social_big/twitter_white.png) no-repeat;
+	background: #48c4d2 url(../img/icons/social_big/twitter_white2.png) no-repeat;
 }
 
 .social-vimeo { 
@@ -961,11 +961,11 @@
 }
 
 .social-small-twitter { 
-	background: #ffffff url(../img/icons/social_small/twitter_grey.png) no-repeat;
+	background: #ffffff url(../img/icons/social_small/twitter_grey2.png) no-repeat;
 }
 
 .social-small-twitter-hover { 
-	background: #48c4d2 url(../img/icons/social_small/twitter_white.png) no-repeat;
+	background: #48c4d2 url(../img/icons/social_small/twitter_white2.png) no-repeat;
 }
 
 .social-small-vimeo { 

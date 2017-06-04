@@ -1,5 +1,9 @@
 <?php 
 session_start();
+if(isset($_SESSION['eligibleToBox']) and $_SESSION['eligibleToBox']==0){
+  header('Location:boxReady.php');
+}
+
  ?>
 <!DOCTYPE html>
 <!-- saved from url=(0018)http://oumbox.com/ -->
@@ -79,28 +83,35 @@ session_start();
       font-size: 18px;
       line-height: 35px;
     }
-    .content3{
+    .content3,.content4{
       margin: 30px 0px !important;
     }
     .commandeDetails{
       font-size: 25px;
     }
-    .content3  p{
+    .content3  p, .content4 p{
       margin-bottom: 40px;
     }
     .infoLivraison{
       color: #c36eaa;
     }
+    .infos{
+      font-size: 15px;
+    font-weight: bold;
+    }
+    #error{
+      margin: 10px;
+    }
     @media (max-width: 767px) {
       .coordonnee{
-        height: 300px;
+        height: 150px;
       }
     }
   </style>
 
 </head>
 <body>
-<?php include('header.php'); ?>
+
 <div class="register">
   <?php include('maBox-content.php'); ?>
 </div>

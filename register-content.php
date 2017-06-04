@@ -1,6 +1,4 @@
-
-  
-  <div class="row" id="content" >
+ <div class="row" id="content" >
       <form class="col s12 m8 offset-m2 l6 offset-l3 left-alert" id="myForm" novalidate="novalidate">
       <ul class="collapsible collapsible-expandable" data-collapsible="expandable">
         
@@ -11,17 +9,17 @@
             <div class="row">
              <div class="input-field col s12" >
               <span class="micons-mail prefix"></span>
-              <input id="email" type="email" name="EMAIL" class="validate" required="true" aria-required="true" pattern="^.*@[a-zA-Z\.]+\.[a-zA-Z]{2,}$">
-              <label for="email" data-error="email invalide" data-success="" class="">Email</label>
+              <input id="email" type="email" name="EMAIL" class="validate" required="required" aria-required="true" pattern="^.*@[a-zA-Z\.]+\.[a-zA-Z]{2,}$">
+              <label id="labelEmail" for="email" data-error="email invalide" data-success="" class="">Email</label>
             </div>
             <div class="input-field col s6">
               <span class="micons-padlock prefix"></span>
               <input id="password" type="password" name="PASSWORD" pattern=".{2,}" minlength="6" class="validate" required="required" aria-required="true">
-              <label for="password" data-error="invalide" class="">Password</label>
+              <label id="labelPassword" for="password" data-error="invalide" class="">Password</label>
             </div>
             <div class="input-field col s6">
               <input id="passconf" name="passconf" type="password" pattern=".{2,}" minlength="6" class="validate" required="required" aria-required="true">
-              <label for="passconf" data-error="Password incorrect" class="">Confirmation</label>
+              <label id="labelPassconf" for="passconf" data-error="Password incorrect" class="">Confirmation</label>
             </div>
             <div class="sparator">
               <label>Ou</label>
@@ -60,36 +58,38 @@
           <input id="passconf" name="passconf" type="password" pattern=".{2,}" minlength="6" class="validate" required="required" aria-required="true">
           <label for="passconf" data-error="Password incorrect" class="">Confirmation</label>
         </div> -->
-             <div class="input-field col s6">
-<span class="micons-user prefix"></span>
+        <div class="input-field col s6">
+        <span class="micons-user prefix"></span>
           <input id="prenom" type="text" name="PRENOM" pattern=".{2,}" minlength="2" class="validate" required="required" aria-required="true">
-          <label for="prenom" data-error="invalide" class="">Prénom</label>
+          <label id="labelPrenom"for="prenom" data-error="invalide" class="">Prénom</label>
         </div>
         <div class="input-field col s6">
           <input id="nom" name="NOM" type="text" pattern=".{2,}" minlength="2" class="validate" required="required" aria-required="true">
-          <label for="nom" data-error="invalide" class="">Nom de famille</label>
+          <label id="labelNom" for="nom" data-error="invalide" class="">Nom de famille</label>
         </div>
          <div class="input-field col s6">
-<span class="micons-mobile prefix"></span>
+        <span class="micons-mobile prefix"></span>
           <input id="gsm" name="GSM" type="text" pattern="^(0|00\s?212\s?|\(?\+212\)?\s?(\(0\))?)[67]([\s\-\.]?[0-9]{2}){4}$" class="validate" required="required" aria-required="true">
-          <label for="gsm" data-error="numéro invalide" class="">Tél. portable</label>
+          <label id="labelGsm" for="gsm" data-error="numéro invalide" class="">Tél. portable</label>
          </div>
 
         <div class="input-field col s6">
 <span class="micons-calendar prefix"></span>
           <input id="naissance" name="DATE_NAISSANCE" class="datepicker  picker__input" placeholder="Date de naissance" required="required" readonly="" tabindex="-1" aria-haspopup="true" aria-expanded="false" aria-readonly="false" aria-owns="naissance_root" aria-required="true"><label for="naissance"></label><div class="picker" id="naissance_root" tabindex="0" aria-hidden="true"><div class="picker__holder"><div class="picker__frame"><div class="picker__wrap"><div class="picker__box"><div class="picker__date-display"><div class="picker__weekday-display">mardi</div><div class="picker__month-display"><div>mai</div></div><div class="picker__day-display"><div>9</div></div><div class="picker__year-display"><div>1987</div></div></div><div class="picker__calendar-container"><div class="picker__header"><select class="picker__select--month browser-default" aria-controls="naissance_table" title="Choisir un mois" disabled="disabled"><option value="0">janvier</option><option value="1">février</option><option value="2">mars</option><option value="3">avril</option><option value="4" selected="">mai</option><option value="5">juin</option><option value="6">juillet</option><option value="7">août</option><option value="8">septembre</option><option value="9">octobre</option><option value="10">novembre</option><option value="11">décembre</option></select><select class="picker__select--year browser-default" aria-controls="naissance_table" title="Choisir une année" disabled="disabled"><option value="1965">1965</option><option value="1966">1966</option><option value="1967">1967</option><option value="1968">1968</option><option value="1969">1969</option><option value="1970">1970</option><option value="1971">1971</option><option value="1972">1972</option><option value="1973">1973</option><option value="1974">1974</option><option value="1975">1975</option><option value="1976">1976</option><option value="1977">1977</option><option value="1978">1978</option><option value="1979">1979</option><option value="1980">1980</option><option value="1981">1981</option><option value="1982">1982</option><option value="1983">1983</option><option value="1984">1984</option><option value="1985">1985</option><option value="1986">1986</option><option value="1987" selected="">1987</option><option value="1988">1988</option><option value="1989">1989</option><option value="1990">1990</option><option value="1991">1991</option><option value="1992">1992</option><option value="1993">1993</option><option value="1994">1994</option><option value="1995">1995</option><option value="1996">1996</option><option value="1997">1997</option><option value="1998">1998</option><option value="1999">1999</option><option value="2000">2000</option><option value="2001">2001</option></select><div class="picker__nav--prev" data-nav="-1" role="button" aria-controls="naissance_table" title="Mois précédent"> </div><div class="picker__nav--next" data-nav="1" role="button" aria-controls="naissance_table" title="Mois prochain"> </div></div><table class="picker__table" id="naissance_table" role="grid" aria-controls="naissance" aria-readonly="true"><thead><tr><th class="picker__weekday" scope="col" title="lundi">L</th><th class="picker__weekday" scope="col" title="mardi">M</th><th class="picker__weekday" scope="col" title="mercredi">M</th><th class="picker__weekday" scope="col" title="jeudi">J</th><th class="picker__weekday" scope="col" title="vendredi">V</th><th class="picker__weekday" scope="col" title="samedi">S</th><th class="picker__weekday" scope="col" title="dimanche">D</th></tr></thead><tbody><tr><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="546476400000" role="gridcell" aria-label="27/04/1987">27</div></td><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="546562800000" role="gridcell" aria-label="28/04/1987">28</div></td><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="546649200000" role="gridcell" aria-label="29/04/1987">29</div></td><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="546735600000" role="gridcell" aria-label="30/04/1987">30</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="546822000000" role="gridcell" aria-label="01/05/1987">1</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="546908400000" role="gridcell" aria-label="02/05/1987">2</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="546994800000" role="gridcell" aria-label="03/05/1987">3</div></td></tr><tr><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="547081200000" role="gridcell" aria-label="04/05/1987">4</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="547167600000" role="gridcell" aria-label="05/05/1987">5</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--highlighted" data-pick="547254000000" role="gridcell" aria-label="06/05/1987" aria-activedescendant="true">6</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="547340400000" role="gridcell" aria-label="07/05/1987">7</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="547426800000" role="gridcell" aria-label="08/05/1987">8</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="547513200000" role="gridcell" aria-label="09/05/1987">9</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="547599600000" role="gridcell" aria-label="10/05/1987">10</div></td></tr><tr><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="547686000000" role="gridcell" aria-label="11/05/1987">11</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="547772400000" role="gridcell" aria-label="12/05/1987">12</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="547858800000" role="gridcell" aria-label="13/05/1987">13</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="547945200000" role="gridcell" aria-label="14/05/1987">14</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="548031600000" role="gridcell" aria-label="15/05/1987">15</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="548118000000" role="gridcell" aria-label="16/05/1987">16</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="548204400000" role="gridcell" aria-label="17/05/1987">17</div></td></tr><tr><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="548290800000" role="gridcell" aria-label="18/05/1987">18</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="548377200000" role="gridcell" aria-label="19/05/1987">19</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="548463600000" role="gridcell" aria-label="20/05/1987">20</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="548550000000" role="gridcell" aria-label="21/05/1987">21</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="548636400000" role="gridcell" aria-label="22/05/1987">22</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="548722800000" role="gridcell" aria-label="23/05/1987">23</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="548809200000" role="gridcell" aria-label="24/05/1987">24</div></td></tr><tr><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="548895600000" role="gridcell" aria-label="25/05/1987">25</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="548982000000" role="gridcell" aria-label="26/05/1987">26</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="549068400000" role="gridcell" aria-label="27/05/1987">27</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="549154800000" role="gridcell" aria-label="28/05/1987">28</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="549241200000" role="gridcell" aria-label="29/05/1987">29</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="549327600000" role="gridcell" aria-label="30/05/1987">30</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="549414000000" role="gridcell" aria-label="31/05/1987">31</div></td></tr><tr><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="549500400000" role="gridcell" aria-label="01/06/1987">1</div></td><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="549586800000" role="gridcell" aria-label="02/06/1987">2</div></td><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="549673200000" role="gridcell" aria-label="03/06/1987">3</div></td><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="549759600000" role="gridcell" aria-label="04/06/1987">4</div></td><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="549846000000" role="gridcell" aria-label="05/06/1987">5</div></td><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="549932400000" role="gridcell" aria-label="06/06/1987">6</div></td><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="550018800000" role="gridcell" aria-label="07/06/1987">7</div></td></tr></tbody></table></div><div class="picker__footer"><button class="btn-flat picker__today" type="button" data-pick="1494284400000" aria-controls="naissance" disabled="disabled">Aujourd'hui</button><button class="btn-flat picker__clear" type="button" data-clear="1" aria-controls="naissance" disabled="disabled">RAZ</button><button class="btn-flat picker__close" type="button" data-close="true" aria-controls="naissance" disabled="disabled">OK</button></div></div></div></div></div></div><input type="hidden" name="DATE_NAISSANCE2">
- <label for="naissance"></label>
+ <label id="labelNaissance" for="naissance"></label>
         </div>
-               <div class="input-field col s12">
-                <span class="micons-sign prefix"></span>
-                <textarea id="adresse" name="ADRESSE" type="text" minlength="4" pattern=".{4,}" class="materialize-textarea validate"></textarea>
-                  <label for="adresse" data-error="adresse incomplète" class="">Adresse</label>
-         </div>
-           <div class="input-field col s8">
+        <div class="input-field col s12">
+        <span class="micons-sign prefix"></span>
+                <!-- <textarea id="adresse" name="ADRESSE" type="text" minlength="4"  pattern=".{4,}" class="materialize-textarea validate"></textarea>
+                  <label id="labelAdresse" for="adresse" data-error="adresse incomplète" class="">Adresse</label> -->
+         <input id="adresse" type="text" name="ADRESSE" minlength="5"  required="required" aria-required="true">
+          <label id="labelAdresse" for="adresse" data-error="email invalide" data-success="" class="">Adresse</label>
+        </div>
+           <div class="input-field col s8 selectCity">
 <span class="micons-building prefix"></span>
           <!-- <input id="city" name="VILLE" type="text" pattern=".{3,}" minlength="3" required="required" class="validate" aria-required="true"> -->
 
-          <select id="ville" name="VILLE" class="initialized">
+          <select id="ville" name="VILLE" class="initialized" required="required" aria-required="true">
             <option value="0" disabled="" selected="">Ville</option>
             <option value="1">Casablanca</option>
             <option value="2">Rabat</option>
@@ -106,6 +106,8 @@
             <option value="13">Temara</option>
             <option value="14">Berrechid</option>
           </select>
+          <span>Champ obligatoire</span>
+         
 
           
 
@@ -249,6 +251,7 @@
       $("#password").on("focusout", function (e) {
           if ($(this).val() != $("#passconf").val()) {
               $("#passconf").removeClass("valid").addClass("invalid");
+              $("#labelPassconf").addClass("active");
           } else {
               $("#passconf").removeClass("invalid").addClass("valid");
           }
@@ -460,6 +463,21 @@ $(document).ready(function() {
 });
 $("#myForm").submit(function(e) {
     e.preventDefault();
+    $("#labelEmail").addClass('active');
+    $("#labelPassconf").addClass('active');
+    $("#labelPassword").addClass('active');
+    console.log($("#labelPrenom"));
+    $("#labelPrenom").addClass('active');
+    $("#labelNom").addClass('active');
+    $("#labelGsm").addClass('active');
+    $("label[for='naissance']").addClass('active');
+    $("label[for='naissance']").css('bottom','27px');
+    if($('#ville').val()==null)
+    $(".selectCity > span:nth-child(3)").css('display','unset');
+    else
+     $(".selectCity > span:nth-child(3)").css('display','none');
+    console.log($('#ville').val());
+    $("#labelAdresse").addClass('active');
   }).validate({
     rules:{
   //  SEXE_ENFANT : { min: 1 }
@@ -481,11 +499,13 @@ $("#myForm").submit(function(e) {
        submitHandler: function (form) {
       //  console.log('form ok');
         if(checkForm()){
+        console.log("form valide");
         $.ajax(
         { type:"POST",
           url:"tools/sendform.php", //replace with full url
           data:$("#myForm").serialize(),
-          error:function(){
+          error:function(data){
+          console.log(data);
           Materialize.toast("Une erreur est survenue.",4000)},
           statusCode: {
             400: function() {
@@ -500,22 +520,24 @@ $("#myForm").submit(function(e) {
             204: function() {
             Materialize.toast("Votre demande n'a pu être envoyée avec succès. Veuillez svp vérifier les données et renouveler l'envoi.",4000);
             },
-            202: function() {
+            202: function(data) {
             console.log('error 202');
             document.location.href="index.php"; 
-            $("#content").hide();
+           /* $("#content").hide();
             $("#incent").hide();
-            $("#status").html('Bienvenue!<br>Votre inscription a été effectuée avec succès.').show();
+            $("#status").html('Bienvenue!<br>Votre inscription a été effectuée avec succès.').show();*/
             },
             200: function() {
-            document.location.href="espace.php"; 
-            $("#content").hide();
-            $("#incent").hide();
+            document.location.href="login.php"; 
+            /*$("#content").hide();
+            $("#incent").hide();*/
             //$("#status").html('Bienvenue!<br>Votre inscription a été effectuée avec succès.').show();
-            $("#status").html('Votre inscription a été effectuée avec succès.<br><br>Nous vous conseillons de rajouter contact@oumbox.com à votre liste de contact pour être sûre de recevoir nos futures communications.').show();
+            /*$("#status").html('Votre inscription a été effectuée avec succès.<br><br>Nous vous conseillons de rajouter contact@oumbox.com à votre liste de contact pour être sûre de recevoir nos futures communications.').show();*/
             }
           }
         });
+        }else{
+          console.log("invalid form");
         }
              
     }
@@ -566,6 +588,10 @@ function checkForm(){
     Materialize.toast("Veuillez accepter les conditions pour vous inscrire.",4000);
 
   }
+
+
+
+
  //   console.log("checkform : "+result);
     return result;
 }
@@ -592,8 +618,26 @@ $(function() {
 <script type="text/javascript">
   
   $('.continueBtn').click(function() {
-    $("li.active.maman").removeAttr( "hidden" );
-    $("#libaby0").attr( "hidden",'' );
+    //$("li.active.maman").removeAttr( "hidden" );
+    
+    var a = $("#email").val()=="";
+    var b = $("#password").val()=="";
+    if($("#email").val()==""){
+      $("#labelEmail").addClass('active');
+      $("#email").addClass('invalid');  
+    }
+    if($("#password").val()==""){
+      $("#labelPassword").addClass('active');
+      $("#labelPassconf").addClass('active');
+      $("#password").addClass('invalid');  
+    }
+    if(!a && !b && $("#email").hasClass('valid') && $("#password").hasClass('valid') && $("#passconf").hasClass('valid')){
+      $("li.active.maman").removeAttr( "hidden" );
+      $("#libaby0").attr( "hidden",'' );
+    }
+   /* $("#labelPassconf").addClass('active');
+    $("#labelPassword").addClass('active');*/
+    //$("#libaby0").attr( "hidden",'' );
   }); 
 
 </script>
@@ -656,7 +700,7 @@ $(function() {
  function _i(){
      var url = '/me?fields=gender,first_name,last_name,email';
      FB.api(url, function(response) {
-
+        console.log(response);
         $("li.active.maman").removeAttr( "hidden" );
         $("#libaby0").attr( "hidden",'' );
 
