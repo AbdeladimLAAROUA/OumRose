@@ -1,6 +1,6 @@
 <div class="part1">
 	<div class="title">Notre programme</div>
-	<div class="timeline-wrapper clearfix">
+	<div class="timeline-wrapper container">
 	    <div class="timeline-content-day">
 	        <div class="timeline-line"></div>
 	        <div id="programme1" class="timeline-content-item" >
@@ -93,8 +93,13 @@
 		        previousId=3;
 		    }
 		    $('#programme' + currentID).addClass("active");
+		    $('#programme' + currentID + ' > span').css("display","none");
+		   
 		    $('#programme' + nextID).removeClass("active");
-		     $('#programme' + previousId).removeClass("active");
+		    $('#programme' + nextID + ' > span').css("display","");
+
+		    $('#programme' + previousId).removeClass("active");
+		    $('#programme' + previousId + ' > span').css("display","");
 		    previousId=currentID;
 		    currentID = nextID;
 		},3000);

@@ -145,6 +145,27 @@ $(function () {
                   $("#baby_table tbody").append(newRow);
                 });
               }
+              $("#box_table tbody").empty();
+              var box = data.result.box;
+              var box1="Non commandé";
+              var box2="Non commandé";
+              var box3="Non commandé";
+             
+              if(box.indexOf('1') > -1){
+                box1="commandé";
+              }if(box.indexOf('2') > -1){
+                box2="commandé";
+              }if(box.indexOf('3') > -1){
+                box3="commandé";
+              }
+              
+                  var newRow = '<tr>'+
+                    '<td>'+box1+'</td>'+
+                    '<td>'+box2+'</td>'+
+                    '<td>'+box3+'</td>'+
+                    '</tr>';
+                  $("#box_table tbody").append(newRow);
+            
             }
           },
           error: function (jqXHR, textStatus, errorThrown) {

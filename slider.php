@@ -10,7 +10,7 @@
 
             var jssor_1_options = {
               $AutoPlay: 0,
-              $SlideDuration: 800,
+              $SlideDuration: 1000,
               $SlideEasing: $Jease$.$OutQuint,
               $CaptionSliderOptions: {
                 $Class: $JssorCaptionSlideo$,

@@ -9,7 +9,8 @@ body {
   position: relative;
   color: #6cc;/*white*/
   text-align: center;
-  margin: 50px 50px;
+  /*margin: 50px 50px;*/
+  margin: 70px -50px;
 }
 .timeline-wrapper .timeline-line {
   display: block;
@@ -115,8 +116,11 @@ body {
   margin-left: .3em;
 }*/
 .timeline-wrapper .timeline-content-item.active {
-  width: 18%;
+  width: 17%;
 }
+/*#programme4{
+  width: 17%;
+}*/
 .timeline-wrapper .timeline-content-item.active .timeline-content-item-reveal {
   display: block;
 }

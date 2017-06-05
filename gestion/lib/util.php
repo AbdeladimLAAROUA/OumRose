@@ -88,6 +88,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			echo getRelaisById($_REQUEST['id_relais']);
 		}else if($_REQUEST['methode'] == 'addLivraison'){
 			echo addLivraison($_REQUEST['livraison']);
+		}else if($_REQUEST['methode'] == 'isUserAlreadyExist'){
+			echo isUserAlreadyExist($_REQUEST['email']);
 		}else{
 			echo json_encode(array('result'=>'method_not_exist'));
 		}
@@ -310,6 +312,8 @@ function getClient($id){
 		$resultat = $resultats->fetchAll();
 		$array['result']['client'] = $resultat;
 
+		
+		//liste des bébé
 		$resultatsBaby = $connexion->prepare("SELECT * FROM baby WHERE customer_id = :id");
     	
     	$resultatsBaby->bindParam(':id', $id);
@@ -319,6 +323,35 @@ function getClient($id){
 		$resultatsBaby->setFetchMode(PDO::FETCH_OBJ);
 		$resultatBaby = $resultatsBaby->fetchAll();
 		$array['result']['baby'] = $resultatBaby;
+
+		//liste des commandes 
+
+		$stmt = $connexion->prepare("SELECT product_id FROM commande where customer_id=:id");
+          $stmt->execute(array(':id'=>$id));
+          $clientCommandesId = array();
+          if ($stmt->execute()) {
+              while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                  $clientCommandesId[] = $row['product_id'];
+              }
+          }
+           $boxList = array();
+          if( count($clientCommandesId)){
+               $qMarks = str_repeat('?,', count($clientCommandesId) - 1) . '?';
+            $sth = $connexion->prepare("SELECT id_box FROM product WHERE id IN ($qMarks)");
+           
+           
+            
+            if ($sth->execute($clientCommandesId)) {
+                while ($row = $sth->fetch(PDO::FETCH_ASSOC)) {
+                    $boxList[] = $row['id_box'];
+                }
+            }else{
+
+            }
+        }
+
+            $array['result']['box']= $boxList;
+
 	} catch (Exception $e) {
 		$array['result'] = 0;
 	}
@@ -1281,6 +1314,31 @@ function getVilleIdByName($name){
 			$array['status'] = 'success';
 		}else{
 			$array['status'] = 'empty';			
+		}
+	} catch (Exception $e) {
+		$array['status'] = 'failed';
+	}
+	
+	$connexion = null;
+	return json_encode($array);	
+}
+function isUserAlreadyExist($email){
+	$array = array();
+	try {
+		$connexion = db_connect();
+		$resultats = $connexion->prepare("SELECT id FROM customer WHERE email= :email");
+		$resultats->bindParam(':email', $email);
+		$resultats->execute();
+		$resultats->setFetchMode(PDO::FETCH_OBJ);
+		$resultat = $resultats->fetchAll();
+		if(count($resultat) > 0){
+			$array['result'] = $resultat;
+			$array['isUserAlreadyExist'] = true;
+			$array['status'] = 'success';
+		}else{
+			$array['status'] = 'empty';		
+			$array['isUserAlreadyExist'] = false;
+	
 		}
 	} catch (Exception $e) {
 		$array['status'] = 'failed';

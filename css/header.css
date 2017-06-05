@@ -32,7 +32,7 @@ color: cornsilk;
 	content: "" clear : both;
 }*/
 .header2 nav.menu {
-	background: #66cccc; /*a4729a*/
+	background: #eceeef; /*a4729a*/ /*66cccc*/
 	position: relative;
 	min-height: 80px;
 	height: 100%;
@@ -44,7 +44,7 @@ color: cornsilk;
 .header2 .menu > ul > li {
 	list-style: none;
 	display: inline-block;
-	color: #df5b79;
+	color: #000;
 	font-weight: bold;
 	line-height: 45px;
 	vertical-align: middle;

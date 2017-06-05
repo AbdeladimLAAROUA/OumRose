@@ -26,6 +26,10 @@ session_start();
     <link href="css/bootstrap-responsive.css" rel="stylesheet">
 	<link href="css/style.css" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="css/header.css">
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<!-- end: CSS -->
 
 	 <script src="js/movieModernizr.js"></script>
@@ -34,7 +38,8 @@ session_start();
 </head>
 
 <body>
-  
+  	
+	<?php include('header3.php'); ?>
 	<div class="myLogin">
 	  	
 	  	<h2>Activez votre compte <!-- ou identifiez-vous --> pour profiter des services personnalisés et de tous les bons plans Oumbox!</h2>

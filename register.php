@@ -51,6 +51,7 @@
     <link href="css/bootstrap-responsive.css" rel="stylesheet">
   <link href="css/style.css" rel="stylesheet">
   <link href="css/header.css" rel="stylesheet">
+
   <!-- end: CSS -->
   <style type="text/css">
   label[for='naissance']::after{
@@ -62,13 +63,29 @@
     color: red;
     left: 50px;
     display: none
-   
-
-}
+   }
+   #divsex > div > span:nth-child(5){
+    position: relative;
+    bottom: 22px;
+    color: red;
+   }
+   .selectSexe1 > span:nth-child(2) {
+    bottom: 23px;
+    position: relative;
+    color: red;
+    left: 50px;
+    display: none
+   }
+   #libaby > div.collapsible-body > div:nth-child(1) > div.input-field.col.s12 > label.active::after{
+    position: relative;
+   }
+   #divsex > div > span:nth-child(5){
+    display: none;
+   }
   </style>
 </head>
 <body>
-<?php include('header.php'); ?>
+
 <div class="register">
   <?php include('register-content.php'); ?>
 </div>

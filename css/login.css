@@ -977,6 +977,7 @@ div.loginpanel div.txt input[type="password"]:focus {
 }
 div.loginpanel div.txt label {
   cursor: text;
+  display: block;;
 }
 div.loginpanel div.txt label:before {
   display: inline-block;

@@ -7,9 +7,9 @@
 			<div class="row">
 
 				<!-- start: About -->
-				<div class="col-md-4 col-xs-6 col-sm-12">
+				<div class="col-md-4 col-xs-12 col-sm-12">
 					
-					<h3>About Us</h3>
+					<h3>A propos de nous</h3>
 					<p>
 						Parce que vos besoins et vos préoccupations en tant que femme et jeune maman évoluent suivant le développement de votre bébé, le programme OUMBOX vous apporte les bonnes réponses et vous accompagne de la grossesse au 12mois de bébé.
 					</p>
@@ -18,20 +18,20 @@
 			
 			<!-- end: About -->
 				<!-- start: Photo Stream -->
-				<div class="col-md-4 col-xs-6 col-sm-12">
+				<div class="col-md-4 col-xs-12 col-sm-12">
 					
-					<h3>We are here!</h3>
-					<div id="small-map-container"><a href="contact.html"></a></div>
+					<h3>On est là!</h3>
+					<div id="small-map-container"><a href="contact.php"></a></div>
 					<iframe id="small-map" width="210" height="210" frameborder="0" scrolling="yes" marginheight="0" marginwidth="0" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d830.9964799260239!2d-7.625237066526706!3d33.57971483992227!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xda7d2b11a0f11d5%3A0x1ca6d976ea310f70!2sOUMBOX!5e0!3m2!1sfr!2sfr!4v1492113064260"></iframe>
 					
 				</div>
 				<!-- end: Photo Stream -->
 				
 
-				<div class="col-md-4 col-xs-6 col-sm-12">
+				<div class="col-md-4 col-xs-12 col-sm-12">
 				
 					<!-- start: Follow Us -->
-					<h3>Follow Us!</h3>
+					<h3>Suivez nous!</h3>
 					<ul class="social-grid">
 						<li>
 							<div class="social-item">				

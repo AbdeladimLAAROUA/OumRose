@@ -17,14 +17,17 @@ if (count($_POST)>7){
         mb_strlen($_POST['VILLE']) >0 ){
 
         // check optional fields
-        if ( mb_strlen($_POST['ADRESSE'])>150 ||
-            (strlen($_POST['CP'])>0 && !preg_match('/^\d{5}$/',$_POST['CP'])) ||
+        if ( mb_strlen($_POST['ADRESSE'])>150 /*||
+            (strlen($_POST['CP'])>0 && !preg_match('/^\d{5}$/',$_POST['CP']))*/ ||
             mb_strlen($_POST['NOM'])>60 ) {
                 header("HTTP/1.0 204 No Response",204);
                 exit();
         }
         header("Content-Type: text/plain; charset=UTF-8");
 
+        include('../config.php');
+        $ville=getCityById($conn,$_POST['VILLE']);
+        echo $ville['name'];
         $customer['nom']=htmlspecialchars($_POST['NOM']);
         $customer['prenom']=htmlspecialchars($_POST['PRENOM']);
         $customer['email']=htmlspecialchars($_POST['EMAIL']);
@@ -33,7 +36,7 @@ if (count($_POST)>7){
         $customer['adresse']=htmlspecialchars($_POST['ADRESSE']);
         $customer['type']=htmlspecialchars($_POST['TYPE']);
         $customer['ville_id']=htmlspecialchars($_POST['VILLE']);
-        echo htmlspecialchars($_POST['VILLE']);
+        $customer['ville']=htmlspecialchars($ville['name']);
         $customer['naissance']=htmlspecialchars($_POST['DATE_NAISSANCE']);
         $customer['cp']=htmlspecialchars($_POST['CP']);
 
@@ -43,15 +46,15 @@ if (count($_POST)>7){
 
         // connect to DB 
 
-        $servername = "sql.k4mshost.odns.fr";
+        /*$servername = "sql.k4mshost.odns.fr";
         $username = "k4mshost_oumdev";
         $password = "!!oumb0x";
-        $dbname="k4mshost_oumdev"; 
+        $dbname="k4mshost_oumdev"; */
 
-        /*$servername = "localhost";
+        $servername = "localhost";
         $username = "root";
         $password = "";
-        $dbname="oumdev_leads";*/
+        $dbname="oumdev_leads";
 
 
         
@@ -66,6 +69,7 @@ if (count($_POST)>7){
         $arr['mysqli']=$mydb;
         $db = new SafeMySQL($arr);
 
+
         $data = $_POST;
         echo '<pre>';
         print_r($data);
@@ -77,7 +81,7 @@ if (count($_POST)>7){
         $idUser=$id;
 
 
-        echo "InsertedId : ".$id;
+        
 
         $baby["naissance"]=htmlspecialchars($_POST['NAISSANCE_BEBE']);
         $baby["MATERNITE"]=htmlspecialchars($_POST['MATERNITE']);
@@ -98,6 +102,8 @@ if (count($_POST)>7){
         mysqli_close($mydb);
         validateByEmail($idUser,$customer['nom']);
          
+        
+
 
 
         //check if real mail

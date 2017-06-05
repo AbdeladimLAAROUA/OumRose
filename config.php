@@ -270,6 +270,20 @@ function getAllCities($conn){
        }
        return  $villes;
 }
+function getCityById($conn,$id){
+      try
+       {
+          $stmt = $conn->prepare("SELECT * FROM ville where id=:id");
+          $stmt->execute(array(':id'=>$id));
+          $row = $stmt->fetch(PDO::FETCH_ASSOC);
+          $ville = $row;
+       }
+       catch(PDOException $e)
+       {
+           echo $e->getMessage();
+       }
+       return  $ville;
+}
 function getAllRelais($conn){
   try
        {

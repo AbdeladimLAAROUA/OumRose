@@ -37,6 +37,13 @@
      <link rel="stylesheet" href="css/movieVendor.css"> 
     <link rel="stylesheet" href="css/movieMain.css"> -->
 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+	<link href="css/style2.css" rel="stylesheet" media="screen">
+	<link href="http://fonts.googleapis.com/css?family=Cabin:400,500,600,700|Asap:400,700" rel="stylesheet" type="text/css">
+	
+	<link rel="apple-touch-icon-precomposed" href="img/apple-touch-icon.png">
+	<link href="chrome-extension://pflmllfnnabikmfkkaddkoolinlfninn/style.css" type="text/css" rel="stylesheet">
+
 	<link rel="stylesheet" type="text/css" href="css/demo.css" />
     <link rel="stylesheet" type="text/css" href="css/set1.css" />
     <link rel="stylesheet" type="text/css" href="css/programme.css">
@@ -46,6 +53,11 @@
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/bootstrap-responsive.css" rel="stylesheet">
 	<link href="css/style.css" rel="stylesheet">
+
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 	
 	<!-- header -->
@@ -64,7 +76,7 @@
 	
 	<!--start: Header -->
 	<header>
-		<?php include('header.php'); ?>	
+		<?php include('header3.php'); ?>	
 	</header>
 	<!--end: Header-->
 	   
@@ -82,7 +94,7 @@
             
             <div>
                 <div class="col-md-4">
-                    <a href="login.php">
+                    <a href="register.php" style="text-decoration: none;">
                     	<div class="block">
                     	    <img class="logoProgramme" src="img/avatar_femme.png">
                     	    <div class="description1">
@@ -95,7 +107,7 @@
                     </a>
                 </div>
                 <div class="col-md-4">
-                    <a href="oxProgramme.php">
+                    <a href="oxProgramme.php" style="text-decoration: none;">
                     	<div class="block">
                     	    <img class="logoProgramme2" src="img/simulation guide+box oumbox.png">
                     	    <div class="description1">
@@ -152,7 +164,7 @@
       			                    <div class="mask">
       			                        <h2>Médecins</h2>
       			                        <p>A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart.</p>
-      			                        <a href="partenaires.php" class="info">Localiser</a>
+      			                        <a href="#" class="info">Localiser</a>
       			                    </div>
       			                </div>  
       			        		</div>
@@ -163,7 +175,7 @@
       			                    <div class="mask">
       			                        <h2>Cliniques</h2>
       			                        <p>A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart.</p>
-      			                        <a href="partenaires.php" class="info">Localiser</a>
+      			                        <a href="#" class="info">Localiser</a>
       			                    </div>
       			                </div>  
       			        		</div>
@@ -173,13 +185,13 @@
       			      		</div>
       		</div>
 			<!-- end: Row -->
-			<hr>
+			<!-- <hr> -->
 			<!-- start: Row -->
       		<?php /*include('derniersArticles.php');*/ ?>
 			<!-- end: Row -->
       		
 			
-			<hr>
+			<!-- <hr> -->
 			<!-- start Clients List -->	
 			<!-- <div class="clients-carousel">
 		
@@ -213,65 +225,7 @@
 	</div>
 	<!-- end: Wrapper  -->			
 
-    <!-- start: Footer Menu -->
-	<div id="footer-menu" class="hidden-tablet hidden-phone">
-
-		<!-- start: Container -->
-		<div class="container">
-			
-			<!-- start: Row -->
-			<div class="row">
-
-				<!-- start: Footer Menu Logo -->
-				<!-- <div class="span2">
-					<div id="footer-menu-logo">
-						<a href="#"><img src="img/logo-footer-menu.png" alt="logo" /></a>
-					</div>
-				</div> -->
-				<!-- end: Footer Menu Logo -->
-
-				<!-- start: Footer Menu Links-->
-				<div class="span9">
-					
-					<div id="footer-menu-links">
-
-						<ul id="footer-nav">
-
-							<!-- <li><a href="index.html">Start</a></li>
-
-							<li><a href="about.html">About</a></li>
-
-							<li><a href="services.html">Services</a></li>
-
-							<li><a href="pricing.html">Pricing</a></li>
-							
-							<li><a href="contact.html">Contact</a></li> -->
-
-						</ul>
-
-					</div>
-					
-				</div>
-				<!-- end: Footer Menu Links-->
-
-				<!-- start: Footer Menu Back To Top -->
-				<!-- <div class="span1">
-						
-					<div id="footer-menu-back-to-top">
-						<a href="#"></a>
-					</div>
-				
-				</div> -->
-				<!-- end: Footer Menu Back To Top -->
-			
-			</div>
-			<!-- end: Row -->
-			
-		</div>
-		<!-- end: Container  -->	
-
-	</div>	
-	<!-- end: Footer Menu -->
+   
 
 	<!-- start: Footer -->
 	<?php include('footer.php') ?>
@@ -301,10 +255,10 @@
 <script src="js/carousel.js"></script>
 <script src="js/jquery.cslider.js"></script>
 <script src="js/slider.js"></script>
-<script defer="defer" src="js/custom.js"></script>
+<!-- <script defer="defer" src="js/custom.js"></script>
 <script src="js/moviePlugins.js"></script>
 <script src="js/movieMain.js"></script>
-<script type="text/javascript" src="js/header.js"></script>
+<script type="text/javascript" src="js/header.js"></script> -->
 <script type="text/javascript">
 	var fixmeTop = $('.fixme').offset().top;
 	$(window).scroll(function() {

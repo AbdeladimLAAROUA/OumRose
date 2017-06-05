@@ -100,22 +100,22 @@ header {
 .navbar, 
 .navbar-inner, 
 .nav {
-	float: right;
-	background: #fff !important;
-	border: none;
+	/*float: left;*/
+	/*background: #fff !important;*/
+/*	border: none;
 	-webkit-box-shadow: none;
      -moz-box-shadow: none;
           box-shadow: none;
 	padding: 0px;
-	margin-top: 4px;	
+	margin-top: 4px;*/	
 }
 
 .navbar-inner {
-	padding-left: 0px !important;
-	padding-right: 0px !important;
+	/*padding-left: 0px !important;
+	padding-right: 0px !important;*/
 }
 
-.navbar .nav > li > a {
+/*.navbar .nav > li > a {
 	color: #666;
 	border-top:4px solid #fff;
 	text-shadow: none;
@@ -143,7 +143,7 @@ a:hover{
        -moz-box-shadow: none;
           	box-shadow: none;
 }
-
+*/
 .dropdown-menu li > a:hover,
 .dropdown-menu li > a:focus,
 .dropdown-submenu:hover > a {
@@ -1030,8 +1030,9 @@ a.buy:hover {
 	position: relative;
 	z-index: 1;
 	height: 400px;
-	width: 100%;
-	top: -20px;
+	width: 90%;
+	margin: auto !important;
+	top: 70px;
 }
 
 #small-map-container {
@@ -1573,12 +1574,12 @@ body > div.section1 > section > h2{
 }
 .title1{
 	position:absolute;
-	left: 12%;;
+	left: 15%;;
 	top:25%;
 	font-weight: 800;
 	z-index:0;
 	line-height:60px;
-	font-size: 4rem;
+	font-size: 6rem;
 	color: #eceeef;
 	font-family: "avenir" !important;
 }
@@ -1597,12 +1598,12 @@ body > div.section1 > section > h2{
 	position: absolute;
     font-family: "avenir" !important;
     top: 44%;
-    left: 8%;
+    left: 10%;
     color: #eceeef;
     height: 120px;
     z-index: 0;
     color: #ffffff;
-    font-size: 1.7rem;
+    font-size: 2.7rem;
     line-height: 1.5;
     font-weight: lighter;
 }
@@ -1778,7 +1779,9 @@ body > div.section1 > section > h2{
 }
 .logo{
 
-	 margin-left: 60px;
+	 /*margin-left: 60px;*/
+	 position: relative;
+	 bottom: 8px;
 }
 .part1 .title{
 	text-align: center;
@@ -1892,14 +1895,16 @@ body > div.section1 > section > h2{
 }
 .inscriptionBtn{
 	font-family: "avenir";
-	font-size: 1.4em;
+	font-size: 1.4em !important;
+	padding: 16px 50px !important;
+	border-radius: 32px !important;
 }
 iframe.video video{
 
 }
 
 #footer .container{
-	width: 1000px !important;
+	/*width: 1000px !important;*/
 }
 
 #footer > div > div > div.span5{
@@ -1951,6 +1956,21 @@ select[name="VILLE"],select[name="quartiersList"]{
 	
 	header {
 		min-height: 64px;
+	}
+	
+}
+
+@media only screen and (min-width: 768px){
+	
+	#imgToggle1 {
+		display: none;
+	}
+	
+}
+@media only screen and (max-width: 767px){
+	
+	#imgToggle2{
+		display: none;
 	}
 	
 }

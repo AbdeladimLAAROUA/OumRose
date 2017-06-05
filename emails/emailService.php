@@ -5,7 +5,7 @@ function welcomeEmail($user,$baby){
 	$DATE_NAISSANCE=$user['naissance'];
 	$GSM=$user['gsm'];
 	$ADRESSE=$user['adresse'];
-	$VILLE=$user['Ville_id'];
+	$VILLE=$user['ville'];
 	$TYPE=$user['type'];
 	$NAISSANCE_BEBE=$baby['naissance'];
 	$PRENOM_BEBE=$baby['prenom'];
