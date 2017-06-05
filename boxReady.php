@@ -20,7 +20,8 @@ if(!isset($_SESSION['nom'])){
 		<link href="css/style.css" rel="stylesheet">
 
 		
-		<!-- header --><link rel="stylesheet" type="text/css" href="css/header.css">
+		<!-- header -->
+		<link rel="stylesheet" type="text/css" href="css/header.css">
 		
 		<!-- end: CSS -->
 		<style type="text/css">
@@ -40,7 +41,6 @@ if(!isset($_SESSION['nom'])){
 				margin: 50px ;
 				line-height: 20px;
 			}
-
 			.boxReady div{
 				font-size: 2em;
 				margin-top: 10px;
@@ -57,20 +57,16 @@ if(!isset($_SESSION['nom'])){
 				font-size: 18px;
 				line-height: 35px;
 			}
-
 			input[type="submit"]{
 				float: right;
 				background: #df5b79 ;
 			}
-
 			h2 ul li:nth-child(1) {
 				/*color:#ec7f8c;*/
-				
 				margin: 20px;
 				border-bottom: solid 2px;
 				display: inline-block;
 			}
-
 			h2 ul li:nth-child(2) {
 				/*color:#ec7f8c;*/
 				font-size: 20px;
@@ -78,7 +74,8 @@ if(!isset($_SESSION['nom'])){
 			h2 ul li:nth-child(3) {
 				color:#6fc7c2;
 				font-size: 20px;
-			}h2 ul li:nth-child(4) {
+			}
+			h2 ul li:nth-child(4) {
 				color:#8e6cac;
 				font-size: 20px;
 			}

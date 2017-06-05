@@ -88,6 +88,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			echo getRelaisById($_REQUEST['id_relais']);
 		}else if($_REQUEST['methode'] == 'addLivraison'){
 			echo addLivraison($_REQUEST['livraison']);
+		}else if($_REQUEST['methode'] == 'getAllCommandeByCus'){
+			echo getAllCommandeByCus($_REQUEST['id_cus']);
 		}else{
 			echo json_encode(array('result'=>'method_not_exist'));
 		}
@@ -1166,9 +1168,6 @@ function getPostById($id){
 	return json_encode($array);	
 }
 
-
-
-
 function updatePost($post){
 	$array = array();
 	$postSlug = slug($post['title']);
@@ -1197,6 +1196,29 @@ function updatePost($post){
 	
 	$connexion = null;
 
+	return json_encode($array);	
+}
+
+function getAllCommandeByCus($id){
+	$array = array();
+	try {
+		$connexion = db_connect();
+		$resultats = $connexion->prepare("SELECT co.id, b.name, b.description, co.creationDate FROM commande co INNER JOIN customer cu ON co.customer_id = cu.id INNER JOIN product pr ON co.product_id = pr.id INNER JOIN box b ON pr.id_box = b.id WHERE co.customer_id = :id_cus");
+		$resultats->bindParam(':id_cus', $id);
+		$resultats->execute();
+		$resultats->setFetchMode(PDO::FETCH_OBJ);
+		$resultat = $resultats->fetchAll();
+		if($resultat > 0){
+			$array['result'] = $resultat;
+			$array['status'] = 'success';
+		}else{
+			$array['status'] = 'empty';			
+		}
+	} catch (Exception $e) {
+		$array['status'] = 'failed';
+	}
+	
+	$connexion = null;
 	return json_encode($array);	
 }
 
@@ -1323,18 +1345,18 @@ function db_connect(){
 	$bd 		='oumdev_leads';
 	$user		='root';	*/
 
-	// $hote   	='localhost';
-	// $passDb 	='S3cr3T%44';
-	// $bd 		='oumdev_leads';
-	// $user		='root';	
+	$hote   	='localhost';
+	$passDb 	='S3cr3T%44';
+	$bd 		='oumdev_leads';
+	$user		='root';
 
 
 	/*Local*/
 
-	$hote 		='localhost';
-	$passDb 	='';
-	$bd 		='oumdev_leads';
-	$user		='root';
+	// $hote 		='localhost';
+	// $passDb 	='';
+	// $bd 		='oumdev_leads';
+	// $user		='root';
 
 	/*Distant*/
 
