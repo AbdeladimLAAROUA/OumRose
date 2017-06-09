@@ -100,14 +100,14 @@
                 <?php 
                     $client = getClient($_SESSION['client_id']);
                     $client = json_decode($client, true);
-                    print_r($client);
+                    // print_r($client);
                 ?>
                 </p>
                 <div class="row edit-client-div">
-                    <div class="col-xs-3">
+                    <div class="col-xs-2">
                         <strong>Nom</strong>
                     </div>
-                    <div class="col-xs-3">
+                    <div class="col-xs-4">
                         <?php echo $client['result']['client'][0]['nom']; ?>
                     </div>
                     <div class="col-xs-3">
@@ -132,10 +132,10 @@
                     </div>
                 </div>
                 <div class="row edit-client-div">
-                    <div class="col-xs-3">
+                    <div class="col-xs-2">
                         <strong>GSM</strong>
                     </div>
-                    <div class="col-xs-3">
+                    <div class="col-xs-4">
                         <?php echo $client['result']['client'][0]['gsm']; ?>
                     </div>
                     <div class="col-xs-3">
@@ -146,10 +146,10 @@
                     </div>
                 </div>
                 <div class="row edit-client-div">
-                    <div class="col-xs-3">
+                    <div class="col-xs-2">
                         <strong>Ville</strong>
                     </div>
-                    <div class="col-xs-3">
+                    <div class="col-xs-4">
                         <?php echo $client['result']['client'][0]['ville']; ?>
                     </div>
                     <div class="col-xs-3">
@@ -181,80 +181,136 @@
             </div>
             <div role="tabpanel" class="tab-pane fade in" id="vtab3">
                 <h3>Editer Mon profil</h3>
-                <form id="updateForm" action="getsion/lib/util.php">
+                <form id="updateForm" action="user/edit_user.php" method="post">
                     <div class="row edit-client-div">
-                        <div class="col-xs-3">
+                        <div class="col-xs-2">
                             <strong>Nom</strong>
                         </div>
-                        <div class="col-xs-3">
-                        <input type="text" name="nom" id="nom" class="form-control" value="<?php echo $client['result']['client'][0]['nom'];?>">
+                        <div class="form-group has-feedback col-xs-4">
+                            <div class="input-group">
+                                <div class="input-group">
+                                    <input type="text" name="nom" id="nom" class="form-control" value="<?php echo $client['result']['client'][0]['nom'];?>" data-required-error="veuillez renseigner ce champ" data-error="Nom invalid" required>
+                                </div>
+                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                <div class="help-block with-errors"></div>
+                            </div>
                         </div>
-                        <div class="col-xs-3">
+                        <div class="col-xs-2">
                             <strong>Prénom</strong>
                         </div>
-                        <div class="col-xs-3">
-                        <input type="text" name="prenom" id="prenom" class="form-control" value="<?php echo $client['result']['client'][0]['prenom'];?>">
+                        <div class="form-group has-feedback col-xs-4">
+                            <div class="input-group">
+                                <div class="input-group">
+                                    <input type="text" name="prenom" id="prenom" class="form-control" value="<?php echo $client['result']['client'][0]['prenom'];?>" data-required-error="veuillez renseigner ce champ" data-error="Prénom invalid" required>
+                                </div>
+                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                <div class="help-block with-errors"></div>
+                            </div>
                         </div>
                     </div>
                     <div class="row edit-client-div">
                         <div class="col-xs-2">
                             <strong>E-mail</strong>
                         </div>
-                        <div class="col-xs-4">
-                        <input type="text" name="email" id="email" class="form-control" value="<?php echo $client['result']['client'][0]['email'];?>">
+                        <div class="form-group has-feedback col-xs-4">
+                            <div class="input-group">
+                                <div class="input-group">
+                                    <input type="email" name="email" id="email" class="form-control" value="<?php echo $client['result']['client'][0]['email'];?>" data-required-error="veuillez renseigner ce champ" data-error="E-mail invalid" required>
+                                </div>
+                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                <div class="help-block with-errors"></div>
+                            </div>
                         </div>
-                        <div class="col-xs-3">
+                        <div class="col-xs-2">
                             <strong>Date de naissance</strong>
                         </div>
-                        <div class="col-xs-3">
-                        <input type="text" name="naissance" id="naissance" class="form-control" value="<?php echo $client['result']['client'][0]['naissance'];?>">
+                        <div class="form-group has-feedback col-xs-4">
+                            <div class="input-group">
+                                <div class="input-group">
+                                    <input type="text" name="naissance" id="naissance" class="form-control" value="<?php echo $client['result']['client'][0]['naissance'];?>" pattern="^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$" data-required-error="veuillez renseigner ce champ" data-error="date invalid" required>
+                                </div>
+                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                <div class="help-block with-errors"></div>
+                            </div>
                         </div>
                     </div>
                     <div class="row edit-client-div">
-                        <div class="col-xs-3">
+                        <div class="col-xs-2">
                             <strong>GSM</strong>
                         </div>
-                        <div class="col-xs-3">
-                        <input type="text" name="gsm" id="gsm" class="form-control" value="<?php echo $client['result']['client'][0]['gsm'];?>">
+                        <div class="form-group has-feedback col-xs-4">
+                            <div class="input-group">
+                                <div class="input-group">
+                                    <input type="text" name="gsm" id="gsm" class="form-control" value="<?php echo $client['result']['client'][0]['gsm'];?>"  pattern="^(?:(?:\+|00)212|0)\s*[1-9](?:[\s.-]*\d{2}){4}$" data-required-error="veuillez renseigner ce champ" data-error="GSM invalid" required>
+                                </div>
+                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                <div class="help-block with-errors"></div>
+                            </div>
                         </div>
-                        <div class="col-xs-3">
+                        <div class="col-xs-2">
                             <strong>Adresse</strong>
                         </div>
-                        <div class="col-xs-3">
-                        <input type="text" name="adresse" id="adresse" class="form-control" value="<?php echo $client['result']['client'][0]['adresse'];?>">
+                        <div class="form-group has-feedback col-xs-4">
+                            <div class="input-group">
+                                <div class="input-group">
+                                    <textarea type="text" name="adresse" id="adresse" class="form-control" rows="3" data-error="Champ invalid" ><?php echo $client['result']['client'][0]['adresse'];?></textarea>
+                                </div>
+                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                <div class="help-block with-errors"></div>
+                            </div>
                         </div>
                     </div>
                     <div class="row edit-client-div">
-                        <div class="col-xs-3">
+                        <div class="col-xs-2">
                             <strong>Ville</strong>
                         </div>
-                        <div class="col-xs-3">
-                        <input type="text" name="ville" id="ville" class="form-control" value="<?php echo $client['result']['client'][0]['ville'];?>">
+                        <div class="form-group has-feedback col-xs-4">
+                            <div class="input-group">
+                                <div class="input-group">
+                                    <input type="text" name="ville" id="ville" class="form-control" value="<?php echo $client['result']['client'][0]['ville'];?>" data-required-error="veuillez renseigner ce champ" data-error="Ville invalid" required>
+                                </div>
+                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                <div class="help-block with-errors"></div>
+                            </div>
                         </div>
-                        <div class="col-xs-3">
+                        <div class="col-xs-2">
                             <strong>Code Postal</strong>
                         </div>
-                        <div class="col-xs-3">
-                        <input type="text" name="cp" id="cp" class="form-control" value="<?php echo $client['result']['client'][0]['CP'];?>">
+                        <div class="form-group has-feedback col-xs-4">
+                            <div class="input-group">
+                                <div class="input-group">
+                                    <input type="number" name="cp" id="cp" class="form-control" value="<?php echo $client['result']['client'][0]['CP'];?>" data-error="Code Postale invalid">
+                                </div>
+                                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                                <div class="help-block with-errors"></div>
+                            </div>
                         </div>
                     </div>
                     <button type="submit" class="btn btn-warning">Modifier</button>
                 </form>
                 <br /><br />
                 <div class="row">
-                        <table class="table table-striped custab">
+                        <table id="table_babies" class="table table-striped custab">
                             <thead>
                                 <tr>
-                                    <th width="20%">Date de naissance / Accouchement</th>
-                                    <th width="20%">Sexe</th>
-                                    <th width="20%">Prénom</th>
-                                    <th width="20%">Maternité</th>
-                                    <th width="20%">Actions</th>
+                                    <th width="17%">Date de naissance / Accouchement</th>
+                                    <th width="17%">Sexe</th>
+                                    <th width="17%">Prénom</th>
+                                    <th width="17%">Gynécologue</th>
+                                    <th width="17%">Maternité</th>
+                                    <th width="15%">Actions</th>
                                 </tr>
                             </thead>
                                 <?php
                                     foreach ($client['result']['baby'] as $key => $value) {
-                                        $row = '<tr><td>'.$value['naissance'].'</td><td>'.$value['sexe'].'</td><td>'.$value['prenom'].'</td><td>'.$value['MATERNITE'].'</td><td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-default btn-xs" data-id="'.$value['id'].'" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></td></tr>';
+                                        $row = '<tr>
+                                        <td id="naissance_'.$value['id'].'" data-naissance="'.$value['naissance'].'">'.$value['naissance'].'</td>
+                                        <td id="sexe_'.$value['id'].'" data-sexe="'.$value['sexe'].'">'.$value['sexe'].'</td>
+                                        <td id="prenom_'.$value['id'].'" data-prenom="'.$value['prenom'].'">'.$value['prenom'].'</td>
+                                        <td id="gyneco_'.$value['id'].'" data-gyneco="'.$value['GYNECO'].'">'.$value['GYNECO'].'</td>
+                                        <td id="maternite_'.$value['id'].'" data-MATERNITE="'.$value['MATERNITE'].'">'.$value['MATERNITE'].'</td>
+                                        <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-default btn-xs" data-type="edit" data-id="'.$value['id'].'" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></td>
+                                        </tr>';
                                         echo $row;
                                     }
                                 ?>
@@ -299,11 +355,17 @@
                 <h4 class="modal-title custom_align" id="Heading">Modifier bébé</h4>
             </div>
             <div class="modal-body">
+                <div id="alert_recover_ok_edit_baby" class="alert alert-success hide-me">
+                  Bébé modifié
+                </div>
+                <div id="alert_recover_ko_edit_baby" class="alert alert-warning hide-me">
+                  Quelque chose a mal tourné
+                </div>
                 <div class="form-group">
                     <input id="edit_prenom" class="form-control" type="text" placeholder="prénom">
                 </div>
-                <div id="edit_sexe" class="form-group">
-                    <select class="form-control">
+                <div class="form-group">
+                    <select id="edit_sexe" class="form-control">
                         <option value="G">G</option>
                         <option value="F">F</option>
                         <option value="I">I</option>
@@ -316,11 +378,11 @@
                     <input id="edit_gyneco" class="form-control" type="text" placeholder="Gynécologue">
                 </div>
                 <div class="form-group">
-                    <textarea id="edit_maternite" rows="2" class="form-control" placeholder="Maternité"></textarea>
+                    <input type="text" name="edit_maternite" id="edit_maternite" rows="2" class="form-control" placeholder="Maternité"  />
                 </div>
             </div>
             <div class="modal-footer ">
-                <button type="button" class="btn btn-warning btn-lg" style="width: 100%;"><span class="glyphicon glyphicon-ok-sign"></span>Modifierx</button>
+                <button id="edit_btn" type="button" data-id="0" class="btn btn-warning btn-lg" style="width: 100%;"><span class="glyphicon glyphicon-ok-sign"></span>Modifier</button>
             </div>
         </div>
         <!-- /.modal-content --> 
@@ -328,7 +390,7 @@
     <!-- /.modal-dialog --> 
 </div>
 
-<div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+<div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -371,10 +433,108 @@
 
 <script src="gestion/dist/js/validator.min.js"></script>
 <script type="text/javascript">
-  //Date picker
-  $('#edit_naissance').datepicker({
-    autoclose: true,
-    forceParse: false,
-    format: 'yyyy-mm-dd'
-  });
+    //Date picker
+    var naissance_input = $('#edit_naissance').datepicker({
+                                                    autoclose: true,
+                                                    forceParse: false,
+                                                    format: 'yyyy-mm-dd'
+                                                });
+    $('#naissance').datepicker({
+                    autoclose: true,
+                    forceParse: false,
+                    format: 'yyyy-mm-dd'
+                }).datepicker('setDate', $('#naissance').val());
+
+    $("#table_babies" ).on( "click", 'button',function() {
+        var type        = $(this).data("type"),
+            id          = $(this).data("id"),
+            naissance   = $('#naissance_'+id).text();
+        console.log(type+" - "+id);
+        switch (type){
+            case 'edit' :
+                $('#edit_btn').data('id', id) ;
+                setNaissance(naissance);
+                $('#edit_prenom').val($('#prenom_'+id).data("prenom"));
+                $('#edit_sexe').val($('#sexe_'+id).data("sexe"));
+                $('#edit_gyneco').val($('#gyneco_'+id).data("gyneco"));
+                $('#edit_maternite').val($('#maternite_'+id).data("maternite"));
+                break;
+            case 'delete' :
+
+                break;
+            default :
+
+                break;
+        }
+    });
+
+    $("#edit_btn").on("click", function() {
+            console.log();
+            var     edit_prenom     = $('#edit_prenom').val(),
+                    edit_sexe       = $('#edit_sexe').val(),
+                    edit_gyneco     = $('#edit_gyneco').val(),
+                    edit_maternite  = $('#edit_maternite').val(),
+                    edit_naissance  = $('#edit_naissance').val(),
+                    id              = $(this).data("id");
+            var baby = {'id':id ,'prenom':edit_prenom,'sexe':edit_sexe,'gyneco':edit_gyneco,'maternite':edit_maternite,'naissance':edit_naissance};
+            updateBaby(baby);
+    });
+
+    $('#updateForm').validator().on('submit', function (e) {
+        if (e.isDefaultPrevented()) {
+          // handle the invalid form...
+          console.log("handle the invalid form...");
+        } else {
+          // everything looks good!
+          console.log("everything looks good!");
+        }
+    });
+
+    function setNaissance(naissance) {
+        naissance_input.datepicker('setDate', naissance);
+    }
+
+    function updateBaby(baby) {
+        var obj = {'methode':'updateBaby','baby':baby}
+        $.ajax({
+            url : "./gestion/lib/util.php",
+            dataType: "json",
+            type: "POST",
+            data : obj,
+            success: function(data, textStatus, jqXHR) {
+              console.log(data);
+              if(data.result == 'success'){
+                $('#alert_recover_ok_edit_baby').css('visibility','visible').fadeIn(1500);
+
+                    $('#naissance_'+baby.id).text(baby.naissance);
+                    $('#sexe_'+baby.id).text(baby.sexe);
+                    $('#prenom_'+baby.id).text(baby.prenom);
+                    $('#gyneco_'+baby.id).text(baby.gyneco);
+                    $('#maternite_'+baby.id).text(baby.maternite);
+                    $('#naissance_'+baby.id).data('naissance',baby.naissance);
+                    $('#sexe_'+baby.id).data('sexe',baby.sexe);
+                    $('#prenom_'+baby.id).data('prenom',baby.prenom);
+                    $('#gyneco_'+baby.id).data('gyneco',baby.gyneco);
+                    $('#maternite_'+baby.id).data('maternite',baby.maternite);
+
+                setTimeout(function(){
+                    $('#edit').modal('toggle');
+                    $('#alert_recover_ok_edit_baby').css('visibility','hidden');
+                }, 2000);
+              }else{
+                console.log('Something went wrong !!');
+                $('#alert_recover_ko_edit_baby').css('visibility','visible').fadeIn(1500);
+                setTimeout(function(){
+                  $('#edit').modal('toggle');
+                $('#alert_recover_ko_edit_baby').css('visibility','hidden');
+                }, 2000);
+              }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+              console.log(jqXHR);
+              console.log(textStatus);
+              console.log(errorThrown);
+            }
+        }); 
+    }
 </script>

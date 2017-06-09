@@ -32,6 +32,15 @@
 .edit-client-div{
     margin-bottom: 20px;
 }
+#updateForm{
+    margin-top: 25px;
+}
+.espace {
+    margin-top: 25px;
+}
+.hide-me{
+    display: none;
+}
 .alert-info, .information {
     background-image: none;
     background-color: #d9edf7;
@@ -154,7 +163,7 @@ h2 ul li:nth-child(4) {
 
     <!-- <a class="scrollToTop" href="#"><i class="fa fa-angle-up"></i></a> -->
     <?php include('header.php'); ?>
-    <div class="container">
+    <div class="container espace">
         <h2>Espae client</h2>
         <?php 
             if(isset($_SESSION["nom"])){
