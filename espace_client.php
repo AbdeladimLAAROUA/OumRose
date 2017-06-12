@@ -101,11 +101,11 @@
                 <?php 
                     $client = getClient2($_SESSION['client_id']);
                     $client = json_decode($client, true);
-<<<<<<< HEAD
+
                     /*print_r($client);*/
-=======
+
                     // print_r($client);
->>>>>>> 717f72de46595451330bff5836a774c867fa6acf
+
                 ?>
                 </p>
                 <div class="row edit-client-div">

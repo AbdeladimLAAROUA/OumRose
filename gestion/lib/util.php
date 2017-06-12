@@ -88,8 +88,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			echo getRelaisById($_REQUEST['id_relais']);
 		}else if($_REQUEST['methode'] == 'addLivraison'){
 			echo addLivraison($_REQUEST['livraison']);
-<<<<<<< HEAD
-
 		}else if($_REQUEST['methode'] == 'updateLivraison'){
 			echo updateLivraison($_REQUEST['livraison']);
 
@@ -104,12 +102,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			echo getCommandesSB();
 		}else if($_REQUEST['methode'] == 'getAllCommandes'){
 			echo getAllCommandes();
-=======
 		}else if($_REQUEST['methode'] == 'getAllCommandeByCus'){
 			echo getAllCommandeByCus($_REQUEST['id_cus']);
 		}else if($_REQUEST['methode'] == 'updateBaby'){
 			echo updateBaby($_REQUEST['baby']);
->>>>>>> 717f72de46595451330bff5836a774c867fa6acf
 		}else{
 			echo json_encode(array('result'=>'method_not_exist'));
 		}
