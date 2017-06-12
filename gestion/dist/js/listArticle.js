@@ -3,8 +3,42 @@ $(function () {
   $('#loading-image').popup({
     blur: false
   });
+  var table_p = $("#table_acrticles_p").DataTable(),
+      table_f = $("#table_acrticles_f").DataTable();
+  var data_search_p,data_search_f;
 
-  var table_p,table_f;
+  $("#export_p").on("click", function() {
+    search = table_p.rows( { filter : 'applied'} ).data();
+    console.log(search);
+
+    var arr = [];;
+    $.each(search, function(key, val) {
+      arr.push(val);
+    });
+    console.log(arr);
+
+    var obj = {'methode' : 'exportPere','data':arr};
+    console.log(obj);
+
+    $.ajax({
+      url : "./lib/excelExport.php",
+      dataType: "json",
+      type: "POST",
+      data : obj,
+      async : false,
+      success: function(data, textStatus, jqXHR) {
+        console.log(data);
+        // res = data;
+        window.open('http://localhost:8080/OumRose/gestion/downloads/'+data+'.xlsx','_blank' );
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        console.log(jqXHR);
+        console.log(textStatus);
+        console.log(errorThrown);
+      }
+    });
+  });
+
   var obj = {'methode' : 'getAllBox'};
     $.ajax({
       url : "./lib/util.php",
@@ -21,24 +55,23 @@ $(function () {
         console.log(data);
         // console.log(data.result);
         $.each(data.result, function(key, val) {
-          var newRow = '<tr id="box_'+val.id+'">'+
-                      '<td>'+val.id+'</td>'+
-                      '<td>'+val.name+'</td>'+
-                      '<td>'+val.description+'</td>'+
-                      '<td>'+val.debut+'</td>'+
-                      '<td>'+val.fin+'</td>'+
-                      '<td width="25%">'+
-                      '<button class="btn btn-primary btn-xs action" data-type="add_fils" data-id="'+val.id+'" data-toggle="modal" data-target="#add_fils" ><span class="glyphicon glyphicon-plus"></span></button>'+
-                      '<button class="btn btn-default btn-xs action" data-type="view" data-id="'+val.id+'" data-toggle="modal" data-target="#view" ><span class="glyphicon glyphicon-eye-open"></span></button>'+
-                      '<button class="btn btn-primary btn-xs action" data-type="edit" data-id="'+val.id+'" data-toggle="modal" data-target="#edit_parent" ><span class="glyphicon glyphicon-pencil"></span></button>'+
-                      '<button class="btn btn-danger btn-xs action" data-type="delete" data-id="'+val.id+'" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button>'+
-                      '</td>'+
-                      '</tr>';
-          $("#table_acrticles_p tbody").append(newRow);
-          // console.log(val);
-        });
+          var rowNode = table_p.row.add([
+                          val.id,
+                          val.name,
+                          val.description,
+                          val.debut,
+                          val.fin,
+                          '<button class="btn btn-primary btn-xs action" data-type="add_fils" data-id="'+val.id+'" data-toggle="modal" data-target="#add_fils" ><span class="glyphicon glyphicon-plus"></span></button>'+
+                          '<button class="btn btn-default btn-xs action" data-type="view" data-id="'+val.id+'" data-toggle="modal" data-target="#view" ><span class="glyphicon glyphicon-eye-open"></span></button>'+
+                          '<button class="btn btn-primary btn-xs action" data-type="edit" data-id="'+val.id+'" data-toggle="modal" data-target="#edit_parent" ><span class="glyphicon glyphicon-pencil"></span></button>'+
+                          '<button class="btn btn-danger btn-xs action" data-type="delete" data-id="'+val.id+'" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button>'
+                        ])
+                        .draw()
+                        .node();
 
-        table_p = $("#table_acrticles_p").DataTable();
+          $(rowNode)
+            .attr('id','box_'+val.id);
+        });
       },
       error: function (jqXHR, textStatus, errorThrown) {
         console.log(jqXHR);
@@ -62,22 +95,21 @@ $(function () {
         console.log(data);
         // console.log(data.result);
         $.each(data.result, function(key, val) {
-          var newRow = '<tr id="product_'+val.id_product+'">'+
-                      '<td>'+val.id_product+'</td>'+
-                      '<td>'+val.name+'</td>'+
-                      '<td>'+val.Name+'</td>'+
-                      '<td>'+val.RefBox+'</td>'+
-                      '<td width="25%">'+
-                      '<button class="btn btn-default btn-xs action" data-type="view" data-id="'+val.id_product+'" data-toggle="modal" data-target="#view_fils" ><span class="glyphicon glyphicon-eye-open"></span></button>'+
-                      '<button class="btn btn-primary btn-xs action" data-type="edit" data-id="'+val.id_product+'" data-toggle="modal" data-target="#edit_fils" ><span class="glyphicon glyphicon-pencil"></span></button>'+
-                      '<button class="btn btn-danger btn-xs action" data-type="delete" data-id="'+val.id_product+'" data-toggle="modal" data-target="#delete_fils" ><span class="glyphicon glyphicon-trash"></span></button>'+
-                      '</td>'+
-                      '</tr>';
-          $("#table_acrticles_f tbody").append(newRow);
-          // console.log(val);
-        });
+          var rowNode = table_f.row.add([
+                          val.id_product,
+                          val.name,
+                          val.Name,
+                          val.RefBox,
+                          '<button class="btn btn-default btn-xs action" data-type="view" data-id="'+val.id_product+'" data-toggle="modal" data-target="#view_fils" ><span class="glyphicon glyphicon-eye-open"></span></button>'+
+                          '<button class="btn btn-primary btn-xs action" data-type="edit" data-id="'+val.id_product+'" data-toggle="modal" data-target="#edit_fils" ><span class="glyphicon glyphicon-pencil"></span></button>'+
+                          '<button class="btn btn-danger btn-xs action" data-type="delete" data-id="'+val.id_product+'" data-toggle="modal" data-target="#delete_fils" ><span class="glyphicon glyphicon-trash"></span></button>'
+                        ])
+                        .draw()
+                        .node();
 
-        table_f = $("#table_acrticles_f").DataTable();
+          $(rowNode)
+            .attr('id','product_'+val.id_product);
+        });
       },
       error: function (jqXHR, textStatus, errorThrown) {
         console.log(jqXHR);

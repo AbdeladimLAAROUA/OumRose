@@ -1,16 +1,16 @@
 <?php
 
-/*Local*/
-// $servername = "localhost";
-// $username = "root";
-// $password = "";
-// $dbname="oumdev_leads";
-
-/*Local*/
+/*Local Kindy*/
 $servername = "localhost";
 $username = "root";
-$password = "";
+$password = "S3cr3T%44";
 $dbname="oumdev_leads";
+
+/*Local*/
+/*$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname="oumdev_leads";*/
 
 /*Distant*/
 /*$servername = "essalhi-impr.000webhostapp.com";

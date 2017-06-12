@@ -3,6 +3,35 @@
   $('#loading-image').popup({
     blur: false
   });
+
+
+
+  $("#export_LD_cmd").on("click", function() {
+    search = table.rows( { filter : 'applied'} ).data();
+
+    var arr = [];
+    $.each(search, function(key, val) {
+      arr.push(val);
+    });
+
+    var obj = {'methode' : 'exportLDcmd','data' : arr};
+    $.ajax({
+      url : "./lib/excelExport.php",
+      dataType: "json",
+      type: "POST",
+      data : obj,
+      async : false,
+      success: function(data, textStatus, jqXHR) {
+        window.open('http://localhost:8080/OumRose/gestion/downloads/'+data+'.xlsx','_blank' );
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        console.log(jqXHR);
+        console.log(textStatus);
+        console.log(errorThrown);
+      }
+    });
+  });
+
   var table2,table3,tableOx;
  var objCommandeLD = {'methode' : 'getCommandesLD'}
     $.ajax({

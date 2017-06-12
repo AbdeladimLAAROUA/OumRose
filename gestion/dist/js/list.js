@@ -10,6 +10,40 @@ $(function () {
     format: 'yyyy-mm-dd'
   });
 
+
+  $("#export_c").on("click", function() {
+    console.log('search');
+    search = table.rows( { filter : 'applied'} ).data();
+    console.log(search);
+
+    var arr = [];
+    $.each(search, function(key, val) {
+      arr.push(val);
+    });
+    console.log(arr);
+
+    var obj = {'methode' : 'exportClient','data':arr};
+    console.log(obj);
+
+    $.ajax({
+      url : "./lib/excelExport.php",
+      dataType: "json",
+      type: "POST",
+      data : obj,
+      async : false,
+      success: function(data, textStatus, jqXHR) {
+        console.log(data);
+        // res = data;
+        window.open('http://localhost:8080/OumRose/gestion/downloads/'+data+'.xlsx','_blank' );
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        console.log(jqXHR);
+        console.log(textStatus);
+        console.log(errorThrown);
+      }
+    });
+  });
+
   var table/*,table2,table3*/,id_client;
     var obj = {'methode' : 'getAllClient'}
     $.ajax({

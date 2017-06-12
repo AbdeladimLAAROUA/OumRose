@@ -1739,15 +1739,15 @@ function db_connect(){
 	/*Local Kindy*/
 
 
-/*	$hote   	='localhost';
+	$hote		='localhost';
 	$passDb 	='S3cr3T%44';
 	$bd 		='oumdev_leads';
-	$user		='root';	*/
+	$user		='root';	
 
-	$hote   	='localhost';
+/*	$hote   	='localhost';
 	$passDb 	='';
 	$bd 		='oumdev_leads';
-	$user		='root';
+	$user		='root';*/
 
 
 	/*Local*/
