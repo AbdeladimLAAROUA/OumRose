@@ -18,8 +18,8 @@ if($row['postID'] == ''){
 <head>
     <meta charset="utf-8">
     <title>Blog - <?php echo $row['postTitle'];?></title>
-    <link rel="stylesheet" href="style/normalize.css">
-    <link rel="stylesheet" href="style/main.css">
+    <link rel="stylesheet" href="blog/style/normalize.css">
+    <link rel="stylesheet" href="blog/style/main.css">
 </head>
 <body>
 

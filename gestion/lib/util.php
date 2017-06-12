@@ -88,6 +88,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			echo getRelaisById($_REQUEST['id_relais']);
 		}else if($_REQUEST['methode'] == 'addLivraison'){
 			echo addLivraison($_REQUEST['livraison']);
+<<<<<<< HEAD
 
 		}else if($_REQUEST['methode'] == 'updateLivraison'){
 			echo updateLivraison($_REQUEST['livraison']);
@@ -103,6 +104,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			echo getCommandesSB();
 		}else if($_REQUEST['methode'] == 'getAllCommandes'){
 			echo getAllCommandes();
+=======
+		}else if($_REQUEST['methode'] == 'getAllCommandeByCus'){
+			echo getAllCommandeByCus($_REQUEST['id_cus']);
+		}else if($_REQUEST['methode'] == 'updateBaby'){
+			echo updateBaby($_REQUEST['baby']);
+>>>>>>> 717f72de46595451330bff5836a774c867fa6acf
 		}else{
 			echo json_encode(array('result'=>'method_not_exist'));
 		}
@@ -682,6 +689,37 @@ function updateClient($client){
 		$stmt->bindValue(':cp', $client['cp']);
 		$stmt->bindValue(':type', $client['type']);
 		$stmt->bindValue(':Ville_id', $client['ville']);
+
+		$stmt->execute();
+
+		if($stmt->rowCount()) {
+			$array['result'] = 'success';
+		} else {
+			$array['result'] = 'failed';
+		}
+	} catch (Exception $e) {
+		$array['result'] = 'ko';
+	}
+	
+	$connexion = null;
+
+	return json_encode($array);	
+}
+
+function updateBaby($baby){
+	$array = array();
+
+	try {
+		$connexion = db_connect();
+
+		$stmt = $connexion->prepare("UPDATE `baby` SET `naissance`= :naissance,`prenom`= :prenom,`sexe`= :sexe,`MATERNITE`= :MATERNITE,`GYNECO`= :GYNECO WHERE `id`= :id");
+		
+		$stmt->bindValue(':id', $baby['id']);
+		$stmt->bindValue(':prenom', $baby['prenom']);
+		$stmt->bindValue(':sexe', $baby['sexe']);
+		$stmt->bindValue(':GYNECO', $baby['gyneco']);
+		$stmt->bindValue(':MATERNITE', $baby['maternite']);
+		$stmt->bindValue(':naissance', $baby['naissance']);
 
 		$stmt->execute();
 
