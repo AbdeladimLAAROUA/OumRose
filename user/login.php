@@ -63,7 +63,7 @@ if(isset($_POST['email']) and isset($_POST['password']) ){
 		$_SESSION['result1']=$info;
 		$_SESSION['eligibleToBox']=$info["box"];
 		//echo $_SESSION['eligibleToBox'];
-		header('Location:../boxReady.php');
+		header('Location:../espace.php');
 		
 	}else{
 		$info["success"]=false;

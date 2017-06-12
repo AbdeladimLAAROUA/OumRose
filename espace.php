@@ -1,3 +1,7 @@
+<?php
+    include('gestion/lib/util.php');
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,6 +10,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
+<!-- bootstrap datepicker -->
+<link rel="stylesheet" href="gestion/plugins/datepicker/datepicker3.css">
 <!-- <link rel="stylesheet" type="text/css" href="assets/css/blogStyle.css"> -->
 
   
@@ -17,8 +23,73 @@
 <script src="assets/js/html5shiv.min.js"></script>
 <script src="assets/js/respond.min.js"></script>
 <![endif]-->
+<link href="css/style.css" rel="stylesheet">
 <style type="text/css">
-    .nav-tabs-dropdown {
+.nav-pills>li.active>a, .nav-pills>li.active>a:hover, .nav-pills>li.active>a:focus {
+    color: #fff;
+    background-color: #c26faa;
+}
+.edit-client-div{
+    margin-bottom: 20px;
+}
+.alert-info, .information {
+    background-image: none;
+    background-color: #d9edf7;
+    color: #31708f;
+    border-color: #9acfea;
+}
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border-width: 1px;
+    border-style: solid;
+}
+.boxReady{
+    margin: 50px ;
+    line-height: 20px;
+}
+.boxReady div{
+    font-size: 2em;
+    margin-top: 10px;
+    color: #c36eaa;
+}
+.row div.col-md-12{
+    border: solid 1px #9c4691;
+    padding: 13px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+}
+.content p, .content ul li{
+    margin-left: 30px !important;
+    font-size: 18px;
+    line-height: 35px;
+}
+input[type="submit"]{
+    float: right;
+    background: #df5b79 ;
+    margin-left: 10px;
+}
+h2 ul li:nth-child(1) {
+    /*color:#ec7f8c;*/
+    margin: 20px;
+    border-bottom: solid 2px;
+    display: inline-block;
+}
+h2 ul li:nth-child(2) {
+    /*color:#ec7f8c;*/
+    font-size: 20px;
+}
+h2 ul li:nth-child(3) {
+    color:#6fc7c2;
+    font-size: 20px;
+}
+h2 ul li:nth-child(4) {
+    color:#8e6cac;
+    font-size: 20px;
+}
+</style>
+<style type="text/css">
+.nav-tabs-dropdown {
   display: none;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
@@ -77,6 +148,7 @@
         background-color: #428bca;
     }
 }
+}
 </style>
 </head>
 <body>
@@ -85,45 +157,15 @@
     <?php include('header.php'); ?>
     <div class="container">
         <h2>Espae client</h2>
-        <p class="lead">Bienvenu dans votre espace client <?php echo $_SESSION["nom"];?></p>
-        <div class="row">
-            <div class="col-sm-3">
-                <a href="#" class="nav-tabs-dropdown btn btn-block btn-primary">Tabs</a>
-                <ul id="nav-tabs-wrapper" class="nav nav-tabs nav-pills nav-stacked well">
-                  <li class="active"><a href="#vtab1" data-toggle="tab">Acceuil</a></li>
-                  <li><a href="#vtab2" data-toggle="tab">Commander ma box</a></li>
-                  <li><a href="#vtab4" data-toggle="tab">Historique de mes commandes</a></li>
-                  <li><a href="#vtab3" data-toggle="tab">Mon Profil</a></li>
-                </ul>
-            </div>
-            <div class="col-sm-9">
-                <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane fade in active" id="vtab1">
-                        <h3>Acceuil</h3>
-                        <p>
-                            Vous êtes éligible à aucune Box.
-                        </p>
-                    </div>
-                    <div role="tabpanel" class="tab-pane fade" id="vtab2">
-                        <h3>Commander ma box</h3>
-                        <p>
-                        Désolé vous n'êtes éligible à aucune box
-                        </p>
-                    </div>
-                    <div role="tabpanel" class="tab-pane fade in" id="vtab3">
-                        <h3>Mon profil</h3>
-                        <p>
-                            
-                        </p>
-                    </div>
-                    <div role="tabpanel" class="tab-pane fade in" id="vtab4">
-                        <h3>Mes commandes</h3>
-                        <p>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <?php 
+            if(isset($_SESSION["nom"])){
+                include('espace_client.php');
+            }else{
+                echo "Veuillez vous connecter pour accèder à votre espace client ";
+                echo '<a href="login.php">S\'identifier</a>';
+            }
+
+        ?>
     </div>
 
     <!-- start: Footer -->

@@ -20,7 +20,8 @@ if(!isset($_SESSION['nom'])){
 		<link href="css/style.css" rel="stylesheet">
 
 		
-		<!-- header --><link rel="stylesheet" type="text/css" href="css/header.css">
+		<!-- header -->
+		<link rel="stylesheet" type="text/css" href="css/header.css">
 		
 		<!-- end: CSS -->
 		<style type="text/css">
@@ -40,7 +41,6 @@ if(!isset($_SESSION['nom'])){
 				margin: 50px ;
 				line-height: 20px;
 			}
-
 			.boxReady div{
 				font-size: 2em;
 				margin-top: 10px;
@@ -57,20 +57,17 @@ if(!isset($_SESSION['nom'])){
 				font-size: 18px;
 				line-height: 35px;
 			}
-
 			input[type="submit"]{
 				float: right;
 				background: #df5b79 ;
+				margin-left: 10px;
 			}
-
 			h2 ul li:nth-child(1) {
 				/*color:#ec7f8c;*/
-				
 				margin: 20px;
 				border-bottom: solid 2px;
 				display: inline-block;
 			}
-
 			h2 ul li:nth-child(2) {
 				/*color:#ec7f8c;*/
 				font-size: 20px;
@@ -78,7 +75,8 @@ if(!isset($_SESSION['nom'])){
 			h2 ul li:nth-child(3) {
 				color:#6fc7c2;
 				font-size: 20px;
-			}h2 ul li:nth-child(4) {
+			}
+			h2 ul li:nth-child(4) {
 				color:#8e6cac;
 				font-size: 20px;
 			}
@@ -119,7 +117,7 @@ if(!isset($_SESSION['nom'])){
 			<?php 
 				if($_SESSION['eligibleToBox']!=0){
 			 ?>
-			<div class=" col-md-12 col-sm-12 col-xs-12 content">
+			<div class="col-md-12 col-sm-12 col-xs-12 content">
 			    <p><span style="font-size:10.5pt;line-height:107%;font-family:Helvetica, sans-serif;background-image:initial;background-attachment:initial;background-size:initial;background-origin:initial;background-clip:initial;background-position:initial;background-repeat:initial;">
 			    <h3>
 			    	a-	Chez Oumbox : Gratuit
@@ -134,7 +132,8 @@ if(!isset($_SESSION['nom'])){
 			    <p>
 			    	Lundi au vendredi de 9h30 à 15H30 (Horaire Ramadan)
 			    </p>
-			    <form method="post" action="contact.html"><input type="hidden" name="type_livraison" value="SB" /><input type="submit" value="Localisez-nous" class="btn btn-primary"></form>
+			    <input type="hidden" name="type_livraison" value="SB" /><input type="submit" value="Localisez-nous" class="btn btn-primary">
+			    <form method="post" action="maBox.php"><input type="hidden" name="type_livraison" value="OX" /><input type="submit" value="Commander ma box" class="btn btn-primary"></form>
 			    </span></p>
 			</div>
 

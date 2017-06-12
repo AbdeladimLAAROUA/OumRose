@@ -14,7 +14,7 @@
              type:'POST',
              data : myData,
              success: function(data){
-                   /*for (var i = 0; i < result.length; i++) {
+                   for (var i = 0; i < result.length; i++) {
                     	$.ajax({
                     	  url: "https://api.speedbox.ma/api/listeprville/?ville="+result[i], 
                     	  type:'POST',
@@ -37,7 +37,7 @@
                     	             }
                     	           });                    	             
                     	  }});
-                   };     */
+                   };     
              },
              error : function() {
              

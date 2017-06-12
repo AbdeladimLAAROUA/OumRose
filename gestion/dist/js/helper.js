@@ -13,15 +13,24 @@ app.config(function($routeProvider) {
     .when("/listClient", {
         templateUrl : "pages/views/listClient.html"
     })
-    .when("/listClient2", {
-        templateUrl : "pages/views/listClient2.html"
+    .when("/allCommande", {
+        templateUrl : "pages/views/allCommande.html"
+    })
+    .when("/commandeSB", {
+        templateUrl : "pages/views/commandeSB.html"
+    }) 
+    .when("/commandeLD", {
+        templateUrl : "pages/views/commandeLD.html"
+    })
+     .when("/commandeOX", {
+        templateUrl : "pages/views/commandeOX.html"
     })
     .when("/listBaby", {
         templateUrl : "pages/views/listBaby.html"
     })
     .when("/listCommande", {
         templateUrl : "pages/views/listCommande.html"
-    })
+    }) 
     .when("/listArticle", {
         templateUrl : "pages/views/listArticle.html"
     })    

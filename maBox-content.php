@@ -1,6 +1,47 @@
 
 <?php 
-  if($_POST['type_livraison']=="SB")
+  if($_POST['type_livraison']=="OX"){
+?>
+<div class="container">
+  <div class="row content5" >
+    <div class="alert alert-info col-md-12 col-sm-12 col-xs-12 content">
+        <!-- <p><span style="font-size:10.5pt;line-height:107%;font-family:Helvetica, sans-serif;background-image:initial;background-attachment:initial;background-size:initial;background-origin:initial;background-clip:initial;background-position:initial;background-repeat:initial;"> -->
+        <!-- <h3 class="text-center">
+          Votre demande a été envoyée avec succès.
+        </h3> -->
+        <p class="text-center">
+          Détails de votre commande : 
+        </p>
+
+        <div class="commandeDetails">
+          <div class="row"><div class="col-md-6">Client :</div><div class="infoLivraison"><?php echo $_SESSION['nomComplet']; ?> </div></div>
+          <div class="row"><div class="col-md-6">Type de livraison :</div><div class="infoLivraison" >Oumbox</div></div>
+          <div class="row"><div class="col-md-6">Ville :</div><div id="infos7" class="infoLivraison">Casablanca</div></div>
+          <div class="row"><div class="col-md-6">Adresse :</div><div id="infos8" class="infoLivraison">77 bis, boulevard abdelmoumen</div></div>
+          <div class="row"><div class="col-md-6">Téléphone :</div><div id="infosTel2" class="infoLivraison">05 22 22 58 50</div></div>
+        </div>
+        <form method="post" style="text-align: center; margin-top: 50px;" action="pdf/br.php">
+            <input type="submit" value="Télécharger le bon de retrait" class="btn btn-primary">
+        </form>
+
+        </span></p>
+    </div>
+
+    <div class="alert alert-info col-md-12 col-sm-12 col-xs-12 content">
+        <p>
+          <ul>
+            <li>1. </li>
+            <li>2. </li>
+          </ul>
+        </p>
+        </span></p>
+    </div>
+
+  </div>  
+</div>
+<?php
+  }
+  else if($_POST['type_livraison']=="SB")
   {
  ?>
 <div class="row content1" id="content" >

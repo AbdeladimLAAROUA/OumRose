@@ -10,8 +10,8 @@ $(function () {
     format: 'yyyy-mm-dd'
   });
 
-  var table,id_client;
-  var obj = {'methode' : 'getAllClient'}
+  var table/*,table2,table3*/,id_client;
+    var obj = {'methode' : 'getAllClient'}
     $.ajax({
       url : "./lib/util.php",
       dataType: "json",
@@ -53,6 +53,9 @@ $(function () {
         console.log(errorThrown);
       }
     });
+
+   
+
     var obj_city = {'methode' : 'getAllCities'}
     $.ajax({
       url : "./lib/util.php",
@@ -240,6 +243,364 @@ $(function () {
         break;
     }
   });
+
+
+
+
+  /*$("#table_commandesSB tbody" ).on( "click", 'button',function() {
+    var type  = $(this).data("type"),
+        id    = $(this).data("id");
+    console.log(type+" - "+id);
+    switch (type){
+      case 'view' :
+        var get_client = {"methode":"getClient","id":id};
+        $.ajax({
+          url : "./lib/util.php",
+          dataType: "json",
+          type: "POST",
+          data : get_client,
+          beforeSend: function(){
+            $('#loading-image').popup('show');
+          },
+          complete: function(){
+            setTimeout(function(){$('#loading-image').popup('hide');},250);
+          },
+          success: function(data, textStatus, jqXHR) {
+            $('.infos_client').text('');
+            $("#baby_table tbody").empty();
+            if(data.result != 0){
+              var client = data.result.client[0];
+              $('#id_client').text(client.id_client);
+              $('#nom').text(client.nom);
+              $('#prenom').text(client.prenom);
+              $('#email').text(client.email);
+              $('#gsm').text(client.gsm);
+              $('#naissance').text(client.naissance);
+              $('#adresse').text(client.adresse);
+              $('#CP').text(client.CP);
+              $('#type').text(client.type);
+              $('#Ville_id').text(client.name);
+              $('#creationDate').text(client.creationDateClient);
+              var babies = data.result.baby;
+              console.log(babies);
+              if(babies.lenght == 0){
+                var newRow = '<tr>'+
+                  '<td>Aucun bébé trouvé</td>'+
+                  '</tr>';
+                  $("#baby_table tbody").append(newRow);
+              }else{
+                $.each(babies, function(key, val) {   
+                  var newRow = '<tr>'+
+                    '<td>'+val.id+'</td>'+
+                    '<td>'+val.prenom+'</td>'+
+                    '<td>'+val.sexe+'</td>'+
+                    '<td>'+val.naissance+'</td>'+
+                    '<td>'+val.MATERNITE+'</td>'+
+                    '</tr>';
+                  $("#baby_table tbody").append(newRow);
+                });
+              }
+              $("#box_table tbody").empty();
+              var box = data.result.box;
+              var box1="Non commandé";
+              var box2="Non commandé";
+              var box3="Non commandé";
+             
+              if(box.indexOf('1') > -1){
+                box1="commandé";
+              }if(box.indexOf('2') > -1){
+                box2="commandé";
+              }if(box.indexOf('3') > -1){
+                box3="commandé";
+              }
+              
+                  var newRow = '<tr>'+
+                    '<td>'+box1+'</td>'+
+                    '<td>'+box2+'</td>'+
+                    '<td>'+box3+'</td>'+
+                    '</tr>';
+                  $("#box_table tbody").append(newRow);
+            
+            }
+          },
+          error: function (jqXHR, textStatus, errorThrown) {
+
+          }
+        });
+        break;
+      case 'edit' :
+        console.log('edit');var get_client = {"methode":"getClient","id":id};
+        $.ajax({
+          url : "./lib/util.php",
+          dataType: "json",
+          type: "POST",
+          data : get_client,
+          beforeSend: function(){
+            $('#loading-image').popup('show');
+          },
+          complete: function(){
+            setTimeout(function(){$('#loading-image').popup('hide');},250);
+          },
+          success: function(data, textStatus, jqXHR) {
+            // $.validate();
+            $('.infos_client').text('');
+            $("#baby_table tbody").empty();
+            $('#Ville_id_edit').val(0);
+            if(data.result != 0){
+              var client = data.result.client[0];
+              console.log(client);
+              $('#id_client_edit').text(client.id_client);
+              $('#nom_edit').val(client.nom);
+              $('#prenom_edit').val(client.prenom);
+              $('#email_edit').val(client.email);
+              $('#gsm_edit').val(client.gsm);
+              $('#naissance_edit').val(client.naissance);
+              $('#adresse_edit').val(client.adresse);
+              $('#CP_edit').val(client.CP);
+              $('#type_edit').val(client.type);
+              $('#Ville_id_edit').val(client.Ville_id);
+              $('#creationDate_edit').text(client.creationDateClient);
+              var babies = data.result.baby;
+              console.log(babies);
+              if(babies.lenght == 0){
+                var newRow = '<tr>'+
+                  '<td>Aucun bébé trouvé</td>'+
+                  '</tr>';
+                  $("#baby_table tbody").append(newRow);
+              }else{
+                $.each(babies, function(key, val) {   
+                  var newRow = '<tr>'+
+                    '<td>'+val.id+'</td>'+
+                    '<td>'+val.prenom+'</td>'+
+                    '<td>'+val.sexe+'</td>'+
+                    '<td>'+val.naissance+'</td>'+
+                    '<td>'+val.MATERNITE+'</td>'+
+                    '</tr>';
+                  $("#baby_table tbody").append(newRow);
+                });
+              }
+            }
+          },
+          error: function (jqXHR, textStatus, errorThrown) {
+
+          }
+        });
+
+      break;
+      case 'delete' :
+        $("#conf_supp").data("id",id);
+        break;
+
+
+       case 'livraison' :
+        var livraison = {"id":id,'status':'livré'};
+        var myLivraison = {"methode":"updateLivraison",'livraison':livraison};
+        $.ajax({
+          url : "./lib/util.php",
+          dataType: "json",
+          type: "POST",
+          data : myLivraison,
+          beforeSend: function(){
+            $('#loading-image').popup('show');
+          },
+          complete: function(){
+            setTimeout(function(){$('#loading-image').popup('hide');},250);
+          },
+          success: function(data, textStatus, jqXHR) {
+            console.log('done');
+            $('.livraisonStatus').html('Livré');
+          },
+          error: function (jqXHR, textStatus, errorThrown) {
+
+          }
+        });
+        break;
+      
+
+      default :
+        console.log('default');
+        break;
+    }
+  });
+
+
+  $("#table_commandesLD tbody" ).on( "click", 'button',function() {
+    var type  = $(this).data("type"),
+        id    = $(this).data("id");
+    console.log(type+" - "+id);
+    switch (type){
+      case 'view' :
+        var get_client = {"methode":"getClient","id":id};
+        $.ajax({
+          url : "./lib/util.php",
+          dataType: "json",
+          type: "POST",
+          data : get_client,
+          beforeSend: function(){
+            $('#loading-image').popup('show');
+          },
+          complete: function(){
+            setTimeout(function(){$('#loading-image').popup('hide');},250);
+          },
+          success: function(data, textStatus, jqXHR) {
+            $('.infos_client').text('');
+            $("#baby_table tbody").empty();
+            if(data.result != 0){
+              var client = data.result.client[0];
+              $('#id_client').text(client.id_client);
+              $('#nom').text(client.nom);
+              $('#prenom').text(client.prenom);
+              $('#email').text(client.email);
+              $('#gsm').text(client.gsm);
+              $('#naissance').text(client.naissance);
+              $('#adresse').text(client.adresse);
+              $('#CP').text(client.CP);
+              $('#type').text(client.type);
+              $('#Ville_id').text(client.name);
+              $('#creationDate').text(client.creationDateClient);
+              var babies = data.result.baby;
+              console.log(babies);
+              if(babies.lenght == 0){
+                var newRow = '<tr>'+
+                  '<td>Aucun bébé trouvé</td>'+
+                  '</tr>';
+                  $("#baby_table tbody").append(newRow);
+              }else{
+                $.each(babies, function(key, val) {   
+                  var newRow = '<tr>'+
+                    '<td>'+val.id+'</td>'+
+                    '<td>'+val.prenom+'</td>'+
+                    '<td>'+val.sexe+'</td>'+
+                    '<td>'+val.naissance+'</td>'+
+                    '<td>'+val.MATERNITE+'</td>'+
+                    '</tr>';
+                  $("#baby_table tbody").append(newRow);
+                });
+              }
+              $("#box_table tbody").empty();
+              var box = data.result.box;
+              var box1="Non commandé";
+              var box2="Non commandé";
+              var box3="Non commandé";
+             
+              if(box.indexOf('1') > -1){
+                box1="commandé";
+              }if(box.indexOf('2') > -1){
+                box2="commandé";
+              }if(box.indexOf('3') > -1){
+                box3="commandé";
+              }
+              
+                  var newRow = '<tr>'+
+                    '<td>'+box1+'</td>'+
+                    '<td>'+box2+'</td>'+
+                    '<td>'+box3+'</td>'+
+                    '</tr>';
+                  $("#box_table tbody").append(newRow);
+            
+            }
+          },
+          error: function (jqXHR, textStatus, errorThrown) {
+
+          }
+        });
+        break;
+      case 'edit' :
+        console.log('edit');var get_client = {"methode":"getClient","id":id};
+        $.ajax({
+          url : "./lib/util.php",
+          dataType: "json",
+          type: "POST",
+          data : get_client,
+          beforeSend: function(){
+            $('#loading-image').popup('show');
+          },
+          complete: function(){
+            setTimeout(function(){$('#loading-image').popup('hide');},250);
+          },
+          success: function(data, textStatus, jqXHR) {
+            // $.validate();
+            $('.infos_client').text('');
+            $("#baby_table tbody").empty();
+            $('#Ville_id_edit').val(0);
+            if(data.result != 0){
+              var client = data.result.client[0];
+              console.log(client);
+              $('#id_client_edit').text(client.id_client);
+              $('#nom_edit').val(client.nom);
+              $('#prenom_edit').val(client.prenom);
+              $('#email_edit').val(client.email);
+              $('#gsm_edit').val(client.gsm);
+              $('#naissance_edit').val(client.naissance);
+              $('#adresse_edit').val(client.adresse);
+              $('#CP_edit').val(client.CP);
+              $('#type_edit').val(client.type);
+              $('#Ville_id_edit').val(client.Ville_id);
+              $('#creationDate_edit').text(client.creationDateClient);
+              var babies = data.result.baby;
+              console.log(babies);
+              if(babies.lenght == 0){
+                var newRow = '<tr>'+
+                  '<td>Aucun bébé trouvé</td>'+
+                  '</tr>';
+                  $("#baby_table tbody").append(newRow);
+              }else{
+                $.each(babies, function(key, val) {   
+                  var newRow = '<tr>'+
+                    '<td>'+val.id+'</td>'+
+                    '<td>'+val.prenom+'</td>'+
+                    '<td>'+val.sexe+'</td>'+
+                    '<td>'+val.naissance+'</td>'+
+                    '<td>'+val.MATERNITE+'</td>'+
+                    '</tr>';
+                  $("#baby_table tbody").append(newRow);
+                });
+              }
+            }
+          },
+          error: function (jqXHR, textStatus, errorThrown) {
+
+          }
+        });
+
+      break;
+      case 'delete' :
+        $("#conf_supp").data("id",id);
+        break;
+
+
+       case 'livraison' :
+        var livraison = {"id":id,'status':'livré'};
+        var myLivraison = {"methode":"updateLivraison",'livraison':livraison};
+        $.ajax({
+          url : "./lib/util.php",
+          dataType: "json",
+          type: "POST",
+          data : myLivraison,
+          beforeSend: function(){
+            $('#loading-image').popup('show');
+          },
+          complete: function(){
+            setTimeout(function(){$('#loading-image').popup('hide');},250);
+          },
+          success: function(data, textStatus, jqXHR) {
+            console.log('done');
+            $('.livraisonStatus'+id).html('Livré');
+          },
+          error: function (jqXHR, textStatus, errorThrown) {
+
+          }
+        });
+        break;
+      
+
+      default :
+        console.log('default');
+        break;
+    }
+  });
+
+*/
 
   $("#conf_supp").on("click", function() {
     var id = $(this).data("id");

@@ -88,8 +88,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			echo getRelaisById($_REQUEST['id_relais']);
 		}else if($_REQUEST['methode'] == 'addLivraison'){
 			echo addLivraison($_REQUEST['livraison']);
+
+		}else if($_REQUEST['methode'] == 'updateLivraison'){
+			echo updateLivraison($_REQUEST['livraison']);
+
 		}else if($_REQUEST['methode'] == 'isUserAlreadyExist'){
 			echo isUserAlreadyExist($_REQUEST['email']);
+
+		}else if($_REQUEST['methode'] == 'getCommandesLD'){
+			echo getCommandesLD();
+		}else if($_REQUEST['methode'] == 'getCommandesOX'){
+			echo getCommandesOX();
+		}else if($_REQUEST['methode'] == 'getCommandesSB'){
+			echo getCommandesSB();
+		}else if($_REQUEST['methode'] == 'getAllCommandes'){
+			echo getAllCommandes();
 		}else{
 			echo json_encode(array('result'=>'method_not_exist'));
 		}
@@ -222,6 +235,141 @@ function getBabySex(){
 	return json_encode($array);	
 }
 
+function getCommandesLD(){
+
+	$array = array();
+	try {
+		$connexion = db_connect();
+		$sql =
+			"SELECT  cust.id as 'idMaman', cust.nom as 'nomMaman', cust.prenom, cust.gsm as 'GSM1',
+			l.gsm as 'GSM2',b.naissance,co.creationDate,p.id_box,
+			 l.type as 'typeLivraison', l.adresseLivraison, l.quartier,l.status,l.id as 'idLivraison'
+			 from  commande co, customer cust, product p, livraison l, baby b
+			 where 
+			 cust.id=co.customer_id and
+             p.id=co.product_id and
+             l.commande_id=co.id and
+             b.customer_id=cust.id and
+             l.type='LD'
+             ";
+		$resultats = $connexion->prepare($sql);
+
+		$resultats->execute();
+
+		$resultats->setFetchMode(PDO::FETCH_OBJ);
+		$resultat = $resultats->fetchAll();
+	
+		$array['result'] = $resultat;
+	} catch (Exception $e) {
+		$array['result'] = 0;
+	}
+	
+	$connexion = null;
+	return json_encode($array);	
+
+}
+function getCommandesOX(){
+
+	$array = array();
+	try {
+		$connexion = db_connect();
+		$sql =
+			"SELECT  cust.id as 'idMaman', cust.nom as 'nomMaman', cust.prenom, cust.gsm as 'GSM1',
+			l.gsm as 'GSM2',b.naissance,co.creationDate,p.id_box,
+			 l.type as 'typeLivraison', l.adresseLivraison, l.quartier,l.status,l.id as 'idLivraison'
+			 from  commande co, customer cust, product p, livraison l, baby b
+			 where 
+			 cust.id=co.customer_id and
+             p.id=co.product_id and
+             l.commande_id=co.id and
+             b.customer_id=cust.id and
+             l.type='OX'
+             ";
+		$resultats = $connexion->prepare($sql);
+
+		$resultats->execute();
+
+		$resultats->setFetchMode(PDO::FETCH_OBJ);
+		$resultat = $resultats->fetchAll();
+	
+		$array['result'] = $resultat;
+	} catch (Exception $e) {
+		$array['result'] = 0;
+	}
+	
+	$connexion = null;
+	return json_encode($array);	
+
+}
+function getCommandesSB(){
+
+	$array = array();
+	try {
+		$connexion = db_connect();
+		$sql =
+			"SELECT cust.id as 'idMaman', cust.nom as 'nomMaman', cust.prenom, cust.GSM as 
+			'GSM1',l.gsm as 'GSM2', b.naissance,co.creationDate,p.id_box,
+			r.nom as 'pointRelais',v.name as'Ville',l.status,l.id as 'idLivraison'
+			from livraison l, commande co, customer cust, relais r, ville v,baby b,product p
+			where 
+			l.commande_id=co.id and 
+			cust.id=co.customer_id and 
+			l.shop_id=r.id and 
+			v.id=r.id_ville and
+			b.customer_id=cust.id and
+			p.id=co.product_id and
+			l.type='SB'";
+
+		$resultats = $connexion->prepare($sql);
+
+		$resultats->execute();
+
+		$resultats->setFetchMode(PDO::FETCH_OBJ);
+		$resultat = $resultats->fetchAll();
+	
+		$array['result'] = $resultat;
+	} catch (Exception $e) {
+		$array['result'] = 0;
+	}
+	
+	$connexion = null;
+	return json_encode($array);	
+
+}
+function getAllCommandes(){
+
+	$array = array();
+	try {
+		$connexion = db_connect();
+		$sql =
+			"SELECT  cust.id as 'idMaman', cust.nom as 'nomMaman', cust.prenom, cust.gsm as 'GSM1',
+			l.gsm as 'GSM2',b.naissance,co.creationDate,
+			 l.type as 'typeLivraison', l.adresseLivraison, l.quartier 
+			 from  commande co, customer cust, product p, livraison l, baby b
+			 where 
+			 cust.id=co.customer_id and
+             p.id=co.product_id and
+             l.commande_id=co.id and
+             b.customer_id=cust.id and
+             l.type='LD'
+             ";
+		$resultats = $connexion->prepare($sql);
+
+		$resultats->execute();
+
+		$resultats->setFetchMode(PDO::FETCH_OBJ);
+		$resultat = $resultats->fetchAll();
+	
+		$array['result'] = $resultat;
+	} catch (Exception $e) {
+		$array['result'] = 0;
+	}
+	
+	$connexion = null;
+	return json_encode($array);	
+
+}
+
 function getClientDash(){
 	$array = array();
 	try {
@@ -270,6 +418,29 @@ function getAllClient(){
 
 		$resultats->setFetchMode(PDO::FETCH_OBJ);
 		$resultat = $resultats->fetchAll();
+		
+
+		
+		 
+              /*for ($i = 0; $i < count($resultat); $i++) {
+              	 $boxList[] = $getCommandeByClient($resultat[i]['id']);
+
+              	 $box1="Non commandé";
+              	 $box2="Non commandé";
+              	 $box3="Non commandé";
+              	 
+              	 if(in_array('1', $boxList)){
+              	   $box1="commandé";
+              	 }if(in_array('2', $boxList)){
+              	   $box2="commandé";
+              	 }if(in_array('3', $boxList)){
+              	   $box3="commandé";
+				}
+				$resultats[i]['refBox1']=$box1;
+				$resultats[i]['refBox2']=$box2;
+				$resultats[i]['refBox3']=$box3;
+          }*/
+
 		$array['result'] = $resultat;
 	} catch (Exception $e) {
 		$array['result'] = 0;
@@ -288,7 +459,7 @@ function getClientWithEligibility(){
 		$resultats->execute();
 
 		$resultats->setFetchMode(PDO::FETCH_OBJ);
-		$resultat = $resultats->fetchAll();
+		
 		$array['result'] = $resultat;
 	} catch (Exception $e) {
 		$array['result'] = 0;
@@ -358,6 +529,101 @@ function getClient($id){
 	
 	$connexion = null;
 	return json_encode($array);	
+}
+
+function getClient2($id){
+	$array = array();
+	try {
+		$connexion = db_connect();
+		//$resultats = $connexion->prepare("SELECT *,c.id as id_client,c.creationDate as creationDateClient FROM customer c INNER JOIN ville v ON c.Ville_id = v.id WHERE c.id = :id");
+		$resultats = $connexion->prepare("SELECT *,c.id as id_client,c.creationDate as creationDateClient FROM customer c");
+    	
+    	$resultats->bindParam(':id', $id);
+
+		$resultats->execute();
+
+		$resultats->setFetchMode(PDO::FETCH_OBJ);
+		$resultat = $resultats->fetchAll();
+		$array['result']['client'] = $resultat;
+
+		
+		//liste des bébé
+		$resultatsBaby = $connexion->prepare("SELECT * FROM baby WHERE customer_id = :id");
+    	
+    	$resultatsBaby->bindParam(':id', $id);
+
+		$resultatsBaby->execute();
+
+		$resultatsBaby->setFetchMode(PDO::FETCH_OBJ);
+		$resultatBaby = $resultatsBaby->fetchAll();
+		$array['result']['baby'] = $resultatBaby;
+
+		//liste des commandes 
+
+		$stmt = $connexion->prepare("SELECT product_id FROM commande where customer_id=:id");
+          $stmt->execute(array(':id'=>$id));
+          $clientCommandesId = array();
+          if ($stmt->execute()) {
+              while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                  $clientCommandesId[] = $row['product_id'];
+              }
+          }
+           $boxList = array();
+          if( count($clientCommandesId)){
+               $qMarks = str_repeat('?,', count($clientCommandesId) - 1) . '?';
+            $sth = $connexion->prepare("SELECT id_box FROM product WHERE id IN ($qMarks)");
+           
+           
+            
+            if ($sth->execute($clientCommandesId)) {
+                while ($row = $sth->fetch(PDO::FETCH_ASSOC)) {
+                    $boxList[] = $row['id_box'];
+                }
+            }else{
+
+            }
+        }
+
+            $array['result']['box']= $boxList;
+
+	} catch (Exception $e) {
+		$array['result'] = 0;
+	}
+	
+	$connexion = null;
+	return json_encode($array);	
+}
+
+function getCommandeByClient($id){
+	try {
+		$stmt = $connexion->prepare("SELECT product_id FROM commande where customer_id=:id");
+          $stmt->execute(array(':id'=>$id));
+          $clientCommandesId = array();
+          if ($stmt->execute()) {
+              while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                  $clientCommandesId[] = $row['product_id'];
+              }
+          }
+           $boxList = array();
+          if( count($clientCommandesId)){
+               $qMarks = str_repeat('?,', count($clientCommandesId) - 1) . '?';
+            $sth = $connexion->prepare("SELECT id_box FROM product WHERE id IN ($qMarks)");
+           
+           
+            
+            if ($sth->execute($clientCommandesId)) {
+                while ($row = $sth->fetch(PDO::FETCH_ASSOC)) {
+                    $boxList[] = $row['id_box'];
+                }
+            }else{
+
+            }
+        }
+
+        return $boxList;
+	} catch (Exception $e) {
+		
+	}
 }
 
 function deleteFullClient($id){
@@ -836,7 +1102,11 @@ function addLivraison($livraison){
 	try {
 		$connexion = db_connect();
 		$sql="";
-		if($livraison['relais']=='NULL'){
+		if($livraison['type']=='OX'){
+			$sql = "INSERT INTO livraison (commande_id, type) 
+			VALUES (:commande_id, 'OX')";
+		}
+		else if($livraison['relais']=='NULL'){
 			$sql = "INSERT INTO livraison (adresseLivraison, commande_id, type, quartier,gsm) 
 			VALUES (:adresseLivraison, :commande_id, :type, :quartier,:gsm)";	
 		}
@@ -847,14 +1117,21 @@ function addLivraison($livraison){
 		//Prepare our statement.
 		$statement = $connexion->prepare($sql);
 		
-		//Bind our values to our parameters (we called them :make and :model).
-		$statement->bindValue(':adresseLivraison', $livraison['adresse']);
-		if($livraison['relais']!='NULL')
-		$statement->bindValue(':shop_id', $livraison['relais']);
 		$statement->bindValue(':commande_id', $id_commande);
-		$statement->bindValue(':type', $livraison['type']);
-		$statement->bindValue(':quartier', $livraison['quartier']);
-		$statement->bindValue(':gsm', $livraison['gsm']);
+		if($livraison['type']!='OX'){
+			
+			//Bind our values to our parameters (we called them :make and :model).
+		
+			if($livraison['relais']!='NULL')
+			$statement->bindValue(':shop_id', $livraison['relais']);
+			
+			$statement->bindValue(':adresseLivraison', $livraison['adresse']);
+			$statement->bindValue(':type', $livraison['type']);
+			$statement->bindValue(':quartier', $livraison['quartier']);
+			$statement->bindValue(':gsm', $livraison['gsm']);
+		}
+
+	
 		 
 		//Execute the statement and insert our values.
 		$inserted = $statement->execute();
@@ -865,6 +1142,38 @@ function addLivraison($livraison){
 			$indertedId = $connexion->lastInsertId();
 			$array['status'] = 'success';
 			$array['inserted_id'] = $indertedId;
+		}else{
+			echo 'error';
+		}
+
+	} catch (Exception $e) {
+		$array['status'] = 'failed';
+	}
+	
+	$connexion = null;
+	return json_encode($array);
+}
+function updateLivraison($livraison){
+	$array = array();
+
+	try {
+		$connexion = db_connect();
+		$sql="";
+		
+		$sql = "UPDATE livraison set status=:status where id=:id";
+		//Prepare our statement.
+		$statement = $connexion->prepare($sql);
+		
+		$statement->bindValue(':id', $livraison['id']);		 
+		$statement->bindValue(':status', $livraison['status']);		 
+		
+		//Execute the statement and insert our values.
+		$updated = $statement->execute();
+		 
+		//Because PDOStatement::execute returns a TRUE or FALSE value,
+		//we can easily check to see if our insert was successful.
+		if($updated){
+			$array['status'] = 'success';
 		}else{
 			echo 'error';
 		}
@@ -1199,9 +1508,6 @@ function getPostById($id){
 	return json_encode($array);	
 }
 
-
-
-
 function updatePost($post){
 	$array = array();
 	$postSlug = slug($post['title']);
@@ -1230,6 +1536,29 @@ function updatePost($post){
 	
 	$connexion = null;
 
+	return json_encode($array);	
+}
+
+function getAllCommandeByCus($id){
+	$array = array();
+	try {
+		$connexion = db_connect();
+		$resultats = $connexion->prepare("SELECT co.id, b.name, b.description, co.creationDate FROM commande co INNER JOIN customer cu ON co.customer_id = cu.id INNER JOIN product pr ON co.product_id = pr.id INNER JOIN box b ON pr.id_box = b.id WHERE co.customer_id = :id_cus");
+		$resultats->bindParam(':id_cus', $id);
+		$resultats->execute();
+		$resultats->setFetchMode(PDO::FETCH_OBJ);
+		$resultat = $resultats->fetchAll();
+		if($resultat > 0){
+			$array['result'] = $resultat;
+			$array['status'] = 'success';
+		}else{
+			$array['status'] = 'empty';			
+		}
+	} catch (Exception $e) {
+		$array['status'] = 'failed';
+	}
+	
+	$connexion = null;
 	return json_encode($array);	
 }
 
@@ -1381,18 +1710,18 @@ function db_connect(){
 	$bd 		='oumdev_leads';
 	$user		='root';	*/
 
-	// $hote   	='localhost';
-	// $passDb 	='S3cr3T%44';
-	// $bd 		='oumdev_leads';
-	// $user		='root';	
+	$hote   	='localhost';
+	$passDb 	='';
+	$bd 		='oumdev_leads';
+	$user		='root';
 
 
 	/*Local*/
 
-	$hote 		='localhost';
-	$passDb 	='';
-	$bd 		='oumdev_leads';
-	$user		='root';
+	// $hote 		='localhost';
+	// $passDb 	='';
+	// $bd 		='oumdev_leads';
+	// $user		='root';
 
 	/*Distant*/
 
