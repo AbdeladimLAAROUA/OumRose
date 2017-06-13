@@ -13,6 +13,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			echo exportClient($_REQUEST['data']);
 		}else if($_REQUEST['methode'] == 'exportLDcmd'){
 			echo exportLDcmd($_REQUEST['data']);
+		}else if($_REQUEST['methode'] == 'exportSBcmd'){
+			echo exportLDcmd($_REQUEST['data']);
+		}else if($_REQUEST['methode'] == 'exportOXcmd'){
+			echo exportLDcmd($_REQUEST['data']);
 		}else{
 			echo json_encode(array('result'=>'method_not_exist'));
 		}
@@ -130,6 +134,63 @@ function exportClient($data){
 }
 
 function exportLDcmd($data){
+	$objPHPExcel = new PHPExcel;
+	$objPHPExcel->getDefaultStyle()->getFont()->setName('Calibri');
+	$objPHPExcel->getDefaultStyle()->getFont()->setSize(10);
+	$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, "Excel2007");
+	$currencyFormat = '#,#0.## \€;[Red]-#,#0.## \€';
+	$numberFormat = '#,#0.##;[Red]-#,#0.##';
+	$name = 'liste_clients_'.date("Y-m-d_His");
+	$objSheet = $objPHPExcel->getActiveSheet();
+	$objSheet->setTitle('Liste Produits Pères');
+
+	$objSheet->getStyle('A1:D1')->getFont()->setBold(true)->setSize(12);
+
+	$objSheet->getCell('A1')->setValue('Id Maman');
+	$objSheet->getCell('B1')->setValue('Nom');
+	$objSheet->getCell('C1')->setValue('Box');
+	$objSheet->getCell('D1')->setValue('GSM 1');
+	$objSheet->getCell('E1')->setValue('GSM 2');
+	$objSheet->getCell('F1')->setValue('Naissance Bébé');
+	$objSheet->getCell('G1')->setValue('Adresse');
+	$objSheet->getCell('H1')->setValue('Quartier');
+	$objSheet->getCell('I1')->setValue('Date');
+	$objSheet->getCell('J1')->setValue('Status');
+
+	foreach ($data as $key => $commande) {
+		$i = $key+2;
+		$objSheet->getCell('A'.$i)->setValue($commande[0]);
+		$objSheet->getCell('B'.$i)->setValue($commande[1]);
+		$objSheet->getCell('C'.$i)->setValue($commande[2]);
+		$objSheet->getCell('D'.$i)->setValue($commande[3]);
+		$objSheet->getCell('E'.$i)->setValue($commande[4]);
+		$objSheet->getCell('F'.$i)->setValue($commande[5]);
+		$objSheet->getCell('G'.$i)->setValue($commande[6]);
+		$objSheet->getCell('H'.$i)->setValue($commande[7]);
+		$objSheet->getCell('I'.$i)->setValue($commande[8]);
+		$objSheet->getCell('J'.$i)->setValue($commande[9]);
+	}
+
+	$objSheet->getColumnDimension('A')->setAutoSize(true);
+	$objSheet->getColumnDimension('B')->setAutoSize(true);
+	$objSheet->getColumnDimension('C')->setAutoSize(true);
+	$objSheet->getColumnDimension('D')->setAutoSize(true);
+	$objSheet->getColumnDimension('E')->setAutoSize(true);
+	$objSheet->getColumnDimension('F')->setAutoSize(true);
+	$objSheet->getColumnDimension('G')->setAutoSize(true);
+	$objSheet->getColumnDimension('H')->setAutoSize(true);
+	$objSheet->getColumnDimension('I')->setAutoSize(true);
+	$objSheet->getColumnDimension('J')->setAutoSize(true);
+
+	$objWriter->save('../downloads/'.$name.'.xlsx');
+	$objPHPExcel->disconnectWorksheets();
+	unset($objWriter, $objPHPExcel);
+
+	return  json_encode($name);
+}
+
+
+function exportSBcmd($data){
 	$objPHPExcel = new PHPExcel;
 	$objPHPExcel->getDefaultStyle()->getFont()->setName('Calibri');
 	$objPHPExcel->getDefaultStyle()->getFont()->setSize(10);

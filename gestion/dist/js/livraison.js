@@ -5,7 +5,7 @@
   });
 
 
-   var table2,table3,tableOx;
+  var table2,table3,tableOx;
   $("#export_LD_cmd").on("click", function() {
     search = table2.rows( { filter : 'applied'} ).data();
 
@@ -22,7 +22,59 @@
       data : obj,
       async : false,
       success: function(data, textStatus, jqXHR) {
-        window.open('http://localhost:8080/OumRose/gestion/downloads/'+data+'.xlsx','_blank' );
+        window.open('http://localhost:/Oumbox/gestion/downloads/'+data+'.xlsx','_blank' );
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        console.log(jqXHR);
+        console.log(textStatus);
+        console.log(errorThrown);
+      }
+    });
+  });
+
+  $("#export_SB_cmd").on("click", function() {
+    search = table3.rows( { filter : 'applied'} ).data();
+
+    var arr = [];
+    $.each(search, function(key, val) {
+      arr.push(val);
+    });
+
+    var obj = {'methode' : 'exportSBcmd','data' : arr};
+    $.ajax({
+      url : "./lib/excelExport.php",
+      dataType: "json",
+      type: "POST",
+      data : obj,
+      async : false,
+      success: function(data, textStatus, jqXHR) {
+        window.open('http://localhost:/Oumbox/gestion/downloads/'+data+'.xlsx','_blank' );
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        console.log(jqXHR);
+        console.log(textStatus);
+        console.log(errorThrown);
+      }
+    });
+  });
+
+  $("#export_OX_cmd").on("click", function() {
+    search = tableOX.rows( { filter : 'applied'} ).data();
+
+    var arr = [];
+    $.each(search, function(key, val) {
+      arr.push(val);
+    });
+
+    var obj = {'methode' : 'exportOXcmd','data' : arr};
+    $.ajax({
+      url : "./lib/excelExport.php",
+      dataType: "json",
+      type: "POST",
+      data : obj,
+      async : false,
+      success: function(data, textStatus, jqXHR) {
+        window.open('http://localhost:/Oumbox/gestion/downloads/'+data+'.xlsx','_blank' );
       },
       error: function (jqXHR, textStatus, errorThrown) {
         console.log(jqXHR);
@@ -327,7 +379,7 @@
           },
           success: function(data, textStatus, jqXHR) {
             console.log('done');
-            $('.livraisonStatus').html('Livré');
+            $('.livraisonStatus'+id).html('Livré');
           },
           error: function (jqXHR, textStatus, errorThrown) {
 
