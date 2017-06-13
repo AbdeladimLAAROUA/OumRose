@@ -9,8 +9,8 @@
 
   /*$dateInSixMonth = $today->add(new DateInterval('P9M'));*/
   
-  $today = new DateTime('2017-6-4');
-  $naissance =  new DateTime('2017-12-06');
+  $today = new DateTime('2017-6-13');
+  $naissance =  new DateTime('2016-11-09');
 
 
   $interval = date_diff($today, $naissance);

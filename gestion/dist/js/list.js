@@ -45,7 +45,7 @@ $(function () {
   });
 
   var table/*,table2,table3*/,id_client;
-    var obj = {'methode' : 'getAllClient'}
+    var obj = {'methode' : 'getAllClient2'}
     $.ajax({
       url : "./lib/util.php",
       dataType: "json",
@@ -69,6 +69,7 @@ $(function () {
                       '<td>'+val.age+'</td>'+
                       '<td>'+val.adresse+'</td>'+
                       '<td>'+val.name+'</td>'+
+                      '<td>'+val.eligible+'</td>'+
                       '<td width="12%" align="center">'+
                       '<button class="btn btn-default btn-xs action" data-type="view" data-id="'+val.id+'" data-toggle="modal" data-target="#view" ><span class="glyphicon glyphicon-eye-open"></span></button>'+
                       '<button class="btn btn-primary btn-xs action" data-type="edit" data-id="'+val.id+'" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button>'+

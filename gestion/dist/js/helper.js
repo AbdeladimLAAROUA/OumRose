@@ -13,6 +13,15 @@ app.config(function($routeProvider) {
     .when("/listClient", {
         templateUrl : "pages/views/listClient.html"
     })
+    .when("/eligibleBox1", {
+        templateUrl : "pages/views/eligibleBox1.html"
+    })
+    .when("/eligibleBox2", {
+        templateUrl : "pages/views/eligibleBox2.html"
+    })
+    .when("/eligibleBox3", {
+        templateUrl : "pages/views/eligibleBox3.html"
+    })
     .when("/allCommande", {
         templateUrl : "pages/views/allCommande.html"
     })

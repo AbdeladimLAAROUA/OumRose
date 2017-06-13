@@ -5,9 +5,9 @@
   });
 
 
-
+   var table2,table3,tableOx;
   $("#export_LD_cmd").on("click", function() {
-    search = table.rows( { filter : 'applied'} ).data();
+    search = table2.rows( { filter : 'applied'} ).data();
 
     var arr = [];
     $.each(search, function(key, val) {
@@ -32,7 +32,7 @@
     });
   });
 
-  var table2,table3,tableOx;
+ 
  var objCommandeLD = {'methode' : 'getCommandesLD'}
     $.ajax({
       url : "./lib/util.php",

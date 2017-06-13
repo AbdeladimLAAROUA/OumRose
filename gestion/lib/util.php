@@ -14,8 +14,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			echo getClientDash();
 		}else if($_REQUEST['methode'] == 'getBabyDash'){
 			echo getBabyDash();
-		}else if($_REQUEST['methode'] == 'getAllClient'){
-			echo getAllClient();
+		}else if($_REQUEST['methode'] == 'getAllClient2'){
+			echo getAllClient2();
 		}else if($_REQUEST['methode'] == 'getClient'){
 			echo getClient($_REQUEST['id']);
 		}else if($_REQUEST['methode'] == 'deleteFullClient'){
@@ -452,6 +452,51 @@ function getAllClient(){
 	$connexion = null;
 	return json_encode($array);	
 }
+
+
+function getAllClient2(){
+	$array = array();
+	try {
+		$connexion = db_connect();
+		$resultats = $connexion->prepare("SELECT c.id,c.nom, c.prenom, c.email, c.gsm,YEAR(NOW()) - YEAR(c.naissance) as age, c.adresse, ville,eligible FROM customer c where id<1000");
+
+		$resultats->execute();
+
+		$resultats->setFetchMode(PDO::FETCH_OBJ);
+		$resultat = $resultats->fetchAll();
+		
+
+		
+		 
+              /*for ($i = 0; $i < count($resultat); $i++) {
+              	 $boxList[] = $getCommandeByClient($resultat[i]['id']);
+
+              	 $box1="Non commandé";
+              	 $box2="Non commandé";
+              	 $box3="Non commandé";
+              	 
+              	 if(in_array('1', $boxList)){
+              	   $box1="commandé";
+              	 }if(in_array('2', $boxList)){
+              	   $box2="commandé";
+              	 }if(in_array('3', $boxList)){
+              	   $box3="commandé";
+				}
+				$resultats[i]['refBox1']=$box1;
+				$resultats[i]['refBox2']=$box2;
+				$resultats[i]['refBox3']=$box3;
+          }*/
+
+		$array['result'] = $resultat;
+	} catch (Exception $e) {
+		$array['result'] = 0;
+	}
+	
+	$connexion = null;
+	return json_encode($array);	
+}
+
+
 
 function getClientWithEligibility(){
 	$array = array();
@@ -1739,15 +1784,15 @@ function db_connect(){
 	/*Local Kindy*/
 
 
-	$hote		='localhost';
+	/*$hote		='localhost';
 	$passDb 	='S3cr3T%44';
 	$bd 		='oumdev_leads';
-	$user		='root';	
+	$user		='root';	*/
 
-/*	$hote   	='localhost';
+	$hote   	='localhost';
 	$passDb 	='';
 	$bd 		='oumdev_leads';
-	$user		='root';*/
+	$user		='root';
 
 
 	/*Local*/
