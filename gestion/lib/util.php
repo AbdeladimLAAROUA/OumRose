@@ -458,7 +458,7 @@ function getAllClient2(){
 	$array = array();
 	try {
 		$connexion = db_connect();
-		$resultats = $connexion->prepare("SELECT c.id,c.nom, c.prenom, c.email, c.gsm,YEAR(NOW()) - YEAR(c.naissance) as age, c.adresse, ville,eligible FROM customer c where id<1000");
+		$resultats = $connexion->prepare("SELECT c.id,c.nom, c.prenom, c.email, c.gsm,YEAR(NOW()) - YEAR(c.naissance) as age, c.adresse, ville FROM customer c");
 
 		$resultats->execute();
 
@@ -1784,15 +1784,15 @@ function db_connect(){
 	/*Local Kindy*/
 
 
-	/*$hote		='localhost';
+	$hote		='localhost';
 	$passDb 	='S3cr3T%44';
 	$bd 		='oumdev_leads';
-	$user		='root';	*/
+	$user		='root';
 
-	$hote   	='localhost';
+/*	$hote 		='localhost';
 	$passDb 	='';
 	$bd 		='oumdev_leads';
-	$user		='root';
+	$user		='root';*/
 
 
 	/*Local*/

@@ -58,7 +58,7 @@ $(function () {
         setTimeout(function(){$('#loading-image').popup('hide');},250);
       },
       success: function(data, textStatus, jqXHR) {
-        // console.log(data.result);
+        console.log(data.result);
         $.each(data.result, function(key, val) {
           var newRow = '<tr id="client_'+val.id+'">'+
                       '<td>'+val.id+'</td>'+

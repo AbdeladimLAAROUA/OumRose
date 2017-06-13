@@ -45,6 +45,9 @@ app.config(function($routeProvider) {
     })    
     .when("/gestionBlog", {
         templateUrl : "pages/views/gestionBlog.html"
+    })
+    .when("/gestionClient", {
+        templateUrl : "pages/views/listClient_2.html"
     })    
     .otherwise({
         redirectTo: '/main'
