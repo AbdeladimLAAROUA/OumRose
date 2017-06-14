@@ -12,13 +12,13 @@
 	/* Array of database columns which should be read and sent back to DataTables. Use a space where
 	 * you want to insert a non-database field (for example a counter or static image)
 	 */
-	$aColumns = array( 'id', 'engine', 'browser', 'platform', 'version', 'grade' );
+	$aColumns = array( 'id', 'nom', 'prenom', 'email', 'gsm', 'naissance', 'adresse', 'ville');
 	
 	/* Indexed column (used for fast and accurate table cardinality) */
 	$sIndexColumn = "id";
 	
 	/* DB table to use */
-	$sTable = "ajax";
+	$sTable = "customer";
 	
 	/* Database connection information */
 	$gaSql['user']       = "root";
@@ -42,6 +42,7 @@
 	// 	die( 'Could not select database '. $gaSql['db'] );
 
 	$gaSql['link'] = mysqli_connect($gaSql['server'], $gaSql['user'], $gaSql['password'], $gaSql['db']);
+	$gaSql['link']->set_charset("utf8");
 	
 	/* 
 	 * Paging
