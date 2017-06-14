@@ -24,6 +24,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			echo getAllCities();
 		}else if($_REQUEST['methode'] == 'getAllTypeMoms'){
 			echo getAllTypeMoms();
+		}else if($_REQUEST['methode'] == 'createClient'){
+			echo createClient($_REQUEST['client']);
 		}else if($_REQUEST['methode'] == 'updateClient'){
 			echo updateClient($_REQUEST['client']);
 		}else if($_REQUEST['methode'] == 'getAllBox'){
@@ -698,6 +700,102 @@ function deleteFullClient($id){
 	}
 	
 	$connexion = null;
+	return json_encode($array);	
+}
+
+function createClient($client){
+	$array = array();
+
+	$array['nom'] = $client['nom'];
+	$array['prenom'] = $client['prenom'];
+	$array['email'] = $client['email'];
+	$array['gsm'] = $client['gsm'];
+	$array['naissance'] = $client['dof'];
+	$array['adresse'] = $client['adresse'];
+	$array['cp'] = $client['cp'];
+	$array['type'] = $client['type'];
+	$array['ville_id'] = $client['ville_id'];
+	$villeName=getCityById($client['ville_id']);
+
+	try {
+		$connexion = db_connect();
+
+		$stmt = $connexion->prepare("INSERT INTO customer(nom,prenom,email,gsm,naissance,adresse,CP,type,ville_id,ville,createdBy) 
+												VALUES(:nom,:prenom,:email,:gsm,:naissance,:adresse,:cp,:type,:ville_id,:ville,:user)");
+		
+		
+		$stmt->bindValue(':nom', $client['nom']);
+		$stmt->bindValue(':prenom', $client['prenom']);
+		$stmt->bindValue(':email', $client['email']);
+		$stmt->bindValue(':gsm', $client['gsm']);
+		$stmt->bindValue(':naissance', $client['dof']);
+		$stmt->bindValue(':adresse', $client['adresse']);
+		$stmt->bindValue(':cp', $client['cp']);
+		$stmt->bindValue(':type', $client['type']);
+		$stmt->bindValue(':ville_id', $client['ville_id']);
+		$stmt->bindValue(':ville', $villeName['name']);
+		$stmt->bindValue(':user', '1');
+
+		$stmt->execute();
+		$idClient = $connexion->lastInsertId();
+		if($stmt->rowCount()) {
+			
+			$stmt = $connexion->prepare("INSERT INTO baby(naissance,gyneco,maternite,customer_id) 
+													VALUES(:naissance,:gyneco,:maternite,:customer_id)");
+			
+			
+			$stmt->bindValue(':naissance', $client['naissance_bebe']);
+			$stmt->bindValue(':maternite', $client['maternite']);
+			$stmt->bindValue(':gyneco', $client['gyneco']);
+			$stmt->bindValue(':customer_id', $idClient);
+			
+			$stmt->execute();
+			if($stmt->rowCount()) {
+				$array['result'] = 'success';
+			}else{
+				$array['result'] = 'failed';
+			}
+			
+		} else {
+			$array['result'] = 'failed';
+		}
+
+
+		// ajouter une livraison 
+
+		//ajouter d'abord un produit
+		$product['id_box']="2";
+		$idProduct = addProduct2($product);
+
+		//ajouter ensuite une commande
+		$commande['BC']="default";
+		$commande['product_id']  = $idProduct;
+		$commande['customer_id']  = $idClient;
+		$resultJS = addCommande($commande);
+		$result = json_decode($resultJS,true);
+		$id_commande = $result['inserted_id'];
+		$sql = "INSERT INTO livraison (commande_id, type) 
+		VALUES (:commande_id, 'OX')";
+		//Prepare our statement.
+		$statement = $connexion->prepare($sql);
+		
+		$statement->bindValue(':commande_id', $id_commande);
+		//Execute the statement and insert our values.
+		$inserted = $statement->execute();
+
+
+		if($inserted){
+			$array['status'] = 'success';
+		}else{
+			$array['status'] = 'failed';
+		}
+
+	} catch (Exception $e) {
+		$array['result'] = 'ko';
+	}
+	
+	$connexion = null;
+
 	return json_encode($array);	
 }
 
@@ -1706,6 +1804,22 @@ function updateRelais($relais){
 	$connexion = null;
 
 	return json_encode($array);	
+}
+
+function getCityById($id){
+      try
+       {
+       	  $connexion = db_connect();
+          $stmt = $connexion->prepare("SELECT * FROM ville where id=:id");
+          $stmt->execute(array(':id'=>$id));
+          $row = $stmt->fetch(PDO::FETCH_ASSOC);
+          $ville = $row;
+       }
+       catch(PDOException $e)
+       {
+           echo $e->getMessage();
+       }
+       return  $ville;
 }
 
 function getVilleIdByName($name){
