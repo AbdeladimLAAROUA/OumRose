@@ -60,6 +60,8 @@ $(function () {
       success: function(data, textStatus, jqXHR) {
         // console.log(data.result);
         $.each(data.result, function(key, val) {
+          var color ='#ee5f5b';
+         // console.log(data.commandes[]['id']);
           var newRow = '<tr id="client_'+val.id+'">'+
                       '<td>'+val.id+'</td>'+
                       '<td>'+val.nom+'</td>'+
@@ -69,7 +71,7 @@ $(function () {
                       '<td>'+val.age+'</td>'+
                       '<td>'+val.adresse+'</td>'+
                       '<td>'+val.name+'</td>'+
-                      '<td>'+val.eligible+'</td>'+
+                      '<td style="backgroud-color:'+color+'">'+val.eligible+'</td>'+
                       '<td width="12%" align="center">'+
                       '<button class="btn btn-default btn-xs action" data-type="view" data-id="'+val.id+'" data-toggle="modal" data-target="#view" ><span class="glyphicon glyphicon-eye-open"></span></button>'+
                       '<button class="btn btn-primary btn-xs action" data-type="edit" data-id="'+val.id+'" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button>'+

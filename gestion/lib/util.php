@@ -467,31 +467,24 @@ function getAllClient2(){
 		$resultats->setFetchMode(PDO::FETCH_OBJ);
 		$resultat = $resultats->fetchAll();
 		
+		//Récupérer la liste des commande
+		$sql =  "SELECT c.id,id_box
+				from customer c, commande co, product p, livraison l 
+				where c.id=co.customer_id and p.id=co.product_id and  l.commande_id=co.id ";
+		$commandes = $connexion->prepare($sql);
 
+		$commandes->execute();
+
+		$commandes->setFetchMode(PDO::FETCH_OBJ);
+		$commandes = $commandes->fetchAll();
+	
+		$array['commandes'] = $commandes;
 		
-		 
-              /*for ($i = 0; $i < count($resultat); $i++) {
-              	 $boxList[] = $getCommandeByClient($resultat[i]['id']);
-
-              	 $box1="Non commandé";
-              	 $box2="Non commandé";
-              	 $box3="Non commandé";
-              	 
-              	 if(in_array('1', $boxList)){
-              	   $box1="commandé";
-              	 }if(in_array('2', $boxList)){
-              	   $box2="commandé";
-              	 }if(in_array('3', $boxList)){
-              	   $box3="commandé";
-				}
-				$resultats[i]['refBox1']=$box1;
-				$resultats[i]['refBox2']=$box2;
-				$resultats[i]['refBox3']=$box3;
-          }*/
-
 		$array['result'] = $resultat;
+
 	} catch (Exception $e) {
 		$array['result'] = 0;
+		$array['commandes'] = 0;
 	}
 	
 	$connexion = null;
