@@ -104,6 +104,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			echo getCommandesSB();
 		}else if($_REQUEST['methode'] == 'getAllCommandes'){
 			echo getAllCommandes();
+		}else if($_REQUEST['methode'] == 'getAllCommandes2'){
+			echo getAllCommandes2();
 		}else if($_REQUEST['methode'] == 'getAllCommandeByCus'){
 			echo getAllCommandeByCus($_REQUEST['id_cus']);
 		}else if($_REQUEST['methode'] == 'updateBaby'){
@@ -247,7 +249,7 @@ function getCommandesLD(){
 		$connexion = db_connect();
 		$sql =
 			"SELECT  cust.id as 'idMaman', cust.nom as 'nomMaman', cust.prenom, cust.gsm as 'GSM1',
-			l.gsm as 'GSM2',b.naissance,co.creationDate,p.id_box,
+			l.gsm as 'GSM2',b.naissance,co.creationDate,p.id_box,co.id as 'idCommande',
 			 l.type as 'typeLivraison', l.adresseLivraison, l.quartier,l.status,l.id as 'idLivraison'
 			 from  commande co, customer cust, product p, livraison l, baby b
 			 where 
@@ -280,7 +282,7 @@ function getCommandesOX(){
 		$connexion = db_connect();
 		$sql =
 			"SELECT  cust.id as 'idMaman', cust.nom as 'nomMaman', cust.prenom, cust.gsm as 'GSM1',
-			l.gsm as 'GSM2',b.naissance,co.creationDate,p.id_box,
+			l.gsm as 'GSM2',b.naissance,co.creationDate,p.id_box,co.id as 'idCommande',
 			 l.type as 'typeLivraison', l.adresseLivraison, l.quartier,l.status,l.id as 'idLivraison'
 			 from  commande co, customer cust, product p, livraison l, baby b
 			 where 
@@ -313,7 +315,7 @@ function getCommandesSB(){
 		$connexion = db_connect();
 		$sql =
 			"SELECT cust.id as 'idMaman', cust.nom as 'nomMaman', cust.prenom, cust.GSM as 
-			'GSM1',l.gsm as 'GSM2', b.naissance,co.creationDate,p.id_box,
+			'GSM1',l.gsm as 'GSM2', b.naissance,co.creationDate,p.id_box,co.id as 'idCommande',
 			r.nom as 'pointRelais',v.name as'Ville',l.status,l.id as 'idLivraison'
 			from livraison l, commande co, customer cust, relais r, ville v,baby b,product p
 			where 
@@ -357,6 +359,38 @@ function getAllCommandes(){
              l.commande_id=co.id and
              b.customer_id=cust.id and
              l.type='LD'
+             ";
+		$resultats = $connexion->prepare($sql);
+
+		$resultats->execute();
+
+		$resultats->setFetchMode(PDO::FETCH_OBJ);
+		$resultat = $resultats->fetchAll();
+	
+		$array['result'] = $resultat;
+	} catch (Exception $e) {
+		$array['result'] = 0;
+	}
+	
+	$connexion = null;
+	return json_encode($array);	
+
+}
+function getAllCommandes2(){
+
+	$array = array();
+	try {
+		$connexion = db_connect();
+		$sql =
+			"SELECT  cust.id as 'idMaman', cust.nom as 'nomMaman', cust.prenom, cust.gsm as 'GSM1',
+			l.gsm as 'GSM2',b.naissance,co.creationDate,l.status,
+			 l.type as 'typeLivraison', l.adresseLivraison, l.quartier 
+			 from  commande co, customer cust, product p, livraison l, baby b
+			 where 
+			 cust.id=co.customer_id and
+             p.id=co.product_id and
+             l.commande_id=co.id and
+             b.customer_id=cust.id
              ";
 		$resultats = $connexion->prepare($sql);
 
@@ -539,7 +573,7 @@ function getClient($id){
 		$array['result']['baby'] = $resultatBaby;
 
 		//liste des commandes 
-
+		// requete particulière pour les anciens commandes!
 		$stmt = $connexion->prepare("SELECT product_id FROM commande where customer_id=:id");
           $stmt->execute(array(':id'=>$id));
           $clientCommandesId = array();
@@ -564,7 +598,21 @@ function getClient($id){
             }
         }
 
+
+        // liste des livraison 
+        $stmt = $connexion->prepare("SELECT id_box,l.status
+				from customer c, commande co, livraison l,product p
+				where c.id=co.customer_id and  co.product_id=p.id and l.commande_id = co.id and c.id=:id");
+         
+         $commandes=$stmt->execute(array(':id'=>$id));
+        $stmt->setFetchMode(PDO::FETCH_OBJ);
+		$commandes = $stmt->fetchAll();
+
+         $test=$commandes;
+        
+
             $array['result']['box']= $boxList;
+            $array['result']['commandes']= $commandes;
 
 	} catch (Exception $e) {
 		$array['result'] = 0;
@@ -1257,67 +1305,94 @@ function addCat($cat){
 }
 function addLivraison($livraison){
 	$array = array();
-	
-	$product['id_box']=$_SESSION['eligibleToBox'];
-	$_SESSION['eligibleToBox']=0;// le client n'est plus éligible 
-	$idProduct = addProduct2($product);
+	$connexion = db_connect();
+	if($livraison['user']=="admin"){
+		// ajouter une livraison 
 
-	$commande['BC']="default";
-	$commande['product_id']  = $idProduct;
-	$commande['customer_id'] = $_SESSION['client_id'];
-	$resultJS = addCommande($commande);
-	$result = json_decode($resultJS,true);
-	$id_commande = $result['inserted_id'];
+		//ajouter d'abord un produit
+		$product['id_box']=$livraison['id_box'];
+		$idProduct = addProduct2($product);
 
-	try {
-		$connexion = db_connect();
-		$sql="";
-		if($livraison['type']=='OX'){
-			$sql = "INSERT INTO livraison (commande_id, type) 
-			VALUES (:commande_id, 'OX')";
-		}
-		else if($livraison['relais']=='NULL'){
-			$sql = "INSERT INTO livraison (adresseLivraison, commande_id, type, quartier,gsm) 
-			VALUES (:adresseLivraison, :commande_id, :type, :quartier,:gsm)";	
-		}
-		else{
-			$sql = "INSERT INTO livraison (adresseLivraison,shop_id, commande_id, type, quartier,gsm) 
-			VALUES (:adresseLivraison, :shop_id, :commande_id, :type, :quartier,:gsm)";	
-		}
+		//ajouter ensuite une commande
+		$commande['BC']="default";
+		$commande['product_id']  = $idProduct;
+		$commande['customer_id']  = $livraison['idClient'];
+		$resultJS = addCommande($commande);
+		$result = json_decode($resultJS,true);
+		$id_commande = $result['inserted_id'];
+		$sql = "INSERT INTO livraison (commande_id, type) 
+		VALUES (:commande_id, 'OX')";
 		//Prepare our statement.
 		$statement = $connexion->prepare($sql);
 		
 		$statement->bindValue(':commande_id', $id_commande);
-		if($livraison['type']!='OX'){
-			
-			//Bind our values to our parameters (we called them :make and :model).
-		
-			if($livraison['relais']!='NULL')
-			$statement->bindValue(':shop_id', $livraison['relais']);
-			
-			$statement->bindValue(':adresseLivraison', $livraison['adresse']);
-			$statement->bindValue(':type', $livraison['type']);
-			$statement->bindValue(':quartier', $livraison['quartier']);
-			$statement->bindValue(':gsm', $livraison['gsm']);
-		}
-
-	
-		 
 		//Execute the statement and insert our values.
 		$inserted = $statement->execute();
-		 
-		//Because PDOStatement::execute returns a TRUE or FALSE value,
-		//we can easily check to see if our insert was successful.
-		if($inserted){
-			$indertedId = $connexion->lastInsertId();
-			$array['status'] = 'success';
-			$array['inserted_id'] = $indertedId;
-		}else{
-			echo 'error';
-		}
+		$array['result'] = 'success';
 
-	} catch (Exception $e) {
-		$array['status'] = 'failed';
+	}
+	else{
+		$product['id_box']=$_SESSION['eligibleToBox'];
+		$_SESSION['eligibleToBox']=0;// le client n'est plus éligible 
+		$idProduct = addProduct2($product);
+
+		$commande['BC']="default";
+		$commande['product_id']  = $idProduct;
+		$commande['customer_id'] = $_SESSION['client_id'];
+		$resultJS = addCommande($commande);
+		$result = json_decode($resultJS,true);
+		$id_commande = $result['inserted_id'];
+
+		try {
+			
+			$sql="";
+			if($livraison['type']=='OX'){
+				$sql = "INSERT INTO livraison (commande_id, type) 
+				VALUES (:commande_id, 'OX')";
+			}
+			else if($livraison['relais']=='NULL'){
+				$sql = "INSERT INTO livraison (adresseLivraison, commande_id, type, quartier,gsm) 
+				VALUES (:adresseLivraison, :commande_id, :type, :quartier,:gsm)";	
+			}
+			else{
+				$sql = "INSERT INTO livraison (adresseLivraison,shop_id, commande_id, type, quartier,gsm) 
+				VALUES (:adresseLivraison, :shop_id, :commande_id, :type, :quartier,:gsm)";	
+			}
+			//Prepare our statement.
+			$statement = $connexion->prepare($sql);
+			
+			$statement->bindValue(':commande_id', $id_commande);
+			if($livraison['type']!='OX'){
+				
+				//Bind our values to our parameters (we called them :make and :model).
+			
+				if($livraison['relais']!='NULL')
+				$statement->bindValue(':shop_id', $livraison['relais']);
+				
+				$statement->bindValue(':adresseLivraison', $livraison['adresse']);
+				$statement->bindValue(':type', $livraison['type']);
+				$statement->bindValue(':quartier', $livraison['quartier']);
+				$statement->bindValue(':gsm', $livraison['gsm']);
+			}
+
+		
+			 
+			//Execute the statement and insert our values.
+			$inserted = $statement->execute();
+			 
+			//Because PDOStatement::execute returns a TRUE or FALSE value,
+			//we can easily check to see if our insert was successful.
+			if($inserted){
+				$indertedId = $connexion->lastInsertId();
+				$array['result'] = 'success';
+				$array['inserted_id'] = $indertedId;
+			}else{
+				echo 'error';
+			}
+
+		} catch (Exception $e) {
+			$array['status'] = 'failed';
+		}
 	}
 	
 	$connexion = null;
@@ -1891,15 +1966,15 @@ function db_connect(){
 	/*Local Kindy*/
 
 
-	$hote		='localhost';
+	/*$hote		='localhost';
 	$passDb 	='S3cr3T%44';
 	$bd 		='oumdev_leads';
-	$user		='root';
+	$user		='root';*/
 
-/*	$hote 		='localhost';
+	$hote 		='localhost';
 	$passDb 	='';
 	$bd 		='oumdev_leads';
-	$user		='root';*/
+	$user		='root';
 
 
 	/*Local*/

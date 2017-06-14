@@ -33,7 +33,8 @@ $(document).ready(function() {
               { data: "4" },
               { data: "5" },
               { data: "6" },
-              { data: "7" },
+              { data: "7" }, 
+              { data: "8" },
               { data: "0",
                 render: function(data, type, row) {
                   var ret = '<button class="btn btn-default btn-xs action" data-type="view" data-id="'+data+'" data-toggle="modal" data-target="#view" ><span class="glyphicon glyphicon-eye-open"></span></button>'+
@@ -117,6 +118,8 @@ $(document).ready(function() {
       }
     });
 
+
+  var commanderBoxType='';
   $("#table_clients tbody" ).on( "click", 'button',function() {
     var type  = $(this).data("type"),
         id    = $(this).data("id");
@@ -151,6 +154,7 @@ $(document).ready(function() {
               $('#type').text(client.type);
               $('#Ville_id').text(client.name);
               $('#creationDate').text(client.creationDateClient);
+              var eligible = client.eligible;
               var babies = data.result.baby;
               console.log(babies);
               if(babies.lenght == 0){
@@ -171,23 +175,64 @@ $(document).ready(function() {
                 });
               }
               $("#box_table tbody").empty();
+
+              var commandes = data.result.commandes;
               var box = data.result.box;
+
               var box1="Non commandé";
+              var style1="style=''";
               var box2="Non commandé";
+              var style2="style=''";
               var box3="Non commandé";
+              var style3="style=''";
              
-              if(box.indexOf('1') > -1){
-                box1="commandé";
-              }if(box.indexOf('2') > -1){
+              if(box.indexOf('1')  > -1){
+                 box1="commandé"
+               for (var i = 0; i < commandes.length; i++) {
+                  if(commandes[i]['id_box']=='1' && commandes[i]['status']=='Livré'){
+                    style1="style='background-color:#6cc;color:white;font-weight: bold;'";
+                    box1="Commandé et livré"
+                  }
+                };
+               ;
+              }else if(eligible=='BOX1'){
+                $('#AddCommandeForm').removeAttr( "hidden");
+                commanderBoxType='1';
+              }
+              if(box.indexOf('2') > -1){
+                
                 box2="commandé";
-              }if(box.indexOf('3') > -1){
-                box3="commandé";
+                for (var i = 0; i < commandes.length; i++) {
+                  if(commandes[i]['id_box']=='2' && commandes[i]['status']=='Livré'){
+                    style2="style='background-color:#6cc;color:white;font-weight: bold;'";
+                    box2="Commandé et livré";
+                  }
+                };
+              }else if(eligible=='BOX2'){
+                $('#AddCommandeForm').removeAttr( "hidden");
+                commanderBoxType='2';
+
+              }
+
+              if(box.indexOf('3') > -1){
+                 box2="commandé";
+                for (var i = 0; i < commandes.length; i++) {
+                  if(commandes[i]['id_box']=='3' && commandes[i]['status']=='Livré'){
+                    style3="style='background-color:#6cc;color:white;font-weight: bold;'";
+                     box3="Commandé et livré";
+                  }
+
+                };
+               
+              }else if(eligible=='BOX3'){
+                $('#AddCommandeForm').removeAttr( "hidden");
+                commanderBoxType='3';
               }
               
                   var newRow = '<tr>'+
-                    '<td>'+box1+'</td>'+
-                    '<td>'+box2+'</td>'+
-                    '<td>'+box3+'</td>'+
+                    '<td '+style1+'>'+box1+'</td>'+
+                    '<td '+style2+'>'+box2+'</td>'+
+                    '<td '+style3+'>'+box3+'</td>'+
                     '</tr>';
                   $("#box_table tbody").append(newRow);
             
@@ -360,6 +405,54 @@ $(document).ready(function() {
             setTimeout(function(){
               $('#edit').modal('toggle');
               $('#alert_recover_ko').css('visibility','hidden');
+            }, 2000);
+          }
+
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+          console.log(jqXHR);
+          console.log(textStatus);
+          console.log(errorThrown);
+        }
+      });
+    }
+  });
+
+  $('#AddCommandeForm').on('submit', function (e) {
+    
+   {
+
+      var id=$('#id_client').text();
+      console.log(id);
+      var obj = {'id':id};
+      var livraison={user:'admin',id_box:commanderBoxType,idClient:id};
+      var commanderBox = {'methode':'addLivraison','livraison':livraison};
+      // console.log(obj);
+      $.ajax({
+        url : "./lib/util.php",
+        dataType: "json",
+        type: "POST",
+        data : commanderBox,
+        beforeSend: function(){
+          $('#loading-image').popup('show');
+        },
+        complete: function(){
+          $('#loading-image').popup('hide');
+        },
+        success: function(data, textStatus, jqXHR) {
+          console.log(data);
+          if(data.result == 'success'){
+            setTimeout(function(){
+              $('#view').modal('toggle');
+              $('#alert_recover_box_ok').css('visibility','hidden');
+            }, 2000);
+             $('#AddCommandeForm').attr("hidden", true)
+          }else{
+            console.log('Something went wrong !!');
+            $('#alert_recover_box_ko').css('visibility','visible').fadeIn(1500);
+            setTimeout(function(){
+              $('#view').modal('toggle');
+              $('#alert_recover_box_ko').css('visibility','hidden');
             }, 2000);
           }
 

@@ -472,7 +472,7 @@ $(function() {
       $('#error2').html("Numéro de téléphone invalide"); 
       console.log(myTel.length);
     }else{
-      var livraison = {livraison:{type:'SB',quartier:myQuartier,relais:id_relais,adresse:myAdresse,gsm:myTel},methode:'addLivraison'};
+      var livraison = {livraison:{user:'client',type:'SB',quartier:myQuartier,relais:id_relais,adresse:myAdresse,gsm:myTel},methode:'addLivraison'};
     $.ajax({
       url:'gestion/lib/util.php',
       type:'POST',
@@ -508,7 +508,7 @@ $(function() {
     }else if(tel.length<10){
       $('#error').html("Numéro de téléphone invalide"); 
     }else{
-      var livraison = {livraison:{type:'LD',quartier:myQuartier,relais:'NULL',adresse:myAdresse,gsm:tel},methode:'addLivraison'};
+      var livraison = {livraison:{user:'client',type:'LD',quartier:myQuartier,relais:'NULL',adresse:myAdresse,gsm:tel},methode:'addLivraison'};
     $.ajax({
       url:'gestion/lib/util.php',
       type:'POST',

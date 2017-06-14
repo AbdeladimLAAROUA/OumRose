@@ -46,6 +46,7 @@
               <th>Age</th>
               <th>Adresse</th>
               <th>Ville</th>
+              <th>Eligible</th>
               <th>Actions</th>
             </tr>
             </thead>
@@ -62,6 +63,7 @@
               <th>Age</th>
               <th>Adresse</th>
               <th>Ville</th>
+              <th>Eligible</th>
               <th>Actions</th>
             </tr>
             </tfoot>
@@ -83,6 +85,12 @@
         <h4 class="modal-title custom_align" id="Heading">Les details du client</h4>
       </div>
       <div class="modal-body">
+         <div id="alert_recover_box_ok" class="alert alert-success hide-me">
+          La commande a été effectué avec succès 
+        </div>
+        <div id="alert_recover_box_ko" class="alert alert-warning hide-me">
+          Quelque chose a mal tourné
+        </div>
         <div class="row">
           <div class="col-xs-3">
             <div class="form-group">
@@ -223,7 +231,7 @@
                      <!--  <th style="width: 10px"></th> -->
                       <th>Box 1 </th>
                       <th>Box 2</th>
-                      <th>Box 2</th>
+                      <th>Box 3</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -235,6 +243,17 @@
             <!-- /.box -->
           </div>
         </div>
+
+
+        <!-- Ajouter une nouvelle commande -->
+        <form id="AddCommandeForm" hidden>
+          <div class="row">
+            <div class="col-xs-12">
+              <button type="submit" class="btn btn-success btn-lg" style="width: 100%;margin-bottom: 10px;"><span class="glyphicon"></span>Commander la box</button>
+            </div>
+          </div>
+        </form>
+
       </div>
       <div class="modal-footer ">
         <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>Fermer</button>

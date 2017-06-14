@@ -12,7 +12,7 @@
 	/* Array of database columns which should be read and sent back to DataTables. Use a space where
 	 * you want to insert a non-database field (for example a counter or static image)
 	 */
-	$aColumns = array( 'id', 'nom', 'prenom', 'email', 'gsm', 'naissance', 'adresse', 'ville');
+	$aColumns = array( 'id', 'nom', 'prenom', 'email', 'gsm', 'naissance', 'adresse', 'ville','eligible');
 	
 	/* Indexed column (used for fast and accurate table cardinality) */
 	$sIndexColumn = "id";
@@ -22,9 +22,14 @@
 	
 	/* Database connection information */
 	$gaSql['user']       = "root";
-	$gaSql['password']   = "S3cr3T%44";
+	$gaSql['password']   = "";
 	$gaSql['db']         = "oumdev_leads";
 	$gaSql['server']     = "localhost";
+
+	/*$hote 		='localhost';
+	$passDb 	='';
+	$bd 		='oumdev_leads';
+	$user		='root';*/
 	
 	
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
