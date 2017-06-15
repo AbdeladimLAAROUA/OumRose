@@ -1,4 +1,5 @@
 <?php
+include('config.php');
 session_start();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	if(isset($_REQUEST['methode'])){
@@ -1961,48 +1962,6 @@ function getRelaisListByVille($id){
 	$connexion = null;
 	return json_encode($array);	
 }
-
-function db_connect(){
-
-	/*Local Kindy*/
-
-
-	/*$hote		='localhost';
-	$passDb 	='S3cr3T%44';
-	$bd 		='oumdev_leads';
-	$user		='root';*/
-
-	$hote 		='localhost';
-	$passDb 	='';
-	$bd 		='oumdev_leads';
-	$user		='root';
-
-
-	/*Local*/
-
-	// $hote 		='localhost';
-	// $passDb 	='';
-	// $bd 		='oumdev_leads';
-	// $user		='root';
-
-	/*Distant*/
-
-	// $hote 		='localhost';
-	// $passDb 	='oumdev';
-	// $bd 		='id709237_oumdev_leads';
-	// $user		='id709237_oumdev';
-
-	/*oumtest*/
-	/*$hote = "sql.k4mshost.odns.fr";
-	$user = "k4mshost_oumdev";
-	$passDb = "!!oumb0x";
-	$bd="k4mshost_oumdev";*/
-
-	$connexion = new PDO('mysql:host='.$hote.';dbname='.$bd.';charset=utf8', $user, $passDb);
-
-	return $connexion;
-}
-
 
 function slug($text){ 
 	// replace non letter or digits by -

@@ -1,7 +1,7 @@
 <?php
 /** Set default timezone (will throw a notice otherwise) */
 date_default_timezone_set('Africa/Casablanca');
-
+include('config.php');
 // include PHPExcel
 require('PHPExcel.php');
 
@@ -17,6 +17,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			echo exportLDcmd($_REQUEST['data']);
 		}else if($_REQUEST['methode'] == 'exportOXcmd'){
 			echo exportLDcmd($_REQUEST['data']);
+		}else if($_REQUEST['methode'] == 'exportClientTest'){
+			echo exportClientTest($_REQUEST['search']);
 		}else{
 			echo json_encode(array('result'=>'method_not_exist'));
 		}
@@ -24,6 +26,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		echo json_encode(array('result'=>'no_method_selected'));
 	}
 }
+
+// exportClientTest('tes');
 
 function exportPere($data){
 	// create new PHPExcel object
@@ -246,5 +250,86 @@ function exportSBcmd($data){
 	return  json_encode($name);
 }
 
+function exportClientTest($val){
+	$objPHPExcel = new PHPExcel;
+
+	$objPHPExcel->getDefaultStyle()->getFont()->setName('Calibri');
+	$objPHPExcel->getDefaultStyle()->getFont()->setSize(10);
+	$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, "Excel2007");
+	$currencyFormat = '#,#0.## \€;[Red]-#,#0.## \€';
+	$numberFormat = '#,#0.##;[Red]-#,#0.##';
+	$name = 'liste_clients_'.date("Y-m-d_His");
+	$objSheet = $objPHPExcel->getActiveSheet();
+	$objSheet->setTitle('Liste Produits Pères');
+
+	$objSheet->getStyle('A1:H1')->getFont()->setBold(true)->setSize(12);
+
+	$objSheet->getCell('A1')->setValue('ID');
+	$objSheet->getCell('B1')->setValue('Nom');
+	$objSheet->getCell('C1')->setValue('Prenom');
+	$objSheet->getCell('D1')->setValue('E-mail');
+	$objSheet->getCell('E1')->setValue('GSM');
+	$objSheet->getCell('F1')->setValue('Age');
+	$objSheet->getCell('G1')->setValue('Adresse');
+	$objSheet->getCell('H1')->setValue('Ville');
+
+	$aColumns = array( 'id', 'nom', 'prenom', 'email', 'gsm', 'naissance', 'adresse', 'ville','eligible');
+
+	$array = array();
+
+	try {
+		$connexion = db_connect();
+		$sWhere = "WHERE (";
+		for ( $i=0 ; $i<count($aColumns) ; $i++ )
+		{
+			$sWhere .= $aColumns[$i]." LIKE '%".$val."%' OR ";
+		}
+		$sWhere = substr_replace( $sWhere, "", -3 );
+		$sWhere .= ')';
+
+		$sQuery = "	SELECT * FROM customer $sWhere ";
+		$resultats = $connexion->prepare($sQuery);
+		$resultats->execute();
+		$resultats->setFetchMode(PDO::FETCH_OBJ);
+		$resultat = $resultats->fetchAll();
+		if($resultat > 0){
+			$array['result'] = $resultat;
+			$array['status'] = 'success';
+
+			foreach ($resultat as $key => $client) {
+				$i = $key+2;
+				$objSheet->getCell('A'.$i)->setValue($client->id);
+				$objSheet->getCell('B'.$i)->setValue($client->nom);
+				$objSheet->getCell('C'.$i)->setValue($client->prenom);
+				$objSheet->getCell('D'.$i)->setValue($client->email);
+				$objSheet->getCell('E'.$i)->setValue($client->gsm);
+				$objSheet->getCell('F'.$i)->setValue($client->naissance);
+				$objSheet->getCell('G'.$i)->setValue($client->adresse);
+				$objSheet->getCell('H'.$i)->setValue($client->ville);
+			}
+		}else{
+			$array['status'] = 'empty';			
+		}
+	} catch (Exception $e) {
+		$array['status'] = 'failed';
+	}
+	
+	$connexion = null;
+
+	$objSheet->getColumnDimension('A')->setAutoSize(true);
+	$objSheet->getColumnDimension('B')->setAutoSize(true);
+	$objSheet->getColumnDimension('C')->setAutoSize(true);
+	$objSheet->getColumnDimension('D')->setAutoSize(true);
+	$objSheet->getColumnDimension('E')->setAutoSize(true);
+	$objSheet->getColumnDimension('F')->setAutoSize(true);
+	$objSheet->getColumnDimension('G')->setAutoSize(true);
+	$objSheet->getColumnDimension('H')->setAutoSize(true);
+
+	$objWriter->save('../downloads/'.$name.'.xlsx');
+	$objPHPExcel->disconnectWorksheets();
+	unset($objWriter, $objPHPExcel);
+
+	return  json_encode($name);
+}
 
 ?>
