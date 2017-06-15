@@ -9,75 +9,76 @@ $(function () {
     forceParse: false,
     format: 'yyyy-mm-dd'
   });
+  $('#naissance_create').datepicker({
+    autoclose: true,
+    forceParse: false,
+    format: 'yyyy-mm-dd'
+  });
+  $('#naissance_bebe_create').datepicker({
+    autoclose: true,
+    forceParse: false,
+    format: 'yyyy-mm-dd'
+  });
 
 
 });
 $(document).ready(function() {
 
-  var table/*,table2,table3*/,id_client;
+  var table, id_client;
 
-  $('#table_clients').dataTable({
-            "bProcessing" : true,
-            "bServerSide" : true,
-            "sAjaxSource" : "./lib/server_processing.php",
-            "columns"       : [
-              { data: "0",
-                render: function(data, type, row) {
-                  console.log(data);
-                  return data;
+  table = $('#table_clients').dataTable({
+              "bProcessing" : true,
+              "bServerSide" : true,
+              "sAjaxSource" : "./lib/server_processing.php",
+              "columns"       : [
+                { data: "0" },
+                { data: "1" },
+                { data: "2" },
+                { data: "3" },
+                { data: "4" },
+                { data: "5" },
+                { data: "6" },
+                { data: "7" }, 
+                { data: "8" },
+                { data: "0",
+                  render: function(data, type, row) {
+                    var ret = '<button class="btn btn-default btn-xs action" data-type="view" data-id="'+data+'" data-toggle="modal" data-target="#view" ><span class="glyphicon glyphicon-eye-open"></span></button>'+
+                              '<button class="btn btn-primary btn-xs action" data-type="edit" data-id="'+data+'" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button>'+
+                              '<button class="btn btn-danger btn-xs action" data-type="delete" data-id="'+data+'" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button>';
+                    return ret;
+                  }
                 }
-              },
-              { data: "1" },
-              { data: "2" },
-              { data: "3" },
-              { data: "4" },
-              { data: "5" },
-              { data: "6" },
-              { data: "7" }, 
-              { data: "8" },
-              { data: "0",
-                render: function(data, type, row) {
-                  var ret = '<button class="btn btn-default btn-xs action" data-type="view" data-id="'+data+'" data-toggle="modal" data-target="#view" ><span class="glyphicon glyphicon-eye-open"></span></button>'+
-                            '<button class="btn btn-primary btn-xs action" data-type="edit" data-id="'+data+'" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button>'+
-                            '<button class="btn btn-danger btn-xs action" data-type="delete" data-id="'+data+'" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button>';
-                  return ret;
-                }
-              }
-            ]
-          });
+              ]
+            });
 
-    // $("#export_c").on("click", function() {
-    //   console.log('search');
-    //   search = table.rows( { filter : 'applied'} ).data();
-    //   console.log(search);
+    $("#export_c").on("click", function() {
+      var search_val = $('#table_clients_wrapper div div.dataTables_filter input').val();
 
-    //   var arr = [];
-    //   $.each(search, function(key, val) {
-    //     arr.push(val);
-    //   });
-    //   console.log(arr);
+      var obj = {'methode' : 'exportClientTest','search':search_val};
 
-    //   var obj = {'methode' : 'exportClient','data':arr};
-    //   console.log(obj);
-
-    //   $.ajax({
-    //     url : "./lib/excelExport.php",
-    //     dataType: "json",
-    //     type: "POST",
-    //     data : obj,
-    //     async : false,
-    //     success: function(data, textStatus, jqXHR) {
-    //       console.log(data);
-    //       // res = data;
-    //       window.open('http://localhost:8080/OumRose/gestion/downloads/'+data+'.xlsx','_blank' );
-    //     },
-    //     error: function (jqXHR, textStatus, errorThrown) {
-    //       console.log(jqXHR);
-    //       console.log(textStatus);
-    //       console.log(errorThrown);
-    //     }
-    //   });
-    // });
+      $.ajax({
+        url : "./lib/excelExport.php",
+        dataType: "json",
+        type: "POST",
+        data : obj,
+        async : true,
+        beforeSend: function(){
+          $('#loading-image').popup('show');
+        },
+        complete: function(){
+          setTimeout(function(){$('#loading-image').popup('hide');},250);
+        },
+        success: function(data, textStatus, jqXHR) {
+          console.log(data);
+          window.location = 'http://localhost:8080/OumRose/gestion/downloads/'+data+'.xlsx';
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+          console.log(jqXHR);
+          console.log(textStatus);
+          console.log(errorThrown);
+        }
+      });
+    });
 
     var obj_city = {'methode' : 'getAllCities'}
     $.ajax({
@@ -86,7 +87,6 @@ $(document).ready(function() {
       type: "POST",
       data : obj_city,
       success: function(data, textStatus, jqXHR) {
-        console.log(data.result);
         $.each(data.result, function(key, val) {
           var newOption = '<option value="'+val.id+'">'+val.name+'</option>';
           $("#Ville_id_edit").append(newOption);
@@ -106,7 +106,6 @@ $(document).ready(function() {
       type: "POST",
       data : obj_type,
       success: function(data, textStatus, jqXHR) {
-        console.log(data.result);
         $.each(data.result, function(key, val) {
           var newOption = '<option value="'+val.type+'">'+val.type+'</option>';
           $("#type_edit").append(newOption);
@@ -125,7 +124,6 @@ $(document).ready(function() {
   $("#table_clients tbody" ).on( "click", 'button',function() {
     var type  = $(this).data("type"),
         id    = $(this).data("id");
-    console.log(type+" - "+id);
     switch (type){
       case 'view' :
         var get_client = {"methode":"getClient","id":id};
@@ -158,7 +156,6 @@ $(document).ready(function() {
               $('#creationDate').text(client.creationDateClient);
               var eligible = client.eligible;
               var babies = data.result.baby;
-              console.log(babies);
               if(babies.lenght == 0){
                 var newRow = '<tr>'+
                   '<td>Aucun bébé trouvé</td>'+
@@ -246,7 +243,7 @@ $(document).ready(function() {
         });
         break;
       case 'edit' :
-        console.log('edit');var get_client = {"methode":"getClient","id":id};
+        var get_client = {"methode":"getClient","id":id};
         $.ajax({
           url : "./lib/util.php",
           dataType: "json",
@@ -265,7 +262,6 @@ $(document).ready(function() {
             $('#Ville_id_edit').val(0);
             if(data.result != 0){
               var client = data.result.client[0];
-              console.log(client);
               $('#id_client_edit').text(client.id_client);
               $('#nom_edit').val(client.nom);
               $('#prenom_edit').val(client.prenom);
@@ -278,7 +274,6 @@ $(document).ready(function() {
               $('#Ville_id_edit').val(client.Ville_id);
               $('#creationDate_edit').text(client.creationDateClient);
               var babies = data.result.baby;
-              console.log(babies);
               if(babies.lenght == 0){
                 var newRow = '<tr>'+
                   '<td>Aucun bébé trouvé</td>'+
@@ -308,7 +303,7 @@ $(document).ready(function() {
         $("#conf_supp").data("id",id);
         break;
       default :
-        console.log('default');
+
         break;
     }
   });
@@ -331,7 +326,6 @@ $(document).ready(function() {
         // console.log(data);
         if(data.result == 'ok'){
           var tr =  $("#client_"+id);
-          console.log(tr);
           table.row(tr).remove().draw();
           $("#delete").modal('toggle');
         }
@@ -344,16 +338,12 @@ $(document).ready(function() {
     });
   });
   $('#table_clients').on( 'click', 'tbody tr', function (){
-    console.log(this);
     var id = $(this).attr('id');
-    console.log('id : '+id);
     var res = id.split("_");
     id_client = id;
-    console.log('id_client click :'+id_client);
     //myTable.row( this ).edit();
   });
   $('#myForm').validator().on('submit', function (e) {
-    console.log('id_client submit:'+id_client);
     if (e.isDefaultPrevented()) {
       // handle the invalid form...
       alert("handle the invalid form...");
@@ -386,7 +376,6 @@ $(document).ready(function() {
           $('#loading-image').popup('hide');
         },
         success: function(data, textStatus, jqXHR) {
-          console.log(data);
           if(data.result == 'success'){
             console.log('Client bien modifier !! '+id_client);
             $('#alert_recover_ok').css('visibility','visible').fadeIn(1500);
@@ -423,9 +412,7 @@ $(document).ready(function() {
   $('#AddCommandeForm').on('submit', function (e) {
     
    {
-
       var id=$('#id_client').text();
-      console.log(id);
       var obj = {'id':id};
       var livraison={user:'admin',id_box:commanderBoxType,idClient:id};
       var commanderBox = {'methode':'addLivraison','livraison':livraison};

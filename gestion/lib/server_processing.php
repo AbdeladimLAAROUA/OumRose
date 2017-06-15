@@ -1,4 +1,5 @@
 <?php
+	include ('config.php');
 	/*
 	 * Script:    DataTables server-side script for PHP and MySQL
 	 * Copyright: 2010 - Allan Jardine
@@ -21,15 +22,13 @@
 	$sTable = "customer";
 	
 	/* Database connection information */
-	$gaSql['user']       = "root";
-	$gaSql['password']   = "";
-	$gaSql['db']         = "oumdev_leads";
-	$gaSql['server']     = "localhost";
 
-	/*$hote 		='localhost';
-	$passDb 	='';
-	$bd 		='oumdev_leads';
-	$user		='root';*/
+	$params = getConnexionParams();
+
+	$gaSql['server'] 	= $params['hote'];
+	$gaSql['password'] 	= $params['passDb'];
+	$gaSql['db']		= $params['bd'];
+	$gaSql['user']		= $params['user'];
 	
 	
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
