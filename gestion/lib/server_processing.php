@@ -25,6 +25,14 @@
 	$gaSql['password']   = "";
 	$gaSql['db']         = "oumdev_leads";
 	$gaSql['server']     = "localhost";
+/*
+	$gaSql['user']       = "k4mshost_oumbeta";
+	$gaSql['password']   = "!!oumb0x";
+	$gaSql['db']         = "k4mshost_oumdev";
+	$gaSql['server']     = "sql.k4mshost.odns.fr";*/
+
+
+	
 
 	/*$hote 		='localhost';
 	$passDb 	='';

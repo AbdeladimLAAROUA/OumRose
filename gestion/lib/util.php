@@ -383,7 +383,7 @@ function getAllCommandes2(){
 		$connexion = db_connect();
 		$sql =
 			"SELECT  cust.id as 'idMaman', cust.nom as 'nomMaman', cust.prenom, cust.gsm as 'GSM1',
-			l.gsm as 'GSM2',b.naissance,co.creationDate,l.status,
+			l.gsm as 'GSM2',b.naissance,co.creationDate,l.status,commande_id as 'idCommande',p.id_box,
 			 l.type as 'typeLivraison', l.adresseLivraison, l.quartier 
 			 from  commande co, customer cust, product p, livraison l, baby b
 			 where 
