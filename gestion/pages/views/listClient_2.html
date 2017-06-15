@@ -34,6 +34,7 @@
         <div class="box-body">
           <div style="margin-bottom:20px;">
             <button id="export_c" type="button" class="btn btn-success"><span class="glyphicon glyphicon-download-alt"></span> Export</button>
+             <button id="createUserByAdmin" type="button" class="btn btn-primary" data-type="createUser" data-toggle="modal" data-target="#createUser"><span class="glyphicon"></span> Nouveau client</button>
           </div>
           <table id="table_clients" class="table table-bordered table-striped">
             <thead>
@@ -472,6 +473,196 @@
       <div class="modal-footer ">
         <button id="conf_supp" type="button" data-id="0" class="btn btn-success" ><span class="glyphicon glyphicon-ok-sign"></span>Oui</button>
         <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>Non</button>
+      </div>
+    </div>
+    <!-- /.modal-content --> 
+  </div>
+  <!-- /.modal-dialog --> 
+</div>
+
+<div class="modal fade" id="createUser" tabindex="-1" role="dialog" aria-labelledby="createUser" aria-hidden="true">
+<div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+        <h4 class="modal-title custom_align" id="Heading">Créer un nouveau client</h4>
+      </div>
+      <div class="modal-body">
+        <div id="alert_recover_ok_create" class="alert alert-success hide-me">
+          Un nouveau client a été ajouté
+        </div>
+        <div id="alert_recover_ko_create" class="alert alert-warning hide-me">
+          Quelque chose a mal tourné
+        </div>
+        <form id="createUserForm">
+          <div class="row">
+            <div class="col-xs-2">
+              <div class="form-group">
+                <label>E-mail</label>
+              </div>
+            </div>
+            <div class="form-group has-feedback col-xs-6">
+              <div class="input-group">
+                <div class="input-group">
+                  <div class="input-group-addon">
+                    <i class="fa fa-envelope"></i>
+                  </div>
+                <input id="email_create" value="oumbox@nomail.com" type="email" class="form-control infos_client" data-required-error="veuillez renseigner ce champ" data-error="E-mail invalid">
+                </div>
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                <div class="help-block with-errors"></div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-2">
+              <div class="form-group">
+                <label>Prénom</label>
+              </div>
+            </div>
+            <div class="form-group has-feedback col-xs-4">
+              <div class="input-group">
+                <input id="prenom_create" type="text" pattern="^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$" class="form-control infos_client" data-error="Prénom invalid" data-required-error="veuillez renseigner ce champ" required>
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                <div class="help-block with-errors"></div>
+              </div>
+            </div>
+            <div class="col-xs-2">
+              <div class="form-group">
+                <label>Nom</label>
+              </div>
+            </div>
+            <div class="form-group has-feedback col-xs-4">
+              <div class="input-group">
+                <input id="nom_create" type="text" pattern="^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$" class="form-control infos_client" data-error="Nom invalid" data-required-error="veuillez renseigner ce champ" required>
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                <div class="help-block with-errors"></div>
+              </div>
+            </div>
+          </div> 
+          <div class="row">
+            <div class="col-xs-2">
+              <div class="form-group">
+                <label>GSM</label>
+              </div>
+            </div>
+            <div class="form-group has-feedback col-xs-4">
+              <div class="input-group">
+                <div class="input-group">
+                  <div class="input-group-addon">
+                    <i class="fa fa-phone"></i>
+                  </div>
+                  <input id="gsm_create" type="tel" class="form-control infos_client" pattern="^(?:(?:\+|00)212|0)\s*[1-9](?:[\s.-]*\d{2}){4}$" data-required-error="veuillez renseigner ce champ" data-error="phone number invalid" required>
+                </div>
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                <div class="help-block with-errors"></div>
+              </div>
+            </div>
+            <div class="col-xs-2">
+              <div class="form-group">
+                <label>Naissance</label>
+              </div>
+            </div>
+            <div class="col-xs-4">
+              <div class="input-group date">
+                <div class="input-group-addon">
+                  <i class="fa fa-calendar"></i>
+                </div>
+                <input type="text" class="form-control pull-right" id="naissance_create" readonly="true">
+              </div>
+            </div>
+          </div> 
+          <div class="row">
+            <div class="col-xs-2">
+              <div class="form-group">
+                <label>Adresse</label>
+              </div>
+            </div>
+            <div class="col-xs-4">
+              <textarea class="form-control infos_client" id="adresse_create" rows="2"></textarea>
+            </div>
+            <div class="col-xs-2">
+              <div class="form-group">
+                <label>CP</label>
+              </div>
+            </div>
+            <div class="form-group has-feedback col-xs-4">
+              <div class="input-group">
+                <input id="CP_create" type="NUMBER" class="form-control infos_client" data-minlength="5" data-error="Code postale invalid">
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                <div class="help-block with-errors"></div>
+              </div>
+            </div>
+          </div>   
+          <div class="row">
+            <div class="col-xs-2">
+              <div class="form-group">
+                <label>Type maman</label>
+              </div>
+            </div>
+            <div class="col-xs-4">
+              <select id="type_create" class="form-control">
+              </select>
+              <!-- <span id="type_edit" class="form-group infos_client text-blue"></span> -->
+            </div>
+            <div class="col-xs-2">
+              <div class="form-group">
+                <label>Ville</label>
+              </div>
+            </div>
+            <div class="col-xs-4">
+              <select id="Ville_id_create" class="form-control">
+                <option value="0">Choisir une ville</option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-2">
+              <div class="form-group">
+                <label>Date naissance bébé</label>
+              </div>
+            </div>
+            <div class="col-xs-4">
+             <div class="input-group date">
+                <div class="input-group-addon">
+                  <i class="fa fa-calendar"></i>
+                </div>
+                <input type="text" class="form-control pull-right" id="naissance_bebe_create" readonly="true">
+              </div>
+            </div>
+            <div class="col-xs-2">
+              <div class="form-group">
+                <label>Maternité</label>
+              </div>
+            </div>
+            <div class="form-group has-feedback col-xs-4">
+              <div class="input-group">
+                <input id="maternite_create" type="text" pattern="^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$" class="form-control infos_client" data-error="Prénom invalid" data-required-error="veuillez renseigner ce champ" required>
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                <div class="help-block with-errors"></div>
+              </div>
+            </div>
+          </div>  
+          <div class="row">
+            <div class="col-xs-2">
+              <div class="form-group">
+                <label>Gynécologue</label>
+              </div>
+            </div>
+            <div class="form-group has-feedback col-xs-4">
+              <div class="input-group">
+                <input id="gyneco_create" type="text" pattern="^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$" class="form-control infos_client" data-error="Prénom invalid" data-required-error="veuillez renseigner ce champ" required>
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                <div class="help-block with-errors"></div>
+              </div>
+            </div>
+          </div>    
+          <div class="row">
+            <div class="col-xs-12">
+              <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;margin-bottom: 10px;"><span class="glyphicon glyphicon-ok-sign"></span>Créer</button>
+            </div>
+          </div>
+        </form>
       </div>
     </div>
     <!-- /.modal-content --> 

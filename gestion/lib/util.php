@@ -809,6 +809,7 @@ function createClient($client){
 		$idProduct = addProduct2($product);
 
 		//ajouter ensuite une commande
+		
 		$commande['BC']="default";
 		$commande['product_id']  = $idProduct;
 		$commande['customer_id']  = $idClient;

@@ -90,6 +90,7 @@ $(document).ready(function() {
         $.each(data.result, function(key, val) {
           var newOption = '<option value="'+val.id+'">'+val.name+'</option>';
           $("#Ville_id_edit").append(newOption);
+          $("#Ville_id_create").append(newOption);
         });
       },
       error: function (jqXHR, textStatus, errorThrown) {
@@ -109,6 +110,7 @@ $(document).ready(function() {
         $.each(data.result, function(key, val) {
           var newOption = '<option value="'+val.type+'">'+val.type+'</option>';
           $("#type_edit").append(newOption);
+          $("#type_create").append(newOption);
         });
       },
       error: function (jqXHR, textStatus, errorThrown) {
@@ -215,7 +217,7 @@ $(document).ready(function() {
               }
 
               if(box.indexOf('3') > -1){
-                 box2="commandé";
+                 box3="commandé";
                 for (var i = 0; i < commandes.length; i++) {
                   if(commandes[i]['id_box']=='3' && commandes[i]['status']=='Livré'){
                     style3="style='background-color:#6cc;color:white;font-weight: bold;'";
@@ -466,6 +468,76 @@ $(document).ready(function() {
     }
   });
 
+});
+
+$('#createUserForm').validator().on('submit', function (e) {
+    //console.log('id_client submit:'+id_client);
+    if (e.isDefaultPrevented()) {
+      // handle the invalid form...
+      alert("handle the invalid form...");
+    } else {
+      // everything looks good!
+      // console.log("everything looks good!");
+      e.preventDefault();
+      var nom     = $('#nom_create').val(),
+          prenom  = $('#prenom_create').val(),
+          email   = $('#email_create').val(),
+          gsm     = $('#gsm_create').val(),
+          dof     = $('#naissance_create').val(),
+          adresse = $('#adresse_create').val(),
+          cp      = $('#CP_create').val(),
+          type    = $('#type_create').val(),
+          ville_id   = $('#Ville_id_create').val();
+          naissance_bebe   = $('#naissance_bebe_create').val();
+          maternite   = $('#maternite_create').val();
+          gyneco   = $('#gyneco_create').val();
+      var obj = {'nom':nom,'prenom':prenom,'email':email,'gsm':gsm,'dof':dof,'adresse':adresse,'cp':cp,'type':type,'ville_id':ville_id,'naissance_bebe':naissance_bebe,'maternite':maternite,'gyneco':gyneco};
+      var create_client = {'methode':'createClient','client':obj};
+
+      $.ajax({
+        url : "./lib/util.php",
+        dataType: "json",
+        type: "POST",
+        data : create_client,
+        beforeSend: function(){
+          $('#loading-image').popup('show');
+        },
+        complete: function(){
+          $('#loading-image').popup('hide');
+        },
+        success: function(data, textStatus, jqXHR) {
+          console.log(data);
+          if(data.result == 'success'){
+            console.log('Un nouveau client a été crée !! ');
+            $('#alert_recover_ok_create').css('visibility','visible').fadeIn(1500);
+           /* $('#'+id_client+' td:nth-child(2)').html(nom);
+            $('#'+id_client+' td:nth-child(3)').html(prenom);
+            $('#'+id_client+' td:nth-child(4)').html(email);
+            $('#'+id_client+' td:nth-child(5)').html(gsm);
+            $('#'+id_client+' td:nth-child(6)').html(getAge(dof));
+            $('#'+id_client+' td:nth-child(7)').html(adresse);
+            $('#'+id_client+' td:nth-child(8)').html($('#Ville_id_edit option:selected').text());*/
+            setTimeout(function(){
+              $('#createUser').modal('toggle');
+              $('#alert_recover_ok_create').css('visibility','hidden');
+            }, 2000);
+          }else{
+            console.log('Something went wrong !!');
+            $('#alert_recover_ko_create').css('visibility','visible').fadeIn(1500);
+            setTimeout(function(){
+              $('#createUser').modal('toggle');
+              $('#alert_recover_ko_create').css('visibility','hidden');
+            }, 2000);
+          }
+
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+          console.log(jqXHR);
+          console.log(textStatus);
+          console.log(errorThrown);
+        }
+      });
+    }
 });
 
 function getAge(dateString) {

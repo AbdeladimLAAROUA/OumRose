@@ -61,27 +61,35 @@ function function1()
 
 function function2($conn){
 
-  $stmt = $conn->prepare("SELECT c.id as id FROM leads l, customer c  where l.id=c.id_leads and REF_BOX3!=''");
-  $stmt->execute();
-  $stmt1 = $conn->prepare("SELECT * FROM product where id_box='3'");
-   $stmt1->execute();
-  $sameRowCount = $stmt->rowCount()==$stmt1->rowCount();
-  echo $sameRowCount;
-  if ($sameRowCount) {
-      while ($row = $stmt->fetch(PDO::FETCH_ASSOC) and $row1 = $stmt1->fetch(PDO::FETCH_ASSOC)) {
 
-          $stmt2 = $conn->prepare("INSERT INTO commande(customer_id,product_id) 
-                                                      VALUES(:customer_id,:product_id)");
-             
-          $stmt2->bindparam(":customer_id", $row['id']);          
-          $stmt2->bindparam(":product_id", $row1['id']);          
-        
-          $stmt2->execute(); 
+    $stmt01 = $conn->prepare("DELETE FROM commande where 1");
+    $stmt01->execute(); 
 
-         
+    $stmt02 = $conn->prepare("ALTER TABLE commande AUTO_INCREMENT = 1");
+    $stmt02->execute();
 
+
+    for ($i=1; $i <=3 ; $i++) { 
+      $stmt = $conn->prepare("SELECT c.id as id FROM leads l, customer c  where l.id=c.id_leads and REF_BOX".$i."!=''");
+      $stmt->execute();
+      
+      $stmt1 = $conn->prepare("SELECT * FROM product where id_box='".$i."'");
+      $stmt1->execute();
+      $sameRowCount = $stmt->rowCount()==$stmt1->rowCount();
+      if ($sameRowCount) {
+          while ($row = $stmt->fetch(PDO::FETCH_ASSOC) and $row1 = $stmt1->fetch(PDO::FETCH_ASSOC)) {
+
+              $stmt2 = $conn->prepare("INSERT INTO commande(customer_id,product_id) 
+                                                          VALUES(:customer_id,:product_id)");
+              $stmt2->bindparam(":customer_id", $row['id']);          
+              $stmt2->bindparam(":product_id", $row1['id']);          
+              $stmt2->execute();         
+          }
       }
-  }
+    }
+
+    echo "done !";
+   
 }
 
- ?>
+?>

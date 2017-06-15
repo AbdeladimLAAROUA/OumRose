@@ -3,7 +3,7 @@
 /*Local Kindy*/
 $servername = "localhost";
 $username = "root";
-$password = "S3cr3T%44";
+$password = "";
 $dbname="oumdev_leads";
 
 /*Local*/
