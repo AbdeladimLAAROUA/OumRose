@@ -1,13 +1,14 @@
 <?php
 // print_r(getConnexionParams());
 function db_connect(){
+	$params = getConnexionParams();
 
 	/*Local Kindy*/
 
-	$hote		='localhost';
-	$passDb 	='S3cr3T%44';
-	$bd 		='oumdev_leads';
-	$user		='root';
+	$hote		=$params['hote'];
+	$passDb 	=$params['passDb'];
+	$bd 		=$params['bd'];
+	$user		=$params['user'];
 
 	/*Local*/
 
