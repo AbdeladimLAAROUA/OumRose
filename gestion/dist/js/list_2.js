@@ -64,6 +64,11 @@ $(document).ready(function() {
             ]
           });
 
+    $("#export_c").on("click", function() {
+      console.log("search");
+      var search_val = $('#table_clients_wrapper div div.dataTables_filter input').val();
+      console.log(search_val);
+
     // $("#export_c").on("click", function() {
     //   console.log('search');
     //   search = table.rows( { filter : 'applied'} ).data();
