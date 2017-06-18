@@ -1,4 +1,5 @@
 <?php 
+session_start();
 include("mpdf/mpdf.php");
 $mpdf=new mPDF('win-1252','A3','','',15,10,16,10,10,10);//A4 page in portrait for landscape add -L.
 
@@ -7,7 +8,7 @@ $mpdf->SetDisplayMode('fullpage');
 // Buffer the following html with PHP so we can store it to a variable later
 ob_start();
 ?>
-<?php include "content.php";
+<?php include "content".$_SESSION['lastEligibleToBox'].".php";
  //This is your php page ?>
 <?php 
 $html = ob_get_contents();

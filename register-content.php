@@ -694,7 +694,6 @@ $(function() {
         success:function(data){
           if(data['isUserAlreadyExist']==true){
               Materialize.toast("Email déjà existant",4000);
-              console.log(data);
           }else{
               $("li.active.maman").removeAttr( "hidden" );
               $("#libaby0").attr( "hidden",'' );

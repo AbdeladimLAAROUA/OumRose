@@ -9,7 +9,7 @@
 
   /*$dateInSixMonth = $today->add(new DateInterval('P9M'));*/
   
-  $today = new DateTime('2017-6-13');
+ /* $today = new DateTime('2017-6-13');
   $naissance =  new DateTime('2016-11-09');
 
 
@@ -29,8 +29,11 @@
   }else{
 
     echo $diffJours."aucune box <br/> ";
-  }
+  }*/
 
+  /*$today = date("dmY");
+  echo $today."OX"."1";
+*/
 /*  include('config.php');
   $product['id_box']=3;
   $idProduct = addProduct2($product['id_box']);

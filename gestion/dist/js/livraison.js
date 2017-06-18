@@ -183,6 +183,7 @@
         console.log(data+"---------------------------------->");
         // console.log(data.result);
         $.each(data.result, function(key, val) {
+          console.log(val);
           var newRow = '<tr id="client_'+val.id+'">'+
                       '<td>'+val.idMaman+'</td>'+
                       '<td>'+val.idCommande+'</td>'+
@@ -235,7 +236,7 @@
                       '<td>'+val.pointRelais+'</td>'+
                       '<td>'+val.Ville+'</td>'+
                       '<td>'+val.creationDate+'</td>'+
-                      '<td class="livraisonStatus"'+val.idLivraison+'>'+val.status+'</td>'+
+                      '<td class="livraisonStatus'+val.idLivraison+'">'+val.status+'</td>'+
                       '<td width="12%" align="center">'+
                       '<button class="btn btn-default btn-xs action" data-type="view" data-id="'+val.idLivraison+'" data-toggle="modal" data-target="#view" ><span class="glyphicon glyphicon-eye-open"></span></button>'+
                       '<button class="btn btn-primary btn-xs action" data-type="edit" data-id="'+val.idLivraison+'" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button>'+
@@ -407,7 +408,7 @@
 
 
        case 'livraison' :
-        var livraison = {"id":id,'status':'Livré'};
+        var livraison = {"id":id,'status':'Livré','type':'SB'};
         var myLivraison = {"methode":"updateLivraison",'livraison':livraison};
         $.ajax({
           url : "./lib/util.php",
@@ -584,7 +585,7 @@
 
 
        case 'livraison' :
-        var livraison = {"id":id,'status':'Livré'};
+         var livraison = {"id":id,'status':'Livré','type':'LD'};
         var myLivraison = {"methode":"updateLivraison",'livraison':livraison};
         $.ajax({
           url : "./lib/util.php",
@@ -761,7 +762,7 @@
 
 
        case 'livraison' :
-        var livraison = {"id":id,'status':'Livré'};
+        var livraison = {"id":id,'status':'Livré','type':'OX'};
         var myLivraison = {"methode":"updateLivraison",'livraison':livraison};
         $.ajax({
           url : "./lib/util.php",

@@ -27,7 +27,7 @@ if (count($_POST)>7){
 
         include('../config.php');
         $ville=getCityById($conn,$_POST['VILLE']);
-        echo $ville['name'];
+        
         $customer['nom']=htmlspecialchars($_POST['NOM']);
         $customer['prenom']=htmlspecialchars($_POST['PRENOM']);
         $customer['email']=htmlspecialchars($_POST['EMAIL']);

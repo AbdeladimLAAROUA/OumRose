@@ -1,6 +1,6 @@
 <?php
-include('config.php');
 session_start();
+include('config.php');
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	if(isset($_REQUEST['methode'])){
 		if($_REQUEST['methode'] == 'getCustomerType'){
@@ -19,6 +19,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			echo getAllClient2();
 		}else if($_REQUEST['methode'] == 'getClient'){
 			echo getClient($_REQUEST['id']);
+		}else if($_REQUEST['methode'] == 'getClient2'){
+			echo getClient2($_REQUEST['id']);
 		}else if($_REQUEST['methode'] == 'deleteFullClient'){
 			echo deleteFullClient($_REQUEST['id']);
 		}else if($_REQUEST['methode'] == 'getAllCities'){
@@ -28,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		}else if($_REQUEST['methode'] == 'createClient'){
 			echo createClient($_REQUEST['client']);
 		}else if($_REQUEST['methode'] == 'updateClient'){
-			echo updateClient($_REQUEST['client']);
+			echo updateClient($_REQUEST['client'],$_REQUEST['baby']);
 		}else if($_REQUEST['methode'] == 'getAllBox'){
 			echo getAllBox();
 		}else if($_REQUEST['methode'] == 'getAllProduct'){
@@ -96,6 +98,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 		}else if($_REQUEST['methode'] == 'isUserAlreadyExist'){
 			echo isUserAlreadyExist($_REQUEST['email']);
+
+		}else if($_REQUEST['methode'] == 'getCurrentUser'){
+			echo getCurrentUser();
 
 		}else if($_REQUEST['methode'] == 'getCommandesLD'){
 			echo getCommandesLD();
@@ -385,7 +390,7 @@ function getAllCommandes2(){
 		$sql =
 			"SELECT  cust.id as 'idMaman', cust.nom as 'nomMaman', cust.prenom, cust.gsm as 'GSM1',
 			l.gsm as 'GSM2',b.naissance,co.creationDate,l.status,commande_id as 'idCommande',p.id_box,
-			 l.type as 'typeLivraison', l.adresseLivraison, l.quartier 
+			 l.type as 'typeLivraison', l.adresseLivraison, l.quartier,l.id as 'idLivraison'
 			 from  commande co, customer cust, product p, livraison l, baby b
 			 where 
 			 cust.id=co.customer_id and
@@ -551,7 +556,84 @@ function getClient($id){
 	$array = array();
 	try {
 		$connexion = db_connect();
-		$resultats = $connexion->prepare("SELECT *,c.id as id_client,c.creationDate as creationDateClient FROM customer c INNER JOIN ville v ON c.Ville_id = v.id WHERE c.id = :id");
+		//$resultats = $connexion->prepare("SELECT *,c.id as id_client,c.creationDate as creationDateClient FROM customer c INNER JOIN ville v ON c.Ville_id = v.id WHERE c.id = :id");
+		$resultats = $connexion->prepare("SELECT *,c.id as id_client,c.creationDate as creationDateClient, ville as 'name' FROM customer c where id=:id");
+    	
+    	$resultats->bindParam(':id', $id);
+
+		$resultats->execute();
+
+		$resultats->setFetchMode(PDO::FETCH_OBJ);
+		$resultat = $resultats->fetchAll();
+		$array['result']['client'] = $resultat;
+
+		
+		//liste des bébé
+		$resultatsBaby = $connexion->prepare("SELECT * FROM baby WHERE customer_id = :id");
+    	
+    	$resultatsBaby->bindParam(':id', $id);
+
+		$resultatsBaby->execute();
+
+		$resultatsBaby->setFetchMode(PDO::FETCH_OBJ);
+		$resultatBaby = $resultatsBaby->fetchAll();
+		$array['result']['baby'] = $resultatBaby;
+
+		//liste des commandes 
+		// requete particulière pour les anciens commandes!
+		$stmt = $connexion->prepare("SELECT product_id FROM commande where customer_id=:id");
+          $stmt->execute(array(':id'=>$id));
+          $clientCommandesId = array();
+          if ($stmt->execute()) {
+              while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                  $clientCommandesId[] = $row['product_id'];
+              }
+          }
+           $boxList = array();
+          if( count($clientCommandesId)){
+               $qMarks = str_repeat('?,', count($clientCommandesId) - 1) . '?';
+            $sth = $connexion->prepare("SELECT * FROM product WHERE id IN ($qMarks)");
+           
+           
+            
+            if ($sth->execute($clientCommandesId)) {
+                while ($row = $sth->fetch(PDO::FETCH_ASSOC)) {
+                    $boxList[] = $row;		
+                }
+            }else{
+
+            }
+        }
+
+
+        // liste des livraison 
+        $stmt = $connexion->prepare("SELECT id_box,l.status
+				from customer c, commande co, livraison l,product p
+				where c.id=co.customer_id and  co.product_id=p.id and l.commande_id = co.id and c.id=:id");
+         
+         $commandes=$stmt->execute(array(':id'=>$id));
+        $stmt->setFetchMode(PDO::FETCH_OBJ);
+		$commandes = $stmt->fetchAll();
+
+         $test=$commandes;
+        
+
+            $array['result']['box']= $boxList;
+            $array['result']['commandes']= $commandes;
+
+	} catch (Exception $e) {
+		$array['result'] = 0;
+	}
+	
+	$connexion = null;
+	return json_encode($array);	
+}
+
+function getClient2($id){
+	$array = array();
+	try {
+		$connexion = db_connect();
+		$resultats = $connexion->prepare("SELECT *,c.id as id_client,c.creationDate as creationDateClient FROM customer c where id=:id");
     	
     	$resultats->bindParam(':id', $id);
 
@@ -614,69 +696,6 @@ function getClient($id){
 
             $array['result']['box']= $boxList;
             $array['result']['commandes']= $commandes;
-
-	} catch (Exception $e) {
-		$array['result'] = 0;
-	}
-	
-	$connexion = null;
-	return json_encode($array);	
-}
-
-function getClient2($id){
-	$array = array();
-	try {
-		$connexion = db_connect();
-		//$resultats = $connexion->prepare("SELECT *,c.id as id_client,c.creationDate as creationDateClient FROM customer c INNER JOIN ville v ON c.Ville_id = v.id WHERE c.id = :id");
-		$resultats = $connexion->prepare("SELECT *,c.id as id_client,c.creationDate as creationDateClient FROM customer c");
-    	
-    	$resultats->bindParam(':id', $id);
-
-		$resultats->execute();
-
-		$resultats->setFetchMode(PDO::FETCH_OBJ);
-		$resultat = $resultats->fetchAll();
-		$array['result']['client'] = $resultat;
-
-		
-		//liste des bébé
-		$resultatsBaby = $connexion->prepare("SELECT * FROM baby WHERE customer_id = :id");
-    	
-    	$resultatsBaby->bindParam(':id', $id);
-
-		$resultatsBaby->execute();
-
-		$resultatsBaby->setFetchMode(PDO::FETCH_OBJ);
-		$resultatBaby = $resultatsBaby->fetchAll();
-		$array['result']['baby'] = $resultatBaby;
-
-		//liste des commandes 
-
-		$stmt = $connexion->prepare("SELECT product_id FROM commande where customer_id=:id");
-          $stmt->execute(array(':id'=>$id));
-          $clientCommandesId = array();
-          if ($stmt->execute()) {
-              while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                  $clientCommandesId[] = $row['product_id'];
-              }
-          }
-           $boxList = array();
-          if( count($clientCommandesId)){
-               $qMarks = str_repeat('?,', count($clientCommandesId) - 1) . '?';
-            $sth = $connexion->prepare("SELECT id_box FROM product WHERE id IN ($qMarks)");
-           
-           
-            
-            if ($sth->execute($clientCommandesId)) {
-                while ($row = $sth->fetch(PDO::FETCH_ASSOC)) {
-                    $boxList[] = $row['id_box'];
-                }
-            }else{
-
-            }
-        }
-
-            $array['result']['box']= $boxList;
 
 	} catch (Exception $e) {
 		$array['result'] = 0;
@@ -762,8 +781,8 @@ function createClient($client){
 	try {
 		$connexion = db_connect();
 
-		$stmt = $connexion->prepare("INSERT INTO customer(nom,prenom,email,gsm,naissance,adresse,CP,type,ville_id,ville,createdBy) 
-												VALUES(:nom,:prenom,:email,:gsm,:naissance,:adresse,:cp,:type,:ville_id,:ville,:user)");
+		$stmt = $connexion->prepare("INSERT INTO customer(nom,prenom,email,gsm,naissance,adresse,CP,type,ville_id,ville,eligible,createdBy) 
+												VALUES(:nom,:prenom,:email,:gsm,:naissance,:adresse,:cp,:type,:ville_id,:ville,:eligible,:user)");
 		
 		
 		$stmt->bindValue(':nom', $client['nom']);
@@ -776,6 +795,7 @@ function createClient($client){
 		$stmt->bindValue(':type', $client['type']);
 		$stmt->bindValue(':ville_id', $client['ville_id']);
 		$stmt->bindValue(':ville', $villeName['name']);
+		$stmt->bindValue(':eligible', eligible($client['naissance_bebe']));
 		$stmt->bindValue(':user', '1');
 
 		$stmt->execute();
@@ -842,7 +862,7 @@ function createClient($client){
 	return json_encode($array);	
 }
 
-function updateClient($client){
+function updateClient($client,$baby){
 	$array = array();
 
 	$array['id'] = $client['id'];
@@ -856,10 +876,17 @@ function updateClient($client){
 	$array['type'] = $client['type'];
 	$array['Ville_id'] = $client['ville'];
 
+
+
+	/*$array['idBebe'] = $baby['id'];
+	$array['prenomBebe'] = $baby['prenomBebe'];
+	*/
+
+
 	try {
 		$connexion = db_connect();
 
-		$stmt = $connexion->prepare("UPDATE customer SET nom = :nom,prenom = :prenom,email = :email,gsm = :gsm,naissance = :naissance,adresse = :adresse,CP = :cp,type = :type,Ville_id = :Ville_id WHERE id = :id ");
+		$stmt = $connexion->prepare("UPDATE customer SET nom = :nom,prenom = :prenom,email = :email,gsm = :gsm,naissance = :naissance,adresse = :adresse,CP = :cp,type = :type,Ville_id = :Ville_id, eligible = :eligible WHERE id = :id ");
 		
 		$stmt->bindValue(':id', $client['id']);
 		$stmt->bindValue(':nom', $client['nom']);
@@ -871,14 +898,33 @@ function updateClient($client){
 		$stmt->bindValue(':cp', $client['cp']);
 		$stmt->bindValue(':type', $client['type']);
 		$stmt->bindValue(':Ville_id', $client['ville']);
+		$stmt->bindValue(':eligible',eligible($baby['naissanceBebe']));
 
 		$stmt->execute();
 
-		if($stmt->rowCount()) {
+		$a=$stmt->rowCount();
+
+		
+		$stmt1 = $connexion->prepare("UPDATE baby SET prenom = :prenom ,sexe = :sexe, MATERNITE = :maternite,naissance= :naissance WHERE id = :id ");
+
+		$stmt1->bindValue(':id', $baby['id']);
+		$stmt1->bindValue(':prenom', $baby['prenomBebe']);
+		$stmt1->bindValue(':sexe', $baby['sexeBebe']);
+		$stmt1->bindValue(':maternite', $baby['maternite']);
+		$stmt1->bindValue(':naissance', $baby['naissanceBebe']);
+
+		$stmt1->execute();
+
+		$b=$stmt1->rowCount();
+
+		if($a or $b) {
 			$array['result'] = 'success';
 		} else {
-			$array['result'] = 'failed';
+			$array['result'] = 'failed1';
 		}
+	
+
+		
 	} catch (Exception $e) {
 		$array['result'] = 'ko';
 	}
@@ -1312,22 +1358,30 @@ function addLivraison($livraison){
 		// ajouter une livraison 
 
 		//ajouter d'abord un produit
-		$product['id_box']=$livraison['id_box'];
-		$idProduct = addProduct2($product);
+		
+		$today = date("dmY");
+		$RefBox =  $today.$livraison['type'].$livraison['idClient'];
 
+		$product['id_box']=$livraison['id_box'];
+		$product['refProduct']=$RefBox;
+		$product['id_shop']=1;
+
+		$insertedProduct = json_decode(addProduct($product),true);
+		
 		//ajouter ensuite une commande
 		$commande['BC']="default";
-		$commande['product_id']  = $idProduct;
+		$commande['product_id']  = $insertedProduct['inserted_id'];
 		$commande['customer_id']  = $livraison['idClient'];
 		$resultJS = addCommande($commande);
 		$result = json_decode($resultJS,true);
 		$id_commande = $result['inserted_id'];
-		$sql = "INSERT INTO livraison (commande_id, type) 
-		VALUES (:commande_id, 'OX')";
+		$sql = "INSERT INTO livraison (commande_id, type,status) 
+		VALUES (:commande_id, 'OX',:status)";
 		//Prepare our statement.
 		$statement = $connexion->prepare($sql);
 		
 		$statement->bindValue(':commande_id', $id_commande);
+		$statement->bindValue(':status', $livraison['status']);
 		//Execute the statement and insert our values.
 		$inserted = $statement->execute();
 		$array['result'] = 'success';
@@ -1335,6 +1389,7 @@ function addLivraison($livraison){
 	}
 	else{
 		$product['id_box']=$_SESSION['eligibleToBox'];
+		$_SESSION['lastEligibleToBox']=$_SESSION['eligibleToBox'];
 		$_SESSION['eligibleToBox']=0;// le client n'est plus éligible 
 		$idProduct = addProduct2($product);
 
@@ -1406,24 +1461,62 @@ function updateLivraison($livraison){
 	try {
 		$connexion = db_connect();
 		$sql="";
-		
+
+		$resultats = $connexion->prepare("SELECT c.customer_id,c.id from commande c,livraison l where l.commande_id = c.id and l.id=:id");
+		$resultats->bindParam(':id', $livraison['id']);
+		$resultats->execute();
+		$resultats->setFetchMode(PDO::FETCH_OBJ);
+		$commande = $resultats->fetchAll();
+		$today = date("dmY");
+		$RefBox =  $today.$livraison['type'].$commande[0]->customer_id;
+
+
+
 		$sql = "UPDATE livraison set status=:status where id=:id";
 		//Prepare our statement.
 		$statement = $connexion->prepare($sql);
 		
 		$statement->bindValue(':id', $livraison['id']);		 
-		$statement->bindValue(':status', $livraison['status']);		 
+		$statement->bindValue(':status', $livraison['status']);		
+ 
 		
 		//Execute the statement and insert our values.
-		$updated = $statement->execute();
-		 
-		//Because PDOStatement::execute returns a TRUE or FALSE value,
-		//we can easily check to see if our insert was successful.
+		$updated = $statement->execute();	
+
 		if($updated){
 			$array['status'] = 'success';
 		}else{
 			echo 'error';
 		}
+		
+		if($array['status'] == 'success'){
+			$sql = "UPDATE product p 
+			JOIN commande co ON p.id=co.product_id 
+			JOIN customer c ON c.id=co.customer_id 
+			set RefBox=:RefBox
+			where customer_id=:customer_id
+			and co.id=:commande_id
+			";
+			//Prepare our statement.
+			$statement = $connexion->prepare($sql);
+			
+			$statement->bindValue(':RefBox', $RefBox);		 	
+			$statement->bindValue(':customer_id', $commande[0]->customer_id);		 	
+			$statement->bindValue(':commande_id', $commande[0]->id);		 	
+
+			
+			//Execute the statement and insert our values.
+			$updated = $statement->execute();
+
+			//Because PDOStatement::execute returns a TRUE or FALSE value,
+			//we can easily check to see if our insert was successful.
+			if($updated){
+				$array['status'] = 'success';
+			}else{
+				echo 'error';
+			}
+		}
+
 
 	} catch (Exception $e) {
 		$array['status'] = 'failed';
@@ -1815,6 +1908,19 @@ function updateVilles(){
 
 	try {
 		$connexion = db_connect();
+
+		$stmt = $connexion->prepare('DELETE FROM ville where 1');
+		$stmt->execute();
+		$stmt = $connexion->prepare('ALTER TABLE ville AUTO_INCREMENT = 1');
+		$stmt->execute();
+
+		$stmt = $connexion->prepare('DELETE FROM relais where 1');
+		$stmt->execute();
+
+		$stmt = $connexion->prepare('ALTER TABLE relais AUTO_INCREMENT = 1');
+		$stmt->execute();
+
+
 		$requet="INSERT INTO ville (name)
 				SELECT * FROM (SELECT :villeName) AS tmp
 				WHERE NOT EXISTS (
@@ -1842,11 +1948,14 @@ function updateVilles(){
 }
 function updateRelais($relais){
 	$array = array();
+
 	$villeJS=getVilleIdByName($relais['ville']);
 	$ville = json_decode($villeJS,true);
 	$id_ville =  $ville['result'][0]['id'];
 	try {
 		$connexion = db_connect();
+		
+
 		$requet="INSERT INTO relais (gps_lat,gps_lng,nom,adresse,id_relais,id_ville)
 					values(:gps_lat,:gps_lng,:nom,:adresse,:id_relais,:id_ville)";
 				  
@@ -1914,15 +2023,39 @@ function getVilleIdByName($name){
 	$connexion = null;
 	return json_encode($array);	
 }
-function isUserAlreadyExist($email){
-	$array = array();
+ function getCurrentUser(){
+ 	$array = array();
+	
 	try {
 		$connexion = db_connect();
+
+		$resultats = $connexion->prepare("SELECT * FROM customer WHERE id=:id LIMIT 1");
+		$resultats->bindParam(':id', $_SESSION['client_id']);
+		$resultats->execute();
+		$resultats->setFetchMode(PDO::FETCH_OBJ);
+		$resultat = $resultats->fetchAll();
+		$array['result'] = $resultat;
+		$array['status'] = 'success';
+	} catch (Exception $e) {
+		$array['status'] = 'failed';
+	}
+	
+	$connexion = null;
+	return json_encode($array);	
+	
+}
+function isUserAlreadyExist($email){
+	$array = array();
+	
+	try {
+		$connexion = db_connect();
+
 		$resultats = $connexion->prepare("SELECT id FROM customer WHERE email= :email");
 		$resultats->bindParam(':email', $email);
 		$resultats->execute();
 		$resultats->setFetchMode(PDO::FETCH_OBJ);
 		$resultat = $resultats->fetchAll();
+
 		if(count($resultat) > 0){
 			$array['result'] = $resultat;
 			$array['isUserAlreadyExist'] = true;
@@ -1962,6 +2095,34 @@ function getRelaisListByVille($id){
 	$connexion = null;
 	return json_encode($array);	
 }
+
+function eligible($naissanceBebe){
+        
+        $eligible='';
+        // Date d'aujourd'hui
+        $today = new DateTime(date('Y-m-d'));
+
+        $naissance= new DateTime($naissanceBebe);
+        
+
+        $interval = date_diff($today, $naissance);
+
+        $diffJours = $interval->format('%R%a days');
+        
+        if($diffJours>=7 && $diffJours<=146 ){
+                  $eligible='BOX1';
+        }
+        else if($diffJours<=-7 && $diffJours>=-122){
+               $eligible='BOX2';
+        }
+        else if($diffJours<=-183 && $diffJours>=-305 ){
+              $eligible='BOX3';
+        }
+        return $eligible;
+}
+
+
+
 
 function slug($text){ 
 	// replace non letter or digits by -

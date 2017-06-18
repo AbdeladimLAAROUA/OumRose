@@ -220,7 +220,7 @@
                         <div class="form-group has-feedback col-xs-4">
                             <div class="input-group">
                                 <div class="input-group">
-                                    <input type="email" name="email" id="email" class="form-control" value="<?php echo $client['result']['client'][0]['email'];?>" data-required-error="veuillez renseigner ce champ" data-error="E-mail invalid" required>
+                                    <input type="email" readOnly="true" name="email" id="email" class="form-control" value="<?php echo $client['result']['client'][0]['email'];?>" data-required-error="veuillez renseigner ce champ" data-error="E-mail invalid" required>
                                 </div>
                                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                                 <div class="help-block with-errors"></div>

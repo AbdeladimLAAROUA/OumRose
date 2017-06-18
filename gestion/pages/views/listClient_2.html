@@ -44,7 +44,7 @@
               <th>Prenom</th>
               <th>E-mail</th>
               <th>GSM</th>
-              <th>Age</th>
+              <th>Naissance</th>
               <th>Adresse</th>
               <th>Ville</th>
               <th>Eligible</th>
@@ -61,7 +61,7 @@
               <th>Prenom</th>
               <th>E-mail</th>
               <th>GSM</th>
-              <th>Age</th>
+              <th>Naissance</th>
               <th>Adresse</th>
               <th>Ville</th>
               <th>Eligible</th>
@@ -361,7 +361,7 @@
                 <div class="input-group-addon">
                   <i class="fa fa-calendar"></i>
                 </div>
-                <input type="text" class="form-control pull-right" id="naissance_edit" readonly="true">
+                <input type="text" class="form-control pull-right" id="naissance_edit" readonly="false">
               </div>
             </div>
           </div> 
@@ -419,19 +419,85 @@
               <span id="creationDate_edit" class="form-group infos_client text-blue"></span>
             </div>
           </div>
+          
+
+          <!-- Bébé -->
+          <input type="hidden" id="id_bebe_edit"/>
+          <div class="row">
+             
+            <div class="col-xs-2">
+              <div class="form-group">
+                <label>Prénom bébé</label>
+              </div>
+            </div>
+            <div class="form-group has-feedback col-xs-4">
+              <div class="input-group">
+                <input id="prenom_bebe_edit" type="text" pattern="^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$" class="form-control infos_client" data-error="Prénom invalid" data-required-error="veuillez renseigner ce champ" required>
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                <div class="help-block with-errors"></div>
+              </div>
+            </div>
+
+            <div class="col-xs-2">
+              <div class="form-group">
+                <label>Sexe bébé</label>
+              </div>
+            </div>
+            <div class="form-group has-feedback col-xs-4">
+              <div class="input-group">
+                <input placeholder="F ou G" id="sexe_bebe_id" type="text" class="form-control infos_client"  data-required-error="veuillez renseigner ce champ" required>
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                <div class="help-block with-errors"></div>
+              </div>
+            </div>
+
+           
+          </div>
+          <div class="row">
+             <div class="col-xs-2">
+              <div class="form-group">
+                <label>Naissance</label>
+              </div>
+            </div>
+            <div class="col-xs-4">
+              <div class="input-group date">
+                <div class="input-group-addon">
+                  <i class="fa fa-calendar"></i>
+                </div>
+                <input type="text" class="form-control pull-right" id="naissance_bebe_edit" readonly="false">
+              </div>
+            </div>
+
+             <div class="col-xs-2">
+              <div class="form-group">
+                <label>Maternité</label>
+              </div>
+            </div>
+            <div class="form-group has-feedback col-xs-4">
+              <div class="input-group">
+                <input id="maternite_bebe_edit" type="text" pattern="^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$" class="form-control infos_client"  data-required-error="veuillez renseigner ce champ" required>
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                <div class="help-block with-errors"></div>
+              </div>
+            </div>
+
+          </div>
+
+
+
           <div class="row">
             <div class="col-xs-12">
               <button type="submit" class="btn btn-warning btn-lg" style="width: 100%;margin-bottom: 10px;"><span class="glyphicon glyphicon-ok-sign"></span>Modifier</button>
             </div>
           </div>
         </form>
-        <div class="row">
+        <!-- <div class="row">
           <div class="col-xs-12">
             <div class="box box-danger">
               <div class="box-header with-border">
                 <h3 class="box-title">Liste des Bébés</h3>
               </div>
-              <!-- /.box-header -->
+
               <div class="box-body">
                 <table id="baby_table" class="table table-bordered">
                   <thead>
@@ -447,11 +513,9 @@
                   </tbody>
                 </table>
               </div>
-              <!-- /.box-body -->
             </div>
-            <!-- /.box -->
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
     <!-- /.modal-content --> 

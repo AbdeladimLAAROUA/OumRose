@@ -102,6 +102,32 @@ if(isset($_SESSION['eligibleToBox']) and $_SESSION['eligibleToBox']==0){
     #error{
       margin: 10px;
     }
+    .modal {
+        display:    none;
+        position:   fixed;
+        z-index:    1000;
+        top:        0;
+        left:       0;
+        height:     100%;
+        max-height : 100%;
+        width:      100%;
+        background: rgba( 255, 255, 255, .5 ) 
+                    url('http://sampsonresume.com/labs/pIkfp.gif') 
+                    50% 50% 
+                    no-repeat;
+    }
+
+    /* When the body has the loading class, we turn
+       the scrollbar off with overflow:hidden */
+    body.loading {
+        overflow: hidden;   
+    }
+
+    /* Anytime the body has the loading class, our
+       modal element will be visible */
+    body.loading .modal {
+        display: block;
+    }
     @media (max-width: 767px) {
       .coordonnee{
         height: 150px;
@@ -111,7 +137,7 @@ if(isset($_SESSION['eligibleToBox']) and $_SESSION['eligibleToBox']==0){
 
 </head>
 <body>
-
+<div class="modal"></div>
 <div class="register">
   <?php include('maBox-content.php'); ?>
 </div>

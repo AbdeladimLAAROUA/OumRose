@@ -3,7 +3,7 @@
 /*Local Kindy*/
 $servername = "localhost";
 $username = "root";
-$password = "S3cr3T%44";
+$password = "";
 $dbname="oumdev_leads";
 
 /*Local*/
@@ -230,6 +230,21 @@ function getUserByEmail($conn,$email){
   }
 }
 
+function getUser($conn,$id){
+  try
+  {  
+     $stmt = $conn->prepare("SELECT * FROM customer WHERE id=:id LIMIT 1");
+     $stmt->execute(array(':id'=>$id));
+     $userRow=$stmt->fetch(PDO::FETCH_ASSOC);
+
+    return $userRow;
+  }
+  catch(PDOException $e)
+  {
+      echo $e->getMessage();
+  }
+}
+
 
 function addRefBox($conn,$box,$email){
 
@@ -255,7 +270,7 @@ function deleteUser($conn, $id){
        }
 }
 
-function getAllCities($conn){
+function getAllCities1($conn){
   try
        {
           $stmt = $conn->prepare("SELECT * FROM ville");
@@ -273,7 +288,7 @@ function getAllCities($conn){
        }
        return  $villes;
 }
-function getCityById($conn,$id){
+function getCityById1($conn,$id){
       try
        {
           $stmt = $conn->prepare("SELECT * FROM ville where id=:id");

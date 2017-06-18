@@ -16,7 +16,7 @@ if (isset($_GET["id"])) {
       if ($result[0]["status"] == "approved") {
         $msg = "Your account has already been activated.";
         $msgType = "info";
-        header('Location:boxReady.php');
+        header('Location:login.php');
       } else {
         $sql = "UPDATE `customer` SET  `status` =  'approved' WHERE `id` = :id";
         $stmt = $conn->prepare($sql);
@@ -29,7 +29,7 @@ if (isset($_GET["id"])) {
           welcomeEmail($result[0],getBaby($conn,$result[0]));
         }
         
-        header('Location:boxReady.php');
+        header('Location:login.php');
       }
     } else {
       $msg = "No account found";

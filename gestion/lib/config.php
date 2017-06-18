@@ -1,3 +1,4 @@
+
 <?php
 // print_r(getConnexionParams());
 function db_connect(){

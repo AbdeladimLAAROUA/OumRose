@@ -3,8 +3,10 @@
   if($_POST['type_livraison']=="OX"){
 ?>
 <div class="container">
+
   <div class="row content5" >
     <div class="alert alert-info col-md-12 col-sm-12 col-xs-12 content">
+    <!-- <img src="img/loader.gif" id="gif" style="display: block; margin: 0 auto; width: 100%;"> -->
         <!-- <p><span style="font-size:10.5pt;line-height:107%;font-family:Helvetica, sans-serif;background-image:initial;background-attachment:initial;background-size:initial;background-origin:initial;background-clip:initial;background-position:initial;background-repeat:initial;"> -->
         <!-- <h3 class="text-center">
           Votre demande a été envoyée avec succès.
@@ -61,7 +63,7 @@
             <option value="0" disabled="" selected="">Ville</option>
             <?php  
               include('config.php');
-              $villes = getAllCities($conn);
+              $villes = getAllCities1($conn);
               $relais = getAllRelais($conn);
               foreach ($villes as $key => $infos) { 
             ?>
@@ -527,6 +529,13 @@ $(function() {
   });
 </script>
 
+
+<script type="text/javascript">
+  $("input[type='submit']").on("click", function(){
+    $body = $("body");
+     $body.addClass("loading");
+});
+</script>
 <script type="text/javascript" src="register/materialize.min.js"></script>
 <script type="text/javascript" src="register/jquery.validate.min.js"></script>
 <script type="text/javascript" src="register/additional-methods.min.js"></script>
