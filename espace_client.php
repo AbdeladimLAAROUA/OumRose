@@ -6,7 +6,8 @@
           <li class="active"><a href="#vtab1" data-toggle="tab">Commander ma box</a></li>
           <li><a href="#vtab2" data-toggle="tab">Mon profil</a></li>
           <li><a href="#vtab4" data-toggle="tab">Historique de mes commandes</a></li>
-          <li><a href="#vtab3" data-toggle="tab">Editer mon profil</a></li>
+          <li><a href="#" data-toggle="tab" OnClick="window.location.href='user/logout.php'">Déconnexion</a></li>
+         <!--  <li><a href="#vtab3" data-toggle="tab">Editer mon profil</a></li> -->
         </ul>
     </div>
     <div class="col-sm-9">
@@ -16,6 +17,11 @@
                     <div class="text-center boxReady">
                             <h2>
                                 <?php
+                                    
+                                    include('config.php');
+                                    $user['id']=$_SESSION['client_id'];
+                                    $baby=getBaby($conn,$user);
+                                    $_SESSION['eligibleToBox'] = fullEligible($conn,$user,$baby['naissance']);
                                     if($_SESSION['eligibleToBox']==0){
                                         echo "Chère ".$_SESSION['nom'].", vous n'êtes éligible à aucune box pour le moment <br/>
                                 <ul>

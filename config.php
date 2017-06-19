@@ -273,13 +273,21 @@ function deleteUser($conn, $id){
 function getAllCities1($conn){
   try
        {
-          $stmt = $conn->prepare("SELECT * FROM ville");
+          $stmt = $conn->prepare("SELECT * FROM ville order by name");
           $stmt->execute();
           $villes = array();
+          $villes1=array();
+          $villes2=array();
           if ($stmt->execute()) {
               while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                  $villes[] = $row;
+                  if($row['name']=='Casablanca' or $row['name']=='Rabat' or $row['name']=='Marrakech'){
+                    $villes1[] = $row;
+                  }else{
+                     $villes2[] = $row;
+                  }
               }
+              $villes=array_merge($villes1, $villes2);
+
           }
        }
        catch(PDOException $e)
@@ -374,4 +382,38 @@ function getAllQuartiers($conn){
        }
        return  $quartiers;
 }
+
+function fullEligible($conn,$user,$naissanceBebe){
+    
+    $boxList = getClientBox($conn,$user);
+    
+    $eligible='0';
+    
+    // Date d'aujourd'hui
+    $today = new DateTime(date('Y-m-d'));
+
+    /*//Ajout de 3 mois sur la date d'aujourd'hui
+    $dateInThreeMonth = $today->add(new DateInterval('P3M'));*/
+
+    // Date de naissance du bébé
+
+    $naissance= new DateTime($naissanceBebe);
+    
+
+    $interval = date_diff($today, $naissance);
+
+    $diffJours = $interval->format('%R%a days');
+    
+    if($diffJours>=7 && $diffJours<=146 && !in_array("1", $boxList)){
+       $eligible='1';
+    }
+    else if($diffJours<=-7 && $diffJours>=-122 and !in_array("2", $boxList)){
+        $eligible='2';
+    }
+    else if($diffJours<=-183 && $diffJours>=-305 and !in_array("3", $boxList)){
+         $eligible='3';
+    }
+    return $eligible;
+}
+
 ?> 

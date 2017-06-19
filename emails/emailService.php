@@ -534,9 +534,9 @@ EOT;
     //echo $message1;
     $semi_rand = md5(time());
         $mime_boundary = "Oumbx_Mpart_Bound_x{$semi_rand}x";
-        $headers= "Sender: khalid.essalhi8@gmail.com\n";
+        $headers= "Sender: contact@oumbox.com\n";
 //      $headers.= "Return-Path: lead@dclabs.fr\n";
-        $headers.= "From: khalid.essalhi8@gmail.com\n";
+        $headers.= "From: contact@oumbox.com\n";
 
         $headers .= "MIME-Version: 1.0\n" .
              "Content-Type: text/html; charset=UTF-8;format=flowed\n" .

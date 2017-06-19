@@ -18,7 +18,6 @@ if(isset($_POST['email']) and isset($_POST['password']) ){
 		$baby = getBaby($conn,$user);
 		$boxList = getClientBox($conn,$user);
 
-		print_r($boxList);
 		// Date d'aujourd'hui
 		$today = new DateTime(date('Y-m-d'));
 

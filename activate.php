@@ -24,10 +24,12 @@ if (isset($_GET["id"])) {
         $stmt->execute();
         $msg = "Your account has been activated.";
         $msgType = "success";
-        if($result[0]['id_leads']==0){
+         include('emails/emailService.php');
+          welcomeEmail($result[0],getBaby($conn,$result[0]));
+        /*if($result[0]['id_leads']==0){
           include('emails/emailService.php');
           welcomeEmail($result[0],getBaby($conn,$result[0]));
-        }
+        }*/
         
         header('Location:login.php');
       }

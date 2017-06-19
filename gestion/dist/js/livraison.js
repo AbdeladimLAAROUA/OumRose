@@ -5,7 +5,7 @@
   });
 
 
-  var table2,table3,tableOx,tableAll;
+  var table2,table3,table4,tableAll;
   $("#export_LD_cmd").on("click", function() {
     search = table2.rows( { filter : 'applied'} ).data();
 
@@ -22,7 +22,7 @@
       data : obj,
       async : false,
       success: function(data, textStatus, jqXHR) {
-        window.open('http://localhost:/Oumbox/gestion/downloads/'+data+'.xlsx','_blank' );
+        window.open('downloads/'+data+'.xlsx','_blank' );
       },
       error: function (jqXHR, textStatus, errorThrown) {
         console.log(jqXHR);
@@ -48,7 +48,7 @@
       data : obj,
       async : false,
       success: function(data, textStatus, jqXHR) {
-        window.open('http://localhost:/Oumbox/gestion/downloads/'+data+'.xlsx','_blank' );
+        window.open('downloads/'+data+'.xlsx','_blank' );
       },
       error: function (jqXHR, textStatus, errorThrown) {
         console.log(jqXHR);
@@ -59,7 +59,7 @@
   });
 
   $("#export_OX_cmd").on("click", function() {
-    search = tableOX.rows( { filter : 'applied'} ).data();
+    search = table4.rows( { filter : 'applied'} ).data();
 
     var arr = [];
     $.each(search, function(key, val) {
@@ -74,7 +74,7 @@
       data : obj,
       async : false,
       success: function(data, textStatus, jqXHR) {
-        window.open('http://localhost:/Oumbox/gestion/downloads/'+data+'.xlsx','_blank' );
+        window.open('downloads/'+data+'.xlsx','_blank' );
       },
       error: function (jqXHR, textStatus, errorThrown) {
         console.log(jqXHR);
@@ -163,7 +163,7 @@
           $("#table_commandesOX tbody").append(newRow);
           // console.log(val);
         });
-          tableOx = $("#table_commandesOX").DataTable();
+          table4 = $("#table_commandesOX").DataTable();
     }
   });
 

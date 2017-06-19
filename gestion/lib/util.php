@@ -1,6 +1,82 @@
 <?php
 session_start();
-include('config.php');
+//include('config.php');
+function db_connect(){
+	$params = getConnexionParams();
+
+	/*Local Kindy*/
+
+
+	/*$hote		='localhost';
+	$passDb 	='S3cr3T%44';
+	$bd 		='oumdev_leads';
+	$user		='root';*/
+
+	$hote		=$params['hote'];
+	$passDb 	=$params['passDb'];
+	$bd 		=$params['bd'];
+	$user		=$params['user'];
+
+
+	/*Local*/
+
+	$hote 		='localhost';
+	$passDb 	='';
+	$bd 		='oumdev_leads';
+	$user		='root';
+
+	/*Distant*/
+
+/*	$hote 		='localhost';
+	$passDb 	='oumdev';
+	$bd 		='id709237_oumdev_leads';
+	$user		='id709237_oumdev';*/
+
+	/*oumtest*/
+
+/*	$hote = "sql.k4mshost.odns.fr";
+	$user = "k4mshost_oumdev";
+	$passDb = "!!oumb0x";
+	$bd="k4mshost_oumdev";*/
+
+	$connexion = new PDO('mysql:host='.$hote.';dbname='.$bd.';charset=utf8', $user, $passDb);
+
+	return $connexion;
+}
+
+function getConnexionParams(){
+	$array = array();
+
+	/*Local Kindy*/
+
+/*	$array['hote']		= 'localhost';
+	$array['passDb'] 	= 'S3cr3T%44';
+	$array['bd'] 		= 'oumdev_leads';
+	$array['user']		= 'root';*/
+	
+	/*Local*/
+
+	$array['hote']		= 'localhost';
+	$array['passDb'] 	= '';
+	$array['bd'] 		= 'oumdev_leads';
+	$array['user']		= 'root';
+	
+	/*Distant*/
+
+/*	$array['hote']		= 'localhost';
+	$array['passDb'] 	= 'oumdev';
+	$array['bd'] 		= 'id709237_oumdev_leads';
+	$array['user']		= 'id709237_oumdev';*/
+	
+	/*oumtest*/
+	
+/*	$array['hote']		= 'sql.k4mshost.odns.fr';
+	$array['passDb'] 	= '!!oumb0x';
+	$array['bd'] 		= 'k4mshost_oumdev';
+	$array['user']		= 'k4mshost_oumdev';*/
+
+	return $array;
+}
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	if(isset($_REQUEST['methode'])){
 		if($_REQUEST['methode'] == 'getCustomerType'){
@@ -824,34 +900,13 @@ function createClient($client){
 
 
 		// ajouter une livraison 
+		$livraison['user']="admin";
+		$livraison['id_box']="2";
+		$livraison['idClient']=$idClient;
+		$livraison['status']='Livré';
+		$livraison['type']='CL';
 
-		//ajouter d'abord un produit
-		$product['id_box']="2";
-		$idProduct = addProduct2($product);
-
-		//ajouter ensuite une commande
-		
-		$commande['BC']="default";
-		$commande['product_id']  = $idProduct;
-		$commande['customer_id']  = $idClient;
-		$resultJS = addCommande($commande);
-		$result = json_decode($resultJS,true);
-		$id_commande = $result['inserted_id'];
-		$sql = "INSERT INTO livraison (commande_id, type) 
-		VALUES (:commande_id, 'OX')";
-		//Prepare our statement.
-		$statement = $connexion->prepare($sql);
-		
-		$statement->bindValue(':commande_id', $id_commande);
-		//Execute the statement and insert our values.
-		$inserted = $statement->execute();
-
-
-		if($inserted){
-			$array['status'] = 'success';
-		}else{
-			$array['status'] = 'failed';
-		}
+		addLivraison($livraison);
 
 	} catch (Exception $e) {
 		$array['result'] = 'ko';
@@ -1376,12 +1431,13 @@ function addLivraison($livraison){
 		$result = json_decode($resultJS,true);
 		$id_commande = $result['inserted_id'];
 		$sql = "INSERT INTO livraison (commande_id, type,status) 
-		VALUES (:commande_id, 'OX',:status)";
+		VALUES (:commande_id, :type,:status)";
 		//Prepare our statement.
 		$statement = $connexion->prepare($sql);
 		
 		$statement->bindValue(':commande_id', $id_commande);
 		$statement->bindValue(':status', $livraison['status']);
+		$statement->bindValue(':type', $livraison['type']);
 		//Execute the statement and insert our values.
 		$inserted = $statement->execute();
 		$array['result'] = 'success';

@@ -1,7 +1,7 @@
 <?php 
 session_start();
 if(isset($_SESSION['eligibleToBox']) and $_SESSION['eligibleToBox']==0){
-  header('Location:boxReady.php');
+  header('Location:espace.php');
 }
 
  ?>
@@ -61,10 +61,10 @@ if(isset($_SESSION['eligibleToBox']) and $_SESSION['eligibleToBox']==0){
   <!-- end: CSS -->
 
   <style type="text/css">
-  	#map {
-  	  height: 300px;
-  	  margin: 0.5rem 0 1rem 0;
-  	}
+    #map {
+      height: 300px;
+      margin: 0.5rem 0 1rem 0;
+    }
     h1{
       margin: 40px;
     }
@@ -128,6 +128,11 @@ if(isset($_SESSION['eligibleToBox']) and $_SESSION['eligibleToBox']==0){
     body.loading .modal {
         display: block;
     }
+    button.retour{
+        float: right;
+        background: #df5b79 ;
+        margin-left: 10px;
+      }
     @media (max-width: 767px) {
       .coordonnee{
         height: 150px;
@@ -137,7 +142,7 @@ if(isset($_SESSION['eligibleToBox']) and $_SESSION['eligibleToBox']==0){
 
 </head>
 <body>
-<div class="modal"></div>
+<div class="modal"></div>  
 <div class="register">
   <?php include('maBox-content.php'); ?>
 </div>

@@ -214,6 +214,7 @@ else if($_POST['type_livraison']=="LD"){
             </ul>
           </p>
           </span></p>
+          <button type="button" class="btn btn-primary retour"  OnClick="window.location.href='espace.php'">Retour</button>
       </div>
   </div>  
 </div>
@@ -248,6 +249,7 @@ else if($_POST['type_livraison']=="LD"){
           </ul>
         </p>
         </span></p>
+        <button type="button" class="btn btn-primary retour" OnClick="window.location.href='espace.php'">Retour</button>
     </div>
 
   </div>  
@@ -480,9 +482,11 @@ $(function() {
       type:'POST',
       data:livraison,
       success: function(data){
-        console.log(data);
+        $body = $("body");
+        $body.addClass("loading");
         $( ".content1" ).fadeOut( "slow", function() {
               $( ".content3" ).fadeIn("slow");
+              $body.removeClass("loading");
           });
       },
       error : function(data){
@@ -516,8 +520,11 @@ $(function() {
       type:'POST',
       data:livraison,
       success: function(data){
+         $body = $("body");
+        $body.addClass("loading");
         $( ".content2" ).fadeOut( "slow", function() {
               $( ".content4" ).fadeIn("slow");
+                $body.removeClass("loading");
           });
       },
       error : function(data){

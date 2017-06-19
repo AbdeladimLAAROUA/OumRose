@@ -165,7 +165,7 @@ h2 ul li:nth-child(4) {
     <!-- <a class="scrollToTop" href="#"><i class="fa fa-angle-up"></i></a> -->
     <?php include('header.php'); ?>
     <div class="container espace">
-        <h2>Espae client</h2>
+        <h2>Espace client</h2>
         <?php 
             if(isset($_SESSION["nom"])){
                 include('espace_client.php');
@@ -182,7 +182,7 @@ h2 ul li:nth-child(4) {
     <!-- end: Footer -->
 <script src="assets/js/jquery.min.js"></script>
 <!-- Latest compiled JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script type="text/javascript">
     $('.nav-tabs-dropdown').each(function(i, elm) {
         $(elm).text($(elm).next('ul').find('li.active a').text());
