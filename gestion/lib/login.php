@@ -1,14 +1,20 @@
 <?php
-session_start();
+// session_start();
 
-include('../config.php');
+include('./util.php');
 $info["success"]=true;
 $info["response"]='Tous les paramètres sont obligatoires';
 $info["mCode"]="0";
 if(isset($_POST['email']) and isset($_POST['password']) ){
-	  header('Location: ../');
+	$email = $_POST['email'];
+	$password = $_POST['password'];
+
+	$user 	= loginGestion($email,$password);
+	$res 	= json_decode($user);
+	// print_r($res->infos->id);
+
+	$_SESSION['ResultUser'] = $res->result;
+	$_SESSION['resultInfos'] 	= $res->infos;
+
+	header('Location: ../');
 }
-
-
-
-

@@ -1,3 +1,8 @@
+<style type="text/css">
+    .info{
+        color: rgb(255,97,173);
+    }
+</style>
 <p class="lead">Bienvenue dans votre espace client Mme <?php echo $_SESSION["nom"];?></p>
 <div class="row">
     <div class="col-sm-3">
@@ -119,13 +124,13 @@
                     <div class="col-xs-2">
                         <strong>Nom</strong>
                     </div>
-                    <div class="col-xs-4" id="nomView">
+                    <div class="col-xs-4 info" id="nomView">
                         <?php echo $client['result']['client'][0]['nom']; ?>
                     </div>
                     <div class="col-xs-3">
                         <strong>Prénom</strong>
                     </div>
-                    <div class="col-xs-3" id="prenomView">
+                    <div class="col-xs-3 info" id="prenomView">
                         <?php echo $client['result']['client'][0]['prenom']; ?>
                     </div>
                 </div>
@@ -133,13 +138,13 @@
                     <div class="col-xs-2">
                         <strong>E-mail</strong>
                     </div>
-                    <div class="col-xs-4">
+                    <div class="col-xs-4 info">
                         <?php echo $client['result']['client'][0]['email']; ?>
                     </div>
                     <div class="col-xs-3">
                         <strong>Date de naissance</strong>
                     </div>
-                    <div class="col-xs-3" id="naissanceView">
+                    <div class="col-xs-3 info" id="naissanceView">
                         <?php echo $client['result']['client'][0]['naissance']; ?>
                     </div>
                 </div>
@@ -147,13 +152,13 @@
                     <div class="col-xs-2">
                         <strong>GSM</strong>
                     </div>
-                    <div class="col-xs-4" id="gsmView">
+                    <div class="col-xs-4 info" id="gsmView">
                         <?php echo $client['result']['client'][0]['gsm']; ?>
                     </div>
                     <div class="col-xs-3">
                         <strong>Adresse</strong>
                     </div>
-                    <div class="col-xs-3" id="adresseView">
+                    <div class="col-xs-3 info" id="adresseView">
                         <?php echo $client['result']['client'][0]['adresse']; ?>
                     </div>
                 </div>
@@ -161,13 +166,13 @@
                     <div class="col-xs-2">
                         <strong>Ville</strong>
                     </div>
-                    <div class="col-xs-4" id="villeView">
+                    <div class="col-xs-4 info" id="villeView">
                         <?php echo $client['result']['client'][0]['ville']; ?>
                     </div>
                     <div class="col-xs-3">
                         <strong>Code Postal</strong>
                     </div>
-                    <div class="col-xs-3" id="cpView">
+                    <div class="col-xs-3 info" id="cpView">
                         <?php echo $client['result']['client'][0]['CP']; ?>
                     </div>
                 </div>
