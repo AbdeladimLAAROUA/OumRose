@@ -1,18 +1,10 @@
 var app = angular.module('oumbox', ['oumboxModule']);
 var oumboxModule = angular.module('oumboxModule',[]);
-oumboxModule.controller('oumboxController',function($scope,dataService) {
-
-    $scope.identifiant="11111";
-    $scope.user = {
-       Nom: "ESSALHI",
-       Prenom: "Khalid",
-       Id:"123"
-    };
-    
+oumboxModule.controller('oumboxController',function($scope,dataService) {   
+    $scope.aa='khalid';
     $scope.partenaires = null;
     dataService.getData(function(dataResponse) {
         $scope.partenaires = dataResponse['result'];
-        console.log($scope.partenaires);
     });
 });
 oumboxModule.controller('oumboxControllerMaBox',function($scope,SBListeVilleService) {
@@ -45,6 +37,10 @@ oumboxModule.service('dataService', function($http) {
            /* headers: {'Authorization': 'Token token=xxxxYYYYZzzz'}*/
         }).success(function(data){
             // With the data succesfully returned, call our callback
+            for (var i = 0; i < data['result'].length; i++) {
+              data['result'][i]['showName']='';
+              data['result'][i]['showAdresse']='';
+            }; 
             callbackFunc(data);
             initMap(data['result']);
         }).error(function(){
@@ -81,12 +77,17 @@ oumboxModule.directive('scrollOnClick', function() {
   var scrollOnClick = {
     restrict: 'A',
     link: function(scope, $elm,attrs) {
-      $elm.on('click', function() {
+        $elm.on('click', function() {
         $("body").animate({scrollTop: $("#map").offset().top}, "slow");
-        console.log(attrs.scrollOnClick);
+        //console.log(attrs.scrollOnClick);
         var lat =scope.partenaires[attrs.scrollOnClick].lat;
         var lng =scope.partenaires[attrs.scrollOnClick].lng; 
         var Name =scope.partenaires[attrs.scrollOnClick].Name; 
+        var adresse =scope.partenaires[attrs.scrollOnClick].adresse; 
+        var adresse =scope.partenaires[attrs.scrollOnClick].gsm; 
+        $(".Nom").text(Name);
+        $(".adresse").text(adresse);
+        //$(".gsm").text(gsm);
         locatePartner(lat,lng,Name);
       });
     }

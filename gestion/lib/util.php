@@ -1062,7 +1062,8 @@ function getAllShop(){
 	$array = array();
 	try {
 		$connexion = db_connect();
-		$resultats = $connexion->prepare("SELECT s.*,s.id as id_shop, v.name as ville_name FROM `shop` s INNER JOIN ville v ON s.Ville_id = v.id");
+		//$resultats = $connexion->prepare("SELECT s.*,s.id as id_shop, v.name as ville_name FROM `shop` s INNER JOIN ville v ON s.Ville_id = v.id");
+		$resultats = $connexion->prepare("SELECT * FROM `shop` where (type!='Points de retrait' or Name='Oumbox')");
 
 		$resultats->execute();
 

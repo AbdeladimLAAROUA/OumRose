@@ -164,7 +164,7 @@
       			                    <div class="mask">
       			                        <h2>Médecins</h2>
       			                        <p>A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart.</p>
-      			                        <a href="#" class="info">Localiser</a>
+      			                        <a href="partenaires.php" class="info">Localiser</a>
       			                    </div>
       			                </div>  
       			        		</div>
@@ -175,7 +175,7 @@
       			                    <div class="mask">
       			                        <h2>Cliniques</h2>
       			                        <p>A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart.</p>
-      			                        <a href="#" class="info">Localiser</a>
+      			                        <a href="partenaires.php" class="info">Localiser</a>
       			                    </div>
       			                </div>  
       			        		</div>

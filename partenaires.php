@@ -67,6 +67,8 @@
        * element that contains the map. */
       #map {
         height: 100%;
+        margin: 0px 100px;
+
       }
       /* Optional: Makes the sample page fill the window. */
       html, body {
@@ -76,6 +78,7 @@
       }
       .partenaires h1{
         margin: 30px;
+        color: white;
       }
       .searchPartner{
         margin: 10px 5px;
@@ -113,10 +116,32 @@
       .separ1{
         height: 40px;
         background: #6cc;
+        text-align: center;
+        color: white;
+        padding-bottom:100px;
+        padding-top:60px;
+        font-size: 30px;
+
       }
       .separ2{
         height: 40px;
         background: #c36eaa;
+        text-align: center;
+        color: white;
+        padding-bottom:100px;
+        padding-top:60px;
+      }
+      .Nom{
+        font-size: 30px;
+        margin-bottom: 10px;
+      }
+      td, th {
+          padding: 15px !important;
+      }
+      .btn-primary:hover,.btn-primary:active{
+          color: #fff;
+          background-color: #ef808c !important;
+          border-color: #ef808c !important;
       }
   /* for custom scrollbar for webkit browser*/
 
@@ -160,16 +185,16 @@
   <form class="searchPartner">
    
      <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-4">
            <label for="exampleInputName2">Nom</label>
         <input type="text" class="form-control" id="myInput" onkeyup="myFunction()" > 
         </div>
 
-       <div class="col-md-3">
+       <div class="col-md-4">
          <label for="exampleInputName2">Adresse</label>
          <input type="text" class="form-control" id="adresse" onkeyup="myFunction2()">
        </div>
-       <div class="col-md-3">
+       <!-- <div class="col-md-3">
          <label>Ville</label>
          <select id="ville" onchange="myFunction3()">
            <option>--</option>
@@ -178,14 +203,13 @@
            <option value="Tanger">Tanger</option>
          </select>
 
-       </div>
-       <div class="col-md-3">
+       </div> -->
+       <div class="col-md-4">
         <label>Type</label>
-         <select>
+         <select id="types" onchange="myFunction4()">
            <option>--</option>
-           <option>Médedin</option>
+           <option>Médecin</option>
            <option>Clinique</option>
-           <option>Point de retrait</option>
          </select>
        </div>       
      </div>
@@ -217,7 +241,7 @@
           <td>{{partenaire.adresse}}</td>
           <td>{{partenaire.fixe}}</td>
           <td>{{partenaire.type}}</td>
-          <td><button type="button" class="btn btn-primary" scroll-On-Click="{{ $index }}" > Localiser</button></td>
+          <td><button type="button" class="btn btn-primary locate" scroll-On-Click="{{ $index }}" > Localiser</button></td>
         </tr>       
       </tbody>
     </table>
@@ -228,14 +252,19 @@
   <div><iframe class="col-md-12"  height="500px" frameborder="0" scrolling="yes" marginheight="0" marginwidth="0" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d830.9964799260239!2d-7.625237066526706!3d33.57971483992227!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xda7d2b11a0f11d5%3A0x1ca6d976ea310f70!2sOUMBOX!5e0!3m2!1sfr!2sfr!4v1492113064260"></iframe></div>
 </div> -->
 
-<div class="separ1">Trouver notre partenaire le plus proche de vous </div>
+<div class="separ1">
+  Trouver notre partenaire le plus proche de vous 
+</div>
 <!-- <div class="col-md-6">
   nom : <br/>
   adresse : <br/>
   type : <br/>
 </div> -->
 <div id="map" ></div>
-<div class="separ2"></div>
+<div class="separ2">
+  <div class="Nom"></div>
+  <div class="adresse">77bis bd Abdelmoumen, Casablanca. Sur RDV</div>
+</div>
     
   
 <?php include('footer.php'); ?>
@@ -315,6 +344,7 @@ function myFunction2() {
     }       
   }
 }
+
 function myFunction3() {
 
   /*var ville, filter, table, tr, td, i;
@@ -335,6 +365,31 @@ function myFunction3() {
     }       
   }*/
 }
+function myFunction4() {
+  
+  var table, tr, td, i;
+
+  var e = document.getElementById("types");
+  var type = e.options[e.selectedIndex].text;
+  
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[3];
+    if (td) {
+      if (td.innerHTML==type) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+        console.log(td.innerHTML);
+      }
+    }       
+  }
+}
+
+
+
+
 </script>
     <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.5.2/angular.min.js"></script>
      <script async defer

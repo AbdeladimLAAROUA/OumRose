@@ -18,7 +18,7 @@
                 <!-- <li><a href="index.php"><img src="img/logo.png" class="logo"></a></li> -->
                 <li><a href="index.php" id="imgToggle2" style="padding: 0px;"><img src="img/logo.png" class="logo"></a></li>
                 <li><a href="oxProgramme.php">Programme</a></li>
-                <li><a href="#">Nos partenaires</a></li>
+                <li><a href="partenaires.php">Nos partenaires</a></li>
                 <li><a href="contact.php">Contactez-nous</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
