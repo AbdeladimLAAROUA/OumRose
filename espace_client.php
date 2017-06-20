@@ -1,4 +1,4 @@
-<p class="lead">Bienvenue dans votre espace client <?php echo $_SESSION["nom"];?></p>
+<p class="lead">Bienvenue dans votre espace client Mme <?php echo $_SESSION["nom"];?></p>
 <div class="row">
     <div class="col-sm-3">
         <a href="#" class="nav-tabs-dropdown btn btn-block btn-primary">Tabs</a>
@@ -6,8 +6,9 @@
           <li class="active"><a href="#vtab1" data-toggle="tab">Commander ma box</a></li>
           <li><a href="#vtab2" data-toggle="tab">Mon profil</a></li>
           <li><a href="#vtab4" data-toggle="tab">Historique de mes commandes</a></li>
+          <li><a href="#vtab3" data-toggle="tab">Editer mon profil</a></li>
           <li><a href="#" data-toggle="tab" OnClick="window.location.href='user/logout.php'">Déconnexion</a></li>
-         <!--  <li><a href="#vtab3" data-toggle="tab">Editer mon profil</a></li> -->
+          
         </ul>
     </div>
     <div class="col-sm-9">
@@ -118,13 +119,13 @@
                     <div class="col-xs-2">
                         <strong>Nom</strong>
                     </div>
-                    <div class="col-xs-4">
+                    <div class="col-xs-4" id="nomView">
                         <?php echo $client['result']['client'][0]['nom']; ?>
                     </div>
                     <div class="col-xs-3">
                         <strong>Prénom</strong>
                     </div>
-                    <div class="col-xs-3">
+                    <div class="col-xs-3" id="prenomView">
                         <?php echo $client['result']['client'][0]['prenom']; ?>
                     </div>
                 </div>
@@ -138,7 +139,7 @@
                     <div class="col-xs-3">
                         <strong>Date de naissance</strong>
                     </div>
-                    <div class="col-xs-3">
+                    <div class="col-xs-3" id="naissanceView">
                         <?php echo $client['result']['client'][0]['naissance']; ?>
                     </div>
                 </div>
@@ -146,13 +147,13 @@
                     <div class="col-xs-2">
                         <strong>GSM</strong>
                     </div>
-                    <div class="col-xs-4">
+                    <div class="col-xs-4" id="gsmView">
                         <?php echo $client['result']['client'][0]['gsm']; ?>
                     </div>
                     <div class="col-xs-3">
                         <strong>Adresse</strong>
                     </div>
-                    <div class="col-xs-3">
+                    <div class="col-xs-3" id="adresseView">
                         <?php echo $client['result']['client'][0]['adresse']; ?>
                     </div>
                 </div>
@@ -160,13 +161,13 @@
                     <div class="col-xs-2">
                         <strong>Ville</strong>
                     </div>
-                    <div class="col-xs-4">
+                    <div class="col-xs-4" id="villeView">
                         <?php echo $client['result']['client'][0]['ville']; ?>
                     </div>
                     <div class="col-xs-3">
                         <strong>Code Postal</strong>
                     </div>
-                    <div class="col-xs-3">
+                    <div class="col-xs-3" id="cpView">
                         <?php echo $client['result']['client'][0]['CP']; ?>
                     </div>
                 </div>
@@ -183,16 +184,24 @@
                             </thead>
                                 <?php
                                     foreach ($client['result']['baby'] as $key => $value) {
-                                        $row = '<tr><td>'.$value['naissance'].'</td><td>'.$value['sexe'].'</td><td>'.$value['prenom'].'</td><td>'.$value['MATERNITE'].'</td></tr>';
+                                        $row = '<tr><td id="naissance_bebe_view">'.$value['naissance'].'</td><td id="naissance_sexe_view">'.$value['sexe'].'</td><td id="naissance_prenom_view">'.$value['prenom'].'</td><td id="naissance_MATERNITE_view">'.$value['MATERNITE'].'</td></tr>';
                                         echo $row;
                                     }
                                 ?>
                         </table>
                 </div>
             </div>
-            <div role="tabpanel" class="tab-pane fade in" id="vtab3">
+            <div role="tabpanel" class="tab-pane fade in" id="vtab3" >
                 <h3>Editer Mon profil</h3>
-                <form id="updateForm" action="user/edit_user.php" method="post">
+                
+                <form id="updateForm" >
+                    <div id="alert_recover_ok_edit_maman" class="alert alert-success hide-me">
+                      La modification a été effectué avec succès
+                    </div>
+                    <div id="alert_recover_ko_edit_maman" class="alert alert-warning hide-me">
+                      Quelque chose a mal tourné
+                    </div>
+                   	<input type="hidden" id="client_id" name="client_id"  value="<?php echo $client['result']['client'][0]['id']; ?>" />
                     <div class="row edit-client-div">
                         <div class="col-xs-2">
                             <strong>Nom</strong>
@@ -314,13 +323,21 @@
                             </thead>
                                 <?php
                                     foreach ($client['result']['baby'] as $key => $value) {
+                                        $readOnly='';
+                                        $today = new DateTime(date('Y-m-d'));
+                                        $naissance =  new DateTime($value['naissance']);
+                                        $interval = date_diff($today, $naissance);
+                                        $diffJours =  $interval->format('%R%a jours ');
+                                        if($diffJours<-15){
+                                            $readOnly='readOnly';
+                                        }
                                         $row = '<tr>
                                         <td id="naissance_'.$value['id'].'" data-naissance="'.$value['naissance'].'">'.$value['naissance'].'</td>
                                         <td id="sexe_'.$value['id'].'" data-sexe="'.$value['sexe'].'">'.$value['sexe'].'</td>
                                         <td id="prenom_'.$value['id'].'" data-prenom="'.$value['prenom'].'">'.$value['prenom'].'</td>
                                         <td id="gyneco_'.$value['id'].'" data-gyneco="'.$value['GYNECO'].'">'.$value['GYNECO'].'</td>
                                         <td id="maternite_'.$value['id'].'" data-MATERNITE="'.$value['MATERNITE'].'">'.$value['MATERNITE'].'</td>
-                                        <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-default btn-xs" data-type="edit" data-id="'.$value['id'].'" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></td>
+                                        <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button '. $readOnly .' class="btn btn-default btn-xs" data-type="edit" data-id="'.$value['id'].'"  data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></td>
                                         </tr>';
                                         echo $row;
                                     }
@@ -383,7 +400,7 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <input id="edit_naissance" class="form-control" type="text" placeholder="Date de naissance / Accouchement">
+                    <input id="edit_naissance" <?php echo $readOnly; ?> class="form-control" type="text" placeholder="Date de naissance / Accouchement">
                 </div>
                 <div class="form-group">
                     <input id="edit_gyneco" class="form-control" type="text" placeholder="Gynécologue">
@@ -513,7 +530,6 @@
             type: "POST",
             data : obj,
             success: function(data, textStatus, jqXHR) {
-              console.log(data);
               if(data.result == 'success'){
                 $('#alert_recover_ok_edit_baby').css('visibility','visible').fadeIn(1500);
 
@@ -527,6 +543,14 @@
                     $('#prenom_'+baby.id).data('prenom',baby.prenom);
                     $('#gyneco_'+baby.id).data('gyneco',baby.gyneco);
                     $('#maternite_'+baby.id).data('maternite',baby.maternite);
+
+                    console.log($("#naissance_MATERNITE_view").val());
+                    $("#naissance_MATERNITE_view").text(baby.maternite);
+                    $("#naissance_naissance_view").text(baby.naissance);
+                    $("#naissance_prenom_view").text(baby.prenom);
+                    $("#naissance_sexe_view").text(baby.sexe);
+                    
+
 
                 setTimeout(function(){
                     $('#edit').modal('toggle');
@@ -548,4 +572,39 @@
             }
         }); 
     }
+
+    $('#updateForm').submit(function(event){
+		event.preventDefault();
+		
+		$.ajax({
+			url: 'user/edit_user.php',
+			method: 'POST',
+			data: {
+				id:$('#client_id').val(),
+				nom:$('#nom').val(),
+				prenom:$('#prenom').val(),
+				naissance:$('#naissance').val(),
+				gsm:$('#gsm').val(),
+				adresse:$('#adresse').val(),
+				ville:$('#ville').val(),
+				cp:$('#cp').val()
+			},
+			dataType: 'json',
+			success: function(data){
+                $('#alert_recover_ok_edit_maman').css('visibility','visible').fadeIn(1500);
+                $("#nomView").text($('#nom').val());
+                $("#prenomView").text($('#prenom').val());
+                $("#naissanceView").text($('#naissance').val());
+                $("#gsmView").text($('#gsm').val());
+                $("#adresseView").text($('#adresse').val());
+                $("#villeView").text($('#ville').val());
+				$("#cpView").text($('#cp').val());
+			},
+			error: function(data){
+                 $('#alert_recover_ko_edit_baby').css('visibility','visible').fadeIn(1500);
+				console.log(data);	
+			}
+		});
+	});
+
 </script>

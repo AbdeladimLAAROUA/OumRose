@@ -191,11 +191,14 @@ h2 ul li:nth-child(4) {
     $('.nav-tabs-dropdown').on('click', function(e) {
         e.preventDefault();
         $(e.target).toggleClass('open').next('ul').slideToggle();
+
     });
 
     $('#nav-tabs-wrapper a[data-toggle="tab"]').on('click', function(e) {
         e.preventDefault();
         $(e.target).closest('ul').hide().prev('a').removeClass('open').text($(this).text());
+         $('#alert_recover_ok_edit_maman').css('visibility','hidden');
+         $('#alert_recover_ko_edit_maman').css('visibility','hidden');
     });
 </script>
 </body>

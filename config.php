@@ -416,4 +416,54 @@ function fullEligible($conn,$user,$naissanceBebe){
     return $eligible;
 }
 
+function updateClient_u($connexion, $client){
+  $array = array();
+
+  $array['id'] = $client['id'];
+  $array['nom'] = $client['nom'];
+  $array['prenom'] = $client['prenom'];
+  $array['gsm'] = $client['gsm'];
+  $array['naissance'] = $client['naissance'];
+  $array['adresse'] = $client['adresse'];
+  $array['cp'] = $client['cp'];
+  //$array['type'] = $client['type'];
+  //$array['Ville_id'] = $client['ville'];
+
+
+
+  /*$array['idBebe'] = $baby['id'];
+  $array['prenomBebe'] = $baby['prenomBebe'];
+  */
+
+
+  try {
+
+    $stmt = $connexion->prepare("UPDATE customer SET nom = :nom,prenom = :prenom,gsm = :gsm,naissance = :naissance,adresse = :adresse,CP = :cp WHERE id = :id ");
+    
+    $stmt->bindValue(':id', $client['id']);
+    $stmt->bindValue(':nom', $client['nom']);
+    $stmt->bindValue(':prenom', $client['prenom']);
+    $stmt->bindValue(':gsm', $client['gsm']);
+    $stmt->bindValue(':naissance', $client['naissance']);
+    $stmt->bindValue(':adresse', $client['adresse']);
+    $stmt->bindValue(':cp', $client['cp']);
+    
+
+    if($stmt->execute()) {
+      $array['result'] = 'success';
+    } else {
+      $array['result'] = 'failed1';
+    }
+  
+
+    
+  } catch (Exception $e) {
+    $array['result'] = 'ko';
+  }
+  
+  $connexion = null;
+
+  return json_encode($array); 
+}
+
 ?> 
