@@ -4,40 +4,10 @@ session_start();
 function db_connect(){
 	$params = getConnexionParams();
 
-	/*Local Kindy*/
-
-
-	/*$hote		='localhost';
-	$passDb 	='S3cr3T%44';
-	$bd 		='oumdev_leads';
-	$user		='root';*/
-
 	$hote		=$params['hote'];
 	$passDb 	=$params['passDb'];
 	$bd 		=$params['bd'];
 	$user		=$params['user'];
-
-
-	/*Local*/
-
-	$hote 		='localhost';
-	$passDb 	='';
-	$bd 		='oumdev_leads';
-	$user		='root';
-
-	/*Distant*/
-
-/*	$hote 		='localhost';
-	$passDb 	='oumdev';
-	$bd 		='id709237_oumdev_leads';
-	$user		='id709237_oumdev';*/
-
-	/*oumtest*/
-
-/*	$hote = "sql.k4mshost.odns.fr";
-	$user = "k4mshost_oumdev";
-	$passDb = "!!oumb0x";
-	$bd="k4mshost_oumdev";*/
 
 	$connexion = new PDO('mysql:host='.$hote.';dbname='.$bd.';charset=utf8', $user, $passDb);
 
@@ -49,17 +19,17 @@ function getConnexionParams(){
 
 	/*Local Kindy*/
 
-/*	$array['hote']		= 'localhost';
+	$array['hote']		= 'localhost';
 	$array['passDb'] 	= 'S3cr3T%44';
 	$array['bd'] 		= 'oumdev_leads';
-	$array['user']		= 'root';*/
+	$array['user']		= 'root';
 	
 	/*Local*/
 
-	$array['hote']		= 'localhost';
+/*	$array['hote']		= 'localhost';
 	$array['passDb'] 	= '';
 	$array['bd'] 		= 'oumdev_leads';
-	$array['user']		= 'root';
+	$array['user']		= 'root';*/
 	
 	/*Distant*/
 
@@ -171,13 +141,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			echo addLivraison($_REQUEST['livraison']);
 		}else if($_REQUEST['methode'] == 'updateLivraison'){
 			echo updateLivraison($_REQUEST['livraison']);
-
 		}else if($_REQUEST['methode'] == 'isUserAlreadyExist'){
 			echo isUserAlreadyExist($_REQUEST['email']);
-
 		}else if($_REQUEST['methode'] == 'getCurrentUser'){
 			echo getCurrentUser();
-
 		}else if($_REQUEST['methode'] == 'getCommandesLD'){
 			echo getCommandesLD();
 		}else if($_REQUEST['methode'] == 'getCommandesOX'){
@@ -209,6 +176,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 // $json_test = '{"refProduct": "fd", "id_box": "2", "id_shop": "1"}';
 // $res = json_decode($json_test);
 // echo addProduct($res);
+
+function loginGestion($email,$password){
+	$array = array();
+	try {
+		$connexion = db_connect();
+		$resultats = $connexion->prepare("SELECT * FROM customer WHERE email=:email and password =:password");
+
+    	$resultats->bindParam(':email', $email);
+    	$resultats->bindParam(':password', $password);
+
+		$resultats->execute();
+
+		$resultats->setFetchMode(PDO::FETCH_OBJ);
+		$resultat = $resultats->fetch();
+
+		if($resultats->rowCount() > 0){
+			$_SESSION['UserId'] = $resultat->id;
+			$_SESSION['name'] 	= $resultat->nom;
+			$array['result'] 	= true;
+			$array['infos'] 	= $resultat;
+		}else{
+			$array['result'] 	= false;
+			$array['infos'] 	= 'Not_Found';
+		}
+	} catch (Exception $e) {
+		$array['result'] 	= false;
+		$array['infos'] 	= 'Exception';
+	}
+	
+	$connexion = null;
+	return json_encode($array);	
+}
 
 function getAllCities(){
 	$array = array();

@@ -1,5 +1,5 @@
 <?php
-  // header('Location: ./');
+  session_start();
 ?>
 <!DOCTYPE html>
 <html>
@@ -20,7 +20,12 @@
   <link rel="stylesheet" href="./dist/css/AdminLTE.min.css">
   <!-- iCheck -->
   <link rel="stylesheet" href="./plugins/iCheck/square/blue.css">
-
+  <style type="text/css">
+    .error_login{
+      color: red;
+      text-align: center;;
+    }
+  </style>
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -36,7 +41,11 @@
   <!-- /.login-logo -->
   <div class="login-box-body">
     <p class="login-box-msg">Identifiez-vous pour commencer votre session</p>
-
+      <?php
+        if(isset($_SESSION['ResultUser']) && !$_SESSION['ResultUser']) {
+          echo "<div class='error_login'><h4>Invalide</h4></div>";
+        }
+      ?>
     <form action="./lib/login.php" method="post">
       <div class="form-group has-feedback">
         <input name="email" type="email" class="form-control" placeholder="E-mail">
@@ -48,14 +57,14 @@
       </div>
       <div class="row">
         <div class="col-xs-8">
-          <div class="checkbox icheck">
+<!--           <div class="checkbox icheck">
             <label>
               <input type="checkbox"> Se souvenir de moi
             </label>
-          </div>
+          </div> -->
         </div>
         <!-- /.col -->
-        <div class="col-xs-4">
+        <div class="col-xs-12">
           <button type="submit" class="btn btn-primary btn-block btn-flat">Connexion</button>
         </div>
         <!-- /.col -->

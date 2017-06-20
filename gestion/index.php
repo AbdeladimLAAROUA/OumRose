@@ -1,3 +1,9 @@
+<?php
+session_start();
+if(!isset($_SESSION['UserId'])){
+  header('Location: ./login.php');
+}
+?>
 <!DOCTYPE html>
 <!--
 This is a starter template page. Use this page to start your new project from
@@ -142,6 +148,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <li><a href="#">Liste des Livraisons</a></li>
           </ul>
         </li>
+        <li><a href="lib/logout.php"><i class="fa fa-link"></i> <span>Déconexion</span></a></li>
       </ul>
       <!-- /.sidebar-menu -->
     </section>

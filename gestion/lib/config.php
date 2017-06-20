@@ -1,43 +1,13 @@
-
 <?php
-// print_r(getConnexionParams());
+
 function db_connect(){
 	$params = getConnexionParams();
-
-	/*Local Kindy*/
-
-
-	/*$hote		='localhost';
-	$passDb 	='S3cr3T%44';
-	$bd 		='oumdev_leads';
-	$user		='root';*/
 
 	$hote		=$params['hote'];
 	$passDb 	=$params['passDb'];
 	$bd 		=$params['bd'];
 	$user		=$params['user'];
 
-
-	/*Local*/
-
-	$hote 		='localhost';
-	$passDb 	='';
-	$bd 		='oumdev_leads';
-	$user		='root';
-
-	/*Distant*/
-
-/*	$hote 		='localhost';
-	$passDb 	='oumdev';
-	$bd 		='id709237_oumdev_leads';
-	$user		='id709237_oumdev';*/
-
-	/*oumtest*/
-
-/*	$hote = "sql.k4mshost.odns.fr";
-	$user = "k4mshost_oumdev";
-	$passDb = "!!oumb0x";
-	$bd="k4mshost_oumdev";*/
 
 	$connexion = new PDO('mysql:host='.$hote.';dbname='.$bd.';charset=utf8', $user, $passDb);
 
@@ -49,17 +19,17 @@ function getConnexionParams(){
 
 	/*Local Kindy*/
 
-/*	$array['hote']		= 'localhost';
+	$array['hote']		= 'localhost';
 	$array['passDb'] 	= 'S3cr3T%44';
 	$array['bd'] 		= 'oumdev_leads';
-	$array['user']		= 'root';*/
+	$array['user']		= 'root';
 	
 	/*Local*/
 
-	$array['hote']		= 'localhost';
+/*	$array['hote']		= 'localhost';
 	$array['passDb'] 	= '';
 	$array['bd'] 		= 'oumdev_leads';
-	$array['user']		= 'root';
+	$array['user']		= 'root';*/
 	
 	/*Distant*/
 
