@@ -14,7 +14,7 @@ if(isset($_POST['email']) and isset($_POST['password']) ){
 	// print_r($res->infos->id);
 
 	$_SESSION['ResultUser'] = $res->result;
-	$_SESSION['resultInfos'] 	= $res->infos;
+	$_SESSION['resultInfos']= $res->infos;
 
 	header('Location: ../');
 }

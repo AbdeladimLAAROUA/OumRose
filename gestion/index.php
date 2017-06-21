@@ -97,9 +97,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <ul class="sidebar-menu">
         <li class="header">Menu</li>
         <!-- Optionally, you can add icons to the links -->
-        <li class="active"><a href="#main"><i class="fa fa-link"></i> <span>Tableau de bord</span></a></li>
-       
+        <?php if ($_SESSION['role_a']=='admin'){
+        ?>
+          <li class="active"><a href="#main"><i class="fa fa-link"></i> <span>Tableau de bord</span></a></li>
+        <?php } ?>
        <!--  <li><a href="#listClient"><i class="fa fa-link"></i> <span>Clients</span></a></li> -->
+        
         <li><a href="#gestionClient"><i class="fa fa-link"></i> <span>Clients</span></a></li>
         
 
@@ -117,6 +120,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           </ul>
         </li> -->
 
+         <?php if ($_SESSION['role_a']=='admin') { ?>
         <li class="treeview">
           <a href=""><i class="fa fa-link"></i> <span>Commandes</span>
             <span class="pull-right-container">
@@ -130,13 +134,21 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <li><a href="#commandeOX">Livraison Oumbox</a></li>
           </ul>
         </li>
+        <?php } ?>
        
-
-        <li><a href="#listBaby"><i class="fa fa-link"></i> <span>Liste des bébés</span></a></li>
+        <?php if ($_SESSION['role_a']=='admin') { ?>
+          <li><a href="#listBaby"><i class="fa fa-link"></i> <span>Liste des bébés</span></a></li>
+        <?php } ?>
+         
+         <?php if ($_SESSION['role_a']=='admin') { ?>
         <li><a href="#listArticle"><i class="fa fa-link"></i> <span>Liste des articles</span></a></li>
-        <li><a href="#gestionBlog"><i class="fa fa-link"></i> <span>Gestion du Blog</span></a></li>
-        
+        <?php } ?>
 
+        <?php if ($_SESSION['role_a']=='admin') { ?>
+        <li><a href="#gestionBlog"><i class="fa fa-link"></i> <span>Gestion du Blog</span></a></li>
+        <?php } ?>
+
+        <?php if ($_SESSION['role_a']=='admin2') { ?>
         <li class="treeview">
           <a href=""><i class="fa fa-link"></i> <span>Achats</span>
             <span class="pull-right-container">
@@ -148,6 +160,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <li><a href="#">Liste des Livraisons</a></li>
           </ul>
         </li>
+        <?php } ?>
         <li><a href="lib/logout.php"><i class="fa fa-link"></i> <span>Déconexion</span></a></li>
       </ul>
       <!-- /.sidebar-menu -->

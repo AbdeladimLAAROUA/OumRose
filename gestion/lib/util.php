@@ -19,17 +19,17 @@ function getConnexionParams(){
 
 	/*Local Kindy*/
 
-	$array['hote']		= 'localhost';
+	/*$array['hote']		= 'localhost';
 	$array['passDb'] 	= 'S3cr3T%44';
 	$array['bd'] 		= 'oumdev_leads';
 	$array['user']		= 'root';
-	
+	*/
 	/*Local*/
 
-/*	$array['hote']		= 'localhost';
+	$array['hote']		= 'localhost';
 	$array['passDb'] 	= '';
 	$array['bd'] 		= 'oumdev_leads';
-	$array['user']		= 'root';*/
+	$array['user']		= 'root';
 	
 	/*Distant*/
 
@@ -159,6 +159,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			echo getAllCommandeByCus($_REQUEST['id_cus']);
 		}else if($_REQUEST['methode'] == 'updateBaby'){
 			echo updateBaby($_REQUEST['baby']);
+		}else if($_REQUEST['methode'] == 'searchUser'){
+			echo searchUser($_REQUEST['user']);
 		}else{
 			echo json_encode(array('result'=>'method_not_exist'));
 		}
@@ -181,7 +183,7 @@ function loginGestion($email,$password){
 	$array = array();
 	try {
 		$connexion = db_connect();
-		$resultats = $connexion->prepare("SELECT * FROM customer WHERE email=:email and password =:password");
+		$resultats = $connexion->prepare("SELECT * FROM user WHERE email=:email and password =:password");
 
     	$resultats->bindParam(':email', $email);
     	$resultats->bindParam(':password', $password);
@@ -194,6 +196,7 @@ function loginGestion($email,$password){
 		if($resultats->rowCount() > 0){
 			$_SESSION['UserId'] = $resultat->id;
 			$_SESSION['name'] 	= $resultat->nom;
+			$_SESSION['role_a'] = $resultat->role;
 			$array['result'] 	= true;
 			$array['infos'] 	= $resultat;
 		}else{
@@ -605,7 +608,6 @@ function getAllClient2(){
 	$connexion = null;
 	return json_encode($array);	
 }
-
 
 
 function getClientWithEligibility(){
@@ -2176,6 +2178,43 @@ function eligible($naissanceBebe){
         }
         return $eligible;
 }
+
+
+function searchUser($user){
+	$array = array();
+	try {
+		$connexion = db_connect();
+		$resultats = $connexion->prepare("SELECT c.id,c.nom, c.prenom, c.email, c.gsm,YEAR(NOW()) - YEAR(c.naissance) as age, c.adresse, ville FROM customer c where email=:email");
+		$resultats->bindParam(':email', $user['email']);
+		$resultats->execute();
+
+		$resultats->setFetchMode(PDO::FETCH_OBJ);
+		$resultat = $resultats->fetchAll();
+		
+		//Récupérer la liste des commande
+		$sql =  "SELECT c.id,id_box
+				from customer c, commande co, product p, livraison l 
+				where c.id=co.customer_id and p.id=co.product_id and  l.commande_id=co.id ";
+		$commandes = $connexion->prepare($sql);
+
+		$commandes->execute();
+
+		$commandes->setFetchMode(PDO::FETCH_OBJ);
+		$commandes = $commandes->fetchAll();
+	
+		$array['commandes'] = $commandes;
+		
+		$array['result'] = $resultat;
+
+	} catch (Exception $e) {
+		$array['result'] = 0;
+		$array['commandes'] = 0;
+	}
+	
+	$connexion = null;
+	return json_encode($array);	
+}
+
 
 
 

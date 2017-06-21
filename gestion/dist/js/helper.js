@@ -47,7 +47,7 @@ app.config(function($routeProvider) {
         templateUrl : "pages/views/gestionBlog.html"
     })
     .when("/gestionClient", {
-        templateUrl : "pages/views/listClient_2.html"
+        templateUrl : "pages/views/listClient_2.php"
     })    
     .otherwise({
         redirectTo: '/main'

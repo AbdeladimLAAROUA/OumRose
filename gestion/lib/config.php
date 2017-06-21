@@ -19,17 +19,17 @@ function getConnexionParams(){
 
 	/*Local Kindy*/
 
-	$array['hote']		= 'localhost';
+/*	$array['hote']		= 'localhost';
 	$array['passDb'] 	= 'S3cr3T%44';
 	$array['bd'] 		= 'oumdev_leads';
-	$array['user']		= 'root';
+	$array['user']		= 'root';*/
 	
 	/*Local*/
 
-/*	$array['hote']		= 'localhost';
+	$array['hote']		= 'localhost';
 	$array['passDb'] 	= '';
 	$array['bd'] 		= 'oumdev_leads';
-	$array['user']		= 'root';*/
+	$array['user']		= 'root';
 	
 	/*Distant*/
 

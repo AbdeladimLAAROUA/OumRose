@@ -1,3 +1,6 @@
+<?php 
+session_start();
+ ?>
 <!-- DataTables -->
 <link rel="stylesheet" href="plugins/datatables/dataTables.bootstrap.css">
 <!-- bootstrap datepicker -->
@@ -11,10 +14,20 @@
 }
 </style>
 <!-- Content Header (Page header) -->
+
+
+
 <section class="content-header">
   <h1>
     Oumbox
+
+    <?php if ($_SESSION['role_a']=='admin') { ?>
     <small>Liste des clients</small>
+    <?php } ?>
+
+    <?php if ($_SESSION['role_a']=='user') { ?>
+    <small>Espace livreur</small>
+     <?php } ?>
   </h1>
   <ol class="breadcrumb">
     <li><a href="#main"><i class="fa fa-dashboard"></i>Tableau de bord</a></li>
@@ -22,7 +35,9 @@
   </ol>
 </section>
 
+
 <!-- Main content -->
+ <?php if ($_SESSION['role_a']=='admin') { ?>
 <section class="content">
   <div class="row">
     <div class="col-xs-12">
@@ -77,7 +92,107 @@
     <!-- /.col -->
   </div>
   <!-- /.row -->
-  
+ <?php } ?>
+
+<?php if ($_SESSION['role_a']=='user') { ?>
+<section class="content">
+
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="box">
+        <div class="box-header">
+          <h3 class="box-title">Liste des Clients</h3>
+        </div>
+
+       
+        <div class="form-group has-feedback col-xs-12 col-md-3 col-sm-6">
+          <div class="input-group">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-envelope"></i>
+              </div>
+            <input placeholder="email" id="email_search" type="text" class="form-control infos_client" data-required-error="veuillez renseigner ce champ" data-error="E-mail invalid" required>
+            </div>
+            <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+            <div class="help-block with-errors"></div>
+          </div>
+        </div><div class="form-group has-feedback col-xs-12 col-md-3 col-sm-6">
+          <div class="input-group">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-user"></i>
+              </div>
+            <input placeholder="Nom" id="nom_search" type="text" class="form-control infos_client" data-required-error="veuillez renseigner ce champ" data-error="E-mail invalid" required>
+            </div>
+            <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+            <div class="help-block with-errors"></div>
+          </div>
+        </div><div class="form-group has-feedback col-xs-12 col-md-3 col-sm-6">
+          <div class="input-group">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-user"></i>
+              </div>
+            <input placeholder="Prénom" id="prenom_search" type="text" class="form-control infos_client" data-required-error="veuillez renseigner ce champ" data-error="E-mail invalid" required>
+            </div>
+            <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+            <div class="help-block with-errors"></div>
+          </div>
+        </div><div class="form-group has-feedback col-xs-12 col-md-3 col-sm-6">
+          <div class="input-group">
+            <div class="input-group">
+              <div class="input-group-addon">
+                <i class="fa fa-phone"></i>
+              </div>
+            <input placeholder="GSM" id="gsm_search" type="text" class="form-control infos_client" data-required-error="veuillez renseigner ce champ" data-error="E-mail invalid" required>
+            </div>
+            <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+            <div class="help-block with-errors"></div>
+          </div>
+        </div>
+
+        <!-- /.box-header -->
+        <div class="box-body">
+          <div style="margin-bottom:20px;">
+            <button id="createUserByAdmin" type="button" class="btn btn-success" data-type="createUser" data-toggle="modal" data-target="#createUser"><span class="glyphicon"></span> Nouveau client</button>
+            <button id="search" type="button" class="btn btn-primary" data-type="" data-toggle="" data-target="#createUserr">
+              <span class="glyphicon"></span>
+              Rechercher
+            </button>
+          </div>
+          <table id="table_clients_search" class="table table-bordered table-striped">
+            <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nom</th>
+              <th>GSM</th>
+              <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+              
+            </tbody>
+            <tfoot>
+            <tr>
+              <th>ID</th>
+              <th>Nom</th>
+              <th>GSM</th>
+              <th width="10%">Actions</th>
+            </tr>
+            </tfoot>
+          </table>
+        </div>
+        <!-- /.box-body -->
+      </div>
+      <!-- /.box -->
+    </div>
+    <!-- /.col -->
+  </div>
+  <!-- /.row -->
+ <?php } ?>
+
+
+
 <div class="modal fade" id="view" tabindex="-1" role="dialog" aria-labelledby="view" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -92,6 +207,7 @@
         <div id="alert_recover_box_ko" class="alert alert-warning hide-me">
           Quelque chose a mal tourné
         </div>
+        <input type="hidden" id="roleInput" value="<?php echo $_SESSION['role_a']; ?>">
         <div class="row">
           <div class="col-xs-3">
             <div class="form-group">
@@ -250,14 +366,14 @@
         <form id="AddCommandeForm" hidden>
           <div class="row">
             <div class="col-xs-12">
-              <button type="submit" class="btn btn-success btn-lg" style="width: 100%;margin-bottom: 10px;"><span class="glyphicon"></span>Commander la box</button>
+              <button type="submit" class="btn btn-success btn-lg addCommandeButton" style="width: 100%;margin-bottom: 10px;"><span class="glyphicon"></span>Commander la box</button>
             </div>
           </div>
         </form>
 
       </div>
       <div class="modal-footer ">
-        <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>Fermer</button>
+        <button type="button" class="btn btn-default " data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>Fermer</button>
       </div>
     </div>
     <!-- /.modal-content --> 
