@@ -65,9 +65,9 @@
                                     tél : 0522 22 58 50
                                 </p>
                                 <p>
-                                    Lundi au vendredi de 9h30 à 15H30 (Horaire Ramadan)
+                                    Lundi au vendredi de 9h-13 et 14h-18h
                                 </p>
-                                <input type="hidden" name="type_livraison" value="SB" /><input type="submit" value="Localisez-nous" class="btn btn-primary">
+                                <input type="hidden" name="type_livraison" value="SB" /><input OnClick="window.location.href='contact.php'" type="submit" value="Localisez-nous" class="btn btn-primary">
                                 <form method="post" action="maBox.php"><input type="hidden" name="type_livraison" value="OX" /><input type="submit" value="Commander ma box" class="btn btn-primary"></form>
                                 </span></p>
                             </div>
@@ -206,7 +206,7 @@
                     <div id="alert_recover_ko_edit_maman" class="alert alert-warning hide-me">
                       Quelque chose a mal tourné
                     </div>
-                   	<input type="hidden" id="client_id" name="client_id"  value="<?php echo $client['result']['client'][0]['id']; ?>" />
+                    <input type="hidden" id="client_id" name="client_id"  value="<?php echo $client['result']['client'][0]['id']; ?>" />
                     <div class="row edit-client-div">
                         <div class="col-xs-2">
                             <strong>Nom</strong>
@@ -355,7 +355,7 @@
                 <p>
                     <?php 
                         $mesCommandes = getAllCommandeByCus($_SESSION['client_id']);
-                        // print_r(getAllCommandeByCus($_SESSION['client_id']));
+                         //print_r(getAllCommandeByCus($_SESSION['client_id']));
                     ?>
                         <table class="table table-striped custab">
                             <thead>
@@ -363,13 +363,18 @@
                                     <th>ID Commande</th>
                                     <th>Box</th>
                                     <th>Déscription</th>
+                                    <th>type de Livraison</th>
                                     <th>Date de la commande</th>
                                 </tr>
                             </thead>
                                 <?php
                                     $mesCommandes = json_decode($mesCommandes, true);
                                     foreach ($mesCommandes['result'] as $key => $value) {
-                                        $row = '<tr><td>'.$value['id'].'</td><td>'.$value['name'].'</td><td>'.$value['description'].'</td><td>'.$value['creationDate'].'</td></tr>';
+                                        $type='';
+                                        if($value['type']=="OX") $type="Chez Oumbox";
+                                        if($value['type']=="SB") $type="SpeedBox";
+                                        if($value['type']=="LD") $type="Livraison à domicile";
+                                        $row = '<tr><td>'.$value['id'].'</td><td>'.$value['name'].'</td><td>'.$value['description'].'</td><td>'.$type.'</td><td>'.$value['creationDate'].'</td></tr>';
                                         echo $row;
                                     }
                                 ?>
@@ -579,23 +584,23 @@
     }
 
     $('#updateForm').submit(function(event){
-		event.preventDefault();
-		
-		$.ajax({
-			url: 'user/edit_user.php',
-			method: 'POST',
-			data: {
-				id:$('#client_id').val(),
-				nom:$('#nom').val(),
-				prenom:$('#prenom').val(),
-				naissance:$('#naissance').val(),
-				gsm:$('#gsm').val(),
-				adresse:$('#adresse').val(),
-				ville:$('#ville').val(),
-				cp:$('#cp').val()
-			},
-			dataType: 'json',
-			success: function(data){
+        event.preventDefault();
+        
+        $.ajax({
+            url: 'user/edit_user.php',
+            method: 'POST',
+            data: {
+                id:$('#client_id').val(),
+                nom:$('#nom').val(),
+                prenom:$('#prenom').val(),
+                naissance:$('#naissance').val(),
+                gsm:$('#gsm').val(),
+                adresse:$('#adresse').val(),
+                ville:$('#ville').val(),
+                cp:$('#cp').val()
+            },
+            dataType: 'json',
+            success: function(data){
                 $('#alert_recover_ok_edit_maman').css('visibility','visible').fadeIn(1500);
                 $("#nomView").text($('#nom').val());
                 $("#prenomView").text($('#prenom').val());
@@ -603,13 +608,13 @@
                 $("#gsmView").text($('#gsm').val());
                 $("#adresseView").text($('#adresse').val());
                 $("#villeView").text($('#ville').val());
-				$("#cpView").text($('#cp').val());
-			},
-			error: function(data){
+                $("#cpView").text($('#cp').val());
+            },
+            error: function(data){
                  $('#alert_recover_ko_edit_baby').css('visibility','visible').fadeIn(1500);
-				console.log(data);	
-			}
-		});
-	});
+                console.log(data);  
+            }
+        });
+    });
 
 </script>

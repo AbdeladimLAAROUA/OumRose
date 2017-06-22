@@ -40,9 +40,9 @@ function getConnexionParams(){
 	
 	/*oumtest*/
 	
-/*	$array['hote']		= 'sql.k4mshost.odns.fr';
+	/*$array['hote']		= 'sql.k4mshost.odns.fr';
 	$array['passDb'] 	= '!!oumb0x';
-	$array['bd'] 		= 'k4mshost_oumdev';
+	$array['bd'] 		= 'k4mshost_oubeta';
 	$array['user']		= 'k4mshost_oumdev';*/
 
 	return $array;

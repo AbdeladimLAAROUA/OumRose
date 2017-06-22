@@ -26,6 +26,7 @@ session_start();
     <link href="css/bootstrap-responsive.css" rel="stylesheet">
 	<link href="css/style.css" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="css/header.css">
+
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -37,10 +38,14 @@ session_start();
 </head>
 
 <body>
-  	<?php include('header3.php'); ?>
+  	
+	<?php include('header3.php'); ?>
 	<div class="myLogin">
 	  	
-	  	<h2>Activez votre compte <!-- ou identifiez-vous --> pour profiter des services personnalisés et de tous les bons plans Oumbox!</h2>
+	  	<h2>
+	  		Mot de passe oublié ?
+	  	</h2>
+	  	<div style="color: white;font-size: 20px;">Saisissez votre email</div>
 	  	<h3>
 	  		<?php 
 	  			if(isset($_SESSION['result']) && !$_SESSION['result']['success']){
@@ -50,24 +55,35 @@ session_start();
 
 	  		 ?>
 	  	</h3>
-	  		<form method="post" action="user/login.php">
+	  	
 	  			 <div class="content">
-	  			 <div class="loginpanel">
+	  			 	 <div class="loginpanel">
 	  			  <div class="txt">
 	  			    <input id="user" name="email" type="text" placeholder="Email" />
 	  			    <label for="user" class="entypo-user"></label>
 	  			  </div>
-	  			  <div class="txt">
-	  			    <input id="pwd" name="password" type="password" placeholder="Password" />
-	  			    <label for="pwd" class="entypo-lock"></label>
-	  			  </div>
+	  			  <p class="text-center error">
+	  			  	<?php 
+	  			  		if (isset($_SESSION['errorRegisterByEmail'])) {
+	  			  			echo $_SESSION['errorRegisterByEmail'];
+							session_unset($_SESSION['errorRegisterByEmail']);
+	  			  		}
+	  			  	 ?>
+	  			  </p><div class="row">
 	  			  <div class="buttons">
-	  			    <input type="submit" value="Je me connecte" id="connect" />
-	  			    <span>
+	  			   
+	  			   	<div class="col-md-6">
+	  			   		 <input type="submit" value="Envoyer" id="connect" style="
+    background-color: #6cc;
+    color: white;
+    border-radius: 7px;
+"/>
+	  			   	</div>
+	  			   </div>
+	  			   <!--  <span>
 	  			      <a href="register.php" class="entypo-user-add register">Je m'inscris</a>
-	  			    </span>
+	  			    </span> -->
 	  			  </div>
-	  			  <a href="forgotPassword.php">Mot de passe oublié ?</a>
 	  			 </div>
 	  			  
 	  			 <!--  <div class="hr">
@@ -81,13 +97,53 @@ session_start();
 	  			    <a href="javascript:void(0)" class="twitterLogin"></a>
 	  			    <a href="javascript:void(0)" class="googleplusLogin"></a>
 	  			  </div> -->
-	  			</form>
+	  			</div>
+
+	  			<div>
+	  				
+
+
+	  			</div>
 		  
 	</div>
 
   <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
   <script type="text/javascript" src="js/header.js"></script>
-  
+  <script type="text/javascript">
+  	$("#connect").click(function() {
 
+  		if(checkform()){
+  			$.ajax({
+  				url:'user/register.php',
+  				type:'POST',
+  				dataType: "json",
+  				data:{email: $("#user").val(), password:$("#pwd").val()},
+  				success: function(data) {	
+  					console.log(data);
+  					if(data['code']=="1" || data['code']=="3"|| data['code']=="0"){
+  						//$(".content").hide();
+  						$(".error").html(data['response']);
+
+  					}
+  					console.log(data['code']);
+  				},
+  				error: function(data){
+  					console.log("error "+data);
+  				}
+  			});
+  		}
+  		
+  	});
+  	function checkform() {
+  	    if($("#user").val() == "") {
+  	        $(".error").html("Saisissez votre email");
+  	        return false;
+  	    }else{
+  	    	return true;
+  	    }
+  	   
+  	}
+  </script>
+<?php include('footer.php'); ?>
 </body>
 </html>

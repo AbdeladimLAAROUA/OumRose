@@ -2,7 +2,7 @@
 session_start();
 include('../config.php');
 $user=getUser($conn,$_SESSION['client_id']);
-
+$validity = date('d/m/Y', strtotime('+1 months'));
  ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office"><head><meta http-equiv="X-UA-Compatible" content="IE=edge" /><meta name="viewport" content="width=device-width, initial-scale=1" /><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><meta name="apple-mobile-web-app-capable" content="yes" /><meta name="apple-mobile-web-app-status-bar-style" content="black" /><meta name="format-detection" content="telephone=no" /><title>IMPORTANT: Votre box vous attend!</title><link href="https://fonts.googleapis.com/icon?family=Roboto" rel="stylesheet" type="text/css" /><style type="text/css">
         /* Resets */
@@ -425,7 +425,7 @@ Vous y trouverez votre guide <strong>"Bébé est là!" by Oumbox</strong> et ple
     <li><span style="font-size:14px;"><span style="background-color: transparent;"><strong>NOM:</strong>&nbsp;<?php echo $user['nom']; ?> &nbsp; &nbsp;&nbsp;<strong>PRENOM:&nbsp;</strong></span></span> <?php echo $user['prenom']; ?></li>
     <li><span style="font-size:14px;"><span style="background-color: transparent;"><strong>DATE DE NAISSANCE:</strong> <?php echo $user['naissance']; ?></span></span></li>
     <li><strong>CODE OUMBOX:&nbsp;</strong> <?php echo $user['id']; ?></li>
-    <li><span style="font-size:14px;"><span style="background-color: transparent;">Ce bon est valable juqu'au: 15/06/2017</span></span></li>
+    <li><span style="font-size:14px;"><span style="background-color: transparent;">Ce bon est valable juqu'au: <?php echo $validity ?></span></span></li>
 </ul>
 
 <div><span style="font-size:14px;">&nbsp;</span></div>
@@ -442,7 +442,7 @@ Vous y trouverez votre guide <strong>"Bébé est là!" by Oumbox</strong> et ple
 <ul>
 </ul>
 
-<div><em>&nbsp;*Livraison à domicile limitée au Centre de Casablanca sur liste d'attente. Temps de livraison non guaranti.&nbsp;Prière de prévoir un pourboire pour le livreur. Une seule présentation seulement pendant les horaires de travail.</em></div>
+
 
 <div>
 <div><span style="font-size:14px;"><span style="color:#696969;">&nbsp;</span></span></div>
@@ -451,18 +451,18 @@ Vous y trouverez votre guide <strong>"Bébé est là!" by Oumbox</strong> et ple
 <div style="text-align: center;"><span style="font-size:14px;"><u><strong>VOTRE POINT RETRAIT :</strong></u><strong>&nbsp;</strong></span></div>
 
 <div style="text-align: center;"><span style="font-size:14px;"><a href="http://www.facebook.com/oumbox" style="text-decoration: none; color: rgb(111, 17, 125);"><b>OUMBOX</b></a><br>
-77Bis Boulvard Abdelmoumen<br>
+77Bis Boulevard Abdelmoumen<br>
 <em>(En face de la station Tram WafaSalaf)<br>
 <a href="https://www.google.com/maps?cid=2064576583954403184" style="text-decoration: none; color: rgb(111, 17, 125);">https://www.google.com/maps?cid=2064576583954403184</a></em><br>
 CASABLANCA<br>
 0522 22 58 50</span></div>
 
-<div style="text-align: center;"><span style="font-size:14px;"><u><strong>HORAIRES RAMADAN:&nbsp;</strong></u><br>
-Lundi au Vendredi- 9h à 15h30</span></div>
+<div style="text-align: center;"><span style="font-size:14px;"><u><strong>HORAIRES :&nbsp;</strong></u><br>
+Lundi au Vendredi: 9h -13h et 14h-18h</span></div>
 
 <div style="text-align: center;"><span style="font-size:14px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span><span style="background-color: transparent;">&nbsp;</span></div>
 
-<div style="text-align: right;"><em>&nbsp;CODE: 17</em>06OX <?php echo $user['id']; ?></div>
+<div style="text-align: right;"><em>&nbsp;CODE: 17</em>06OX<?php echo $user['id']; ?></div>
 </div>
                                                         </td>
                                                     </tr>

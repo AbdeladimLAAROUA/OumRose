@@ -72,7 +72,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="dist/img/user9-150x150.jpeg" class="img-circle" alt="User Image">
+          <img src="dist/img/default-avatar.png" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
           <p>Khalid ESSALHI</p>

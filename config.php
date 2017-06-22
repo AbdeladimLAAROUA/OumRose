@@ -1,16 +1,16 @@
 <?php
 
 /*Local Kindy*/
-$servername = "localhost";
-$username = "root";
-$password = "S3cr3T%44";
-$dbname="oumdev_leads";
-
-/*Local*/
 /*$servername = "localhost";
 $username = "root";
-$password = "";
+$password = "S3cr3T%44";
 $dbname="oumdev_leads";*/
+
+/*Local*/
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname="oumdev_leads";
 
 /*Distant*/
 /*$servername = "essalhi-impr.000webhostapp.com";
@@ -24,10 +24,10 @@ $username = "k4mshost_oumdev";
 $password = "!!oumb0x";
 $dbname="k4mshost_oumdev";*/
 
-// $servername = "sql.k4mshost.odns.fr";
-// $username = "k4mshost_oumdev";
-// $password = "!!oumb0x";
-// $dbname="k4mshost_oumdev";
+/*$servername = "sql.k4mshost.odns.fr";
+$username = "k4mshost_oumdev";
+$password = "!!oumb0x";
+$dbname="k4mshost_oumbeta";*/
 
 
 try {
@@ -310,6 +310,20 @@ function getCityById1($conn,$id){
        }
        return  $ville;
 }
+function getClientByToken($conn,$token){
+      try
+       {
+          $stmt = $conn->prepare("SELECT * FROM customer where token=:token and expiration >= NOW() and status='approved'");
+          $stmt->execute(array(':token'=>$token));
+          $row = $stmt->fetch(PDO::FETCH_ASSOC);
+          $client = $row;
+       }
+       catch(PDOException $e)
+       {
+           echo $e->getMessage();
+       }
+       return  $client;
+}
 function getAllRelais($conn){
   try
        {
@@ -364,6 +378,42 @@ function getClientBox($conn,$user){
        }
        return  $boxList;
 }
+
+function updateToken($conn,$email,$token)
+    {
+       try
+       {  
+
+          $stmt = $conn->prepare("UPDATE customer c SET c.token=:token, c.expiration=:expiration where email=:email and status='approved'");
+          $stmt->bindparam(":token", $token);
+          $stmt->bindparam(":email", $email);
+          $stmt->bindparam(":expiration", date("Y-m-d H:i:s",strtotime(date("Y-m-d H:i:s")." +30 minutes")));
+          $stmt->execute();
+         return $stmt;
+       }
+       catch(PDOException $e)
+       {
+           echo $e->getMessage();
+       }
+}
+
+function updatePassword($conn,$email,$password)
+    {
+       try
+       {  
+
+          $stmt = $conn->prepare("UPDATE customer c SET c.password=:password where email=:email and status='approved'");
+          $stmt->bindparam(":password", $password);
+          $stmt->bindparam(":email", $email);
+          $stmt->execute();
+          updateToken($conn,$email,'');
+         return $stmt;
+       }
+       catch(PDOException $e)
+       {
+           echo $e->getMessage();
+       }
+}
 function getAllQuartiers($conn){
   try
        {
@@ -382,7 +432,6 @@ function getAllQuartiers($conn){
        }
        return  $quartiers;
 }
-
 function fullEligible($conn,$user,$naissanceBebe){
     
     $boxList = getClientBox($conn,$user);
@@ -415,55 +464,4 @@ function fullEligible($conn,$user,$naissanceBebe){
     }
     return $eligible;
 }
-
-function updateClient_u($connexion, $client){
-  $array = array();
-
-  $array['id'] = $client['id'];
-  $array['nom'] = $client['nom'];
-  $array['prenom'] = $client['prenom'];
-  $array['gsm'] = $client['gsm'];
-  $array['naissance'] = $client['naissance'];
-  $array['adresse'] = $client['adresse'];
-  $array['cp'] = $client['cp'];
-  //$array['type'] = $client['type'];
-  //$array['Ville_id'] = $client['ville'];
-
-
-
-  /*$array['idBebe'] = $baby['id'];
-  $array['prenomBebe'] = $baby['prenomBebe'];
-  */
-
-
-  try {
-
-    $stmt = $connexion->prepare("UPDATE customer SET nom = :nom,prenom = :prenom,gsm = :gsm,naissance = :naissance,adresse = :adresse,CP = :cp WHERE id = :id ");
-    
-    $stmt->bindValue(':id', $client['id']);
-    $stmt->bindValue(':nom', $client['nom']);
-    $stmt->bindValue(':prenom', $client['prenom']);
-    $stmt->bindValue(':gsm', $client['gsm']);
-    $stmt->bindValue(':naissance', $client['naissance']);
-    $stmt->bindValue(':adresse', $client['adresse']);
-    $stmt->bindValue(':cp', $client['cp']);
-    
-
-    if($stmt->execute()) {
-      $array['result'] = 'success';
-    } else {
-      $array['result'] = 'failed1';
-    }
-  
-
-    
-  } catch (Exception $e) {
-    $array['result'] = 'ko';
-  }
-  
-  $connexion = null;
-
-  return json_encode($array); 
-}
-
 ?> 

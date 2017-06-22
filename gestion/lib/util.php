@@ -334,7 +334,7 @@ function getCommandesLD(){
 		$sql =
 			"SELECT  cust.id as 'idMaman', cust.nom as 'nomMaman', cust.prenom, cust.gsm as 'GSM1',
 			l.gsm as 'GSM2',b.naissance,co.creationDate,p.id_box,co.id as 'idCommande',
-			 l.type as 'typeLivraison', l.adresseLivraison, l.quartier,l.status,l.id as 'idLivraison'
+			 l.type as 'typeLivraison', l.adresseLivraison, l.quartier,l.status,l.id as 'idLivraison',l.creationDate
 			 from  commande co, customer cust, product p, livraison l, baby b
 			 where 
 			 cust.id=co.customer_id and
@@ -342,6 +342,7 @@ function getCommandesLD(){
              l.commande_id=co.id and
              b.customer_id=cust.id and
              l.type='LD'
+            order by l.creationDate and l.status='Non livré' DESC
              ";
 		$resultats = $connexion->prepare($sql);
 
@@ -367,7 +368,7 @@ function getCommandesOX(){
 		$sql =
 			"SELECT  cust.id as 'idMaman', cust.nom as 'nomMaman', cust.prenom, cust.gsm as 'GSM1',
 			l.gsm as 'GSM2',b.naissance,co.creationDate,p.id_box,co.id as 'idCommande',
-			 l.type as 'typeLivraison', l.adresseLivraison, l.quartier,l.status,l.id as 'idLivraison'
+			 l.type as 'typeLivraison', l.adresseLivraison, l.quartier,l.status,l.id as 'idLivraison', l.creationDate
 			 from  commande co, customer cust, product p, livraison l, baby b
 			 where 
 			 cust.id=co.customer_id and
@@ -375,6 +376,7 @@ function getCommandesOX(){
              l.commande_id=co.id and
              b.customer_id=cust.id and
              l.type='OX'
+             order by l.creationDate and l.status='Non livré' DESC
              ";
 		$resultats = $connexion->prepare($sql);
 
@@ -400,7 +402,7 @@ function getCommandesSB(){
 		$sql =
 			"SELECT cust.id as 'idMaman', cust.nom as 'nomMaman', cust.prenom, cust.GSM as 
 			'GSM1',l.gsm as 'GSM2', b.naissance,co.creationDate,p.id_box,co.id as 'idCommande',
-			r.nom as 'pointRelais',v.name as'Ville',l.status,l.id as 'idLivraison'
+			r.nom as 'pointRelais',v.name as'Ville',l.status,l.id as 'idLivraison',l.creationDate
 			from livraison l, commande co, customer cust, relais r, ville v,baby b,product p
 			where 
 			l.commande_id=co.id and 
@@ -409,7 +411,8 @@ function getCommandesSB(){
 			v.id=r.id_ville and
 			b.customer_id=cust.id and
 			p.id=co.product_id and
-			l.type='SB'";
+			l.type='SB'
+			order by l.creationDate and l.status='Non livré' DESC";
 
 		$resultats = $connexion->prepare($sql);
 
@@ -435,7 +438,7 @@ function getAllCommandes(){
 		$sql =
 			"SELECT  cust.id as 'idMaman', cust.nom as 'nomMaman', cust.prenom, cust.gsm as 'GSM1',
 			l.gsm as 'GSM2',b.naissance,co.creationDate,
-			 l.type as 'typeLivraison', l.adresseLivraison, l.quartier 
+			 l.type as 'typeLivraison', l.adresseLivraison, l.quartier,l.creationDate
 			 from  commande co, customer cust, product p, livraison l, baby b
 			 where 
 			 cust.id=co.customer_id and
@@ -443,6 +446,8 @@ function getAllCommandes(){
              l.commande_id=co.id and
              b.customer_id=cust.id and
              l.type='LD'
+
+             order by l.creationDate and l.status='Non livré' DESC
              ";
 		$resultats = $connexion->prepare($sql);
 
@@ -468,13 +473,15 @@ function getAllCommandes2(){
 		$sql =
 			"SELECT  cust.id as 'idMaman', cust.nom as 'nomMaman', cust.prenom, cust.gsm as 'GSM1',
 			l.gsm as 'GSM2',b.naissance,co.creationDate,l.status,commande_id as 'idCommande',p.id_box,
-			 l.type as 'typeLivraison', l.adresseLivraison, l.quartier,l.id as 'idLivraison'
+			 l.type as 'typeLivraison', l.adresseLivraison, l.quartier,l.id as 'idLivraison',l.creationDate
 			 from  commande co, customer cust, product p, livraison l, baby b
 			 where 
 			 cust.id=co.customer_id and
              p.id=co.product_id and
              l.commande_id=co.id and
              b.customer_id=cust.id
+
+             order by l.creationDate and l.status='Non livré' DESC
              ";
 		$resultats = $connexion->prepare($sql);
 
@@ -1941,7 +1948,7 @@ function getAllCommandeByCus($id){
 	$array = array();
 	try {
 		$connexion = db_connect();
-		$resultats = $connexion->prepare("SELECT co.id, b.name, b.description, co.creationDate FROM commande co INNER JOIN customer cu ON co.customer_id = cu.id INNER JOIN product pr ON co.product_id = pr.id INNER JOIN box b ON pr.id_box = b.id WHERE co.customer_id = :id_cus");
+		$resultats = $connexion->prepare("SELECT co.id, b.name, b.description, co.creationDate,l.type FROM commande co INNER JOIN customer cu ON co.customer_id = cu.id INNER JOIN livraison l ON l.commande_id = co.id INNER JOIN product pr ON co.product_id = pr.id INNER JOIN box b ON pr.id_box = b.id WHERE co.customer_id = :id_cus");
 		$resultats->bindParam(':id_cus', $id);
 		$resultats->execute();
 		$resultats->setFetchMode(PDO::FETCH_OBJ);
@@ -2184,9 +2191,32 @@ function searchUser($user){
 	$array = array();
 	try {
 		$connexion = db_connect();
-		$resultats = $connexion->prepare("SELECT c.id,c.nom, c.prenom, c.email, c.gsm,YEAR(NOW()) - YEAR(c.naissance) as age, c.adresse, ville FROM customer c where email=:email");
-		$resultats->bindParam(':email', $user['email']);
-		$resultats->execute();
+		$params = array();
+		$sql='SELECT c.id,c.nom, c.prenom, c.email, c.gsm,YEAR(NOW()) - YEAR(c.naissance) as age, c.adresse, ville FROM customer c where id>0 ';
+		if($user['email']!=''){
+			$sql.="and email=:email ";
+			$params['email']=$user['email'];
+		}if($user['nom']!=''){
+			$sql.="and nom=:nom ";
+			$params['nom']=$user['nom'];
+		}if($user['prenom']!=''){
+			$sql.="and prenom=:prenom ";
+			$params['prenom']=$user['prenom'];
+		}if($user['gsm']!=''){
+			$gsm1 = $user['gsm'];
+			$regex = '/(\\d{2})(\\d{2})(\\d{2})(\\d{2})(\\d{2})/';
+			$gsm2 = preg_replace($regex, '$1 $2 $3 $4 $5', $gsm1);
+			$gsm3 = preg_replace($regex, '$1.$2.$3.$4.$5', $gsm1);
+			$sql.="and gsm LIKE :gsm1 or gsm LIKE :gsm2 or gsm LIKE :gsm3 or gsm LIKE :gsm4 or gsm LIKE :gsm5 ";
+			$params['gsm1']='%'.$gsm1.'%';
+			$params['gsm2']='%'.$gsm2.'%';
+			$params['gsm3']='%'.$gsm3.'%';
+			$params['gsm4']='%'.substr($gsm2, 1).'%';
+			$params['gsm5']='%'.substr($gsm3, 1).'%';
+		}		
+
+		$resultats = $connexion->prepare($sql);
+		$resultats->execute($params);
 
 		$resultats->setFetchMode(PDO::FETCH_OBJ);
 		$resultat = $resultats->fetchAll();

@@ -679,6 +679,7 @@ $('#search').on( 'click', function (){
       type: "POST",
       data : {'user':user_search,'methode':'searchUser'},
       success: function(data, textStatus, jqXHR) {
+        $("#table_clients_search tbody").empty();
         $.each(data.result, function(key, val) {
             var newRow = '<tr>'+
                '<td>'+val.id+'</td>'+

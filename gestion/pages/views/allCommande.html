@@ -33,7 +33,7 @@
         <!-- /.box-header -->
         <div class="box-body">
            <div style="margin-bottom:20px;">
-            <button id="export_OX_cmd" type="button" class="btn btn-success"><span class="glyphicon glyphicon-download-alt"></span> Export</button>
+            <button id="export_all_cmd" type="button" class="btn btn-success"><span class="glyphicon glyphicon-download-alt"></span> Export</button>
           </div>
           <table id="table_commandesAll" class="table table-bordered table-striped">
             <thead>
@@ -42,6 +42,7 @@
               <th>Id Commande</th>
               <th>Type de la Commande</th>
               <th>Nom</th>
+              <th>Prénom</th>
               <th>Box</th>
               <th>GSM 1</th>
               <th>Naissance Bébé</th>
@@ -58,6 +59,7 @@
               <th>Id Maman</th>
               <th>Type de la Commande</th>
               <th>Nom</th>
+              <th>Prénom</th>
               <th>Box</th>
               <th>GSM 1</th>
               <th>Naissance Bébé</th>
@@ -86,6 +88,13 @@
         <h4 class="modal-title custom_align" id="Heading">Les details du client</h4>
       </div>
       <div class="modal-body">
+         <div id="alert_recover_box_ok" class="alert alert-success hide-me">
+          La commande a été effectué avec succès 
+        </div>
+        <div id="alert_recover_box_ko" class="alert alert-warning hide-me">
+          Quelque chose a mal tourné
+        </div>
+        <input type="hidden" id="roleInput" value="<?php echo $_SESSION['role_a']; ?>">
         <div class="row">
           <div class="col-xs-3">
             <div class="form-group">
@@ -212,10 +221,46 @@
             </div>
             <!-- /.box -->
           </div>
+        </div><div class="row">
+          <div class="col-xs-12">
+            <div class="box box-danger">
+              <div class="box-header with-border">
+                <h3 class="box-title">Liste des commandes</h3>
+              </div>
+              <!-- /.box-header -->
+              <div class="box-body">
+                <table id="box_table" class="table table-bordered">
+                  <thead>
+                    <tr>
+                     <!--  <th style="width: 10px"></th> -->
+                      <th>Box 1 </th>
+                      <th>Box 2</th>
+                      <th>Box 3</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+          </div>
         </div>
+
+
+        <!-- Ajouter une nouvelle commande -->
+        <form id="AddCommandeForm" hidden>
+          <div class="row">
+            <div class="col-xs-12">
+              <button type="submit" class="btn btn-success btn-lg addCommandeButton" style="width: 100%;margin-bottom: 10px;"><span class="glyphicon"></span>Commander la box</button>
+            </div>
+          </div>
+        </form>
+
       </div>
       <div class="modal-footer ">
-        <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>Fermer</button>
+        <button type="button" class="btn btn-default " data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>Fermer</button>
       </div>
     </div>
     <!-- /.modal-content --> 
