@@ -123,7 +123,6 @@
         //setTimeout(function(){$('#loading-image').popup('hide');},250);
       },
       success: function(data, textStatus, jqXHR) {
-        console.log(data+"---------------------------------->");
         // console.log(data.result);
         $.each(data.result, function(key, val) {
           var newRow = '<tr id="client_'+val.id+'">'+
@@ -169,8 +168,6 @@
         //setTimeout(function(){$('#loading-image').popup('hide');},250);
       },
       success: function(data, textStatus, jqXHR) {
-        console.log("----------------------------------> OX");
-        console.log(data);
         // console.log(data.result);
         $.each(data.result, function(key, val) {
 
@@ -213,10 +210,8 @@
         //setTimeout(function(){$('#loading-image').popup('hide');},250);
       },
       success: function(data, textStatus, jqXHR) {
-        console.log(data+"---------------------------------->");
         // console.log(data.result);
         $.each(data.result, function(key, val) {
-          console.log(val);
           var newRow = '<tr id="client_'+val.idMaman+'">'+
                       '<td>'+val.idMaman+'</td>'+
                       '<td>'+val.idCommande+'</td>'+
@@ -259,7 +254,6 @@
        // setTimeout(function(){$('#loading-image').popup('hide');},250);
       },
       success: function(data, textStatus, jqXHR) {
-        console.log(data+"---------------------------------->");
         // console.log(data.result);
         $.each(data.result, function(key, val) {
           var newRow = '<tr id="client_'+val.id+'">'+
@@ -305,7 +299,6 @@
  $("#table_commandesSB tbody" ).on( "click", 'button',function() {
     var type  = $(this).data("type"),
         id    = $(this).data("id");
-    console.log(type+" - "+id);
     switch (type){
       case 'view' :
         var get_client = {"methode":"getClient","id":id};
@@ -448,12 +441,39 @@
         });
         break;
       case 'edit' :
-        console.log('edit');var get_client = {"methode":"getClient","id":id};
+        var getAllCities = {"methode":"getAllCities"};
+          $.ajax({
+          url : "./lib/util.php",
+          dataType: "json",
+          type: "POST",
+          data : getAllCities,
+          async:false,
+          beforeSend: function(){
+            $('#loading-image').popup('show');
+          },
+          complete: function(){
+            setTimeout(function(){$('#loading-image').popup('hide');},250);
+          },
+          success: function(data, textStatus, jqXHR) {
+            
+            $.each(data['result'], function(key, val) {   
+                 $('#ville_commande_edit').append($('<option>', {
+                     value: val.id,
+                     text: val.name
+                 }));
+                });
+
+          },
+          error:function(data){
+
+          }
+        });
+        var getLivraison = {"methode":"getLivraison","id":id};
         $.ajax({
           url : "./lib/util.php",
           dataType: "json",
           type: "POST",
-          data : get_client,
+          data : getLivraison,
           beforeSend: function(){
             $('#loading-image').popup('show');
           },
@@ -462,23 +482,110 @@
           },
           success: function(data, textStatus, jqXHR) {
             // $.validate();
-            $('.infos_client').text('');
+           /* $('.infos_client').text('');
             $("#baby_table tbody").empty();
-            $('#Ville_id_edit').val(0);
+            $('#Ville_id_edit').val(0);*/
             if(data.result != 0){
-              var client = data.result.client[0];
-              console.log(client);
-              $('#id_client_edit').text(client.id_client);
-              $('#nom_edit').val(client.nom);
-              $('#prenom_edit').val(client.prenom);
-              $('#email_edit').val(client.email);
+              var commande = data.result[0];
+              console.log(commande);
+
+              $('#id_commande_edit').val(commande.id);
+              $('#id_commande_edit').text(commande.commande_id);
+              $('#id_client_edit').text(commande.customer_id);
+              $("#quartier_commande_edit option").remove();
+             
+              var getAllQuartiers = {"methode":"getAllQuartiers"};
+                   $.ajax({
+                   url : "./lib/util.php",
+                   dataType: "json",
+                   type: "POST",
+                   data : getAllQuartiers,
+                   beforeSend: function(){
+                     $('#loading-image').popup('show');
+                   },
+                   complete: function(){
+                     setTimeout(function(){$('#loading-image').popup('hide');},250);
+                   },
+                   success: function(data, textStatus, jqXHR) {
+                    
+                     $.each(data['result'], function(key, val) {   
+                          $('#quartier_commande_edit').append($('<option>', {
+                              value: val.id,
+                              text: val.nom
+                          }));
+                          if(commande.quartier==val.nom){
+                            $("#quartier_commande_edit").val(val.id);
+                            $("#adresse_commande_edit").val(commande.adresseLivraison);
+                          }
+                     });
+
+                   },
+                   error:function(data){
+
+                   }
+                 });
+              if(commande.type=='OX'){
+                 $("#type_commande_edit").val("1");
+                 gestion();
+              }if(commande.type=='SB'){
+                 $("#type_commande_edit").val("2");
+                 gestion();
+              }if(commande.type=='LD'){
+                 $("#type_commande_edit").val("3");
+                 gestion();
+              }
+
+              if(commande.status=="Livré"){
+                 $("#status_commande_edit").val("1");
+               }else {
+                 $("#status_commande_edit").val("2");
+               }
+
+               if(commande.id_ville!=null){
+                $("#ville_commande_edit").val(commande.id_ville);
+                $("#relais_commande_edit option").remove();
+                var getRelaisListByVille = {"methode":"getRelaisListByVille","id_ville":commande.id_ville};
+                  $.ajax({
+                  url : "./lib/util.php",
+                  dataType: "json",
+                  type: "POST",
+                  data : getRelaisListByVille,
+                  beforeSend: function(){
+                    $('#loading-image').popup('show');
+                  },
+                  complete: function(){
+                    setTimeout(function(){$('#loading-image').popup('hide');},250);
+                  },
+                  success: function(data, textStatus, jqXHR) {
+                    
+                    $.each(data['result'], function(key, val) {   
+                         $('#relais_commande_edit').append($('<option>', {
+                             value: val.id_relais,
+                             text: val.nom
+                         }));
+                      });
+
+                     $('#relais_commande_edit').val(commande.id_relais);
+                  },
+                  error:function(data){
+
+                  }
+                });
+               }
+
+             
+             // $('#type_commande_edit').val(commande.type);
+             /* $('#id_commande_edit').val(client.email);
               $('#gsm_edit').val(client.gsm);
               $('#naissance_edit').val(client.naissance);
               $('#adresse_edit').val(client.adresse);
               $('#CP_edit').val(client.CP);
               $('#type_edit').val(client.type);
               $('#Ville_id_edit').val(client.Ville_id);
-              $('#creationDate_edit').text(client.creationDateClient);
+              $('#creationDate_edit').text(client.creationDateClient);*/
+              
+
+              /*var eligible = client.eligible;
               var babies = data.result.baby;
               console.log(babies);
               if(babies.lenght == 0){
@@ -497,21 +604,19 @@
                     '</tr>';
                   $("#baby_table tbody").append(newRow);
                 });
-              }
+              }*/
             }
           },
           error: function (jqXHR, textStatus, errorThrown) {
 
           }
         });
-
       break;
       case 'delete' :
-        $("#conf_supp").data("id",id);
-        break;
+      $("#conf_supp").data("id",id);
+      break;
 
-
-       case 'livraison' :
+      case 'livraison' :
         var livraison = {"id":id,'status':'Livré','type':'SB'};
         var myLivraison = {"methode":"updateLivraison",'livraison':livraison};
         $.ajax({
@@ -526,7 +631,6 @@
             setTimeout(function(){$('#loading-image').popup('hide');},250);
           },
           success: function(data, textStatus, jqXHR) {
-            console.log('done');
             $('.livraisonStatus'+id).html('Livré');
           },
           error: function (jqXHR, textStatus, errorThrown) {
@@ -535,18 +639,50 @@
         });
         break;
       
-
       default :
-        console.log('default');
         break;
     }
   });
+
+ $("#conf_supp").on("click", function() {
+    var id = $(this).data("id");
+    var commande = {"methode":"deleteCommande","id":id};
+    console.log(commande);
+    $.ajax({
+      url : "./lib/util.php",
+      dataType: "json",
+      type: "POST",
+      data : commande,
+      beforeSend: function(){
+        $('#loading-image').popup('show');
+      },
+      complete: function(){
+        $('#loading-image').popup('hide');
+      },
+      success: function(data, textStatus, jqXHR) {
+        // console.log(data);
+        console.log(data);
+        if(data.result == 'ok'){
+          /*var tr =  $("#client_"+id);
+          console.log(tr);
+          table.row(tr).remove().draw();*/
+          $("#delete").modal('toggle');
+        }
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        console.log(jqXHR);
+        console.log(textStatus);
+        console.log(errorThrown);
+      }
+    });
+  });
+
+
 
 
   $("#table_commandesLD tbody" ).on( "click", 'button',function() {
     var type  = $(this).data("type"),
         id    = $(this).data("id");
-    console.log(type+" - "+id);
     switch (type){
       case 'view' :
         var get_client = {"methode":"getClient","id":id};
@@ -578,7 +714,6 @@
               $('#Ville_id').text(client.name);
               $('#creationDate').text(client.creationDateClient);
               var babies = data.result.baby;
-              console.log(babies);
               if(babies.lenght == 0){
                 var newRow = '<tr>'+
                   '<td>Aucun bébé trouvé</td>'+
@@ -690,12 +825,39 @@
         });
         break;
       case 'edit' :
-        console.log('edit');var get_client = {"methode":"getClient","id":id};
+        var getAllCities = {"methode":"getAllCities"};
+          $.ajax({
+          url : "./lib/util.php",
+          dataType: "json",
+          type: "POST",
+          data : getAllCities,
+          async:false,
+          beforeSend: function(){
+            $('#loading-image').popup('show');
+          },
+          complete: function(){
+            setTimeout(function(){$('#loading-image').popup('hide');},250);
+          },
+          success: function(data, textStatus, jqXHR) {
+            
+            $.each(data['result'], function(key, val) {   
+                 $('#ville_commande_edit').append($('<option>', {
+                     value: val.id,
+                     text: val.name
+                 }));
+                });
+
+          },
+          error:function(data){
+
+          }
+        });
+        var getLivraison = {"methode":"getLivraison","id":id};
         $.ajax({
           url : "./lib/util.php",
           dataType: "json",
           type: "POST",
-          data : get_client,
+          data : getLivraison,
           beforeSend: function(){
             $('#loading-image').popup('show');
           },
@@ -704,23 +866,110 @@
           },
           success: function(data, textStatus, jqXHR) {
             // $.validate();
-            $('.infos_client').text('');
+           /* $('.infos_client').text('');
             $("#baby_table tbody").empty();
-            $('#Ville_id_edit').val(0);
+            $('#Ville_id_edit').val(0);*/
             if(data.result != 0){
-              var client = data.result.client[0];
-              console.log(client);
-              $('#id_client_edit').text(client.id_client);
-              $('#nom_edit').val(client.nom);
-              $('#prenom_edit').val(client.prenom);
-              $('#email_edit').val(client.email);
+              var commande = data.result[0];
+              console.log(commande);
+
+              $('#id_commande_edit').val(commande.id);
+              $('#id_commande_edit').text(commande.commande_id);
+              $('#id_client_edit').text(commande.customer_id);
+              $("#quartier_commande_edit option").remove();
+             
+              var getAllQuartiers = {"methode":"getAllQuartiers"};
+                   $.ajax({
+                   url : "./lib/util.php",
+                   dataType: "json",
+                   type: "POST",
+                   data : getAllQuartiers,
+                   beforeSend: function(){
+                     $('#loading-image').popup('show');
+                   },
+                   complete: function(){
+                     setTimeout(function(){$('#loading-image').popup('hide');},250);
+                   },
+                   success: function(data, textStatus, jqXHR) {
+                    
+                     $.each(data['result'], function(key, val) {   
+                          $('#quartier_commande_edit').append($('<option>', {
+                              value: val.id,
+                              text: val.nom
+                          }));
+                          if(commande.quartier==val.nom){
+                            $("#quartier_commande_edit").val(val.id);
+                            $("#adresse_commande_edit").val(commande.adresseLivraison);
+                          }
+                     });
+
+                   },
+                   error:function(data){
+
+                   }
+                 });
+              if(commande.type=='OX'){
+                 $("#type_commande_edit").val("1");
+                 gestion();
+              }if(commande.type=='SB'){
+                 $("#type_commande_edit").val("2");
+                 gestion();
+              }if(commande.type=='LD'){
+                 $("#type_commande_edit").val("3");
+                 gestion();
+              }
+
+              if(commande.status=="Livré"){
+                 $("#status_commande_edit").val("1");
+               }else {
+                 $("#status_commande_edit").val("2");
+               }
+
+               if(commande.id_ville!=null){
+                $("#ville_commande_edit").val(commande.id_ville);
+                $("#relais_commande_edit option").remove();
+                var getRelaisListByVille = {"methode":"getRelaisListByVille","id_ville":commande.id_ville};
+                  $.ajax({
+                  url : "./lib/util.php",
+                  dataType: "json",
+                  type: "POST",
+                  data : getRelaisListByVille,
+                  beforeSend: function(){
+                    $('#loading-image').popup('show');
+                  },
+                  complete: function(){
+                    setTimeout(function(){$('#loading-image').popup('hide');},250);
+                  },
+                  success: function(data, textStatus, jqXHR) {
+                    
+                    $.each(data['result'], function(key, val) {   
+                         $('#relais_commande_edit').append($('<option>', {
+                             value: val.id_relais,
+                             text: val.nom
+                         }));
+                      });
+
+                     $('#relais_commande_edit').val(commande.id_relais);
+                  },
+                  error:function(data){
+
+                  }
+                });
+               }
+
+             
+             // $('#type_commande_edit').val(commande.type);
+             /* $('#id_commande_edit').val(client.email);
               $('#gsm_edit').val(client.gsm);
               $('#naissance_edit').val(client.naissance);
               $('#adresse_edit').val(client.adresse);
               $('#CP_edit').val(client.CP);
               $('#type_edit').val(client.type);
               $('#Ville_id_edit').val(client.Ville_id);
-              $('#creationDate_edit').text(client.creationDateClient);
+              $('#creationDate_edit').text(client.creationDateClient);*/
+              
+
+              /*var eligible = client.eligible;
               var babies = data.result.baby;
               console.log(babies);
               if(babies.lenght == 0){
@@ -739,7 +988,7 @@
                     '</tr>';
                   $("#baby_table tbody").append(newRow);
                 });
-              }
+              }*/
             }
           },
           error: function (jqXHR, textStatus, errorThrown) {
@@ -933,12 +1182,39 @@
         });
         break;
       case 'edit' :
-        console.log('edit');var get_client = {"methode":"getClient","id":id};
+        var getAllCities = {"methode":"getAllCities"};
+          $.ajax({
+          url : "./lib/util.php",
+          dataType: "json",
+          type: "POST",
+          data : getAllCities,
+          async:false,
+          beforeSend: function(){
+            $('#loading-image').popup('show');
+          },
+          complete: function(){
+            setTimeout(function(){$('#loading-image').popup('hide');},250);
+          },
+          success: function(data, textStatus, jqXHR) {
+            
+            $.each(data['result'], function(key, val) {   
+                 $('#ville_commande_edit').append($('<option>', {
+                     value: val.id,
+                     text: val.name
+                 }));
+                });
+
+          },
+          error:function(data){
+
+          }
+        });
+        var getLivraison = {"methode":"getLivraison","id":id};
         $.ajax({
           url : "./lib/util.php",
           dataType: "json",
           type: "POST",
-          data : get_client,
+          data : getLivraison,
           beforeSend: function(){
             $('#loading-image').popup('show');
           },
@@ -947,23 +1223,110 @@
           },
           success: function(data, textStatus, jqXHR) {
             // $.validate();
-            $('.infos_client').text('');
+           /* $('.infos_client').text('');
             $("#baby_table tbody").empty();
-            $('#Ville_id_edit').val(0);
+            $('#Ville_id_edit').val(0);*/
             if(data.result != 0){
-              var client = data.result.client[0];
-              console.log(client);
-              $('#id_client_edit').text(client.id_client);
-              $('#nom_edit').val(client.nom);
-              $('#prenom_edit').val(client.prenom);
-              $('#email_edit').val(client.email);
+              var commande = data.result[0];
+              console.log(commande);
+
+              $('#id_commande_edit').val(commande.id);
+              $('#id_commande_edit').text(commande.commande_id);
+              $('#id_client_edit').text(commande.customer_id);
+              $("#quartier_commande_edit option").remove();
+             
+              var getAllQuartiers = {"methode":"getAllQuartiers"};
+                   $.ajax({
+                   url : "./lib/util.php",
+                   dataType: "json",
+                   type: "POST",
+                   data : getAllQuartiers,
+                   beforeSend: function(){
+                     $('#loading-image').popup('show');
+                   },
+                   complete: function(){
+                     setTimeout(function(){$('#loading-image').popup('hide');},250);
+                   },
+                   success: function(data, textStatus, jqXHR) {
+                    
+                     $.each(data['result'], function(key, val) {   
+                          $('#quartier_commande_edit').append($('<option>', {
+                              value: val.id,
+                              text: val.nom
+                          }));
+                          if(commande.quartier==val.nom){
+                            $("#quartier_commande_edit").val(val.id);
+                            $("#adresse_commande_edit").val(commande.adresseLivraison);
+                          }
+                     });
+
+                   },
+                   error:function(data){
+
+                   }
+                 });
+              if(commande.type=='OX'){
+                 $("#type_commande_edit").val("1");
+                 gestion();
+              }if(commande.type=='SB'){
+                 $("#type_commande_edit").val("2");
+                 gestion();
+              }if(commande.type=='LD'){
+                 $("#type_commande_edit").val("3");
+                 gestion();
+              }
+
+              if(commande.status=="Livré"){
+                 $("#status_commande_edit").val("1");
+               }else {
+                 $("#status_commande_edit").val("2");
+               }
+
+               if(commande.id_ville!=null){
+                $("#ville_commande_edit").val(commande.id_ville);
+                $("#relais_commande_edit option").remove();
+                var getRelaisListByVille = {"methode":"getRelaisListByVille","id_ville":commande.id_ville};
+                  $.ajax({
+                  url : "./lib/util.php",
+                  dataType: "json",
+                  type: "POST",
+                  data : getRelaisListByVille,
+                  beforeSend: function(){
+                    $('#loading-image').popup('show');
+                  },
+                  complete: function(){
+                    setTimeout(function(){$('#loading-image').popup('hide');},250);
+                  },
+                  success: function(data, textStatus, jqXHR) {
+                    
+                    $.each(data['result'], function(key, val) {   
+                         $('#relais_commande_edit').append($('<option>', {
+                             value: val.id_relais,
+                             text: val.nom
+                         }));
+                      });
+
+                     $('#relais_commande_edit').val(commande.id_relais);
+                  },
+                  error:function(data){
+
+                  }
+                });
+               }
+
+             
+             // $('#type_commande_edit').val(commande.type);
+             /* $('#id_commande_edit').val(client.email);
               $('#gsm_edit').val(client.gsm);
               $('#naissance_edit').val(client.naissance);
               $('#adresse_edit').val(client.adresse);
               $('#CP_edit').val(client.CP);
               $('#type_edit').val(client.type);
               $('#Ville_id_edit').val(client.Ville_id);
-              $('#creationDate_edit').text(client.creationDateClient);
+              $('#creationDate_edit').text(client.creationDateClient);*/
+              
+
+              /*var eligible = client.eligible;
               var babies = data.result.baby;
               console.log(babies);
               if(babies.lenght == 0){
@@ -982,7 +1345,7 @@
                     '</tr>';
                   $("#baby_table tbody").append(newRow);
                 });
-              }
+              }*/
             }
           },
           error: function (jqXHR, textStatus, errorThrown) {
@@ -1174,12 +1537,39 @@
         });
         break;
       case 'edit' :
-        console.log('edit');var get_client = {"methode":"getClient","id":id};
+        var getAllCities = {"methode":"getAllCities"};
+          $.ajax({
+          url : "./lib/util.php",
+          dataType: "json",
+          type: "POST",
+          data : getAllCities,
+          async:false,
+          beforeSend: function(){
+            $('#loading-image').popup('show');
+          },
+          complete: function(){
+            setTimeout(function(){$('#loading-image').popup('hide');},250);
+          },
+          success: function(data, textStatus, jqXHR) {
+            
+            $.each(data['result'], function(key, val) {   
+                 $('#ville_commande_edit').append($('<option>', {
+                     value: val.id,
+                     text: val.name
+                 }));
+                });
+
+          },
+          error:function(data){
+
+          }
+        });
+        var getLivraison = {"methode":"getLivraison","id":id};
         $.ajax({
           url : "./lib/util.php",
           dataType: "json",
           type: "POST",
-          data : get_client,
+          data : getLivraison,
           beforeSend: function(){
             $('#loading-image').popup('show');
           },
@@ -1188,24 +1578,110 @@
           },
           success: function(data, textStatus, jqXHR) {
             // $.validate();
-            $('.infos_client').text('');
+           /* $('.infos_client').text('');
             $("#baby_table tbody").empty();
-            $('#Ville_id_edit').val(0);
+            $('#Ville_id_edit').val(0);*/
             if(data.result != 0){
-              var client = data.result.client[0];
-              console.log(client);
-              $('#id_client_edit').text(client.id_client);
-              $('#nom_edit').val(client.nom);
-              $('#prenom_edit').val(client.prenom);
-              $('#email_edit').val(client.email);
+              var commande = data.result[0];
+              console.log(commande);
+
+              $('#id_commande_edit').val(commande.id);
+              $('#id_commande_edit').text(commande.commande_id);
+              $('#id_client_edit').text(commande.customer_id);
+              $("#quartier_commande_edit option").remove();
+             
+              var getAllQuartiers = {"methode":"getAllQuartiers"};
+                   $.ajax({
+                   url : "./lib/util.php",
+                   dataType: "json",
+                   type: "POST",
+                   data : getAllQuartiers,
+                   beforeSend: function(){
+                     $('#loading-image').popup('show');
+                   },
+                   complete: function(){
+                     setTimeout(function(){$('#loading-image').popup('hide');},250);
+                   },
+                   success: function(data, textStatus, jqXHR) {
+                    
+                     $.each(data['result'], function(key, val) {   
+                          $('#quartier_commande_edit').append($('<option>', {
+                              value: val.id,
+                              text: val.nom
+                          }));
+                          if(commande.quartier==val.nom){
+                            $("#quartier_commande_edit").val(val.id);
+                            $("#adresse_commande_edit").val(commande.adresseLivraison);
+                          }
+                     });
+
+                   },
+                   error:function(data){
+
+                   }
+                 });
+              if(commande.type=='OX'){
+                 $("#type_commande_edit").val("1");
+                 gestion();
+              }if(commande.type=='SB'){
+                 $("#type_commande_edit").val("2");
+                 gestion();
+              }if(commande.type=='LD'){
+                 $("#type_commande_edit").val("3");
+                 gestion();
+              }
+
+              if(commande.status=="Livré"){
+                 $("#status_commande_edit").val("1");
+               }else {
+                 $("#status_commande_edit").val("2");
+               }
+
+               if(commande.id_ville!=null){
+                $("#ville_commande_edit").val(commande.id_ville);
+                $("#relais_commande_edit option").remove();
+                var getRelaisListByVille = {"methode":"getRelaisListByVille","id_ville":commande.id_ville};
+                  $.ajax({
+                  url : "./lib/util.php",
+                  dataType: "json",
+                  type: "POST",
+                  data : getRelaisListByVille,
+                  beforeSend: function(){
+                    $('#loading-image').popup('show');
+                  },
+                  complete: function(){
+                    setTimeout(function(){$('#loading-image').popup('hide');},250);
+                  },
+                  success: function(data, textStatus, jqXHR) {
+                    
+                    $.each(data['result'], function(key, val) {   
+                         $('#relais_commande_edit').append($('<option>', {
+                             value: val.id_relais,
+                             text: val.nom
+                         }));
+                      });
+
+                     $('#relais_commande_edit').val(commande.id_relais);
+                  },
+                  error:function(data){
+
+                  }
+                });
+               }
+
+             
+             // $('#type_commande_edit').val(commande.type);
+             /* $('#id_commande_edit').val(client.email);
               $('#gsm_edit').val(client.gsm);
               $('#naissance_edit').val(client.naissance);
               $('#adresse_edit').val(client.adresse);
               $('#CP_edit').val(client.CP);
               $('#type_edit').val(client.type);
               $('#Ville_id_edit').val(client.Ville_id);
-              $('#creationDate_edit').text(client.creationDateClient);
-              var eligible = client.eligible;
+              $('#creationDate_edit').text(client.creationDateClient);*/
+              
+
+              /*var eligible = client.eligible;
               var babies = data.result.baby;
               console.log(babies);
               if(babies.lenght == 0){
@@ -1224,7 +1700,7 @@
                     '</tr>';
                   $("#baby_table tbody").append(newRow);
                 });
-              }
+              }*/
             }
           },
           error: function (jqXHR, textStatus, errorThrown) {
@@ -1253,7 +1729,6 @@
             setTimeout(function(){$('#loading-image').popup('hide');},250);
           },
           success: function(data, textStatus, jqXHR) {
-            console.log('done');
             $('.livraisonStatus'+id).html('Livré');
           },
           error: function (jqXHR, textStatus, errorThrown) {
@@ -1264,7 +1739,6 @@
       
 
       default :
-        console.log('default');
         break;
     }
   });
@@ -1274,7 +1748,156 @@
 
 
 
+$('#ville_commande_edit').change(function () {
+     var id_ville = $('#ville_commande_edit').val();
+     $("#relais_commande_edit option").remove();
+     var getRelaisListByVille = {"methode":"getRelaisListByVille","id_ville":id_ville};
+     $.ajax({
+     url : "./lib/util.php",
+     dataType: "json",
+     type: "POST",
+     data : getRelaisListByVille,
+     beforeSend: function(){
+       $('#loading-image').popup('show');
+     },
+     complete: function(){
+       setTimeout(function(){$('#loading-image').popup('hide');},250);
+     },
+     success: function(data, textStatus, jqXHR) {
+       
+       $.each(data['result'], function(key, val) {   
+            $('#relais_commande_edit').append($('<option>', {
+                value: val.id_relais,
+                text: val.nom
+            }));
+           });
 
+     },
+     error:function(data){
+
+     }
+   });
+});
+
+
+$('#type_commande_edit').change(function(){
+   var type_commande = $('#type_commande_edit').val();
+   if(type_commande=="1"){
+    $("#ville_commande_edit").prop('disabled', 'disabled');
+    $("#relais_commande_edit").prop('disabled', 'disabled');
+    $("#quartier_commande_edit").prop('disabled', 'disabled');
+    $("#adresse_commande_edit").attr('disabled','disabled');
+   }
+   else if(type_commande=="2"){
+    
+     $("#ville_commande_edit").prop('disabled', false);
+     $("#relais_commande_edit").prop('disabled', false);
+
+    $("#quartier_commande_edit").prop('disabled', 'disabled');
+    $("#adresse_commande_edit").attr('disabled','disabled');
+   }
+   else if(type_commande=="3"){
+     $("#adresse_commande_edit").removeAttr('disabled');
+     $("#quartier_commande_edit").prop('disabled', false);
+     $("#ville_commande_edit").prop('disabled', 'disabled');
+     $("#relais_commande_edit").prop('disabled', 'disabled');
+  }
+});
+
+function gestion(){
+   var type_commande = $('#type_commande_edit').val();
+   if(type_commande=="1"){
+    $("#ville_commande_edit").prop('disabled', 'disabled');
+    $("#relais_commande_edit").prop('disabled', 'disabled');
+    $("#quartier_commande_edit").prop('disabled', 'disabled');
+    $("#adresse_commande_edit").attr('disabled','disabled');
+   }
+   else if(type_commande=="2"){
+    
+     $("#ville_commande_edit").prop('disabled', false);
+     $("#relais_commande_edit").prop('disabled', false);
+
+    $("#quartier_commande_edit").prop('disabled', 'disabled');
+    $("#adresse_commande_edit").attr('disabled','disabled');
+   }
+   else if(type_commande=="3"){
+     $("#adresse_commande_edit").removeAttr('disabled');
+     $("#quartier_commande_edit").prop('disabled', false);
+     $("#ville_commande_edit").prop('disabled', 'disabled');
+     $("#relais_commande_edit").prop('disabled', 'disabled');
+  }
+}
+
+gestion();
+
+
+
+
+
+ $('#edit_commande_form').on('submit', function (e) {
+
+      var type_commande_edit     = $('#type_commande_edit').val(),
+          status_commande_edit   = $("#status_commande_edit option:selected").text(),
+          ville_commande_edit    = $('#ville_commande_edit').val(),
+          relais_commande_edit   = $('#relais_commande_edit').val(),
+          quartier_commande_edit = $('#quartier_commande_edit option:selected').text(),
+          adresse_commande_edit  = $('#adresse_commande_edit').val(),
+          id_commande_edit       = $('#id_commande_edit').val();
+        
+      var type_commande='';
+      if(type_commande_edit=="1"){
+        type_commande='OX';
+      }else if(type_commande_edit=="2"){
+        type_commande='SB';
+      }else if(type_commande_edit=="3"){
+        type_commande='LD'
+      }
+      
+      var livraison={id:id_commande_edit,type:type_commande,status:status_commande_edit,relais:relais_commande_edit,quartier:quartier_commande_edit,adresse:adresse_commande_edit};
+      
+      var update_client = {'methode':'updateLivraison','livraison':livraison};
+      $.ajax({
+        url : "./lib/util.php",
+        dataType: "json",
+        type: "POST",
+        data : update_client,
+        beforeSend: function(){
+          $('#loading-image').popup('show');
+        },
+        complete: function(){
+          $('#loading-image').popup('hide');
+        },
+        success: function(data, textStatus, jqXHR) {
+          if(data.status == 'success'){
+           $('#alert_recover_ok').css('visibility','visible').fadeIn(1500);
+             /*$('#'+id_client+' td:nth-child(2)').html(nom);
+            $('#'+id_client+' td:nth-child(3)').html(prenom);
+            $('#'+id_client+' td:nth-child(4)').html(email);
+            $('#'+id_client+' td:nth-child(5)').html(gsm);
+            $('#'+id_client+' td:nth-child(6)').html(getAge(dof));
+            $('#'+id_client+' td:nth-child(7)').html(adresse);
+            $('#'+id_client+' td:nth-child(8)').html($('#Ville_id_edit option:selected').text());*/
+            setTimeout(function(){
+              $('#edit').modal('toggle');
+              $('#alert_recover_ok').css('visibility','hidden');
+            }, 2000);
+          }else{
+            $('#alert_recover_ko').css('visibility','visible').fadeIn(1500);
+            setTimeout(function(){
+              $('#edit').modal('toggle');
+              $('#alert_recover_ko').css('visibility','hidden');
+            }, 2000);
+          }
+
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+          console.log(jqXHR);
+          console.log(textStatus);
+          console.log(errorThrown);
+        }
+      });  
+ 
+ });
 
 
 

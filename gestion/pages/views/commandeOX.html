@@ -266,11 +266,11 @@
 </div>
   
 <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog" style="width: 700px;">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-        <h4 class="modal-title custom_align" id="Heading">Modifier client</h4>
+        <h4 class="modal-title custom_align" id="Heading">Modifier commande</h4>
       </div>
       <div class="modal-body">
         <div id="alert_recover_ok" class="alert alert-success hide-me">
@@ -279,137 +279,107 @@
         <div id="alert_recover_ko" class="alert alert-warning hide-me">
           Quelque chose a mal tourné
         </div>
-        <form id="myForm">
+        <form id="edit_commande_form">
+        <input type="hidden" value="id_commande_edit"/>
           <div class="row">
-            <div class="col-xs-2">
+            <div class="col-xs-3">
               <div class="form-group">
-                <label>ID</label>
+                <label>Id commande</label>
               </div>
             </div>
-            <div class="col-xs-2">
+            <div class="col-xs-3">
+              <span id="id_commande_edit" class="form-group infos_client text-blue"></span>
+            </div>
+            <div class="col-xs-3">
+              <div class="form-group">
+                <label>Id maman</label>
+              </div>
+            </div>
+            <div class="col-xs-3">
               <span id="id_client_edit" class="form-group infos_client text-blue"></span>
             </div>
-            <div class="col-xs-2">
-              <div class="form-group">
-                <label>E-mail</label>
-              </div>
-            </div>
-            <div class="form-group has-feedback col-xs-6">
-              <div class="input-group">
-                <div class="input-group">
-                  <div class="input-group-addon">
-                    <i class="fa fa-envelope"></i>
-                  </div>
-                <input id="email_edit" type="email" class="form-control infos_client" data-required-error="veuillez renseigner ce champ" data-error="E-mail invalid" required>
-                </div>
-                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-                <div class="help-block with-errors"></div>
-              </div>
-            </div>
+            
           </div>
           <div class="row">
             <div class="col-xs-2">
               <div class="form-group">
-                <label>Prénom</label>
+                <label>type</label>
               </div>
             </div>
             <div class="form-group has-feedback col-xs-4">
-              <div class="input-group">
-                <input id="prenom_edit" type="text" pattern="^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$" class="form-control infos_client" data-error="Prénom invalid" data-required-error="veuillez renseigner ce champ" required>
-                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-                <div class="help-block with-errors"></div>
+              <select id="type_commande_edit" class="form-control">
+                <option value="1">Oumbox</option>
+                <option value="2">SpeedBox</option>
+                <option value="3">Livraison à domicile</option>
+              </select>
+            </div>
+
+
+             <div class="col-xs-2">
+              <div class="form-group">
+                <label>Status</label>
               </div>
             </div>
+            <div class="form-group has-feedback col-xs-4">
+              <select id="status_commande_edit" class="form-control">
+                <option value="1">Livré</option>
+                <option value="2">Non livré</option>
+              </select>
+            </div>
+
+
+           
+          </div> 
+          <div class="row">
+           <div class="col-xs-2">
+              <div class="form-group">
+                <label>Ville</label>
+              </div>
+            </div>
+            <div class="form-group has-feedback col-xs-4">
+              <select id="ville_commande_edit" class="form-control">
+              </select>
+            </div>
+
             <div class="col-xs-2">
               <div class="form-group">
-                <label>Nom</label>
+                <label>Relais</label>
               </div>
             </div>
             <div class="form-group has-feedback col-xs-4">
-              <div class="input-group">
-                <input id="nom_edit" type="text" pattern="^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$" class="form-control infos_client" data-error="Nom invalid" data-required-error="veuillez renseigner ce champ" required>
-                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-                <div class="help-block with-errors"></div>
-              </div>
+              <select id="relais_commande_edit" class="form-control">
+              </select>
             </div>
-          </div> 
+          </div>   
           <div class="row">
             <div class="col-xs-2">
               <div class="form-group">
-                <label>GSM</label>
+                <label>Quartier</label>
               </div>
             </div>
             <div class="form-group has-feedback col-xs-4">
-              <div class="input-group">
-                <div class="input-group">
-                  <div class="input-group-addon">
-                    <i class="fa fa-phone"></i>
-                  </div>
-                  <input id="gsm_edit" type="tel" class="form-control infos_client" pattern="^(?:(?:\+|00)212|0)\s*[1-9](?:[\s.-]*\d{2}){4}$" data-required-error="veuillez renseigner ce champ" data-error="phone number invalid" required>
-                </div>
-                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
-                <div class="help-block with-errors"></div>
-              </div>
+              <select id="quartier_commande_edit" class="form-control">
+              </select>
             </div>
-            <div class="col-xs-2">
-              <div class="form-group">
-                <label>Naissance</label>
-              </div>
-            </div>
-            <div class="col-xs-4">
-              <div class="input-group date">
-                <div class="input-group-addon">
-                  <i class="fa fa-calendar"></i>
-                </div>
-                <input type="text" class="form-control pull-right" id="naissance_edit" readonly="true">
-              </div>
-            </div>
-          </div> 
-          <div class="row">
             <div class="col-xs-2">
               <div class="form-group">
                 <label>Adresse</label>
               </div>
             </div>
-            <div class="col-xs-4">
-              <textarea class="form-control infos_client" id="adresse_edit" rows="2"></textarea>
-            </div>
-            <div class="col-xs-2">
-              <div class="form-group">
-                <label>CP</label>
-              </div>
-            </div>
-            <div class="form-group has-feedback col-xs-4">
+             <div class="form-group has-feedback col-xs-4">
               <div class="input-group">
-                <input id="CP_edit" type="NUMBER" class="form-control infos_client" data-minlength="5" data-error="Code postale invalid">
+                <div class="input-group">
+                  <!-- <div class="input-group-addon">
+                    <i class="fa fa-phone"></i>
+                  </div> -->
+                <input id="adresse_commande_edit" type="text" class="form-control infos_client" data-required-error="veuillez renseigner ce champ" data-error="invalid" >
+                </div>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>
               </div>
             </div>
           </div>   
-          <div class="row">
-            <div class="col-xs-2">
-              <div class="form-group">
-                <label>Type maman</label>
-              </div>
-            </div>
-            <div class="col-xs-4">
-              <select id="type_edit" class="form-control">
-              </select>
-              <!-- <span id="type_edit" class="form-group infos_client text-blue"></span> -->
-            </div>
-            <div class="col-xs-2">
-              <div class="form-group">
-                <label>Ville</label>
-              </div>
-            </div>
-            <div class="col-xs-4">
-              <select id="Ville_id_edit" class="form-control">
-                <option value="0">Choisir une ville</option>
-              </select>
-            </div>
-          </div>   
-          <div class="row">
+         <!--  <div class="row">
             <div class="col-xs-2">
               <div class="form-group">
                 <label>Date de création</label>
@@ -426,40 +396,13 @@
             <div class="col-xs-4">
               <span id="creationDate_edit" class="form-group infos_client text-blue"></span>
             </div>
-          </div>
+          </div> -->
           <div class="row">
             <div class="col-xs-12">
-              <button type="submit" class="btn btn-warning btn-lg" style="width: 100%;margin-bottom: 10px;"><span class="glyphicon glyphicon-ok-sign"></span>Modifier</button>
+              <button type="submit"  class="btn btn-warning btn-lg" style="width: 100%;margin-bottom: 10px;"><span class="glyphicon glyphicon-ok-sign"></span>Modifier</button>
             </div>
           </div>
         </form>
-        <div class="row">
-          <div class="col-xs-12">
-            <div class="box box-danger">
-              <div class="box-header with-border">
-                <h3 class="box-title">Liste des Bébés</h3>
-              </div>
-              <!-- /.box-header -->
-              <div class="box-body">
-                <table id="baby_table" class="table table-bordered">
-                  <thead>
-                    <tr>
-                      <th style="width: 10px">ID</th>
-                      <th>Prenom</th>
-                      <th>Sexe</th>
-                      <th>Naissance</th>
-                      <th>Maternité</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                  </tbody>
-                </table>
-              </div>
-              <!-- /.box-body -->
-            </div>
-            <!-- /.box -->
-          </div>
-        </div>
       </div>
     </div>
     <!-- /.modal-content --> 

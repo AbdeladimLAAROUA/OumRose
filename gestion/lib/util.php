@@ -161,6 +161,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			echo updateBaby($_REQUEST['baby']);
 		}else if($_REQUEST['methode'] == 'searchUser'){
 			echo searchUser($_REQUEST['user']);
+		}else if($_REQUEST['methode'] == 'getLivraison'){
+			echo getLivraison($_REQUEST['id']);
+		}else if($_REQUEST['methode'] == 'getAllQuartiers'){
+			echo getAllQuartiers();
+		}else if($_REQUEST['methode'] == 'deleteCommande'){
+			echo deleteCommande($_REQUEST['id']);
 		}else{
 			echo json_encode(array('result'=>'method_not_exist'));
 		}
@@ -341,7 +347,8 @@ function getCommandesLD(){
              p.id=co.product_id and
              l.commande_id=co.id and
              b.customer_id=cust.id and
-             l.type='LD'
+             l.type='LD' and
+             co.deleted=0
             order by l.creationDate and l.status='Non livré' DESC
              ";
 		$resultats = $connexion->prepare($sql);
@@ -375,7 +382,8 @@ function getCommandesOX(){
              p.id=co.product_id and
              l.commande_id=co.id and
              b.customer_id=cust.id and
-             l.type='OX'
+             l.type='OX' and 
+             co.deleted=0
              order by l.creationDate and l.status='Non livré' DESC
              ";
 		$resultats = $connexion->prepare($sql);
@@ -407,11 +415,12 @@ function getCommandesSB(){
 			where 
 			l.commande_id=co.id and 
 			cust.id=co.customer_id and 
-			l.shop_id=r.id and 
+			l.shop_id=r.id_relais and 
 			v.id=r.id_ville and
 			b.customer_id=cust.id and
 			p.id=co.product_id and
-			l.type='SB'
+			l.type='SB' and 
+			co.deleted=0
 			order by l.creationDate and l.status='Non livré' DESC";
 
 		$resultats = $connexion->prepare($sql);
@@ -445,8 +454,8 @@ function getAllCommandes(){
              p.id=co.product_id and
              l.commande_id=co.id and
              b.customer_id=cust.id and
-             l.type='LD'
-
+             l.type='LD' and 
+             co.deleted=0
              order by l.creationDate and l.status='Non livré' DESC
              ";
 		$resultats = $connexion->prepare($sql);
@@ -479,8 +488,8 @@ function getAllCommandes2(){
 			 cust.id=co.customer_id and
              p.id=co.product_id and
              l.commande_id=co.id and
-             b.customer_id=cust.id
-
+             b.customer_id=cust.id and
+             co.deleted=0
              order by l.creationDate and l.status='Non livré' DESC
              ";
 		$resultats = $connexion->prepare($sql);
@@ -595,7 +604,7 @@ function getAllClient2(){
 		//Récupérer la liste des commande
 		$sql =  "SELECT c.id,id_box
 				from customer c, commande co, product p, livraison l 
-				where c.id=co.customer_id and p.id=co.product_id and  l.commande_id=co.id ";
+				where c.id=co.customer_id and p.id=co.product_id and  l.commande_id=co.id and  co.deleted=0";
 		$commandes = $connexion->prepare($sql);
 
 		$commandes->execute();
@@ -665,7 +674,7 @@ function getClient($id){
 
 		//liste des commandes 
 		// requete particulière pour les anciens commandes!
-		$stmt = $connexion->prepare("SELECT product_id FROM commande where customer_id=:id");
+		$stmt = $connexion->prepare("SELECT product_id FROM commande where customer_id=:id and  deleted=0");
           $stmt->execute(array(':id'=>$id));
           $clientCommandesId = array();
           if ($stmt->execute()) {
@@ -693,7 +702,7 @@ function getClient($id){
         // liste des livraison 
         $stmt = $connexion->prepare("SELECT id_box,l.status
 				from customer c, commande co, livraison l,product p
-				where c.id=co.customer_id and  co.product_id=p.id and l.commande_id = co.id and c.id=:id");
+				where c.id=co.customer_id and  co.product_id=p.id and l.commande_id = co.id and c.id=:id and  co.deleted=0");
          
          $commandes=$stmt->execute(array(':id'=>$id));
         $stmt->setFetchMode(PDO::FETCH_OBJ);
@@ -741,7 +750,7 @@ function getClient2($id){
 
 		//liste des commandes 
 		// requete particulière pour les anciens commandes!
-		$stmt = $connexion->prepare("SELECT product_id FROM commande where customer_id=:id");
+		$stmt = $connexion->prepare("SELECT product_id FROM commande where customer_id=:id and deleted=0");
           $stmt->execute(array(':id'=>$id));
           $clientCommandesId = array();
           if ($stmt->execute()) {
@@ -769,7 +778,7 @@ function getClient2($id){
         // liste des livraison 
         $stmt = $connexion->prepare("SELECT id_box,l.status
 				from customer c, commande co, livraison l,product p
-				where c.id=co.customer_id and  co.product_id=p.id and l.commande_id = co.id and c.id=:id");
+				where c.id=co.customer_id and  co.product_id=p.id and l.commande_id = co.id and c.id=:id and  co.deleted=0");
          
          $commandes=$stmt->execute(array(':id'=>$id));
         $stmt->setFetchMode(PDO::FETCH_OBJ);
@@ -791,7 +800,7 @@ function getClient2($id){
 
 function getCommandeByClient($id){
 	try {
-		$stmt = $connexion->prepare("SELECT product_id FROM commande where customer_id=:id");
+		$stmt = $connexion->prepare("SELECT product_id FROM commande where customer_id=:id and  deleted=0");
           $stmt->execute(array(':id'=>$id));
           $clientCommandesId = array();
           if ($stmt->execute()) {
@@ -1028,6 +1037,52 @@ function updateBaby($baby){
 	return json_encode($array);	
 }
 
+function deleteCommande($id){
+	$array = array();
+
+	try {
+		$connexion = db_connect();
+
+		$resultats = $connexion->prepare("SELECT co.id FROM commande co INNER JOIN livraison l ON l.commande_id=co.id where l.id=:id and co.deleted=0");
+
+		$resultats->bindValue(':id', $id);
+		$resultats->execute();
+
+		$resultats->setFetchMode(PDO::FETCH_OBJ);
+		$commande_id = $resultats->fetchColumn();
+
+
+
+
+		$stmt = $connexion->prepare("UPDATE `commande` SET `deleted`= 1 WHERE `id`= :id");
+		
+		$stmt->bindValue(':id', $commande_id);
+
+		$stmt->execute();
+
+
+		$stmt = $connexion->prepare("UPDATE `livraison` SET `deleted`= 1 WHERE `id`= :id");
+		
+		$stmt->bindValue(':id', $id);
+
+		$stmt->execute();
+
+
+
+		if($stmt->rowCount()) {
+			$array['result'] = 'ok';
+		} else {
+			$array['result'] = 'failed';
+		}
+	} catch (Exception $e) {
+		$array['result'] = 'ko';
+	}
+	
+	$connexion = null;
+
+	return json_encode($array);	
+}
+
 function getAllBox(){
 	$array = array();
 	try {
@@ -1098,6 +1153,36 @@ function getBoxById($id){
 
 		$resultats->setFetchMode(PDO::FETCH_OBJ);
 		$resultat = $resultats->fetchAll();
+		$array['result'] = $resultat;
+
+	} catch (Exception $e) {
+		$array['result'] = 0;
+	}
+	
+	$connexion = null;
+	return json_encode($array);
+}
+
+function getLivraison($id){
+	$array = array();
+	try {
+		$connexion = db_connect();
+		$sql ="SELECT l.*, co.customer_id,r.id_ville,r.nom as 'relais',r.id_relais
+				FROM livraison l 
+				INNER JOIN commande co 
+				ON l.commande_id = co.id
+				LEFT JOIN relais r
+				ON shop_id = r.id_relais
+				WHERE l.id = :id and  co.deleted=0" ;
+		$resultats = $connexion->prepare($sql);
+    	
+    	$resultats->bindParam(':id', $id);
+
+		$resultats->execute();
+
+		$resultats->setFetchMode(PDO::FETCH_OBJ);
+		$resultat = $resultats->fetchAll();
+
 		$array['result'] = $resultat;
 
 	} catch (Exception $e) {
@@ -1527,22 +1612,32 @@ function updateLivraison($livraison){
 		$connexion = db_connect();
 		$sql="";
 
-		$resultats = $connexion->prepare("SELECT c.customer_id,c.id from commande c,livraison l where l.commande_id = c.id and l.id=:id");
+		$resultats = $connexion->prepare("SELECT c.customer_id,c.id from commande c,livraison l where l.commande_id = c.id and l.id=:id and  c.deleted=0");
 		$resultats->bindParam(':id', $livraison['id']);
 		$resultats->execute();
 		$resultats->setFetchMode(PDO::FETCH_OBJ);
 		$commande = $resultats->fetchAll();
+		
+
 		$today = date("dmY");
 		$RefBox =  $today.$livraison['type'].$commande[0]->customer_id;
-
-
-
-		$sql = "UPDATE livraison set status=:status where id=:id";
+		$sql='';
+		if(isset($livraison['quartier']) and isset($livraison['adresse']) and isset($livraison['relais'])  )
+		$sql = "UPDATE livraison set type=:type,status=:status, quartier=:quartier,adresseLivraison=:adresse,shop_id=:relais where id=:id";		
+		else
+		$sql = "UPDATE livraison set type=:type,status=:status where id=:id";		
 		//Prepare our statement.
 		$statement = $connexion->prepare($sql);
 		
 		$statement->bindValue(':id', $livraison['id']);		 
 		$statement->bindValue(':status', $livraison['status']);		
+		$statement->bindValue(':type', $livraison['type']);		
+		if(isset($livraison['quartier']) and isset($livraison['adresse']) and isset($livraison['relais'])  ){
+			$statement->bindValue(':quartier', $livraison['quartier']);		
+			$statement->bindValue(':adresse', $livraison['adresse']);		
+			$statement->bindValue(':relais', $livraison['relais']);		
+		}
+			
  
 		
 		//Execute the statement and insert our values.
@@ -1554,13 +1649,13 @@ function updateLivraison($livraison){
 			echo 'error';
 		}
 		
-		if($array['status'] == 'success'){
+		if($array['status'] == 'success' and $livraison['status']=="Livré"){
 			$sql = "UPDATE product p 
 			JOIN commande co ON p.id=co.product_id 
 			JOIN customer c ON c.id=co.customer_id 
 			set RefBox=:RefBox
 			where customer_id=:customer_id
-			and co.id=:commande_id
+			and co.id=:commande_id and  co.deleted=0
 			";
 			//Prepare our statement.
 			$statement = $connexion->prepare($sql);
@@ -1572,7 +1667,7 @@ function updateLivraison($livraison){
 			
 			//Execute the statement and insert our values.
 			$updated = $statement->execute();
-
+			
 			//Because PDOStatement::execute returns a TRUE or FALSE value,
 			//we can easily check to see if our insert was successful.
 			if($updated){
@@ -1948,7 +2043,7 @@ function getAllCommandeByCus($id){
 	$array = array();
 	try {
 		$connexion = db_connect();
-		$resultats = $connexion->prepare("SELECT co.id, b.name, b.description, co.creationDate,l.type FROM commande co INNER JOIN customer cu ON co.customer_id = cu.id INNER JOIN livraison l ON l.commande_id = co.id INNER JOIN product pr ON co.product_id = pr.id INNER JOIN box b ON pr.id_box = b.id WHERE co.customer_id = :id_cus");
+		$resultats = $connexion->prepare("SELECT co.id, b.name, b.description, co.creationDate,l.type FROM commande co INNER JOIN customer cu ON co.customer_id = cu.id INNER JOIN livraison l ON l.commande_id = co.id INNER JOIN product pr ON co.product_id = pr.id INNER JOIN box b ON pr.id_box = b.id WHERE co.customer_id = :id_cus and  co.deleted=0");
 		$resultats->bindParam(':id_cus', $id);
 		$resultats->execute();
 		$resultats->setFetchMode(PDO::FETCH_OBJ);
@@ -2088,6 +2183,26 @@ function getVilleIdByName($name){
 	$connexion = null;
 	return json_encode($array);	
 }
+
+function getAllQuartiers(){
+	$array = array();
+	try {
+		$connexion = db_connect();
+		$resultats = $connexion->prepare("SELECT * FROM quartier");
+
+		$resultats->execute();
+
+		$resultats->setFetchMode(PDO::FETCH_OBJ);
+		$resultat = $resultats->fetchAll();
+		$array['result'] = $resultat;
+	} catch (Exception $e) {
+		$array['result'] = 0;
+	}
+	
+	$connexion = null;
+	return json_encode($array);	
+}
+
  function getCurrentUser(){
  	$array = array();
 	
@@ -2224,7 +2339,7 @@ function searchUser($user){
 		//Récupérer la liste des commande
 		$sql =  "SELECT c.id,id_box
 				from customer c, commande co, product p, livraison l 
-				where c.id=co.customer_id and p.id=co.product_id and  l.commande_id=co.id ";
+				where c.id=co.customer_id and p.id=co.product_id and  l.commande_id=co.id and  co.deleted=0 ";
 		$commandes = $connexion->prepare($sql);
 
 		$commandes->execute();

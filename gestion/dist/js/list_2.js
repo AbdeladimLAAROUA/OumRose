@@ -534,14 +534,12 @@ $(document).ready(function() {
          typeLivraison = "C"+maternite.toUpperCase().charAt(0);
       }
       
-
-      
       var obj = {'id':id};
       var livraison={user:'admin',id_box:commanderBoxType,idClient:id,status:'Livré',type:typeLivraison};
       var commanderBox = {'methode':'addLivraison','livraison':livraison};
       console.log(commanderBox);
       
-      if(maternite!=''){
+      if(maternite!=''  || $("#roleInput").val()=="admin"){
         $.ajax({
           url : "./lib/util.php",
           dataType: "json",

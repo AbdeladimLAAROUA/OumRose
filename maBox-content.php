@@ -135,7 +135,7 @@ else if($_POST['type_livraison']=="LD"){
             <option value="0" disabled="" selected="">Quartier</option>
             <?php  
               include('config.php');
-              $quartiers = getAllQuartiers($conn);
+              $quartiers = getAllQuartiers1($conn);
               foreach ($quartiers as $key => $infos) { 
             ?>
               <option value="<?php echo $infos['id']; ?>"><?php echo $infos['nom']; ?></option>

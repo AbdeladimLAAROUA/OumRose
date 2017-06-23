@@ -347,7 +347,7 @@ function getClientBox($conn,$user){
   try
        {
 
-          $stmt = $conn->prepare("SELECT product_id FROM commande where customer_id=:id");
+          $stmt = $conn->prepare("SELECT product_id FROM commande where customer_id=:id and deleted=0");
           $stmt->execute(array(':id'=>$user['id']));
           $clientCommandesId = array();
           if ($stmt->execute()) {
@@ -414,7 +414,7 @@ function updatePassword($conn,$email,$password)
            echo $e->getMessage();
        }
 }
-function getAllQuartiers($conn){
+function getAllQuartiers1($conn){
   try
        {
           $stmt = $conn->prepare("SELECT * FROM quartier");
