@@ -600,6 +600,33 @@ session_start();
           </div>
 
 
+          <div class="row">
+             <div class="col-xs-2">
+              <div class="form-group">
+                <label>Livré</label>
+              </div>
+            </div>
+            <div class="col-xs-2">
+                <input type="checkbox" id="livraison">
+            </div>
+
+            <!--  <div class="col-xs-2">
+              <div class="form-group">
+                <label>Maternité</label>
+              </div>
+            </div>
+            <div class="form-group has-feedback col-xs-4">
+              <div class="input-group">
+                <input id="maternite_bebe_edit" type="text" pattern="^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$" class="form-control infos_client"  data-required-error="veuillez renseigner ce champ" required>
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                <div class="help-block with-errors"></div>
+              </div>
+            </div> -->
+
+          </div>
+
+
+
 
           <div class="row">
             <div class="col-xs-12">
@@ -738,17 +765,23 @@ session_start();
                 <div class="help-block with-errors"></div>
               </div>
             </div>
-            <div class="col-xs-2">
+            <div class="form-group has-feedback col-xs-2">
               <div class="form-group">
                 <label>Naissance</label>
               </div>
             </div>
             <div class="col-xs-4">
-              <div class="input-group date">
-                <div class="input-group-addon">
-                  <i class="fa fa-calendar"></i>
+              <div class="form-group has-feedback input-group date">
+               <div class="input-group">
+                  <div class="input-group">
+                  <div class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                  </div>
+                  <input type="text" class="form-control pull-right" id="naissance_create"  data-error="Date naissance invalid" required>
                 </div>
-                <input type="text" class="form-control pull-right" id="naissance_create" readonly="true">
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                <div class="help-block with-errors"></div>
+               </div>
               </div>
             </div>
           </div> 
@@ -758,9 +791,18 @@ session_start();
                 <label>Adresse</label>
               </div>
             </div>
-            <div class="col-xs-4">
-              <textarea class="form-control infos_client" id="adresse_create" rows="2"></textarea>
+           
+             <!--  <input type="text" class="form-control pull-right" id="adresse_create" required> -->
+            <!--   <textarea class="form-control infos_client" id="adresse_create" rows="2" requidred></textarea> -->
+            
+             <div class="form-group has-feedback col-xs-4">
+              <div class="input-group">
+                <input id="adresse_create" type="text" class="form-control infos_client" data-minlength="4" data-error="Code postale invalid" required>
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                <div class="help-block with-errors"></div>
+              </div>
             </div>
+
             <div class="col-xs-2">
               <div class="form-group">
                 <label>CP</label>
@@ -768,7 +810,7 @@ session_start();
             </div>
             <div class="form-group has-feedback col-xs-4">
               <div class="input-group">
-                <input id="CP_create" type="NUMBER" class="form-control infos_client" data-minlength="5" data-error="Code postale invalid">
+                <input id="CP_create" type="NUMBER" class="form-control infos_client" data-minlength="5" data-error="Code postale invalid" required>
                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                 <div class="help-block with-errors"></div>
               </div>
@@ -802,12 +844,19 @@ session_start();
                 <label>Date naissance bébé</label>
               </div>
             </div>
+      
             <div class="col-xs-4">
-             <div class="input-group date">
-                <div class="input-group-addon">
-                  <i class="fa fa-calendar"></i>
+              <div class="form-group has-feedback input-group date">
+               <div class="input-group">
+                  <div class="input-group">
+                  <div class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                  </div>
+                  <input type="text" class="form-control pull-right" id="naissance_bebe_create"  data-error="Date naissance invalid" required>
                 </div>
-                <input type="text" class="form-control pull-right" id="naissance_bebe_create" readonly="true">
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                <div class="help-block with-errors"></div>
+               </div>
               </div>
             </div>
             <div class="col-xs-2">
@@ -824,6 +873,7 @@ session_start();
             </div>
           </div>  
           <div class="row">
+            
             <div class="col-xs-2">
               <div class="form-group">
                 <label>Gynécologue</label>
@@ -836,7 +886,35 @@ session_start();
                 <div class="help-block with-errors"></div>
               </div>
             </div>
-          </div>    
+
+            <div class="col-xs-2">
+              <div class="form-group">
+                <label>Sexe enfant</label>
+              </div>
+            </div>
+            <div class="form-group has-feedback col-xs-4">
+              <div class="input-group">
+                <input id="sexe_create" type="text" class="form-control infos_client" data-error="Sexe invalid" data-required-error="veuillez renseigner ce champ" required>
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                <div class="help-block with-errors"></div>
+              </div>
+            </div>
+
+          </div>  
+          <div class="row">
+            <div class="col-xs-2">
+              <div class="form-group">
+                <label>Prénom enfant</label>
+              </div>
+            </div>
+            <div class="form-group has-feedback col-xs-4">
+              <div class="input-group">
+                <input id="prénom_create" type="text" class="form-control infos_client" data-error="Sexe invalid" data-required-error="veuillez renseigner ce champ" required>
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                <div class="help-block with-errors"></div>
+              </div>
+            </div>
+          </div>  
           <div class="row">
             <div class="col-xs-12">
               <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;margin-bottom: 10px;"><span class="glyphicon glyphicon-ok-sign"></span>Créer</button>

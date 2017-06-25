@@ -31,14 +31,14 @@ session_start();
     <div class="col-xs-12">
       <div class="box">
         <div class="box-header">
-          <h3 class="box-title">Liste des commandes à domicile</h3>
+          <h3 class="box-title">Liste des commandes</h3>
         </div>
         <!-- /.box-header -->
         <div class="box-body">
-          <div style="margin-bottom:20px;">
-            <button id="export_LD_cmd" type="button" class="btn btn-success"><span class="glyphicon glyphicon-download-alt"></span> Export</button>
+           <div style="margin-bottom:20px;">
+            <button id="export_SB_cmd" type="button" class="btn btn-success"><span class="glyphicon glyphicon-download-alt"></span> Export</button>
           </div>
-          <table id="table_commandesLD" class="table table-bordered table-striped">
+          <table id="table_commandesSB" class="table table-bordered table-striped">
             <thead>
             <tr>
               <th>Id Maman</th>
@@ -48,8 +48,8 @@ session_start();
               <th>GSM 1</th>
               <th>GSM 2 </th>
               <th>Naissance Bébé</th>
-              <th>Adresse</th>
-              <th>Quartier</th>
+              <th>Rlais</th>
+              <th>Ville</th>
               <th>Date</th>
               <th>Status</th>
               <th>Actions</th>
@@ -67,8 +67,8 @@ session_start();
               <th>GSM 1</th>
               <th>GSM 2 </th>
               <th>Naissance Bébé</th>
-              <th>Adresse</th>
-              <th>Quartier</th>
+              <th>Relais</th>
+              <th>Ville</th>
               <th>Date</th>
               <th>Status</th>
               <th>Actions</th>
@@ -274,6 +274,7 @@ session_start();
   <!-- /.modal-dialog --> 
 </div>
   
+  
 <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
   <div class="modal-dialog" style="width: 700px;">
     <div class="modal-content">
@@ -475,6 +476,3 @@ if ($_SESSION['role_a']=='mgr') {
    echo '<script src="dist/js/livraison.js" data-role"admin"></script>';
 }
 ?>
-
-<script type="text/javascript">
-</script>

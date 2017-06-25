@@ -351,7 +351,6 @@ $(document).ready(function() {
             $('#Ville_id_edit').val(0);
             if(data.result != 0){
               var client = data.result.client[0];
-              console.log(client);
               $('#id_client_edit').text(client.id_client);
               $('#nom_edit').val(client.nom);
               $('#prenom_edit').val(client.prenom);
@@ -369,7 +368,7 @@ $(document).ready(function() {
 
 
               var babies = data.result.baby;
-              console.log(babies);
+              
               if(babies.lenght == 0){
                 var newRow = '<tr>'+
                   '<td>Aucun bébé trouvé</td>'+
@@ -393,6 +392,8 @@ $(document).ready(function() {
                   $('#maternite_bebe_edit').val(val.MATERNITE);
                 });
               }
+              
+               
             }
           },
           error: function (jqXHR, textStatus, errorThrown) {
@@ -474,9 +475,17 @@ $(document).ready(function() {
           naissanceBebe   = $('#naissance_bebe_edit').val(),
           maternite   = $('#maternite_bebe_edit').val(),
           idBebe   = $('#id_bebe_edit').val();
-      var obj =  {'id':id,'nom':nom,'prenom':prenom,'email':email,'gsm':gsm,'dof':dof,'adresse':adresse,'cp':cp,'type':type,'ville':ville};
+    
+      var addLivraison=$('#livraison').is(":checked");
+
+      var typeLivraison='';
+       if($("#roleInput").val()=="user"){
+         typeLivraison = "C"+maternite.toUpperCase().charAt(0);
+      }
+      var newLivraison={'type':typeLivraison,'addLivraison':addLivraison}
+      var obj =  {'id':id,'nom':nom,'prenom':prenom,'email':email,'gsm':gsm,'dof':dof,'adresse':adresse,'cp':cp,'type':type,'ville':ville,'livraison':newLivraison};
       var obj2 = {'id':idBebe,'prenomBebe':prenomBebe,'sexeBebe':sexeBebe,'naissanceBebe':naissanceBebe,'maternite':maternite};
-     
+      
       var update_client = {'methode':'updateClient','client':obj,'baby':obj2};
       $.ajax({
         url : "./lib/util.php",
@@ -604,12 +613,14 @@ $('#createUserForm').validator().on('submit', function (e) {
           gyneco   = $('#gyneco_create').val();
       var obj = {'nom':nom,'prenom':prenom,'email':email,'gsm':gsm,'dof':dof,'adresse':adresse,'cp':cp,'type':type,'ville_id':ville_id,'naissance_bebe':naissance_bebe,'maternite':maternite,'gyneco':gyneco};
       var create_client = {'methode':'createClient','client':obj};
+      
 
-      $.ajax({
+      var emailOrGsmAlreadyExists = {'methode':'emailOrGsmAlreadyExists','gsm':gsm,'email':email};
+        $.ajax({
         url : "./lib/util.php",
         dataType: "json",
         type: "POST",
-        data : create_client,
+        data : emailOrGsmAlreadyExists,
         beforeSend: function(){
           $('#loading-image').popup('show');
         },
@@ -618,22 +629,57 @@ $('#createUserForm').validator().on('submit', function (e) {
         },
         success: function(data, textStatus, jqXHR) {
           console.log(data);
-          if(data.result == 'success'){
-            console.log('Un nouveau client a été crée !! ');
-            $('#alert_recover_ok_create').css('visibility','visible').fadeIn(1500);
-           /* $('#'+id_client+' td:nth-child(2)').html(nom);
-            $('#'+id_client+' td:nth-child(3)').html(prenom);
-            $('#'+id_client+' td:nth-child(4)').html(email);
-            $('#'+id_client+' td:nth-child(5)').html(gsm);
-            $('#'+id_client+' td:nth-child(6)').html(getAge(dof));
-            $('#'+id_client+' td:nth-child(7)').html(adresse);
-            $('#'+id_client+' td:nth-child(8)').html($('#Ville_id_edit option:selected').text());*/
-            setTimeout(function(){
+          if(data.status == 'success'){
+
+            if(data.isUserAlreadyExist==true){
+
+              $('#alert_recover_ko_create').text(data.response);
+            
+              $('#alert_recover_ko_create').css('visibility','visible').fadeIn(1500);
+          /*  setTimeout(function(){
               $('#createUser').modal('toggle');
               $('#alert_recover_ok_create').css('visibility','hidden');
-            }, 2000);
+            }, 2000);*/
+            }else{  
+                 $.ajax({
+                url : "./lib/util.php",
+                dataType: "json",
+                type: "POST",
+                data : create_client,
+                beforeSend: function(){
+                  $('#loading-image').popup('show');
+                },
+                complete: function(){
+                  $('#loading-image').popup('hide');
+                },
+                success: function(data, textStatus, jqXHR) {
+                  if(data.result == 'success'){
+                    console.log('Un nouveau client a été crée !! ');
+                    $('#alert_recover_ok_create').css('visibility','visible').fadeIn(1500);
+                    setTimeout(function(){
+                      $('#createUser').modal('toggle');
+                      $('#alert_recover_ok_create').css('visibility','hidden');
+                      $('#alert_recover_ko_create').css('visibility','hidden');
+                       $('#alert_recover_ko_create').text("Quelque chose a mal tourné");
+                    }, 2000);
+                  }else{
+                    console.log('Something went wrong !!');
+                    $('#alert_recover_ko_create').css('visibility','visible').fadeIn(1500);
+                    setTimeout(function(){
+                      $('#createUser').modal('toggle');
+                      $('#alert_recover_ko_create').css('visibility','hidden');
+                    }, 2000);
+                  }
+
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                  console.log(jqXHR);
+                  console.log(textStatus);
+                  console.log(errorThrown);
+                }
+              });
+            }
           }else{
-            console.log('Something went wrong !!');
             $('#alert_recover_ko_create').css('visibility','visible').fadeIn(1500);
             setTimeout(function(){
               $('#createUser').modal('toggle');
@@ -648,6 +694,7 @@ $('#createUserForm').validator().on('submit', function (e) {
           console.log(errorThrown);
         }
       });
+     
     }
 });
 
@@ -761,6 +808,9 @@ $('#search').on( 'click', function (){
                   }
                 });
               }
+
+
+
               $("#box_table tbody").empty();
 
               var commandes = data.result.commandes;
@@ -914,6 +964,13 @@ $('#search').on( 'click', function (){
                   $('#maternite_bebe_edit').val(val.MATERNITE);
                 });
               }
+              var commandes=data.result.commandes;
+               console.log(commandes);
+               $.each(commandes, function(key, val) {   
+                  if(val.id_box=="2" && val.status=="Livré"){
+                    $("input#livraison").attr("disabled", true);
+                  }
+                });
             }
           },
           error: function (jqXHR, textStatus, errorThrown) {

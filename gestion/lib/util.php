@@ -167,6 +167,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			echo getAllQuartiers();
 		}else if($_REQUEST['methode'] == 'deleteCommande'){
 			echo deleteCommande($_REQUEST['id']);
+		}else if($_REQUEST['methode'] == 'emailOrGsmAlreadyExists'){
+			echo emailOrGsmAlreadyExists($_REQUEST['email'],$_REQUEST['gsm']);
 		}else{
 			echo json_encode(array('result'=>'method_not_exist'));
 		}
@@ -972,9 +974,9 @@ function updateClient($client,$baby){
 		$stmt->bindValue(':Ville_id', $client['ville']);
 		$stmt->bindValue(':eligible',eligible($baby['naissanceBebe']));
 
-		$stmt->execute();
+		$a =$stmt->execute();
 
-		$a=$stmt->rowCount();
+
 
 		
 		$stmt1 = $connexion->prepare("UPDATE baby SET prenom = :prenom ,sexe = :sexe, MATERNITE = :maternite,naissance= :naissance WHERE id = :id ");
@@ -985,13 +987,24 @@ function updateClient($client,$baby){
 		$stmt1->bindValue(':maternite', $baby['maternite']);
 		$stmt1->bindValue(':naissance', $baby['naissanceBebe']);
 
-		$stmt1->execute();
+		$b=$stmt1->execute();
 
-		$b=$stmt1->rowCount();
+
+		$array['addLivraison']=$client['livraison']['addLivraison'];
+		if($client['livraison']['addLivraison']=='true'){
+			$livraison['user']='admin';
+			$livraison['id_box']='2';
+			$livraison['idClient']=$client['id'];
+			$livraison['type']=$client['livraison']['type'];
+			$livraison['status']='Livré';
+			addLivraison($livraison);
+		}
+
+		
 
 		if($a or $b) {
 			$array['result'] = 'success';
-		} else {
+		} else  {
 			$array['result'] = 'failed1';
 		}
 	
@@ -2245,6 +2258,57 @@ function isUserAlreadyExist($email){
 			$array['isUserAlreadyExist'] = false;
 	
 		}
+	} catch (Exception $e) {
+		$array['status'] = 'failed';
+	}
+	
+	$connexion = null;
+	return json_encode($array);	
+}
+
+function emailOrGsmAlreadyExists($email,$gsm){
+	$array = array();
+	
+	try {
+		$connexion = db_connect();
+		$response='';
+		
+		$resultats = $connexion->prepare("SELECT id FROM customer WHERE gsm= :gsm");
+		$resultats->bindParam(':gsm', $gsm);
+		$resultats->execute();
+		$resultats->setFetchMode(PDO::FETCH_OBJ);
+		$resultat = $resultats->fetchAll();
+
+		$array['isUserAlreadyExist'] = false;
+		if(count($resultat) > 0){
+			$array['result'] = $resultat;
+			$array['isUserAlreadyExist'] = true;
+			$array['status'] = 'success';
+			$array['response']='Téléphone déjà existant';
+		}else{
+			$array['status'] = 'success';	
+			$array['isUserAlreadyExist'] = false;
+	
+		}
+		if(!$array['isUserAlreadyExist']){
+			$resultats = $connexion->prepare("SELECT id FROM customer WHERE email= :email");
+			$resultats->bindParam(':email', $email);
+			$resultats->execute();
+			$resultats->setFetchMode(PDO::FETCH_OBJ);
+			$resultat = $resultats->fetchAll();
+
+			if(count($resultat) > 0){
+				$array['result'] = $resultat;
+				$array['isUserAlreadyExist'] = true;
+				$array['status'] = 'success';
+				$array['response']='Email déjà existant';
+			}else{
+				$array['status'] = 'success';	
+				$array['isUserAlreadyExist'] = false;
+			
+			}
+		}
+
 	} catch (Exception $e) {
 		$array['status'] = 'failed';
 	}

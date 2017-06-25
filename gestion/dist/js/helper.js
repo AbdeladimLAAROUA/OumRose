@@ -26,13 +26,13 @@ app.config(function($routeProvider) {
         templateUrl : "pages/views/allCommande.html"
     })
     .when("/commandeSB", {
-        templateUrl : "pages/views/commandeSB.html"
+        templateUrl : "pages/views/commandeSB.php"
     }) 
     .when("/commandeLD", {
-        templateUrl : "pages/views/commandeLD.html"
+        templateUrl : "pages/views/commandeLD.php"
     })
      .when("/commandeOX", {
-        templateUrl : "pages/views/commandeOX.html"
+        templateUrl : "pages/views/commandeOX.php"
     })
     .when("/listBaby", {
         templateUrl : "pages/views/listBaby.html"

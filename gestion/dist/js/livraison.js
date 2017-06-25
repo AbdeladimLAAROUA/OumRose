@@ -5,6 +5,11 @@
   });
 
 
+  var script = $('script[src*=livraison]'); 
+
+  var role = script.attr('data-role'); 
+
+
   var table2,table3,table4,tableAll;
   $("#export_LD_cmd").on("click", function() {
     search = table2.rows( { filter : 'applied'} ).data();
@@ -109,6 +114,8 @@
     });
   });
 
+
+
  
  var objCommandeLD = {'methode' : 'getCommandesLD'}
     $.ajax({
@@ -125,6 +132,19 @@
       success: function(data, textStatus, jqXHR) {
         // console.log(data.result);
         $.each(data.result, function(key, val) {
+          var actions='';
+          actions=    '<td width="12%" align="center">'+
+                      '<button class="btn btn-default btn-xs action" data-type="view" data-id="'+val.idMaman+'" data-toggle="modal" data-target="#view" ><span class="glyphicon glyphicon-eye-open"></span></button>'+
+                      '<button class="btn btn-primary btn-xs action" data-type="edit" data-id="'+val.idLivraison+'" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button>'+
+                      '<button class="btn btn-danger btn-xs action" data-type="delete" data-id="'+val.idLivraison+'" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button>'+
+                      '<button class="btn btn-default btn-xs action" data-type="livraison" data-id="'+val.idLivraison+'" data-toggle="modal" data-target="#livraison" ><span class="glyphicon glyphicon-ok"></span></button>'+
+                      '</td>';
+          if(role=="mgr"){
+            actions=  '<td width="8%" align="center">'+
+                      '<button class="btn btn-default btn-xs action" data-type="view" data-id="'+val.idMaman+'" data-toggle="modal" data-target="#view" ><span class="glyphicon glyphicon-eye-open"></span></button>'+
+                      '<button class="btn btn-default btn-xs action" data-type="livraison" data-id="'+val.idLivraison+'" data-toggle="modal" data-target="#livraison" ><span class="glyphicon glyphicon-ok"></span></button>'+
+                      '</td>';
+          }
           var newRow = '<tr id="client_'+val.id+'">'+
                       '<td>'+val.idMaman+'</td>'+
                       '<td>'+val.idCommande+'</td>'+
@@ -137,12 +157,7 @@
                       '<td>'+val.quartier+'</td>'+
                       '<td>'+val.creationDate+'</td>'+
                       '<td class="livraisonStatus'+val.idLivraison+'">'+val.status+'</td>'+
-                      '<td width="12%" align="center">'+
-                      '<button class="btn btn-default btn-xs action" data-type="view" data-id="'+val.idMaman+'" data-toggle="modal" data-target="#view" ><span class="glyphicon glyphicon-eye-open"></span></button>'+
-                      '<button class="btn btn-primary btn-xs action" data-type="edit" data-id="'+val.idLivraison+'" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button>'+
-                      '<button class="btn btn-danger btn-xs action" data-type="delete" data-id="'+val.idLivraison+'" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button>'+
-                      '<button class="btn btn-default btn-xs action" data-type="livraison" data-id="'+val.idLivraison+'" data-toggle="modal" data-target="#livraison" ><span class="glyphicon glyphicon-ok"></span></button>'+
-                      '</td>'+
+                       actions+
                       '</tr>';
           $("#table_commandesLD tbody").append(newRow);
           // console.log(val);
@@ -170,7 +185,19 @@
       success: function(data, textStatus, jqXHR) {
         // console.log(data.result);
         $.each(data.result, function(key, val) {
-
+          var actions='';
+          actions=    '<td width="12%" align="center">'+
+                      '<button class="btn btn-default btn-xs action" data-type="view" data-id="'+val.idMaman+'" data-toggle="modal" data-target="#view" ><span class="glyphicon glyphicon-eye-open"></span></button>'+
+                      '<button class="btn btn-primary btn-xs action" data-type="edit" data-id="'+val.idLivraison+'" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button>'+
+                      '<button class="btn btn-danger btn-xs action" data-type="delete" data-id="'+val.idLivraison+'" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button>'+
+                      '<button class="btn btn-default btn-xs action" data-type="livraison" data-id="'+val.idLivraison+'" data-toggle="modal" data-target="#livraison" ><span class="glyphicon glyphicon-ok"></span></button>'+
+                      '</td>';
+          if(role=="mgr"){
+            actions=  '<td width="8%" align="center">'+
+                      '<button class="btn btn-default btn-xs action" data-type="view" data-id="'+val.idMaman+'" data-toggle="modal" data-target="#view" ><span class="glyphicon glyphicon-eye-open"></span></button>'+
+                      '<button class="btn btn-default btn-xs action" data-type="livraison" data-id="'+val.idLivraison+'" data-toggle="modal" data-target="#livraison" ><span class="glyphicon glyphicon-ok"></span></button>'+
+                      '</td>';
+          }
           var newRow = '<tr id="client_id'+val.id+'">'+
                       '<td>'+val.idMaman+'</td>'+
                       '<td>'+val.idCommande+'</td>'+
@@ -180,12 +207,7 @@
                       '<td>'+val.naissance+'</td>'+
                       '<td>'+val.creationDate+'</td>'+
                       '<td class="livraisonStatus'+val.idLivraison+'">'+val.status+'</td>'+
-                      '<td width="12%" align="center">'+
-                      '<button class="btn btn-default btn-xs action" data-type="view" data-id="'+val.idMaman+'" data-toggle="modal" data-target="#view" ><span class="glyphicon glyphicon-eye-open"></span></button>'+
-                      '<button class="btn btn-primary btn-xs action" data-type="edit" data-id="'+val.idLivraison+'" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button>'+
-                      '<button class="btn btn-danger btn-xs action" data-type="delete" data-id="'+val.idLivraison+'" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button>'+
-                      '<button class="btn btn-default btn-xs action" data-type="livraison" data-id="'+val.idLivraison+'" data-toggle="modal" data-target="#livraison" ><span class="glyphicon glyphicon-ok"></span></button>'+
-                      '</td>'+
+                        actions
                       '</tr>';
           
           $("#table_commandesOX tbody").append(newRow);
@@ -212,6 +234,19 @@
       success: function(data, textStatus, jqXHR) {
         // console.log(data.result);
         $.each(data.result, function(key, val) {
+           var actions='';
+          actions=    '<td width="12%" align="center">'+
+                      '<button class="btn btn-default btn-xs action" data-type="view" data-id="'+val.idMaman+'" data-toggle="modal" data-target="#view" ><span class="glyphicon glyphicon-eye-open"></span></button>'+
+                      '<button class="btn btn-primary btn-xs action" data-type="edit" data-id="'+val.idLivraison+'" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button>'+
+                      '<button class="btn btn-danger btn-xs action" data-type="delete" data-id="'+val.idLivraison+'" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button>'+
+                      '<button class="btn btn-default btn-xs action" data-type="livraison" data-id="'+val.idLivraison+'" data-toggle="modal" data-target="#livraison" ><span class="glyphicon glyphicon-ok"></span></button>'+
+                      '</td>';
+          if(role=="mgr"){
+            actions=  '<td width="8%" align="center">'+
+                      '<button class="btn btn-default btn-xs action" data-type="view" data-id="'+val.idMaman+'" data-toggle="modal" data-target="#view" ><span class="glyphicon glyphicon-eye-open"></span></button>'+
+                      '<button class="btn btn-default btn-xs action" data-type="livraison" data-id="'+val.idLivraison+'" data-toggle="modal" data-target="#livraison" ><span class="glyphicon glyphicon-ok"></span></button>'+
+                      '</td>';
+          }
           var newRow = '<tr id="client_'+val.idMaman+'">'+
                       '<td>'+val.idMaman+'</td>'+
                       '<td>'+val.idCommande+'</td>'+
@@ -224,10 +259,7 @@
                       '<td>'+val.creationDate+'</td>'+
                       '<td class="livraisonStatus'+val.idLivraison+'">'+val.status+'</td>'+
                       '<td width="12%" align="center">'+
-                      '<button class="btn btn-default btn-xs action" data-type="view" data-id="'+val.idMaman+'" data-toggle="modal" data-target="#view" ><span class="glyphicon glyphicon-eye-open"></span></button>'+
-                      '<button class="btn btn-primary btn-xs action" data-type="edit" data-id="'+val.idLivraison+'" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button>'+
-                      '<button class="btn btn-danger btn-xs action" data-type="delete" data-id="'+val.idLivraison+'" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button>'+
-                      '<button class="btn btn-default btn-xs action" data-type="livraison" data-id="'+val.idLivraison+'" data-toggle="modal" data-target="#livraison" ><span class="glyphicon glyphicon-ok"></span></button>'+
+                       actions
                       '</td>'+
                       '</tr>';
           $("#table_commandesAll tbody").append(newRow);
@@ -256,6 +288,19 @@
       success: function(data, textStatus, jqXHR) {
         // console.log(data.result);
         $.each(data.result, function(key, val) {
+           var actions='';
+          actions=    '<td width="12%" align="center">'+
+                      '<button class="btn btn-default btn-xs action" data-type="view" data-id="'+val.idMaman+'" data-toggle="modal" data-target="#view" ><span class="glyphicon glyphicon-eye-open"></span></button>'+
+                      '<button class="btn btn-primary btn-xs action" data-type="edit" data-id="'+val.idLivraison+'" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button>'+
+                      '<button class="btn btn-danger btn-xs action" data-type="delete" data-id="'+val.idLivraison+'" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button>'+
+                      '<button class="btn btn-default btn-xs action" data-type="livraison" data-id="'+val.idLivraison+'" data-toggle="modal" data-target="#livraison" ><span class="glyphicon glyphicon-ok"></span></button>'+
+                      '</td>';
+          if(role=="mgr"){
+            actions=  '<td width="8%" align="center">'+
+                      '<button class="btn btn-default btn-xs action" data-type="view" data-id="'+val.idMaman+'" data-toggle="modal" data-target="#view" ><span class="glyphicon glyphicon-eye-open"></span></button>'+
+                      '<button class="btn btn-default btn-xs action" data-type="livraison" data-id="'+val.idLivraison+'" data-toggle="modal" data-target="#livraison" ><span class="glyphicon glyphicon-ok"></span></button>'+
+                      '</td>';
+          }
           var newRow = '<tr id="client_'+val.id+'">'+
                       '<td>'+val.idMaman+'</td>'+
                       '<td>'+val.idCommande+'</td>'+
@@ -268,12 +313,7 @@
                       '<td>'+val.Ville+'</td>'+
                       '<td>'+val.creationDate+'</td>'+
                       '<td class="livraisonStatus'+val.idLivraison+'">'+val.status+'</td>'+
-                      '<td width="12%" align="center">'+
-                      '<button class="btn btn-default btn-xs action" data-type="view" data-id="'+val.idMaman+'" data-toggle="modal" data-target="#view" ><span class="glyphicon glyphicon-eye-open"></span></button>'+
-                      '<button class="btn btn-primary btn-xs action" data-type="edit" data-id="'+val.idLivraison+'" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button>'+
-                      '<button class="btn btn-danger btn-xs action" data-type="delete" data-id="'+val.idLivraison+'" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button>'+
-                      '<button class="btn btn-default btn-xs action" data-type="livraison" data-id="'+val.idLivraison+'" data-toggle="modal" data-target="#livraison" ><span class="glyphicon glyphicon-ok"></span></button>'+
-                      '</td>'+
+                       actions
                       '</tr>';
           $("#table_commandesSB tbody").append(newRow);
           // console.log(val);

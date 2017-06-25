@@ -134,8 +134,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <li><a href="#commandeOX">Livraison Oumbox</a></li>
           </ul>
         </li>
+
+
         <?php } ?>
-       
+        
+
+        <?php if ($_SESSION['role_a']=='mgr') { ?>
+          <li><a href="#commandeSB"><i class="fa fa-link"></i> <span>Speed box</span></a></li>
+          <li><a href="#commandeLD"><i class="fa fa-link"></i> <span>Livraison à domicile</span></a></li>
+          <li><a href="#commandeOX"><i class="fa fa-link"></i> <span>Livraison Oumbox</span></a></li>
+        <?php } ?>
+
         <?php if ($_SESSION['role_a']=='admin') { ?>
           <li><a href="#listBaby"><i class="fa fa-link"></i> <span>Liste des bébés</span></a></li>
         <?php } ?>
