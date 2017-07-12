@@ -104,14 +104,17 @@
 	$sWhere = "";
 	if ( $_GET['sSearch'] != "" )
 	{
-		$sWhere = "WHERE (";
+		$sWhere = "WHERE ";
 		for ( $i=0 ; $i<count($aColumns) ; $i++ )
 		{
 			$sWhere .= $aColumns[$i]." LIKE '%".mysqli_real_escape_string( $gaSql['link'], $_GET['sSearch'] )."%' OR ";
 		}
 		$sWhere = substr_replace( $sWhere, "", -3 );
-		$sWhere .= ')';
+		
+		
 	}
+
+
 	
 	/* Individual column filtering */
 	for ( $i=0 ; $i<count($aColumns) ; $i++ )
@@ -130,6 +133,13 @@
 		}
 	}
 	
+	if($sWhere==""){
+		//$sWhere.=" where status='approved' or status='blocked' ";
+		$sWhere.=" where status!='deleted' ";
+	}else{
+		$sWhere.=" and status!='deleted' ";
+	}
+	
 	
 	/*
 	 * SQL queries
@@ -138,7 +148,8 @@
 	$sQuery = "
 		SELECT SQL_CALC_FOUND_ROWS ".str_replace(" , ", " ", implode(", ", $aColumns))."
 		FROM   $sTable
-		$sWhere
+		$sWhere 
+
 		$sOrder
 		$sLimit
 	";

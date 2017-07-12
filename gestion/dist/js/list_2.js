@@ -1,4 +1,4 @@
-$(function () {
+  $(function () {
   // Initialize the plugin
   $('#loading-image').popup({
     blur: false
@@ -20,8 +20,11 @@ $(function () {
   $('#naissance_create').datepicker({
     autoclose: true,
     forceParse: false,
-    format: 'yyyy-mm-dd'
+    format: 'yyyy-mm-dd',
   });
+
+  $('#naissance_create').datepicker("setDate", new Date(1987,0,01) );
+  $('#naissance_create').val('');
   $('#naissance_bebe_create').datepicker({
     autoclose: true,
     forceParse: false,
@@ -33,8 +36,9 @@ $(function () {
 $(document).ready(function() {
 
   var table/*,table2,table3*/,id_client;
-
-  $('#table_clients').dataTable({
+  var id_clientEdit='0';
+  
+  table=$('#table_clients').DataTable({
             "bProcessing" : true,
             "bServerSide" : true,
             "sAjaxSource" : "./lib/server_processing.php",
@@ -61,7 +65,24 @@ $(document).ready(function() {
                   return ret;
                 }
               }
-            ]
+            ],
+            "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
+                    if ( aData[8] == "BOX1" )
+                    {
+                        $('td', nRow).css('background-color', '#ec7f8c');
+                        $('td', nRow).css('color', 'white');
+                    }
+                    else if ( aData[8] == "BOX2" )
+                    {
+                        $('td', nRow).css('background-color', '#6fc7c2');
+                        $('td', nRow).css('color', 'white');
+                    }
+                    else if ( aData[8] == "BOX3" )
+                    {
+                        $('td', nRow).css('background-color', '#8e6cac');
+                        $('td', nRow).css('color', 'white');
+                    }
+                }
           });
 
     // $("#export_c").on("click", function() {
@@ -117,7 +138,7 @@ $(document).ready(function() {
         console.log(errorThrown);
       }
     });
-    var obj_type = {'methode' : 'getAllTypeMoms'}
+   /* var obj_type = {'methode' : 'getAllTypeMoms'}
     $.ajax({
       url : "./lib/util.php",
       dataType: "json",
@@ -136,7 +157,7 @@ $(document).ready(function() {
         console.log(textStatus);
         console.log(errorThrown);
       }
-    });
+    });*/
 
 
 
@@ -144,6 +165,7 @@ $(document).ready(function() {
     var type  = $(this).data("type"),
         id    = $(this).data("id");
     console.log(type+" - "+id);
+    
     switch (type){
       case 'view' :
         var get_client = {"methode":"getClient","id":id};
@@ -265,50 +287,6 @@ $(document).ready(function() {
                     commanderBoxType='3';
                }
 
-             /* if(box.indexOf('1')  > -1){
-                 box1="commandé"
-               for (var i = 0; i < commandes.length; i++) {
-                  if(commandes[i]['id_box']=='1' && commandes[i]['status']=='Livré'){
-                    style1="style='background-color:#6cc;color:white;font-weight: bold;'";
-                    box1="Commandé et livré"
-                  }
-                };
-               ;
-              }else if(eligible=='BOX1'){
-                $('#AddCommandeForm').removeAttr( "hidden");
-                commanderBoxType='1';
-              }
-
-
-              if(box.indexOf('2') > -1){
-                
-                box2="commandé";
-                for (var i = 0; i < commandes.length; i++) {
-                  if(commandes[i]['id_box']=='2' && commandes[i]['status']=='Livré'){
-                    style2="style='background-color:#6cc;color:white;font-weight: bold;'";
-                    box2="Commandé et livré";
-                  }
-                };
-              }else if(eligible=='BOX2'){
-                $('#AddCommandeForm').removeAttr( "hidden");
-                commanderBoxType='2';
-
-              }
-
-              if(box.indexOf('3') > -1){
-                 box3="commandé";
-                for (var i = 0; i < commandes.length; i++) {
-                  if(commandes[i]['id_box']=='3' && commandes[i]['status']=='Livré'){
-                    style3="style='background-color:#6cc;color:white;font-weight: bold;'";
-                     box3="Commandé et livré";
-                  }
-
-                };
-               
-              }else if(eligible=='BOX3'){
-                $('#AddCommandeForm').removeAttr( "hidden");
-                commanderBoxType='3';
-              }*/
               
                   var newRow = '<tr>'+
                     '<td '+style1+'>'+box1+'</td>'+
@@ -332,7 +310,8 @@ $(document).ready(function() {
         });
         break;
       case 'edit' :
-        console.log('edit');var get_client = {"methode":"getClient","id":id};
+        var get_client = {"methode":"getClient","id":id};
+
         $.ajax({
           url : "./lib/util.php",
           dataType: "json",
@@ -360,12 +339,13 @@ $(document).ready(function() {
               $('#adresse_edit').val(client.adresse);
               $('#CP_edit').val(client.CP);
               $('#type_edit').val(client.type);
+              
               $('#Ville_id_edit').val(client.Ville_id);
               $('#creationDate_edit').text(client.creationDateClient);
               
 
 
-
+             
 
               var babies = data.result.baby;
               
@@ -390,6 +370,7 @@ $(document).ready(function() {
                   $('#sexe_bebe_id').val(val.sexe);
                   $('#naissance_bebe_edit').val(val.naissance);
                   $('#maternite_bebe_edit').val(val.MATERNITE);
+                  $('#gyneco_bebe_edit').val(val.GYNECO);
                 });
               }
               
@@ -400,6 +381,19 @@ $(document).ready(function() {
 
           }
         });
+    
+    //$('#livraison').removeAttr("disabled");
+      
+    $( "#maternite_bebe_edit" ).keyup(function() {
+      
+       if($('#maternite_bebe_edit').val()==""){
+         // $('#livraison').attr("disabled", "disabled").button('refresh');
+          $('#addCommandeButton').attr("disabled", "disabled").button('refresh');
+        }else{
+           $('#addCommandeButton').removeAttr("disabled");
+          // $('#livraison').removeAttr("disabled");
+        }
+    });
 
       break;
       case 'delete' :
@@ -428,9 +422,10 @@ $(document).ready(function() {
       success: function(data, textStatus, jqXHR) {
         // console.log(data);
         if(data.result == 'ok'){
-          var tr =  $("#client_"+id);
-          console.log(tr);
-          table.row(tr).remove().draw();
+          
+          var tr = $("button[data-id="+id+"]").parents('tr');
+          console.log(table);
+          table.rows('.odd').remove().draw();
           $("#delete").modal('toggle');
         }
       },
@@ -451,7 +446,7 @@ $(document).ready(function() {
     //myTable.row( this ).edit();
   });
   $('#myForm').validator().on('submit', function (e) {
-    console.log('id_client submit:'+id_client);
+   
     if (e.isDefaultPrevented()) {
       // handle the invalid form...
       alert("handle the invalid form...");
@@ -472,19 +467,30 @@ $(document).ready(function() {
           
           var prenomBebe   = $('#prenom_bebe_edit').val(),
           sexeBebe   = $('#sexe_bebe_id').val(),
+          gyneco      = $('#gyneco_bebe_edit').val(),
           naissanceBebe   = $('#naissance_bebe_edit').val(),
           maternite   = $('#maternite_bebe_edit').val(),
           idBebe   = $('#id_bebe_edit').val();
     
       var addLivraison=$('#livraison').is(":checked");
-
+     
+      if(!addLivraison){
+        commanderBoxType=0;
+        
+      }
+      /*if(addLivraison){
+        $('#livraison').attr("disabled", "disabled").button('refresh');
+      }*/
       var typeLivraison='';
        if($("#roleInput").val()=="user"){
          typeLivraison = "C"+maternite.toUpperCase().charAt(0);
-      }
-      var newLivraison={'type':typeLivraison,'addLivraison':addLivraison}
-      var obj =  {'id':id,'nom':nom,'prenom':prenom,'email':email,'gsm':gsm,'dof':dof,'adresse':adresse,'cp':cp,'type':type,'ville':ville,'livraison':newLivraison};
-      var obj2 = {'id':idBebe,'prenomBebe':prenomBebe,'sexeBebe':sexeBebe,'naissanceBebe':naissanceBebe,'maternite':maternite};
+       }else if($("#roleInput").val()=="mgr"){
+        typeLivraison="OX";
+       }
+     
+      var newLivraison={'type':typeLivraison,'addLivraison':addLivraison,'updateLivraison':$("#updateLivraison").val()}
+      var obj =  {'id':id,'nom':nom,'prenom':prenom,'email':email,'gsm':gsm,'dof':dof,'adresse':adresse,'cp':cp,'type':type,'ville':ville,'livraison':newLivraison,'id_box':commanderBoxType};
+      var obj2 = {'id':idBebe,'prenomBebe':prenomBebe,'sexeBebe':sexeBebe,'naissanceBebe':naissanceBebe,'maternite':maternite,'gyneco':gyneco};
       
       var update_client = {'methode':'updateClient','client':obj,'baby':obj2};
       $.ajax({
@@ -587,6 +593,57 @@ $(document).ready(function() {
       }
     }
   });
+  $('#blockUserForm').on('submit', function (e) {
+    
+   {
+      
+      var id=$('#id_client').text();
+      var blockUser={'methode':'blockUser','id':id};
+      if($("#roleInput").val()=="admin"){
+        $.ajax({
+          url : "./lib/util.php",
+          dataType: "json",
+          type: "POST",
+          data : blockUser,
+          beforeSend: function(){
+            $('#loading-image').popup('show');
+          },
+          complete: function(){
+            $('#loading-image').popup('hide');
+          },
+          success: function(data, textStatus, jqXHR) {
+            console.log(data);
+            if(data.status == 'success'){
+             
+              $("button[data-id="+id+"]").parents('tr').css({"background-color":'red'});
+              $("button[data-id="+id+"]").parents('tr').css({"color":'white'});
+              //$('#alert_block_user_ok').css('visibility','visible').fadeIn(1000);
+              $('#alert_recover_block_ok').css('visibility','visible').fadeIn(500);
+              setTimeout(function(){
+                $('#view').modal('toggle');
+                $('#alert_recover_block_ok').css('visibility','hidden');
+              }, 2000);
+            }else{
+              console.log('Something went wrong !!');
+              $('#alert_recover_block_ko').css('visibility','visible').fadeIn(500);
+              setTimeout(function(){
+                $('#view').modal('toggle');
+                $('#alert_recover_block_ko').css('visibility','hidden');
+              }, 2000);
+            }
+
+          },
+          error: function (jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR);
+            console.log(textStatus);
+            console.log(errorThrown);
+          }
+        });
+      }else{
+        alert("Action non permise");
+      }
+    }
+  });
 
 });
 
@@ -611,7 +668,9 @@ $('#createUserForm').validator().on('submit', function (e) {
           naissance_bebe   = $('#naissance_bebe_create').val();
           maternite   = $('#maternite_create').val();
           gyneco   = $('#gyneco_create').val();
-      var obj = {'nom':nom,'prenom':prenom,'email':email,'gsm':gsm,'dof':dof,'adresse':adresse,'cp':cp,'type':type,'ville_id':ville_id,'naissance_bebe':naissance_bebe,'maternite':maternite,'gyneco':gyneco};
+          sexe_bebe   = $('#sexe_create').val();
+          prenom_bebe   = $('#prenom_create').val();
+      var obj = {'nom':nom,'prenom':prenom,'email':email,'gsm':gsm,'dof':dof,'adresse':adresse,'cp':cp,'type':type,'ville_id':ville_id,'naissance_bebe':naissance_bebe,'maternite':maternite,'gyneco':gyneco,'sexe_bebe':sexe_bebe,'prenom_bebe':prenom_bebe};
       var create_client = {'methode':'createClient','client':obj};
       
 
@@ -641,7 +700,12 @@ $('#createUserForm').validator().on('submit', function (e) {
               $('#alert_recover_ok_create').css('visibility','hidden');
             }, 2000);*/
             }else{  
-                 $.ajax({
+
+                var nom_createdClient='';
+                var email_createdClient='';
+                var password_createdClient='';
+                var token_createdClient='';
+                $.ajax({
                 url : "./lib/util.php",
                 dataType: "json",
                 type: "POST",
@@ -655,6 +719,10 @@ $('#createUserForm').validator().on('submit', function (e) {
                 success: function(data, textStatus, jqXHR) {
                   if(data.result == 'success'){
                     console.log('Un nouveau client a été crée !! ');
+                    nom_createdClient=data.nom;
+                    email_createdClient=data.email;
+                    password_createdClient=data.password;
+                    token_createdClient=data.token;
                     $('#alert_recover_ok_create').css('visibility','visible').fadeIn(1500);
                     setTimeout(function(){
                       $('#createUser').modal('toggle');
@@ -662,6 +730,36 @@ $('#createUserForm').validator().on('submit', function (e) {
                       $('#alert_recover_ko_create').css('visibility','hidden');
                        $('#alert_recover_ko_create').text("Quelque chose a mal tourné");
                     }, 2000);
+
+                    // Envoyer un email de validation
+                     var myData={'nom':nom_createdClient,'email':email_createdClient,'password':password_createdClient,'token':token_createdClient};
+
+                     $.ajax({
+                      url : "/emails/accountCreated.php",
+                      dataType: "json",
+                      type: "POST",
+                      data:myData,
+                      beforeSend: function(){
+                        $('#loading-image').popup('show');
+                      },
+                      complete: function(){
+                        $('#loading-image').popup('hide');
+                      },
+                      success: function(data, textStatus, jqXHR) {
+                        if(data.status == 'success'){
+                          console.log('Email envoyé!! ');
+                        }else{
+                         console.log('Email n\'est pas envoyé!! ');
+                        }
+
+                      },
+                      error: function (jqXHR, textStatus, errorThrown) {
+                        console.log(jqXHR);
+                        console.log(textStatus);
+                        console.log(errorThrown);
+                      }
+                    });
+
                   }else{
                     console.log('Something went wrong !!');
                     $('#alert_recover_ko_create').css('visibility','visible').fadeIn(1500);
@@ -678,6 +776,10 @@ $('#createUserForm').validator().on('submit', function (e) {
                   console.log(errorThrown);
                 }
               });
+                
+
+
+            
             }
           }else{
             $('#alert_recover_ko_create').css('visibility','visible').fadeIn(1500);
@@ -729,7 +831,9 @@ $('#search').on( 'click', function (){
             var newRow = '<tr>'+
                '<td>'+val.id+'</td>'+
                '<td>'+val.nom+'</td>'+
+               '<td>'+val.prenom+'</td>'+
                '<td>'+val.gsm+'</td>'+
+               '<td>'+val.eligible+'</td>'+
                '<td>'+
                '<button class="btn btn-default btn-xs action" data-type="view" data-id="'+val.id+'" data-toggle="modal" data-target="#view" ><span class="glyphicon glyphicon-eye-open"></span></button>'+
                '<button class="btn btn-primary btn-xs action" data-type="edit" data-id="'+val.id+'" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button>';
@@ -752,6 +856,8 @@ $('#search').on( 'click', function (){
     var type  = $(this).data("type"),
         id    = $(this).data("id");
     console.log(type+" - "+id);
+    var updateLivraison=false;
+    
     switch (type){
       case 'view' :
         var get_client = {"methode":"getClient","id":id};
@@ -825,7 +931,7 @@ $('#search').on( 'click', function (){
               var box3="Non commandé";
               var style3="style=''";
               var ref3="Réf : ";
-             
+              
               if(eligible=='BOX1' && box.length==0){
                     $('#AddCommandeForm').removeAttr( "hidden");
                     commanderBoxType='1';
@@ -843,7 +949,7 @@ $('#search').on( 'click', function (){
                     for (var j = 0; j < commandes.length; j++) {
                        if(commandes[j]['id_box']=='1' && commandes[j]['status']=='Livré'){
                          style1="style='background-color:#6cc;color:white;font-weight: bold;'";
-                         box1="Commandé et livré"
+                         box1="Commandé et livré";
                        }
                      }
                   }
@@ -869,6 +975,8 @@ $('#search').on( 'click', function (){
                   }
                   
               }
+
+              
 
                if(eligible=='BOX1' && box1=="Non commandé"){
                     $('#AddCommandeForm').removeAttr( "hidden");
@@ -903,7 +1011,9 @@ $('#search').on( 'click', function (){
         });
         break;
       case 'edit' :
-        console.log('edit');var get_client = {"methode":"getClient","id":id};
+        var get_client = {"methode":"getClient","id":id};
+        $("input#livraison").attr("disabled", true);
+         $("#livraison").prop('checked', false); 
         $.ajax({
           url : "./lib/util.php",
           dataType: "json",
@@ -922,7 +1032,6 @@ $('#search').on( 'click', function (){
             $('#Ville_id_edit').val(0);
             if(data.result != 0){
               var client = data.result.client[0];
-              console.log(client);
               $('#id_client_edit').text(client.id_client);
               $('#nom_edit').val(client.nom);
               $('#prenom_edit').val(client.prenom);
@@ -935,12 +1044,13 @@ $('#search').on( 'click', function (){
               $('#Ville_id_edit').val(client.Ville_id);
               $('#creationDate_edit').text(client.creationDateClient);
               
-
-
-
-
+              var box = data.result.box;
               var babies = data.result.baby;
-              console.log(babies);
+              var box1="Non commandé";
+              var box2="Non commandé";
+              var box3="Non commandé";
+
+              var eligible = client.eligible;
               if(babies.lenght == 0){
                 var newRow = '<tr>'+
                   '<td>Aucun bébé trouvé</td>'+
@@ -948,29 +1058,95 @@ $('#search').on( 'click', function (){
                   $("#baby_table tbody").append(newRow);
               }else{
                 $.each(babies, function(key, val) {   
-                  /*var newRow = '<tr>'+
-                    '<td>'+val.id+'</td>'+
-                    '<td>'+val.prenom+'</td>'+
-                    '<td>'+val.sexe+'</td>'+
-                    '<td>'+val.naissance+'</td>'+
-                    '<td>'+val.MATERNITE+'</td>'+
-                    '</tr>';
-                  $("#baby_table tbody").append(newRow);*/
-
                   $('#id_bebe_edit').val(val.id);
                   $('#prenom_bebe_edit').val(val.prenom);
                   $('#sexe_bebe_id').val(val.sexe);
                   $('#naissance_bebe_edit').val(val.naissance);
                   $('#maternite_bebe_edit').val(val.MATERNITE);
+                  $('#gyneco_bebe_edit').val(val.GYNECO);
                 });
               }
-              var commandes=data.result.commandes;
-               console.log(commandes);
-               $.each(commandes, function(key, val) {   
+
+              if(eligible=='BOX1' && box.length==0){
+                    $("input#livraison").attr("disabled", true);
+              }if(eligible=='BOX2' && box.length==0){
+                   $("input#livraison").attr("disabled", true);
+              }if(eligible=='BOX3' && box.length==0){
+                    $("input#livraison").attr("disabled", true);
+              }
+              
+              var commandes = data.result.commandes;
+              var box = data.result.box;
+
+              var box1="Non commandé";
+              var box2="Non commandé";
+              var box3="Non commandé";
+
+              for (var i = 0; i < box.length; i++) {
+                  if(box[i]['id_box']=='1'){
+                    box1="Commandé";
+                    for (var j = 0; j < commandes.length; j++) {
+                       if(commandes[j]['id_box']=='1' && commandes[j]['status']=='Livré'){
+                         box1="Commandé et livré"
+                       }
+                     }
+                  }
+                  if(box[i]['id_box']=='2'){
+                    box2="Commandé";
+                    for (var j = 0; j < commandes.length; j++) {
+                       if(commandes[j]['id_box']=='2' && commandes[j]['status']=='Livré'){
+                         box2="Commandé et livré"
+                       }
+                     }
+                  }
+                  if(box[i]['id_box']=='3'){
+                    box3="Commandé";
+                    for (var j = 0; j < commandes.length; j++) {
+                       if(commandes[j]['id_box']=='3' && commandes[j]['status']=='Livré'){
+                         box3="Commandé et livré"
+                       }
+                     }
+                  }
+                  
+              }
+
+               if(eligible=='BOX1' && box1=="Non commandé"){
+                     $('#livraison').removeAttr("disabled");
+                      commanderBoxType='1';
+               }else if(eligible=='BOX2' && box2=="Non commandé"){
+                     $('#livraison').removeAttr("disabled");
+                      commanderBoxType='2';
+               }else if(eligible=='BOX3' && box3=="Non commandé"){
+                     $('#livraison').removeAttr("disabled");
+                      commanderBoxType='3';
+               } 
+
+               if(eligible=='BOX1' && box1=="Commandé"){
+                     $('#livraison').removeAttr("disabled");
+                      commanderBoxType='1';
+                      updateLivraison=true;
+               }else if(eligible=='BOX2' && box2=="Commandé"){
+                     $('#livraison').removeAttr("disabled");
+                      commanderBoxType='2';
+                      updateLivraison=true;
+               }else if(eligible=='BOX3' && box3=="Commandé"){
+                     $('#livraison').removeAttr("disabled");
+                      commanderBoxType='3';
+                      updateLivraison=true;
+               }
+
+
+               // champ caché qui permet de savoir si on va faire une nouvelle livraison ou une mise a jour
+               $("#updateLivraison").val(updateLivraison);
+
+
+
+
+             /*  $.each(commandes, function(key, val) {   
                   if(val.id_box=="2" && val.status=="Livré"){
                     $("input#livraison").attr("disabled", true);
                   }
-                });
+                });*/
             }
           },
           error: function (jqXHR, textStatus, errorThrown) {
@@ -981,9 +1157,15 @@ $('#search').on( 'click', function (){
       break;
       case 'delete' :
         $("#conf_supp").data("id",id);
+        alert(id);
         break;
       default :
         console.log('default');
         break;
     }
   });
+
+
+
+
+

@@ -17,11 +17,11 @@ session_start();
 <section class="content-header">
   <h1>
     Oumbox
-    <small>Liste des Commandes</small>
+    <small>Livraison à domicile</small>
   </h1>
   <ol class="breadcrumb">
     <li><a href="#main"><i class="fa fa-dashboard"></i>Tableau de bord</a></li>
-    <li class="active">Liste des commandes</li>
+    <li class="active">Livraison à domicile</li>
   </ol>
 </section>
 
@@ -31,7 +31,7 @@ session_start();
     <div class="col-xs-12">
       <div class="box">
         <div class="box-header">
-          <h3 class="box-title">Liste des commandes à domicile</h3>
+          <h3 class="box-title">Livraison à domicile</h3>
         </div>
         <!-- /.box-header -->
         <div class="box-body">
@@ -41,11 +41,11 @@ session_start();
           <table id="table_commandesLD" class="table table-bordered table-striped">
             <thead>
             <tr>
-              <th>Id Maman</th>
+              <!-- <th>Id Maman</th> -->
               <th>Id Commande</th>
               <th>Nom</th>
+              <th>Prénom</th>
               <th>Box</th>
-              <th>GSM 1</th>
               <th>GSM 2 </th>
               <th>Naissance Bébé</th>
               <th>Adresse</th>
@@ -62,9 +62,8 @@ session_start();
             <tr>
               <th>Id Maman</th>
               <th>Id Commande</th>
-              <th>Nom</th>
+              <th>Prénom</th>
               <th>Box</th>
-              <th>GSM 1</th>
               <th>GSM 2 </th>
               <th>Naissance Bébé</th>
               <th>Adresse</th>

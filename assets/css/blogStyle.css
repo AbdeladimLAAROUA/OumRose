@@ -175,7 +175,7 @@ figure.effect-layla:hover figcaption::before, figure.effect-layla:hover figcapti
 figure.effect-layla:hover h2{padding-top:26%}
 figure.effect-layla:hover h2, figure.effect-layla:hover a{opacity:1; -webkit-transform:translate3d(0,-35px,0); transform:translate3d(0,-35px,0)}
 figure.effect-layla:hover figcaption::after, figure.effect-layla:hover h2, figure.effect-layla:hover a, figure.effect-layla:hover img{-webkit-transition-delay:0.15s; transition-delay:0.15s}
-.single_sidebar{float:left; display:inline; width:100%; margin-bottom:20px;height: 540px;}
+.single_sidebar{float:left; display:inline; width:100%; margin-bottom:20px;/*height: 540px;*/}
 .single_sidebar > h2{background:none repeat scroll 0 0 #6cc; color:#fff; font-family:"Oswald",sans-serif; font-size:18px; font-weight:400; margin-bottom:10px; margin-left:0; margin-top:5px; padding:0; position:relative; text-align:center; text-transform:uppercase}
 .single_sidebar > h2 span{padding:4px 10px}
 .cat-item a{background:none repeat scroll 0 0 #e4e4e4; color:#888; display:block; float:left; border-bottom:none !important; font-size:13px; line-height:12px; margin:0 2px 2px 0; padding:12px 17px; -webkit-transition:all 0.5s; -mz-transition:all 0.5s; -ms-transition:all 0.5s; -o-transition:all 0.5s; transition:all 0.5s}
@@ -208,8 +208,8 @@ figure.effect-layla:hover figcaption::after, figure.effect-layla:hover h2, figur
 .catgArchive option{background-color:#fff; font-weight:normal; padding:5px; color:#d083cf}
 .nav-tabs > li{display:inline-block; float:none; width:32.55%}
 .nav-tabs{ text-align:center}
-.pagination > li > a, .pagination > li > span{background-color:#000; border:1px solid #000; color:#eee; margin-right:5px; -webkit-transition:all 0.5s; -o-transition:all 0.5s; transition:all 0.5s}
-.pagination > li > a:hover, .pagination > li > a:focus{background-color:#d083cf; color:#fff; border-color:#d083cf}
+.pagination > li > a, .pagination > li > span{background-color:#6cc; border:1px solid #6cc; color:#eee; margin-right:5px; -webkit-transition:all 0.5s; -o-transition:all 0.5s; transition:all 0.5s}
+.pagination > li > a:hover, .pagination > li > a:focus{background-color:#d083cf; color:#fff; border-color:#d083cf;cursor: pointer;}
 .pagination > li:first-child > a, .pagination > li:first-child > span{border-bottom-left-radius:0; border-top-left-radius:0}
 .pagination > li:last-child > a, .pagination > li:last-child > span{border-bottom-right-radius:0; border-top-right-radius:0}
 .single_page{float:left; display:inline; width:100%}

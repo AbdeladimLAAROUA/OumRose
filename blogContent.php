@@ -54,30 +54,35 @@
             <div id="prev-button"><i class="fa fa-chevron-up"></i></div>
             <ul class="latest_postnav">
               <li>
-                <div class="media"> <a href="blogContent.php" class="media-left"> <img alt="" src="img/sport-maman1x.jpeg"> </a>
-                  <div class="media-body"> <a href="blogContent.php" class="catg_title"> Tonifier son périnée</a> </div>
+                <div class="media"> <a href="blogContent-bb8.php" class="media-left"> <img alt="" src="img/bb dort.jpg"> </a>
+                  <div class="media-body"> <a href="blogContent-bb8.php" class="catg_title">Le sommeil de bébé</a> </div>
                 </div>
               </li>
               <li>
-                <div class="media"> <a href="blogContent.php" class="media-left"> <img alt="" src="img/prise-poids1x.jpeg"> </a>
-                  <div class="media-body"> <a href="blogContent.php" class="catg_title">Retrouver les formes en gardant la forme</a> </div>
+                <div class="media"> <a href="blogContent-bb7.php" class="media-left"> <img alt="" src="img/allaitement.jpg"> </a>
+                  <div class="media-body"> <a href="blogContent-bb7.php" class="catg_title">Quelle alimentation pour mon bébé?</a> </div>
                 </div>
               </li>
               <li>
-                <div class="media"> <a href="blogContent.php" class="media-left"> <img alt="" src="img/docteur2x.jpeg"> </a>
-                  <div class="media-body"> <a href="blogContent.php" class="catg_title">Enceinte, quand consulter en urgence?</a> </div>
+                <div class="media"> <a href="blogContent-bb6.php" class="media-left"> <img alt="" src="img/jeux-eveil.jpg"> </a>
+                  <div class="media-body"> <a href="blogContent-bb6.php" class="catg_title">Quel jouet pour quel âge?</a> </div>
                 </div>
               </li>
               <li>
-                <div class="media"> <a href="blogContent.php" class="media-left"> <img alt="" src="img/baby-ultrasound.jpeg"> </a>
-                  <div class="media-body"> <a href="blogContent.php" class="catg_title">3 échographies essentielles</a> </div>
+                <div class="media"> <a href="blogContent-bb5.php" class="media-left"> <img alt="" src="img/security.jpg"> </a>
+                  <div class="media-body"> <a href="blogContent-bb5.php" class="catg_title">Checklist sécurité de bébé à la maison</a> </div>
                 </div>
               </li>
               <li>
-                <div class="media"> <a href="blogContent.php" class="media-left"> <img alt="" src="img/tenue-maman-grossesse.jpeg"> </a>
-                  <div class="media-body"> <a href="blogContent.php" class="catg_title">9 Basiques pour vous habiller pendant votre grossesse</a> </div>
+                <div class="media"> <a href="blogContent-bb4.php" class="media-left"> <img alt="" src="img/sac à langer.jpg"> </a>
+                  <div class="media-body"> <a href="blogContent-bb4.php" class="catg_title">Checklist sac à langer</a> </div>
                 </div>
               </li>
+             <!--  <li>
+                <div class="media"> <a href="blogContent-bb3.php" class="media-left"> <img alt="" src="img/repas bb.jpg"> </a>
+                  <div class="media-body"> <a href="blogContent-bb3.php" class="catg_title">Checklist équipement repas de bébé</a> </div>
+                </div>
+              </li> -->
             </ul>
             <div id="next-button"><i class="fa  fa-chevron-down"></i></div>
           </div>

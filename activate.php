@@ -41,6 +41,34 @@ if (isset($_GET["id"])) {
   } catch (Exception $ex) {
     echo $ex->getMessage();
   }
+}else if(isset($_GET["token"])){
+  try {
+    include('config.php');
+    $user=getDisapprouvedClientByToken($conn,$_GET['token']);
+    $_SESSION['email_c']=$user['email'];
+
+    if ($user!=null) {
+      $_SESSION['nom']=$user["nom"];
+      getBoxEligibility($user,$conn);
+      $sql = "UPDATE `customer` SET  `status` =  'approved' WHERE `id` = :id";
+      $stmt = $conn->prepare($sql);
+      $stmt->bindValue(":id", $user['id']);
+      $stmt->execute();
+      $msg = "Your account has been activated.";
+      $msgType = "success";
+      include('emails/emailService.php');
+      welcomeEmail($result[0],getBaby($conn,$result[0])); 
+      //updateToken($conn,$user['email'],'');
+      header('Location:login.php');
+    } else {
+      $msg = "No account found";
+      $msgType = "warning";
+      echo $msg;
+    }
+  } catch (Exception $ex) {
+    echo $ex->getMessage();
+  }
+
 }
 function getBoxEligibility($user,$conn){
     $baby = getBaby($conn,$user);
@@ -91,4 +119,3 @@ function getBoxEligibility($user,$conn){
 }
 
  ?>
-

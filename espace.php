@@ -19,6 +19,7 @@
 <!-- <link rel="stylesheet" type="text/css" href="css/component.css"> -->
 <!-- header -->
 <link rel="stylesheet" type="text/css" href="css/header.css">   
+<link rel="stylesheet" href="css/jquery-ui-1.9.2.custom.min.css">
 <!--[if lt IE 9]>
 <script src="assets/js/html5shiv.min.js"></script>
 <script src="assets/js/respond.min.js"></script>
@@ -96,6 +97,25 @@ h2 ul li:nth-child(4) {
     color:#8e6cac;
     font-size: 20px;
 }
+#edit .row{
+    margin: 10px 10px;
+}
+#edit_prenom,#edit_sexe,#edit_naissance,#edit_gyneco,#edit_maternite{
+    display: block;
+    /*width: 100%;*/
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px !important;
+}
+#edit label{
+    padding-top: 6px;
+}
 </style>
 <style type="text/css">
 .nav-tabs-dropdown {
@@ -158,6 +178,8 @@ h2 ul li:nth-child(4) {
     }
 }
 }
+
+
 </style>
 </head>
 <body>
@@ -165,12 +187,12 @@ h2 ul li:nth-child(4) {
     <!-- <a class="scrollToTop" href="#"><i class="fa fa-angle-up"></i></a> -->
     <?php include('header.php'); ?>
     <div class="container espace">
-        <h2>Espace client</h2>
+        <h2>Espace membre</h2>
         <?php 
             if(isset($_SESSION["nom"])){
                 include('espace_client.php');
             }else{
-                echo "Veuillez vous connecter pour accèder à votre espace client ";
+                echo "Veuillez vous connecter pour accèder à votre espace membre ";
                 echo '<a href="login.php">S\'identifier</a>';
             }
 

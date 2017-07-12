@@ -462,7 +462,7 @@ Lundi au Vendredi: 9h -13h et 14h-18h</span></div>
 
 <div style="text-align: center;"><span style="font-size:14px;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span><span style="background-color: transparent;">&nbsp;</span></div>
 
-<div style="text-align: right;"><em>&nbsp;CODE: 17</em>06OX<?php echo $user['id']; ?></div>
+<div style="text-align: right;"><em>&nbsp;CODE: <?php echo date("Ymd"); ?>OX<?php echo $user['id']; ?></em></div>
 </div>
                                                         </td>
                                                     </tr>

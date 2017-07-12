@@ -1,21 +1,30 @@
+<script type="text/javascript">
+  var myDate = new Date(30600);
+  console.log(myDate);
+</script>
+
 <?php
   /*echo $today = date("ymd");*/
   // Date d'aujourd'hui
  // $today = new DateTime(date('Y-m-d'));
   
  // echo  $token = bin2hex(openssl_random_pseudo_bytes(32));
- /* $newTime = date("Y-m-d H:i:s",strtotime(date("Y-m-d H:i:s")." +30 minutes"));
-  echo " ". date("Y-m-d H:i:s")<$newTime;*/
+  /*echo $newTime = date("Y-m-d H:i:s",strtotime(date("Y-m-d H:i:s")." +3 months"));*/
+
+ //echo bin2hex(openssl_random_pseudo_bytes(4))
+
+  /*echo " ". date("Y-m-d H:i:s")<$newTime;*/
+  //echo date("Ymd");
   
   /*$today2 = new DateTime(date('Y-m-d'));*/
 
 /*echo date('d/m/Y', strtotime('+1 months'));*/
 
-$gsm1 = '0656011827';
+/*$gsm1 = '0656011827';
 $regex = '/(\\d{2})(\\d{2})(\\d{2})(\\d{2})(\\d{2})/';
  $gsm2 = preg_replace($regex, '$1 $2 $3 $4 $5', $gsm1);
  $gsm3 = preg_replace($regex, '$1.$2.$3.$4.$5', $gsm1);
-echo $gsm4 = substr($gsm2, 1);
+echo $gsm4 = substr($gsm2, 1);*/
  /* $today = new DateTime('2017-6-13');
   $naissance =  new DateTime('2016-11-09');
 
@@ -222,4 +231,14 @@ echo $message;
       echo $msg = $ex->getMessage();
     }
 }*/
+
+
+
+
+echo secondsToTime(70200);
+function secondsToTime($seconds) {
+    $dtF = new \DateTime('@0');
+    $dtT = new \DateTime("@$seconds");
+    return $dtF->diff($dtT)->format('%hH%I');
+}
  ?>

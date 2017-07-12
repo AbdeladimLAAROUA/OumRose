@@ -40,9 +40,16 @@ function getConnexionParams(){
 	
 	/*oumtest*/
 	
-/*	$array['hote']		= 'sql.k4mshost.odns.fr';
+	/*$array['hote']		= 'sql.k4mshost.odns.fr';
 	$array['passDb'] 	= '!!oumb0x';
-	$array['bd'] 		= 'k4mshost_oumdev';
+	$array['bd'] 		= 'k4mshost_oumbeta';
+	$array['user']		= 'k4mshost_oumdev';*/
+
+	/*oumtest*/
+	
+	/*$array['hote']		= 'sql.k4mshost.odns.fr';
+	$array['passDb'] 	= '!!oumb0x';
+	$array['bd'] 		= 'k4mshost_oumbeta';
 	$array['user']		= 'k4mshost_oumdev';*/
 
 	return $array;
@@ -77,6 +84,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			echo createClient($_REQUEST['client']);
 		}else if($_REQUEST['methode'] == 'updateClient'){
 			echo updateClient($_REQUEST['client'],$_REQUEST['baby']);
+		}else if($_REQUEST['methode'] == 'blockUser'){
+			echo blockUser($_REQUEST['id']);
 		}else if($_REQUEST['methode'] == 'getAllBox'){
 			echo getAllBox();
 		}else if($_REQUEST['methode'] == 'getAllProduct'){
@@ -149,6 +158,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			echo getCommandesLD();
 		}else if($_REQUEST['methode'] == 'getCommandesOX'){
 			echo getCommandesOX();
+		}else if($_REQUEST['methode'] == 'getCommandesCL'){
+			echo getCommandesCL();
 		}else if($_REQUEST['methode'] == 'getCommandesSB'){
 			echo getCommandesSB();
 		}else if($_REQUEST['methode'] == 'getAllCommandes'){
@@ -221,21 +232,34 @@ function loginGestion($email,$password){
 }
 
 function getAllCities(){
-	$array = array();
-	try {
-		$connexion = db_connect();
-		$resultats = $connexion->prepare("SELECT * FROM ville");
-
-		$resultats->execute();
-
-		$resultats->setFetchMode(PDO::FETCH_OBJ);
-		$resultat = $resultats->fetchAll();
-		$array['result'] = $resultat;
-	} catch (Exception $e) {
-		$array['result'] = 0;
-	}
+	  $array = array();
+	 try
+       {
+       	  $conn = db_connect();
+          $stmt = $conn->prepare("SELECT * FROM ville order by name");
+          $stmt->execute();
+          $villes = array();
+          $villes1=array();
+          $villes2=array();
+          if ($stmt->execute()) {
+              while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                  if($row['name']=='Casablanca' or $row['name']=='Rabat' or $row['name']=='Marrakech'){
+                    $villes1[] = $row;
+                  }else{
+                     $villes2[] = $row;
+                  }
+              }
+              $villes=array_merge($villes1, $villes2);
+			  $array['result'] = $villes;
+          }
+       }
+       catch(PDOException $e)
+       {
+       	   $array['result'] = 0;
+           echo $e->getMessage();
+       }
 	
-	$connexion = null;
+	$conn = null;
 	return json_encode($array);	
 }
 
@@ -385,6 +409,40 @@ function getCommandesOX(){
              l.commande_id=co.id and
              b.customer_id=cust.id and
              l.type='OX' and 
+             co.deleted=0
+             order by l.creationDate and l.status='Non livré' DESC
+             ";
+		$resultats = $connexion->prepare($sql);
+
+		$resultats->execute();
+
+		$resultats->setFetchMode(PDO::FETCH_OBJ);
+		$resultat = $resultats->fetchAll();
+	
+		$array['result'] = $resultat;
+	} catch (Exception $e) {
+		$array['result'] = 0;
+	}
+	
+	$connexion = null;
+	return json_encode($array);	
+
+}function getCommandesCL(){
+
+	$array = array();
+	try {
+		$connexion = db_connect();
+		$sql =
+			"SELECT  cust.id as 'idMaman', cust.nom as 'nomMaman', cust.prenom, cust.gsm as 'GSM1',
+			l.gsm as 'GSM2',b.naissance,co.creationDate,p.id_box,co.id as 'idCommande',
+			 l.type as 'typeLivraison', l.adresseLivraison, l.quartier,l.status,l.id as 'idLivraison', l.creationDate
+			 from  commande co, customer cust, product p, livraison l, baby b
+			 where 
+			 cust.id=co.customer_id and
+             p.id=co.product_id and
+             l.commande_id=co.id and
+             b.customer_id=cust.id and
+             (l.type LIKE 'C_') and 
              co.deleted=0
              order by l.creationDate and l.status='Non livré' DESC
              ";
@@ -838,16 +896,19 @@ function deleteFullClient($id){
 	try {
 		$connexion = db_connect();
 
-		$stmt = $connexion->prepare("DELETE FROM baby WHERE customer_id = :id");
+		/*$stmt = $connexion->prepare("DELETE FROM baby WHERE customer_id = :id");
 		$stmt->bindParam(':id', $id);
 		$stmt->execute();
-		$count_baby = $stmt->rowCount();
+		$count_baby = $stmt->rowCount();*/
 
-		$stmt = $connexion->prepare("DELETE FROM customer WHERE id = :id");
+		$stmt = $connexion->prepare("UPDATE  customer SET status='deleted' where id = :id");
 		$stmt->bindParam(':id', $id);
 		$stmt->execute();
 		$count_customer = $stmt->rowCount();
-		if($count_baby == 1 && $count_customer == 1){
+		/*if($count_baby == 1 && $count_customer == 1){
+			$array['result'] = 'ok';
+		}*/
+		if($stmt->execute()){
 			$array['result'] = 'ok';
 		}
 
@@ -871,18 +932,30 @@ function createClient($client){
 	$array['cp'] = $client['cp'];
 	$array['type'] = $client['type'];
 	$array['ville_id'] = $client['ville_id'];
-	$villeName=getCityById($client['ville_id']);
+	
+
+	$villeName  = getCityById($client['ville_id']);
+	$token 		= bin2hex(openssl_random_pseudo_bytes(32));
+	$password 	= bin2hex(openssl_random_pseudo_bytes(4));
+	$expiration	= date("Y-m-d H:i:s",strtotime(date("Y-m-d H:i:s")." +3 months"));
+	
+
+	$array['token'] = $token;
+	$array['expiration'] = $expiration;
+	$array['password'] = $password;
+
 
 	try {
 		$connexion = db_connect();
 
-		$stmt = $connexion->prepare("INSERT INTO customer(nom,prenom,email,gsm,naissance,adresse,CP,type,ville_id,ville,eligible,createdBy) 
-												VALUES(:nom,:prenom,:email,:gsm,:naissance,:adresse,:cp,:type,:ville_id,:ville,:eligible,:user)");
+		$stmt = $connexion->prepare("INSERT INTO customer(nom,prenom,email,password,gsm,naissance,adresse,CP,type,ville_id,ville,eligible,createdBy,token,expiration) 
+												VALUES(:nom,:prenom,:email,:password,:gsm,:naissance,:adresse,:cp,:type,:ville_id,:ville,:eligible,:user,:token,:expiration)");
 		
 		
 		$stmt->bindValue(':nom', $client['nom']);
 		$stmt->bindValue(':prenom', $client['prenom']);
 		$stmt->bindValue(':email', $client['email']);
+		$stmt->bindValue(':password', $password);
 		$stmt->bindValue(':gsm', $client['gsm']);
 		$stmt->bindValue(':naissance', $client['dof']);
 		$stmt->bindValue(':adresse', $client['adresse']);
@@ -892,29 +965,38 @@ function createClient($client){
 		$stmt->bindValue(':ville', $villeName['name']);
 		$stmt->bindValue(':eligible', eligible($client['naissance_bebe']));
 		$stmt->bindValue(':user', '1');
+		$stmt->bindValue(':token', $token);
+		$stmt->bindValue(':expiration', $expiration);
+		
+		
+		
+		
+		$idClient='';
+		if($stmt->execute()) {
+			
+			$idClient = $connexion->lastInsertId();
+			$array['idClient'] = $idClient;
 
-		$stmt->execute();
-		$idClient = $connexion->lastInsertId();
-		if($stmt->rowCount()) {
-			
-			$stmt = $connexion->prepare("INSERT INTO baby(naissance,gyneco,maternite,customer_id) 
-													VALUES(:naissance,:gyneco,:maternite,:customer_id)");
+			$stmt = $connexion->prepare("INSERT INTO baby ( sexe, prenom,naissance, gyneco,maternite,customer_id) 
+													VALUES(:sexe,:prenom,:naissance,:gyneco,:maternite,:customer_id)");
 			
 			
+			$stmt->bindValue(':sexe', $client['sexe_bebe']);
+			$stmt->bindValue(':prenom', $client['prenom_bebe']);
 			$stmt->bindValue(':naissance', $client['naissance_bebe']);
 			$stmt->bindValue(':maternite', $client['maternite']);
 			$stmt->bindValue(':gyneco', $client['gyneco']);
 			$stmt->bindValue(':customer_id', $idClient);
 			
-			$stmt->execute();
-			if($stmt->rowCount()) {
+			
+			if($stmt->execute()) {
 				$array['result'] = 'success';
 			}else{
-				$array['result'] = 'failed';
+				$array['result'] = 'failed2';
 			}
 			
 		} else {
-			$array['result'] = 'failed';
+			$array['result'] = 'failed2';
 		}
 
 
@@ -923,7 +1005,7 @@ function createClient($client){
 		$livraison['id_box']="2";
 		$livraison['idClient']=$idClient;
 		$livraison['status']='Livré';
-		$livraison['type']='CL';
+		$livraison['type']= strtoupper('C'.$client['maternite'][0]);
 
 		addLivraison($livraison);
 
@@ -946,6 +1028,7 @@ function updateClient($client,$baby){
 	$array['gsm'] = $client['gsm'];
 	$array['naissance'] = $client['dof'];
 	$array['adresse'] = $client['adresse'];
+	$array['cp'] = $client['cp'];
 	$array['cp'] = $client['cp'];
 	$array['type'] = $client['type'];
 	$array['Ville_id'] = $client['ville'];
@@ -979,12 +1062,13 @@ function updateClient($client,$baby){
 
 
 		
-		$stmt1 = $connexion->prepare("UPDATE baby SET prenom = :prenom ,sexe = :sexe, MATERNITE = :maternite,naissance= :naissance WHERE id = :id ");
+		$stmt1 = $connexion->prepare("UPDATE baby SET prenom = :prenom ,sexe = :sexe, MATERNITE = :maternite, GYNECO = :gyneco,naissance= :naissance WHERE id = :id ");
 
 		$stmt1->bindValue(':id', $baby['id']);
 		$stmt1->bindValue(':prenom', $baby['prenomBebe']);
 		$stmt1->bindValue(':sexe', $baby['sexeBebe']);
 		$stmt1->bindValue(':maternite', $baby['maternite']);
+		$stmt1->bindValue(':gyneco', $baby['gyneco']);
 		$stmt1->bindValue(':naissance', $baby['naissanceBebe']);
 
 		$b=$stmt1->execute();
@@ -993,11 +1077,24 @@ function updateClient($client,$baby){
 		$array['addLivraison']=$client['livraison']['addLivraison'];
 		if($client['livraison']['addLivraison']=='true'){
 			$livraison['user']='admin';
-			$livraison['id_box']='2';
+			$livraison['id_box']=$client['id_box'];
 			$livraison['idClient']=$client['id'];
 			$livraison['type']=$client['livraison']['type'];
 			$livraison['status']='Livré';
-			addLivraison($livraison);
+			if(isset($client['livraison']['updateLivraison']) and $client['livraison']['updateLivraison']=='true'){
+				
+				$livraison['id']=getLastOrderNotDelivred($client['id']);
+				$array['idLivraison'] = $livraison['id'];
+				if($livraison['id']>0){
+					updateLivraison($livraison);
+				}else{
+					$b=false;
+				}
+				
+			}else{
+				addLivraison($livraison);
+			}
+			
 		}
 
 		
@@ -1018,6 +1115,83 @@ function updateClient($client,$baby){
 
 	return json_encode($array);	
 }
+function blockUser($id){
+	$array = array();
+
+	$array['id'] = $id;
+	try {
+		$connexion = db_connect();
+
+		$stmt = $connexion->prepare("UPDATE customer SET status = 'blocked' WHERE id = :id ");
+		
+		$stmt->bindValue(':id', $id);
+
+		$stmt->execute();
+
+		if($stmt->execute()) {
+			$array['status'] = 'success';
+		} else  {
+			$array['status'] = 'failed';
+		}
+	
+
+		
+	} catch (Exception $e) {
+		$array['status'] = 'ko';
+	}
+	
+	$connexion = null;
+
+	return json_encode($array);	
+}
+
+function updateEligibilite($id,$eligible){
+   try {
+    $connexion = db_connect();
+    $condition='';
+    if($eligible=="BOX1"){
+    	 $condition='b.naissance BETWEEN CURDATE()+ INTERVAL 7 DAY AND CURDATE() + INTERVAL 146 DAY and co.deleted=0 and p.id_box=1';
+    }else if($eligible=="BOX2"){
+    	 $condition='b.naissance BETWEEN CURDATE() - INTERVAL 122 DAY AND CURDATE()-INTERVAL 7 DAY and co.deleted=0 and p.id_box=2';
+    }else if($eligible=="BOX3"){
+    	 $condition='bcustomer_id.naissance BETWEEN CURDATE() - INTERVAL 305 DAY AND CURDATE()-INTERVAL 183 DAY and co.deleted=0 and p.id_box=3';
+    }
+
+    $sql="UPDATE customer c1 set c1.eligible=:eligible where c1.id = :id and c1.id not in (
+		SELECT  c.id
+		FROM    (select * from customer) as c
+		LEFT JOIN
+		        commande co
+		ON      co.customer_id = c.id
+		LEFT JOIN
+		        product p
+		ON      p.id = co.product_id
+		LEFT JOIN
+		        baby b
+		ON b.customer_id=c.id
+		where ".$condition." and co.id is NULL);";
+	if($eligible==""){
+		$sql="UPDATE customer SET eligible = :eligible WHERE id = :id ";
+	}
+
+    $stmt = $connexion->prepare($sql);
+    
+    $stmt->bindValue(':id', $id);
+    $stmt->bindValue(':eligible', $eligible);
+
+
+    if($stmt->execute()) {
+      $array['status'] = 'success';
+    } else  {
+      $array['status'] = 'error';
+    }
+  
+   $connexion = null;
+    return $sql;
+  } catch (Exception $e) {
+    $array['status'] = 'ko';
+  }  
+}
 
 function updateBaby($baby){
 	$array = array();
@@ -1034,9 +1208,43 @@ function updateBaby($baby){
 		$stmt->bindValue(':MATERNITE', $baby['maternite']);
 		$stmt->bindValue(':naissance', $baby['naissance']);
 
-		$stmt->execute();
+		$a = $stmt->execute();
 
-		if($stmt->rowCount()) {
+		$eligible='';
+
+
+		$today = new DateTime(date('Y-m-d'));
+		$naissance= new DateTime($baby['naissance']);
+		$interval = date_diff($today, $naissance);
+		$diffJours = $interval->format('%R%a days');
+		
+		if($diffJours>=7 && $diffJours<=146){
+			$eligible='BOX1';
+			$_SESSION['eligibleToBox']=1;
+			$_SESSION['eligibility_msg']= "Vous êtes éligible à la box  \"Je suis enceinte\" ";
+		}
+		else if($diffJours<=-7 && $diffJours>=-122){
+			$eligible='BOX2';
+			$_SESSION['eligibleToBox']=2;
+			$_SESSION['eligibility_msg']="Vous êtes éligible à la box  \"Bébé est là!\" ";
+		}
+		else if($diffJours<=-183 && $diffJours>=-305){
+			$eligible='BOX3';
+			$_SESSION['eligibleToBox']=3;
+			$_SESSION['eligibility_msg']="Vous êtes éligible à la box  \"Bébé grandit\" ";
+		}else{
+			$_SESSION['eligibleToBox']=0;
+			$_SESSION['eligibility_msg']="Vous n'êtes éligible à aucune box pour le moment <br/>
+                                <ul>
+                                   <li style='line-height: 40px;  color=#ec7f8c;'>Critères d'éligibilité</li>
+                                   <li style='line-height: 40px;  color=#ec7f8c;'>Box rose (Je suis enceinte) : du 5ème au 8ème mois de grossesse</li>
+                                   <li style='line-height: 40px; color=#6fc7c2;'>Box vert (Bébé est là!) : de la naissance à 3 mois</li>
+                                   <li style='line-height: 40px; color=#8e6cac;'>Box mauve (Bébé grandit): de 6 à 9 mois</li>
+                                </ul>";
+		}
+		$array['updateEligibilite']=updateEligibilite($baby['customer_id'],$eligible);
+		$array['eligible']=$eligible;
+		if($a) {
 			$array['result'] = 'success';
 		} else {
 			$array['result'] = 'failed';
@@ -1056,17 +1264,19 @@ function deleteCommande($id){
 	try {
 		$connexion = db_connect();
 
-		$resultats = $connexion->prepare("SELECT co.id FROM commande co INNER JOIN livraison l ON l.commande_id=co.id where l.id=:id and co.deleted=0");
+		$resultats = $connexion->prepare("SELECT co.id,p.id_box,co.customer_id,b.naissance FROM commande co INNER JOIN livraison l ON l.commande_id=co.id INNER JOIN product p ON co.product_id=p.id INNER JOIN customer c ON c.id=co.customer_id INNER JOIN baby b ON c.id=b.customer_id  where l.id=:id and co.deleted=0");
 
 		$resultats->bindValue(':id', $id);
 		$resultats->execute();
 
 		$resultats->setFetchMode(PDO::FETCH_OBJ);
-		$commande_id = $resultats->fetchColumn();
-
-
-
-
+		$commande = $resultats->fetchAll();
+		$commande_id = $commande[0]->id;
+		$id_box      = $commande[0]->id_box;
+		$customer_id      = $commande[0]->customer_id;
+		$naissanceBebe      = $commande[0]->naissance;
+		
+		
 		$stmt = $connexion->prepare("UPDATE `commande` SET `deleted`= 1 WHERE `id`= :id");
 		
 		$stmt->bindValue(':id', $commande_id);
@@ -1078,11 +1288,34 @@ function deleteCommande($id){
 		
 		$stmt->bindValue(':id', $id);
 
-		$stmt->execute();
+		$a=$stmt->execute();
+
+
+		$eligible='';
+
+
+		$today = new DateTime(date('Y-m-d'));
+		$naissance= new DateTime($naissanceBebe);
+		$interval = date_diff($today, $naissance);
+		$diffJours = $interval->format('%R%a days');
+		
+		if($diffJours>=7 && $diffJours<=146){
+			$eligible='BOX1';
+		}
+		else if($diffJours<=-7 && $diffJours>=-122){
+			$eligible='BOX2';
+		}
+		else if($diffJours<=-183 && $diffJours>=-305){
+			$eligible='BOX3';
+		}
+
+		updateEligibilite($customer_id,$eligible);
 
 
 
-		if($stmt->rowCount()) {
+
+
+		if($a) {
 			$array['result'] = 'ok';
 		} else {
 			$array['result'] = 'failed';
@@ -1598,13 +1831,21 @@ function addLivraison($livraison){
 		
 			 
 			//Execute the statement and insert our values.
-			$inserted = $statement->execute();
-			 
+			$inserted1 = $statement->execute();
+			
+			$newEligible='BOX0'.$product['id_box'].'_COMMANDÉE';
+			$sql="UPDATE customer set eligible=:eligible where id=:id";
+			$statement = $connexion->prepare($sql);
+			$statement->bindValue(':eligible', $newEligible);
+			$statement->bindValue(':id', $_SESSION['client_id']);
+			$updated1 = $statement->execute();
+
 			//Because PDOStatement::execute returns a TRUE or FALSE value,
 			//we can easily check to see if our insert was successful.
-			if($inserted){
+			if($inserted1 and $updated1){
 				$indertedId = $connexion->lastInsertId();
 				$array['result'] = 'success';
+				$array['type'] = $livraison['type'];
 				$array['inserted_id'] = $indertedId;
 			}else{
 				echo 'error';
@@ -1625,12 +1866,17 @@ function updateLivraison($livraison){
 		$connexion = db_connect();
 		$sql="";
 
-		$resultats = $connexion->prepare("SELECT c.customer_id,c.id from commande c,livraison l where l.commande_id = c.id and l.id=:id and  c.deleted=0");
+		$resultats = $connexion->prepare("SELECT c.customer_id,c.id,l.type from commande c,livraison l where l.commande_id = c.id and l.id=:id and l.status='Non livré' and  c.deleted=0");
 		$resultats->bindParam(':id', $livraison['id']);
 		$resultats->execute();
 		$resultats->setFetchMode(PDO::FETCH_OBJ);
 		$commande = $resultats->fetchAll();
-		
+
+
+
+		if(!isset($livraison['type'])){
+			$livraison['type']=$commande[0]->type;
+		}
 
 		$today = date("dmY");
 		$RefBox =  $today.$livraison['type'].$commande[0]->customer_id;
@@ -2122,6 +2368,10 @@ function updateVilles(){
 function updateRelais($relais){
 	$array = array();
 
+
+
+	$array = $relais;
+	
 	$villeJS=getVilleIdByName($relais['ville']);
 	$ville = json_decode($villeJS,true);
 	$id_ville =  $ville['result'][0]['id'];
@@ -2129,10 +2379,21 @@ function updateRelais($relais){
 		$connexion = db_connect();
 		
 
-		$requet="INSERT INTO relais (gps_lat,gps_lng,nom,adresse,id_relais,id_ville)
-					values(:gps_lat,:gps_lng,:nom,:adresse,:id_relais,:id_ville)";
+		$requet="INSERT INTO relais (gps_lat,gps_lng,nom,adresse,ouverture,fermeture,id_relais,id_ville)
+					values(:gps_lat,:gps_lng,:nom,:adresse,:ouverture,:fermeture,:id_relais,:id_ville)";
 				  
 		foreach ($relais['relaisList'] as $key => $relaisElement) {
+			$ouverture = $relaisElement['horaires'][0][0]['ouverture'];
+			$fermeture = $relaisElement['horaires'][0][0]['fermeture'];
+
+			$dtF = new \DateTime('@0');
+			$dtT = new \DateTime("@$ouverture");
+			$ouverture= $dtF->diff($dtT)->format('%hH%I');
+
+			$dtF = new \DateTime('@0');
+			$dtT = new \DateTime("@$fermeture");
+			$fermeture= $dtF->diff($dtT)->format('%hH%I');
+
 			$stmt = $connexion->prepare($requet);
 
 			$stmt->bindValue(':gps_lat', $relaisElement['gps_lat']);
@@ -2141,6 +2402,8 @@ function updateRelais($relais){
 			$stmt->bindValue(':adresse', $relaisElement['adresse']);
 			$stmt->bindValue(':id_relais', $relaisElement['id']);
 			$stmt->bindValue(':id_ville', $id_ville);
+			$stmt->bindValue(':ouverture', $ouverture);
+			$stmt->bindValue(':fermeture', $fermeture);
 			$stmt->execute();
 
 			if($stmt->rowCount()) {
@@ -2340,6 +2603,33 @@ function getRelaisListByVille($id){
 	return json_encode($array);	
 }
 
+function getLastOrderNotDelivred($id){
+	$array = array();
+	$livraisonId='0';
+	try {
+		$connexion = db_connect();
+		$resultats = $connexion->prepare("SELECT l.id FROM `livraison` l
+											JOIN commande co
+											ON l.commande_id=co.id
+											JOIN customer c
+											ON c.id=co.customer_id
+											where c.id=:id and l.status='Non livré'
+											order by l.id desc
+											limit 1");
+		$resultats->bindParam(':id', $id);
+		$resultats->execute();
+		$resultats->setFetchMode(PDO::FETCH_OBJ);
+
+		$livraisonId = $resultats->fetchColumn();
+
+	} catch (Exception $e) {
+		
+	}
+	
+	$connexion = null;
+	return $livraisonId;	
+}
+
 function eligible($naissanceBebe){
         
         $eligible='';
@@ -2371,29 +2661,29 @@ function searchUser($user){
 	try {
 		$connexion = db_connect();
 		$params = array();
-		$sql='SELECT c.id,c.nom, c.prenom, c.email, c.gsm,YEAR(NOW()) - YEAR(c.naissance) as age, c.adresse, ville FROM customer c where id>0 ';
+		$sql='SELECT c.id,c.nom,c.eligible, c.prenom, c.email, c.gsm,YEAR(NOW()) - YEAR(c.naissance) as age, c.adresse, ville FROM customer c where id>0 ';
 		if($user['email']!=''){
-			$sql.="and email=:email ";
-			$params['email']=$user['email'];
+			$sql.="and email LIKE :email ";
+			$params['email']='%'.$user['email'].'%';
 		}if($user['nom']!=''){
-			$sql.="and nom=:nom ";
-			$params['nom']=$user['nom'];
+			$sql.="and nom LIKE :nom ";
+			$params['nom']='%'.$user['nom'].'%';
 		}if($user['prenom']!=''){
-			$sql.="and prenom=:prenom ";
-			$params['prenom']=$user['prenom'];
+			$sql.="and prenom LIKE :prenom ";
+			$params['prenom']='%'.$user['prenom'].'%';
 		}if($user['gsm']!=''){
 			$gsm1 = $user['gsm'];
 			$regex = '/(\\d{2})(\\d{2})(\\d{2})(\\d{2})(\\d{2})/';
 			$gsm2 = preg_replace($regex, '$1 $2 $3 $4 $5', $gsm1);
 			$gsm3 = preg_replace($regex, '$1.$2.$3.$4.$5', $gsm1);
-			$sql.="and gsm LIKE :gsm1 or gsm LIKE :gsm2 or gsm LIKE :gsm3 or gsm LIKE :gsm4 or gsm LIKE :gsm5 ";
+			$sql.="and (gsm LIKE :gsm1 or gsm LIKE :gsm2 or gsm LIKE :gsm3 or gsm LIKE :gsm4 or gsm LIKE :gsm5) ";
 			$params['gsm1']='%'.$gsm1.'%';
 			$params['gsm2']='%'.$gsm2.'%';
 			$params['gsm3']='%'.$gsm3.'%';
 			$params['gsm4']='%'.substr($gsm2, 1).'%';
 			$params['gsm5']='%'.substr($gsm3, 1).'%';
 		}		
-
+		$sql.=" ORDER BY id DESC LIMIT 50";
 		$resultats = $connexion->prepare($sql);
 		$resultats->execute($params);
 

@@ -34,6 +34,9 @@ app.config(function($routeProvider) {
      .when("/commandeOX", {
         templateUrl : "pages/views/commandeOX.php"
     })
+    .when("/cliniques", {
+        templateUrl : "pages/views/cliniques.php"
+    })
     .when("/listBaby", {
         templateUrl : "pages/views/listBaby.html"
     })

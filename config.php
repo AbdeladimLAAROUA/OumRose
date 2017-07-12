@@ -324,6 +324,20 @@ function getClientByToken($conn,$token){
        }
        return  $client;
 }
+function getDisapprouvedClientByToken($conn,$token){
+      try
+       {
+          $stmt = $conn->prepare("SELECT * FROM customer where token=:token and expiration >= NOW() and status!='approved'");
+          $stmt->execute(array(':token'=>$token));
+          $row = $stmt->fetch(PDO::FETCH_ASSOC);
+          $client = $row;
+       }
+       catch(PDOException $e)
+       {
+           echo $e->getMessage();
+       }
+       return  $client;
+}
 function getAllRelais($conn){
   try
        {
@@ -377,6 +391,81 @@ function getClientBox($conn,$user){
            echo $e->getMessage();
        }
        return  $boxList;
+}
+function updateEligibilite1($id,$eligible){
+   try {
+    $connexion = $conn;
+
+    $stmt = $connexion->prepare("UPDATE customer SET eligible = :eligible WHERE id = :id ");
+    
+    $stmt->bindValue(':id', $id);
+    $stmt->bindValue(':eligible', $eligible);
+
+
+    if($stmt->execute()) {
+      $array['status'] = 'success';
+    } else  {
+      $array['status'] = 'error';
+    }
+  
+
+    
+  } catch (Exception $e) {
+    $array['status'] = 'ko';
+  }  
+}
+
+function updateClient_u($conn,$client){
+  $array = array();
+ 
+  $array['id'] = $client['id'];
+  $array['nom'] = $client['nom'];
+  $array['prenom'] = $client['prenom'];
+  $array['gsm'] = $client['gsm'];
+  $array['naissance'] = $client['naissance'];
+  $array['adresse'] = $client['adresse'];
+  $array['cp'] = $client['cp'];
+ /* $array['type'] = $client['type'];*/
+  $array['ville'] = $client['ville'];
+
+
+
+  /*$array['idBebe'] = $baby['id'];
+  $array['prenomBebe'] = $baby['prenomBebe'];
+  */
+
+
+  try {
+    $connexion = $conn;
+
+    $stmt = $connexion->prepare("UPDATE customer SET nom = :nom,prenom = :prenom,gsm = :gsm,naissance = :naissance,adresse = :adresse,CP = :cp, ville = :ville WHERE id = :id ");
+    
+    $stmt->bindValue(':id', $client['id']);
+    $stmt->bindValue(':nom', $client['nom']);
+    $stmt->bindValue(':prenom', $client['prenom']);
+    $stmt->bindValue(':gsm', $client['gsm']);
+    $stmt->bindValue(':naissance', $client['naissance']);
+    $stmt->bindValue(':adresse', $client['adresse']);
+    $stmt->bindValue(':cp', $client['cp']);
+    $stmt->bindValue(':ville', $client['ville']);
+
+    $a =$stmt->execute();
+
+    if($a) {
+      $array['status'] = 'success';
+    } else  {
+      $array['status'] = 'error';
+    }
+  
+
+    
+  } catch (Exception $e) {
+    $array['status'] = 'ko';
+  }
+  
+  $connexion = null;
+
+  return json_encode($array); 
 }
 
 function updateToken($conn,$email,$token)

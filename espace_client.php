@@ -3,7 +3,7 @@
         color: rgb(255,97,173);
     }
 </style>
-<p class="lead">Bienvenue dans votre espace client Mme <?php echo $_SESSION["nom"];?></p>
+<p class="lead">Bienvenue dans votre espace membre Mme <?php echo $_SESSION["nom"];?></p>
 <div class="row">
     <div class="col-sm-3">
         <a href="#" class="nav-tabs-dropdown btn btn-block btn-primary">Tabs</a>
@@ -21,7 +21,7 @@
             <div role="tabpanel" class="tab-pane fade in active" id="vtab1">
                 <div class="row">
                     <div class="text-center boxReady">
-                            <h2>
+                            <h2 class="eligibility_msg">
                                 <?php
                                     
                                     include('config.php');
@@ -29,7 +29,7 @@
                                     $baby=getBaby($conn,$user);
                                     $_SESSION['eligibleToBox'] = fullEligible($conn,$user,$baby['naissance']);
                                     if($_SESSION['eligibleToBox']==0){
-                                        echo "Chère ".$_SESSION['nom'].", vous n'êtes éligible à aucune box pour le moment <br/>
+                                        echo "Chère Mme ".$_SESSION['nom'].", vous n'êtes éligible à aucune box pour le moment <br/>
                                 <ul>
                                    <li style='line-height: 40px;  color=#ec7f8c;'>Critères d'éligibilité</li>
                                    <li style='line-height: 40px;  color=#ec7f8c;'>Box rose (Je suis enceinte) : du 5ème au 8ème mois de grossesse</li>
@@ -37,8 +37,8 @@
                                    <li style='line-height: 40px; color=#8e6cac;'>Box mauve (Bébé grandit): de 6 à 9 mois</li>
                                 </ul>";
                                     }
-                                    else if(isset($_SESSION['result1'])){
-                                        echo $_SESSION['result1']['response'];
+                                    else if(isset($_SESSION['eligibility_msg'])){
+                                        echo $_SESSION['eligibility_msg'];
                                     }
                                 ?>
                             </h2>
@@ -337,7 +337,7 @@
                                             $readOnly='readOnly';
                                         }
                                         $row = '<tr>
-                                        <td id="naissance_'.$value['id'].'" data-naissance="'.$value['naissance'].'">'.$value['naissance'].'</td>
+                                        <td id="naissance_'.$value['id'].'" data-naissance2="'.$value['naissance2'].'" data-naissance="'.$value['naissance'].'">'.$value['naissance'].'</td>
                                         <td id="sexe_'.$value['id'].'" data-sexe="'.$value['sexe'].'">'.$value['sexe'].'</td>
                                         <td id="prenom_'.$value['id'].'" data-prenom="'.$value['prenom'].'">'.$value['prenom'].'</td>
                                         <td id="gyneco_'.$value['id'].'" data-gyneco="'.$value['GYNECO'].'">'.$value['GYNECO'].'</td>
@@ -399,25 +399,46 @@
                 <div id="alert_recover_ko_edit_baby" class="alert alert-warning hide-me">
                   Quelque chose a mal tourné
                 </div>
-                <div class="form-group">
-                    <input id="edit_prenom" class="form-control" type="text" placeholder="prénom">
+
+                <div class="row">
+                    <label for="edit_prenom" class="col-md-2">Prénom</label>
+                    <div >
+                        <input id="edit_prenom" class="col-md-10" type="text" placeholder="prénom">
+                    </div>
                 </div>
-                <div class="form-group">
-                    <select id="edit_sexe" class="form-control">
-                        <option value="G">G</option>
-                        <option value="F">F</option>
-                        <option value="I">I</option>
-                    </select>
+
+                <div class="row">
+                    <label for="edit_sexe" class="col-md-2">Sexe</label>
+                    <div >
+                       <select id="edit_sexe" class="col-md-10">
+                           <option value="G">Garçon</option>
+                           <option value="F">Fille</option>
+                           <option value="I">Indéterminé</option>
+                       </select>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <input id="edit_naissance" <?php echo $readOnly; ?> class="form-control" type="text" placeholder="Date de naissance / Accouchement">
+
+                <div class="row">
+                    <label for="edit_naissance" class="col-md-2">Naissance</label>
+                    <div >
+                        <input id="edit_naissance" <?php /*echo $readOnly;*/ ?> class="col-md-10" type="text" placeholder="Date de naissance / Accouchement">
+                    </div>
                 </div>
-                <div class="form-group">
-                    <input id="edit_gyneco" class="form-control" type="text" placeholder="Gynécologue">
+
+                <div class="row">
+                    <label for="edit_gyneco" class="col-md-2">Gynécologue</label>
+                    <div >
+                        <input id="edit_gyneco" class="col-md-10" type="text" placeholder="Gynécologue">
+                    </div>
                 </div>
-                <div class="form-group">
-                    <input type="text" name="edit_maternite" id="edit_maternite" rows="2" class="form-control" placeholder="Maternité"  />
+
+                <div class="row">
+                    <label for="edit_maternite" class="col-md-2">Maternité</label>
+                    <div >
+                        <input id="edit_maternite" class="col-md-10" type="text" placeholder="Maternité">
+                    </div>
                 </div>
+                
             </div>
             <div class="modal-footer ">
                 <button id="edit_btn" type="button" data-id="0" class="btn btn-warning btn-lg" style="width: 100%;"><span class="glyphicon glyphicon-ok-sign"></span>Modifier</button>
@@ -468,30 +489,37 @@
 <script src="gestion/plugins/jQuery/jquery-2.2.3.min.js"></script>
 <!-- bootstrap datepicker -->
 <script src="gestion/plugins/datepicker/bootstrap-datepicker.js"></script>
+<script src="js/jquery-1.8.3.js"></script>
+<script src="js/jquery-ui-1.9.2.custom.min.js"></script>
 
 <script src="gestion/dist/js/validator.min.js"></script>
 <script type="text/javascript">
+
     //Date picker
-    var naissance_input = $('#edit_naissance').datepicker({
-                                                    autoclose: true,
-                                                    forceParse: false,
-                                                    format: 'yyyy-mm-dd'
-                                                });
+ 
     $('#naissance').datepicker({
                     autoclose: true,
                     forceParse: false,
-                    format: 'yyyy-mm-dd'
-                }).datepicker('setDate', $('#naissance').val());
+                    dateFormat: 'yy-mm-dd',
+                    changeMonth: true,
+                    changeYear: true,
+
+
+                }).datepicker('setDate', new Date($('#naissance').val()) );
+
+
 
     $("#table_babies" ).on( "click", 'button',function() {
         var type        = $(this).data("type"),
             id          = $(this).data("id"),
             naissance   = $('#naissance_'+id).text();
-        console.log(type+" - "+id);
+            naissance2   = $('#naissance_'+id).data("naissance2");
+            //naissance2  = $('#naissance_'+id).data("naissance2");
+
         switch (type){
             case 'edit' :
                 $('#edit_btn').data('id', id) ;
-                setNaissance(naissance);
+                setNaissance(naissance,naissance2);
                 $('#edit_prenom').val($('#prenom_'+id).data("prenom"));
                 $('#edit_sexe').val($('#sexe_'+id).data("sexe"));
                 $('#edit_gyneco').val($('#gyneco_'+id).data("gyneco"));
@@ -507,14 +535,16 @@
     });
 
     $("#edit_btn").on("click", function() {
-            console.log();
+           
             var     edit_prenom     = $('#edit_prenom').val(),
                     edit_sexe       = $('#edit_sexe').val(),
                     edit_gyneco     = $('#edit_gyneco').val(),
                     edit_maternite  = $('#edit_maternite').val(),
                     edit_naissance  = $('#edit_naissance').val(),
+                    customer_id     = $('#client_id').val(),
                     id              = $(this).data("id");
-            var baby = {'id':id ,'prenom':edit_prenom,'sexe':edit_sexe,'gyneco':edit_gyneco,'maternite':edit_maternite,'naissance':edit_naissance};
+
+            var baby = {'id':id ,'prenom':edit_prenom,'sexe':edit_sexe,'gyneco':edit_gyneco,'maternite':edit_maternite,'naissance':edit_naissance,'customer_id':customer_id};
             updateBaby(baby);
     });
 
@@ -527,9 +557,64 @@
           console.log("everything looks good!");
         }
     });
+    var naissance_input=$('#edit_naissance');
+    function setNaissance(naissance,naissance2) {
+        var date = new Date(naissance2),
+                                  day  = date.getDate(),  
+                                  month = date.getMonth(),              
+                                  year =  date.getFullYear();
+            /* naissance_input.datepicker(
+                 'setDate', new Date(naissance2)
+            );*/
+            naissance_input.datepicker({
+                                                  /*setDate:new Date(naissance),*/
 
-    function setNaissance(naissance) {
-        naissance_input.datepicker('setDate', naissance);
+                                                  autoclose: true,
+                                                  todayHighlight: true,
+                                                  clearBtn: true,
+                                                  multidate: false,
+                                                  multidateSeparator: ",",
+                                                  toggleActive: true,
+                                                  forceParse: false,
+                                                 /* defaultDate: new Date(naissance2),*/
+                                                  dateFormat: 'yy-mm-dd',
+                                                  minDate: new Date(year, month ,day-31),
+                                                  maxDate: new Date(year, month ,day+31)
+                                                }).datepicker('setDate', new Date(naissance) );;
+
+         naissance_input.datepicker(
+                //'setDate', new Date(naissance)
+               /*minDate: new Date(2017, 5 ,1-7),
+               maxDate: new Date(2017, 5 ,1+5)*/
+               /* todayHighlight: true,
+               
+                
+                clearBtn: true,
+                multidate: false,
+                multidateSeparator: ",",
+                toggleActive: true*/
+
+        );
+
+          naissance_input.datepicker(               
+               //'minDate', new Date(2017, 5 ,1-7)
+               /*maxDate: new Date(2017, 5 ,1+5)*/
+        );
+                              
+       /* naissance_input.datepicker(
+            /* minDate: new Date(year, month ,day-7 ),
+             maxDate: new Date(year, month ,day+7);
+             autoclose: true,
+                 todayHighlight: true,
+                
+                 minDate: new Date(2017, 5 ,1)-5,
+                 maxDate: new Date(2017, 5 ,1+5),
+                 clearBtn: true,
+                 multidate: false,
+                 multidateSeparator: ",",
+                 toggleActive: true
+           
+        );*/
     }
 
     function updateBaby(baby) {
@@ -555,8 +640,24 @@
                     $('#maternite_'+baby.id).data('maternite',baby.maternite);
 
                     console.log($("#naissance_MATERNITE_view").val());
+                    if(data.eligible=="BOX1"){
+                        $("h2.eligibility_msg").text("Vous êtes éligible à la box  \"Je suis enceinte\" ");
+                    }else if(data.eligible=="BOX2"){
+                         $("h2.eligibility_msg").text("Vous êtes éligible à la box  \"Bébé est là!\" ");
+                    }else if(data.eligible=="BOX3"){
+                         $("h2.eligibility_msg").text("Vous êtes éligible à la box  \"Bébé grandit\" ");
+                    }else{
+                         $("h2.eligibility_msg").text("Vous n'êtes éligible à aucune box pour le moment <br/>
+                                <ul>
+                                   <li style='line-height: 40px;  color=#ec7f8c;'>Critères d'éligibilité</li>
+                                   <li style='line-height: 40px;  color=#ec7f8c;'>Box rose (Je suis enceinte) : du 5ème au 8ème mois de grossesse</li>
+                                   <li style='line-height: 40px; color=#6fc7c2;'>Box vert (Bébé est là!) : de la naissance à 3 mois</li>
+                                   <li style='line-height: 40px; color=#8e6cac;'>Box mauve (Bébé grandit): de 6 à 9 mois</li>
+                                </ul>");
+                    }
                     $("#naissance_MATERNITE_view").text(baby.maternite);
-                    $("#naissance_naissance_view").text(baby.naissance);
+
+                    $("#naissance_bebe_view").text(baby.naissance);
                     $("#naissance_prenom_view").text(baby.prenom);
                     $("#naissance_sexe_view").text(baby.sexe);
                     
@@ -601,6 +702,7 @@
             },
             dataType: 'json',
             success: function(data){
+               
                 $('#alert_recover_ok_edit_maman').css('visibility','visible').fadeIn(1500);
                 $("#nomView").text($('#nom').val());
                 $("#prenomView").text($('#prenom').val());
@@ -612,7 +714,7 @@
             },
             error: function(data){
                  $('#alert_recover_ko_edit_baby').css('visibility','visible').fadeIn(1500);
-                console.log(data);  
+                 console.log(data);  
             }
         });
     });

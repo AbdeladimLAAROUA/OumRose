@@ -29,10 +29,10 @@
                     	             type:'POST',
                     	             data : myData,
                     	             success: function(data1){
-                    	                   console.log(data1);         
+                    	                   console.log(data1);       
                     	             },
                     	             error : function() {
-                    	             
+                                    alert('KO');  
                     	               console.log(data);
                     	             }
                     	           });                    	             

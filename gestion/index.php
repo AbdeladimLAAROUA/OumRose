@@ -3,6 +3,8 @@ session_start();
 if(!isset($_SESSION['UserId'])){
   header('Location: ./login.php');
 }
+
+  /*header('Location: http://localhost/oumbox/gestion/#/allCommande');*/
 ?>
 <!DOCTYPE html>
 <!--
@@ -44,7 +46,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <header class="main-header">
 
     <!-- Logo -->
-    <a href="#main" class="logo">
+
+    <a id="main" href="#main" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini">O-B</span>
       <!-- logo for regular state and mobile devices -->
@@ -82,7 +85,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       </div>
 
       <!-- search form (Optional) -->
-      <form action="#" method="get" class="sidebar-form">
+      <form action="#gestionClient" method="get" class="sidebar-form">
         <div class="input-group">
           <input type="text" name="q" class="form-control" placeholder="Chercher...">
               <span class="input-group-btn">
@@ -103,7 +106,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <?php } ?>
        <!--  <li><a href="#listClient"><i class="fa fa-link"></i> <span>Clients</span></a></li> -->
         
-        <li><a href="#gestionClient"><i class="fa fa-link"></i> <span>Clients</span></a></li>
+        <li><a id="gestionClient" href="#gestionClient"><i class="fa fa-link"></i> <span>Clients</span></a></li>
         
 
       <!--   <li class="treeview">
@@ -132,6 +135,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <li><a href="#commandeSB">Speed box</a></li>
             <li><a href="#commandeLD">Livraison à domicile</a></li>
             <li><a href="#commandeOX">Livraison Oumbox</a></li>
+            <li><a href="#cliniques">Livraison Cliniques</a></li>
           </ul>
         </li>
 
@@ -143,6 +147,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <li><a href="#commandeSB"><i class="fa fa-link"></i> <span>Speed box</span></a></li>
           <li><a href="#commandeLD"><i class="fa fa-link"></i> <span>Livraison à domicile</span></a></li>
           <li><a href="#commandeOX"><i class="fa fa-link"></i> <span>Livraison Oumbox</span></a></li>
+          
         <?php } ?>
 
         <?php if ($_SESSION['role_a']=='admin') { ?>
@@ -296,5 +301,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
      Both of these plugins are recommended to enhance the
      user experience. Slimscroll is required when using the
      fixed layout. -->
+<?php
+if($_SESSION['role_a']=='mgr' or $_SESSION['role_a']=='user'){
+?>
+<script type="text/javascript">
+        $("#main").attr("href", "#gestionClient");
+        var href = $('#gestionClient').attr('href');
+        window.location.href = href;
+
+</script>
+<?php
+}
+?>
 </body>
 </html>

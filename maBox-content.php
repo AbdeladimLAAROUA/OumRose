@@ -22,19 +22,25 @@
           <div class="row"><div class="col-md-6">Adresse :</div><div id="infos8" class="infoLivraison">77 bis, boulevard abdelmoumen</div></div>
           <div class="row"><div class="col-md-6">Téléphone :</div><div id="infosTel2" class="infoLivraison">05 22 22 58 50</div></div>
         </div>
-        <form method="post" style="text-align: center; margin-top: 50px;" action="pdf/br.php">
+        <form id="downloadBr1" action="pdf/br.php" style="text-align: center; margin-top: 50px;" >
             <input type="submit" value="Télécharger le bon de retrait" class="btn btn-primary">
         </form>
+       <!--  <div  style="text-align: center; margin-top: 50px;">
+          <input id="downloadBr" type="submit" value="Télécharger le bon de retrait" class="btn btn-primary">
+        </div> -->
+         
 
         </span></p>
     </div>
 
     <div class="alert alert-info col-md-12 col-sm-12 col-xs-12 content">
         <p>
-          <ul>
-            <li>1. </li>
-            <li>2. </li>
-          </ul>
+          <ol>
+           <li><span style="font-size:14px;"><span style="color:#696969;"><span style="background-color: transparent;">&nbsp;Il faut </span><strong style="background-color: transparent;">OBLIGATOIREMENT</strong><span style="background-color: transparent;">&nbsp;présenter:&nbsp;<br>
+    <strong>Le bon imprimé + Copie de votre CIN<span style="background-color: transparent;">&nbsp;au point retrait</span></strong></span></span></span></li>
+    <li><span style="font-size:14px;"><span style="color:#696969;"><span style="background-color: transparent;"><strong><span style="background-color: transparent;">Vous pouvez envoyer quelqu'un avec ce bon imprimé+ copie de votre CIN</span></strong></span></span></span></li>
+    <li><span style="font-size:14px;"><span style="color:#696969;"><span style="background-color: transparent;"><strong><span style="background-color: transparent;">Un seul bon par membre par box</span></strong></span></span></span></li>
+          </ol>
         </p>
         </span></p>
     </div>
@@ -79,7 +85,7 @@
                 <?php  
                   foreach ($relais as $key => $infos) { 
                 ?>
-                  <option id="<?php echo "relais".$infos['id_relais']; ?>" class="<?php echo "ville".$infos['id_ville']; ?>" value="<?php echo $infos['id']; ?>"><?php echo $infos['nom']; ?></option>
+                  <option id="<?php echo "relais".$infos['id_relais']; ?>" class="<?php echo "ville".$infos['id_ville']; ?>" value="<?php echo $infos['id_relais']; ?>"><?php echo $infos['nom']; ?></option>
                   <?php } ?>
               </select>
          </div>
@@ -98,7 +104,7 @@
            <?php  
              foreach ($relais as $key => $infos) { 
            ?>
-             <p class="text-center <?php echo "relais".$infos['id']; ?>" value="<?php echo $infos['id']; ?>" ><b>Adresse :</b> <?php echo $infos['adresse']; ?> <br/> Horaire ramadan : du lundi au samedi de 9h à 17h30</p>
+             <p class="text-center <?php echo "relais".$infos['id_relais']; ?>" value="<?php echo $infos['id_relais']; ?>" ><b>Adresse :</b> <?php echo $infos['adresse']; ?> <br/> Horaire : du lundi au samedi de <?php echo $infos['ouverture']; ?> à <?php echo $infos['fermeture']; ?></p>
              <div id="error2" class="text-center"></div>
              <?php } ?>
 
@@ -450,8 +456,9 @@ $(function() {
      }
      
     };
+
     $('#infos4').html($('#relais ul li.active span').text());
-    if($(this).val()>0){
+    if(true){ /*this).val()>0*/
       id_relais=$(this).val();
       $("#adresseRelais").removeAttr( "hidden" );
       $('#adresseRelais p').removeAttr( "hidden" );
@@ -542,6 +549,42 @@ $(function() {
     $body = $("body");
      $body.addClass("loading");
 });
+</script>
+
+<script type="text/javascript">
+    $("#downloadBr").click(function() {
+        var url = "pdf/br.php"; 
+        $.ajax({
+              type: "POST",
+              url: url,
+              success: function(data)
+              {
+                  alert('success'); // show response from the php script.
+              },
+              error:function(data) {
+                 alert('error'); 
+              }
+            });
+    });
+    /*$("#downloadBr").submit(function(e) {
+
+   
+    $.ajax({
+           type: "POST",
+           url: url,
+           data: $("#downloadBr").serialize(), // serializes the form's elements.
+           success: function(data)
+           {
+               alert('error'); // show response from the php script.
+           }
+           error:function(data) {
+              alert('success'); 
+           }
+         });
+
+    e.preventDefault(); // avoid to execute the actual submit of the form.
+});*/
+
 </script>
 <script type="text/javascript" src="register/materialize.min.js"></script>
 <script type="text/javascript" src="register/jquery.validate.min.js"></script>

@@ -1,4 +1,5 @@
-<?phpsession_start();
+<?php
+session_start();
 
 include('config.php');
 
@@ -10,7 +11,6 @@ include('config.php');
 		$baby = getBaby($conn,$user);
 		$boxList = getClientBox($conn,$user);
 
-		print_r($boxList);
 		// Date d'aujourd'hui
 		$today = new DateTime(date('Y-m-d'));
 

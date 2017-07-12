@@ -34,7 +34,7 @@ if(isset($_POST['email']) and isset($_POST['password']) ){
 		$diffJours = $interval->format('%R%a days');
 		
 		if($diffJours>=7 && $diffJours<=146 && !in_array("1", $boxList)){
-				$info["response"]="Chère ".$user['nom'].", vous êtes éligible à la box  \"Je suis enceinte\" ";
+				$info["response"]="Chère Mme".$user['nom'].", vous êtes éligible à la box  \"Je suis enceinte\" ";
 				$info["mCode"]=1;
 				$info["box"]=1;
 		}
@@ -44,11 +44,11 @@ if(isset($_POST['email']) and isset($_POST['password']) ){
 				$info["box"]=2;
 		}
 		else if($diffJours<=-183 && $diffJours>=-305 and !in_array("3", $boxList)){
-				$info["response"]="Chère ".$user['nom'].", vous êtes éligible à la box  \"Bébé grandit\" ";
+				$info["response"]="Chère Mme".$user['nom'].", vous êtes éligible à la box  \"Bébé grandit\" ";
 				$info["mCode"]=3;
 				$info["box"]=3;
 		}else{
-				$info["response"]= "Chère ".$user['nom'].", vous n'êtes éligible à aucune box pour le moment <br/>
+				$info["response"]= "Chère Mme".$user['nom'].", vous n'êtes éligible à aucune box pour le moment <br/>
 				<ul>
 				   <li>Box rose : </li>
 				   <li>Box vert : </li>
@@ -59,6 +59,7 @@ if(isset($_POST['email']) and isset($_POST['password']) ){
 		
 		
 		$info["success"]=true;
+		$_SESSION['eligibility_msg']=$info["response"];
 		$_SESSION['result1']=$info;
 		$_SESSION['eligibleToBox']=$info["box"];
 		//echo $_SESSION['eligibleToBox'];
