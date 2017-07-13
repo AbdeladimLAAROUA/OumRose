@@ -1072,7 +1072,24 @@ function updateClient($client,$baby){
 		$stmt1->bindValue(':naissance', $baby['naissanceBebe']);
 
 		$b=$stmt1->execute();
-
+		$eligible='';
+		if($b){
+					$today = new DateTime(date('Y-m-d'));
+					$naissance= new DateTime($baby['naissanceBebe']);
+					$interval = date_diff($today, $naissance);
+					$diffJours = $interval->format('%R%a days');
+					
+					if($diffJours>=7 && $diffJours<=146){
+						$eligible='BOX1';
+					}
+					else if($diffJours<=-7 && $diffJours>=-122){
+						$eligible='BOX2';
+					}
+					else if($diffJours<=-183 && $diffJours>=-305){
+						$eligible='BOX3';
+					}
+					$array['updateEligibilite']=updateEligibilite($client['id'],$eligible);
+		}
 
 		$array['addLivraison']=$client['livraison']['addLivraison'];
 		if($client['livraison']['addLivraison']=='true'){
@@ -1081,6 +1098,14 @@ function updateClient($client,$baby){
 			$livraison['idClient']=$client['id'];
 			$livraison['type']=$client['livraison']['type'];
 			$livraison['status']='Livré';
+			
+			$newEligible='BOX0'.$product['id_box'].'_COMMANDÉE';
+			$sql="UPDATE customer set eligible=:eligible where id=:id";
+			$statement = $connexion->prepare($sql);
+			$statement->bindValue(':eligible', $newEligible);
+			$statement->bindValue(':id', $client['id']);
+			$updated1 = $statement->execute();
+
 			if(isset($client['livraison']['updateLivraison']) and $client['livraison']['updateLivraison']=='true'){
 				
 				$livraison['id']=getLastOrderNotDelivred($client['id']);
@@ -1154,7 +1179,7 @@ function updateEligibilite($id,$eligible){
     }else if($eligible=="BOX2"){
     	 $condition='b.naissance BETWEEN CURDATE() - INTERVAL 122 DAY AND CURDATE()-INTERVAL 7 DAY and co.deleted=0 and p.id_box=2';
     }else if($eligible=="BOX3"){
-    	 $condition='bcustomer_id.naissance BETWEEN CURDATE() - INTERVAL 305 DAY AND CURDATE()-INTERVAL 183 DAY and co.deleted=0 and p.id_box=3';
+    	 $condition='b.naissance BETWEEN CURDATE() - INTERVAL 305 DAY AND CURDATE()-INTERVAL 183 DAY and co.deleted=0 and p.id_box=3';
     }
 
     $sql="UPDATE customer c1 set c1.eligible=:eligible where c1.id = :id and c1.id not in (
@@ -1174,6 +1199,7 @@ function updateEligibilite($id,$eligible){
 		$sql="UPDATE customer SET eligible = :eligible WHERE id = :id ";
 	}
 
+	$array['sql']=$sql;
     $stmt = $connexion->prepare($sql);
     
     $stmt->bindValue(':id', $id);
@@ -1187,7 +1213,7 @@ function updateEligibilite($id,$eligible){
     }
   
    $connexion = null;
-    return $sql;
+    return  $array['sql'];
   } catch (Exception $e) {
     $array['status'] = 'ko';
   }  
@@ -1780,6 +1806,18 @@ function addLivraison($livraison){
 		$statement->bindValue(':type', $livraison['type']);
 		//Execute the statement and insert our values.
 		$inserted = $statement->execute();
+
+
+		
+
+		$newEligible='BOX0'.$livraison['id_box'].'_COMMANDÉE';
+		$sql="UPDATE customer set eligible=:eligible where id=:id";
+		$statement = $connexion->prepare($sql);
+		$statement->bindValue(':eligible', $newEligible);
+		$statement->bindValue(':id', $livraison['idClient']);
+		$updated1 = $statement->execute();
+
+
 		$array['result'] = 'success';
 
 	}
