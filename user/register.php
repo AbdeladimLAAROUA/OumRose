@@ -56,6 +56,22 @@ if (isset($_POST['email']) and isset($_POST['password'])) {
 			$response['msg']=passwordForgot($$email,$user['id'],$user['nom'],$token);
 		}	
 			
+}else if(isset($_POST['password']) and isset($_POST['newPassword'])){
+	include('../config.php');
+	$password = htmlspecialchars($_POST['password']);
+	$newPassword = htmlspecialchars($_POST['newPassword']);
+	$passwordUser = getUserPassword($conn,$_SESSION['client_id']);
+	$response['passwordUser']=$passwordUser;
+	if($passwordUser!=$password){
+		$response['response']="Password incorrect";
+		$response['success']="true";
+		$response['code']="0";
+	}else {
+		changePassword($conn,$_SESSION['client_id'],$newPassword);
+		$response['response']="Votre mot de passe a été bien changé";
+		$response['success']="true";
+		$response['code']="1";
+	}		
 }
 else{
 	$response['success']="false";

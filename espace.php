@@ -25,6 +25,11 @@
 <script src="assets/js/respond.min.js"></script>
 <![endif]-->
 <link href="css/style.css" rel="stylesheet">
+
+<link rel="stylesheet" type="text/css" href="css/demo.css" />
+   
+  
+   <link rel="stylesheet" href="css/login2.css">
 <style type="text/css">
 .nav-pills>li.active>a, .nav-pills>li.active>a:hover, .nav-pills>li.active>a:focus {
     color: #fff;
@@ -179,7 +184,11 @@ h2 ul li:nth-child(4) {
 }
 }
 
-
+</style>
+<style type="text/css">
+    div.loginpanel div.txt label:before{
+    top: 10px !important;
+}
 </style>
 </head>
 <body>

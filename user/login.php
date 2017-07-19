@@ -39,7 +39,7 @@ if(isset($_POST['email']) and isset($_POST['password']) ){
 				$info["box"]=1;
 		}
 		else if($diffJours<=-7 && $diffJours>=-122 and !in_array("2", $boxList)){
-				$info["response"]="Chère ".$user['nom'].", vous êtes éligible à la box  \"Bébé est là!\" ";
+				$info["response"]="Chère Mme ".$user['nom'].", vous êtes éligible à la box  \"Bébé est là!\" ";
 				$info["mCode"]=2;
 				$info["box"]=2;
 		}

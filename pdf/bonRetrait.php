@@ -16,6 +16,7 @@ ob_end_clean();
 // send the captured HTML from the output buffer to the mPDF class for processing
 $mpdf->WriteHTML($html);
 //$mpdf->SetProtection(array(), 'user', 'password'); uncomment to protect your pdf page with password.
-$mpdf->Output("bonderetrait.pdf","S");
+//$mpdf->Output("bonderetrait.pdf","D");
+$mpdf->Output("bonderetrait.pdf","I");
 exit;
  ?>

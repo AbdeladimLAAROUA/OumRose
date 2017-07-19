@@ -67,7 +67,12 @@ $(document).ready(function() {
               }
             ],
             "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
-                    if ( aData[8] == "BOX1" )
+                    
+                    if(aData[9] == "blocked"){
+                      $('td', nRow).css('background-color', 'red');
+                        $('td', nRow).css('color', 'white');
+                    }
+                    else if ( aData[8] == "BOX1" )
                     {
                         $('td', nRow).css('background-color', '#ec7f8c');
                         $('td', nRow).css('color', 'white');

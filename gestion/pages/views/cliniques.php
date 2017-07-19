@@ -45,6 +45,7 @@ session_start();
               <th>Id Commande</th>
               <th>Nom</th>
               <th>Prénom</th>
+              <th>Maternité</th>
               <th>Box</th>
               <th>GSM 1</th>
               <th>Naissance Bébé</th>
@@ -62,6 +63,7 @@ session_start();
               <th>Id Commande</th>
               <th>Nom</th>
               <th>Prénom</th>
+              <th>Maternité</th>
               <th>Box</th>
               <th>GSM 1</th>
               <th>Naissance Bébé</th>

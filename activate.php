@@ -1,6 +1,9 @@
 <?php 
+session_start();
 if (isset($_GET["id"])) {
+  echo $_GET["id"];
   $id = intval(base64_decode($_GET["id"]));
+  echo "-".$id."-";
   include('config.php');
   $sql = "SELECT * from customer where id = :id";
   try {
@@ -10,13 +13,17 @@ if (isset($_GET["id"])) {
     $result = $stmt->fetchAll();
  
     if (count($result) > 0) {
+      echo "<pre>";
+      print_r($result);
+      echo "</pre>";
       $_SESSION['nom']=$result[0]["nom"];
       getBoxEligibility($result[0],$conn);
 
       if ($result[0]["status"] == "approved") {
         $msg = "Your account has already been activated.";
         $msgType = "info";
-        header('Location:login.php');
+        echo $msg;
+        //header('Location:login.php');
       } else {
         $sql = "UPDATE `customer` SET  `status` =  'approved' WHERE `id` = :id";
         $stmt = $conn->prepare($sql);
@@ -30,8 +37,8 @@ if (isset($_GET["id"])) {
           include('emails/emailService.php');
           welcomeEmail($result[0],getBaby($conn,$result[0]));
         }*/
-        
-        header('Location:login.php');
+        $_SESSION['firstConnexion']=true;
+        //header('Location:login.php');
       }
     } else {
       $msg = "No account found";
@@ -59,6 +66,7 @@ if (isset($_GET["id"])) {
       include('emails/emailService.php');
       welcomeEmail($result[0],getBaby($conn,$result[0])); 
       //updateToken($conn,$user['email'],'');
+      $_SESSION['firstConnexion']=true;
       header('Location:login.php');
     } else {
       $msg = "No account found";

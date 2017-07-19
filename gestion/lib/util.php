@@ -434,7 +434,7 @@ function getCommandesOX(){
 		$connexion = db_connect();
 		$sql =
 			"SELECT  cust.id as 'idMaman', cust.nom as 'nomMaman', cust.prenom, cust.gsm as 'GSM1',
-			l.gsm as 'GSM2',b.naissance,co.creationDate,p.id_box,co.id as 'idCommande',
+			l.gsm as 'GSM2',b.naissance,co.creationDate,p.id_box,co.id as 'idCommande',maternite,
 			 l.type as 'typeLivraison', l.adresseLivraison, l.quartier,l.status,l.id as 'idLivraison', l.creationDate
 			 from  commande co, customer cust, product p, livraison l, baby b
 			 where 
@@ -753,8 +753,6 @@ function getClient($id){
                 while ($row = $sth->fetch(PDO::FETCH_ASSOC)) {
                     $boxList[] = $row;		
                 }
-            }else{
-
             }
         }
 

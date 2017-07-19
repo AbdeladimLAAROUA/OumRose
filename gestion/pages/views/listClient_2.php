@@ -109,14 +109,14 @@ session_start();
           <h3 class="box-title">Liste des Clients</h3>
         </div>
 
-       
+       <form>
         <div class="form-group has-feedback col-xs-12 col-md-3 col-sm-6">
           <div class="input-group">
             <div class="input-group">
               <div class="input-group-addon">
                 <i class="fa fa-envelope"></i>
               </div>
-            <input placeholder="email" id="email_search" type="text" class="form-control infos_client" data-required-error="veuillez renseigner ce champ" data-error="E-mail invalid" required>
+            <input placeholder="email" id="email_search" type="text" class="form-control infos_client" data-required-error="veuillez renseigner ce champ" data-error="E-mail invalid" >
             </div>
             <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
             <div class="help-block with-errors"></div>
@@ -127,7 +127,7 @@ session_start();
               <div class="input-group-addon">
                 <i class="fa fa-user"></i>
               </div>
-            <input placeholder="Nom" id="nom_search" type="text" class="form-control infos_client" data-required-error="veuillez renseigner ce champ" data-error="E-mail invalid" required>
+            <input placeholder="Nom" id="nom_search" type="text" class="form-control infos_client" data-required-error="veuillez renseigner ce champ" data-error="E-mail invalid">
             </div>
             <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
             <div class="help-block with-errors"></div>
@@ -138,7 +138,7 @@ session_start();
               <div class="input-group-addon">
                 <i class="fa fa-user"></i>
               </div>
-            <input placeholder="Prénom" id="prenom_search" type="text" class="form-control infos_client" data-required-error="veuillez renseigner ce champ" data-error="E-mail invalid" required>
+            <input placeholder="Prénom" id="prenom_search" type="text" class="form-control infos_client" data-required-error="veuillez renseigner ce champ" data-error="E-mail invalid" >
             </div>
             <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
             <div class="help-block with-errors"></div>
@@ -149,7 +149,7 @@ session_start();
               <div class="input-group-addon">
                 <i class="fa fa-phone"></i>
               </div>
-            <input placeholder="GSM" id="gsm_search" type="text" class="form-control infos_client" data-required-error="veuillez renseigner ce champ" data-error="E-mail invalid" required>
+            <input placeholder="GSM" id="gsm_search" type="text" class="form-control infos_client" data-required-error="veuillez renseigner ce champ" data-error="E-mail invalid" >
             </div>
             <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
             <div class="help-block with-errors"></div>
@@ -162,7 +162,7 @@ session_start();
             <?php if ($_SESSION['role_a']=='user') { ?>
             <button id="createUserByAdmin" type="button" class="btn btn-success" data-type="createUser" data-toggle="modal" data-target="#createUser"><span class="glyphicon"></span> Nouveau client</button>
             <?php } ?>
-            <button id="search" type="button" class="btn btn-primary" data-type="" data-toggle="" data-target="#createUserr">
+            <button id="search" type="submit" class="btn btn-primary" data-type="" data-toggle="" data-target="#createUserr">
               <span class="glyphicon"></span>
               Rechercher
             </button>
@@ -193,6 +193,7 @@ session_start();
             </tfoot>
           </table>
         </div>
+        </form>
         <!-- /.box-body -->
       </div>
       <!-- /.box -->

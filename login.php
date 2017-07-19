@@ -39,8 +39,19 @@ session_start();
 <body>
   	<?php include('header3.php'); ?>
 	<div class="myLogin">
-	  	
-	  	<h2>Activez votre compte <!-- ou identifiez-vous --> pour profiter des services personnalisés et de tous les bons plans Oumbox!</h2>
+	  	<?php 
+	  		if(isset($_SESSION['firstConnexion']) and $_SESSION['firstConnexion']){
+	  			$_SESSION['firstConnexion']=false;
+	  	 ?>
+	  	<h2>Félicitation, votre compte est désormais activé</h2>
+	  	<h2>Identifiez-vous pour profiter des services personnalisés et de tous les bons plans Oumbox!</h2>
+	  	<?php
+		}else{
+	  	?>
+	  	<h2>Connectez-vous pour profiter des services personnalisés et de tous les bons plans Oumbox!</h2>
+	  	<?php 
+	  	}
+	  	 ?>
 	  	<h3>
 	  		<?php 
 	  			if(isset($_SESSION['result']) && !$_SESSION['result']['success']){

@@ -86,7 +86,7 @@ where l.id=c.id_leads;
 
 
 DELIMITER $$
-DROP PROCEDURE updateProducts$$
+DROP PROCEDURE IF EXISTS updateProducts$$
 CREATE PROCEDURE updateProducts()
 BEGIN   
 	DECLARE countBox1 INT DEFAULT 0;
@@ -97,24 +97,29 @@ BEGIN
 	select count(*) into countBox1  from leads where REF_BOX1!='';
 	select count(*) into countBox2  from leads where REF_BOX2!='';
 	select count(*) into countBox3  from leads where REF_BOX3!='';
+
+    delete from livraison where 1;
+    delete from commande where 1;
     delete from product where 1;
     delete from commande where 1;
     delete from livraison where 1;
     ALTER TABLE product AUTO_INCREMENT = 1;
+    ALTER TABLE commande AUTO_INCREMENT = 1;
+    ALTER TABLE livraison AUTO_INCREMENT = 1;
     WHILE i < countBox1 DO  
-    	INSERT INTO product (id_box) VALUES (1);
+    	INSERT INTO product (id_box,refBox) VALUES (1,'Non disponible');
         SET i = i + 1;
     END WHILE;
     SET i = 0; 
     
     WHILE i < countBox2 DO  
-    	INSERT INTO product (id_box) VALUES (2);
+    	INSERT INTO product (id_box,refBox) VALUES (2,'Non disponible');
         SET i = i + 1;
     END WHILE;
     SET i = 0; 
 
     WHILE i < countBox3 DO 
-    	INSERT INTO product (id_box) VALUES (3); 
+    	INSERT INTO product (id_box,refBox) VALUES (3,'Non disponible'); 
         SET i = i + 1;
     END WHILE;
     SET i = 0;
@@ -127,8 +132,14 @@ call updateProducts();
 
 
 
-SELECT * FROM `product` WHERE `id_box`=1 ORDER BY `id`
+SELECT count(*) FROM `product` WHERE `id_box`=1 ORDER BY `id`;
 select count(*) from leads where REF_BOX1!='';
+
+SELECT count(*) FROM `product` WHERE `id_box`=2 ORDER BY `id`;
+select count(*) from leads where REF_BOX2!='';
+
+SELECT count(*) FROM `product` WHERE `id_box`=3 ORDER BY `id`;
+select count(*) from leads where REF_BOX3!='';
 
 
 

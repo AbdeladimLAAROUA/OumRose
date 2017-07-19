@@ -13,7 +13,7 @@
 	/* Array of database columns which should be read and sent back to DataTables. Use a space where
 	 * you want to insert a non-database field (for example a counter or static image)
 	 */
-	$aColumns = array( 'id', 'nom', 'prenom', 'email', 'gsm', 'naissance', 'adresse', 'ville','eligible');
+	$aColumns = array( 'id', 'nom', 'prenom', 'email', 'gsm', 'naissance', 'adresse', 'ville','eligible','status');
 	
 	/* Indexed column (used for fast and accurate table cardinality) */
 	$sIndexColumn = "id";
@@ -104,16 +104,18 @@
 	$sWhere = "";
 	if ( $_GET['sSearch'] != "" )
 	{
-		$sWhere = "WHERE ";
+		$sWhere = "WHERE (";
 		for ( $i=0 ; $i<count($aColumns) ; $i++ )
 		{
 			$sWhere .= $aColumns[$i]." LIKE '%".mysqli_real_escape_string( $gaSql['link'], $_GET['sSearch'] )."%' OR ";
 		}
 		$sWhere = substr_replace( $sWhere, "", -3 );
-		
+		$sWhere.=' )';
+		$sWhere.=" and (status='approved' or status='blocked') ";
 		
 	}
 
+	//echo $sWhere;
 
 	
 	/* Individual column filtering */
@@ -137,7 +139,7 @@
 		//$sWhere.=" where status='approved' or status='blocked' ";
 		$sWhere.=" where status!='deleted' ";
 	}else{
-		$sWhere.=" and status!='deleted' ";
+		$sWhere.=" and (status='approved' or status='blocked') ";
 	}
 	
 	

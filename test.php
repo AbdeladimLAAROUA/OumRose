@@ -1,9 +1,24 @@
 <script type="text/javascript">
-  var myDate = new Date(30600);
-  console.log(myDate);
+ /* var myDate = new Date(30600);
+  console.log(myDate);*/
 </script>
 
 <?php
+
+/*$dt = new DateTime("2017-07-13 19:38:39");
+$date = $dt->format('Y-m-d');
+$time = strtotime($date);
+echo date('d/m/Y', strtotime('+1 months',$time));*/
+
+//echo date("Y-m-d H:i:s",strtotime(date("Y-m-d H:i:s")."+2 days"));
+
+$villes = array("Agadir", "Assilah","Casablanca", "Meknes","El Jadida", "Fes",
+                "Kenitra", "Larache","Marrakech", "Mohammedia",
+                "Rabat", "Sala Al Jadida","Sale", "Settat",
+                "Tanger", "Temara");
+
+echo in_array("Agadir",$villes);
+ 
   /*echo $today = date("ymd");*/
   // Date d'aujourd'hui
  // $today = new DateTime(date('Y-m-d'));
@@ -235,10 +250,63 @@ echo $message;
 
 
 
-echo secondsToTime(70200);
+/*echo secondsToTime(70200);
 function secondsToTime($seconds) {
     $dtF = new \DateTime('@0');
     $dtT = new \DateTime("@$seconds");
     return $dtF->diff($dtT)->format('%hH%I');
+}*/
+ ?>
+
+
+
+
+ <?php
+
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname="oumdev_leads";
+
+try {
+  $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+  // set the PDO error mode to exception
+  $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 }
+catch(PDOException $e){
+   
+}
+getAllRelais($conn);
+function getAllRelais($conn){
+  $villes = array("AGADIR", "ASSILAH","CASABLANCA", "HAYSTACK","HAYSTACK", "HAYSTACK",
+                "KENITRA", "LARACHE","MARRAKECH", "MOHAMMEDIA",
+                "RABAT", "SALA AL JADIDA","SALE", "SETTAT",
+                "TANGER", "TEMARA");
+  try
+       {
+          $stmt = $conn->prepare("SELECT r.*,v.name FROM relais r INNER JOIN ville v ON v.id=r.id_ville");
+          $stmt->execute();
+          $relais = array();
+          if ($stmt->execute()) {
+              while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                  if(in_array(strtoupper($row['name']), $villes)){
+                    $row['prix']=25; 
+                  }else{
+                    $row['prix']=30;
+                  }
+                  print_r( $row);
+                  $relais[] = $row;
+
+              }
+          }
+       }
+       catch(PDOException $e)
+       {
+           echo $e->getMessage();
+       }
+       return  $relais;
+}
+
+
+
  ?>

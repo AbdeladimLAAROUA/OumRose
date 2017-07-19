@@ -123,7 +123,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           </ul>
         </li> -->
 
-         <?php if ($_SESSION['role_a']=='admin') { ?>
+         <?php if ($_SESSION['role_a']=='admin' or $_SESSION['role_a']=='mgr') { ?>
         <li class="treeview">
           <a href=""><i class="fa fa-link"></i> <span>Commandes</span>
             <span class="pull-right-container">
@@ -144,9 +144,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
         
 
         <?php if ($_SESSION['role_a']=='mgr') { ?>
-          <li><a href="#commandeSB"><i class="fa fa-link"></i> <span>Speed box</span></a></li>
+         <!--  <li><a href="#commandeSB"><i class="fa fa-link"></i> <span>Speed box</span></a></li>
           <li><a href="#commandeLD"><i class="fa fa-link"></i> <span>Livraison à domicile</span></a></li>
-          <li><a href="#commandeOX"><i class="fa fa-link"></i> <span>Livraison Oumbox</span></a></li>
+          <li><a href="#commandeOX"><i class="fa fa-link"></i> <span>Livraison Oumbox</span></a></li> -->
           
         <?php } ?>
 

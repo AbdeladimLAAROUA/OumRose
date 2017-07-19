@@ -245,6 +245,21 @@ function getUser($conn,$id){
   }
 }
 
+function getUserPassword($conn,$id){
+  try
+  {  
+     $stmt = $conn->prepare("SELECT * FROM customer WHERE id=:id LIMIT 1");
+     $stmt->execute(array(':id'=>$id));
+     $userRow=$stmt->fetch(PDO::FETCH_ASSOC);
+
+    return $userRow['password'];
+  }
+  catch(PDOException $e)
+  {
+      echo $e->getMessage();
+  }
+}
+
 
 function addRefBox($conn,$box,$email){
 
@@ -339,14 +354,25 @@ function getDisapprouvedClientByToken($conn,$token){
        return  $client;
 }
 function getAllRelais($conn){
+  $villes = array("AGADIR", "ASSILAH","CASABLANCA", "HAYSTACK","HAYSTACK", "HAYSTACK",
+                "KENITRA", "LARACHE","MARRAKECH", "MOHAMMEDIA",
+                "RABAT", "SALA AL JADIDA","SALE", "SETTAT",
+                "TANGER", "TEMARA");
   try
        {
-          $stmt = $conn->prepare("SELECT * FROM relais");
+          $stmt = $conn->prepare("SELECT r.*,v.name FROM relais r INNER JOIN ville v ON v.id=r.id_ville");
           $stmt->execute();
           $relais = array();
           if ($stmt->execute()) {
               while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                  if(in_array(strtoupper($row['name']), $villes)){
+                    $row['prix']=25; 
+                  }else{
+                    $row['prix']=30;
+                  }
+                  print_r( $row);
                   $relais[] = $row;
+
               }
           }
        }
@@ -413,6 +439,30 @@ function updateEligibilite1($id,$eligible){
   } catch (Exception $e) {
     $array['status'] = 'ko';
   }  
+}
+function changePassword($conn,$id,$newPassword){
+   try {
+    $connexion = $conn;
+
+    $stmt = $connexion->prepare("UPDATE customer SET password = :password WHERE id = :id ");
+    
+    $stmt->bindValue(':id', $id);
+    $stmt->bindValue(':password', $newPassword);
+
+
+    if($stmt->execute()) {
+      $array['status'] = 'success';
+    } else  {
+      $array['status'] = 'error';
+    }
+  
+
+    
+  } catch (Exception $e) {
+    $array['status'] = 'ko';
+  }  
+
+  return  $array['status'];
 }
 
 function updateClient_u($conn,$client){

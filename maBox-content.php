@@ -22,9 +22,10 @@
           <div class="row"><div class="col-md-6">Adresse :</div><div id="infos8" class="infoLivraison">77 bis, boulevard abdelmoumen</div></div>
           <div class="row"><div class="col-md-6">Téléphone :</div><div id="infosTel2" class="infoLivraison">05 22 22 58 50</div></div>
         </div>
-        <form id="downloadBr1" action="pdf/br.php" style="text-align: center; margin-top: 50px;" >
+        <form id="downloadBr" action="pdf/br.php" style="text-align: center; margin-top: 50px;" >
             <input type="submit" value="Télécharger le bon de retrait" class="btn btn-primary">
         </form>
+         <p class="info downloadSuccess" style="text-align: center;" hidden>Le bon de retrait va être téléchargé dans quelques seconds</p>
        <!--  <div  style="text-align: center; margin-top: 50px;">
           <input id="downloadBr" type="submit" value="Télécharger le bon de retrait" class="btn btn-primary">
         </div> -->
@@ -104,7 +105,11 @@
            <?php  
              foreach ($relais as $key => $infos) { 
            ?>
-             <p class="text-center <?php echo "relais".$infos['id_relais']; ?>" value="<?php echo $infos['id_relais']; ?>" ><b>Adresse :</b> <?php echo $infos['adresse']; ?> <br/> Horaire : du lundi au samedi de <?php echo $infos['ouverture']; ?> à <?php echo $infos['fermeture']; ?></p>
+             <p class="text-center <?php echo "relais".$infos['id_relais']; ?>" value="<?php echo $infos['id_relais']; ?>" >
+             <b>Adresse :</b> <span class="adresseShow"> <?php echo $infos['adresse']; ?></span> <br/> 
+             Horaire : du lundi au samedi de <?php echo $infos['ouverture']; ?> à <?php echo $infos['fermeture']; ?><br/>
+            Frais de livraison :  <span class="fraiShow"><?php echo $infos['prix'].' Dh'; ?></span>
+             </p>
              <div id="error2" class="text-center"></div>
              <?php } ?>
 
@@ -205,6 +210,8 @@ else if($_POST['type_livraison']=="LD"){
           <div class="row"><div class="col-md-6">Type de livraison :</div><div class="infoLivraison" >SpeedBox</div></div>
           <div class="row"><div class="col-md-6">Ville :</div><div id="infos3" class="infoLivraison"></div></div>
           <div class="row"><div class="col-md-6">Point relais :</div><div id="infos4" class="infoLivraison"></div></div>
+          <div class="row"><div class="col-md-6">Adresse :</div><div id="infos5" class="infoLivraison"></div></div>
+          <div class="row"><div class="col-md-6">Frais de livraison :</div><div id="infos6" class="infoLivraison"></div></div>
           <div class="row"><div class="col-md-6">Téléphone :</div><div id="infosTel1" class="infoLivraison"></div></div>
         </div>
         
@@ -350,7 +357,7 @@ $(function() {
       $("#relais").removeAttr( "hidden" );
 
       /*$("#relais ul li:nth-child(1)").removeClass("disabled");
-      $("#relais ul li:nth-child(1)").addClass("active");
+       $("#relais ul li:nth-child(1)").addClass("active");
        $("#relais ul li:nth-child(1)").addClass("selected");*/
       $("#relaisList input:text").val('Point relais');
        
@@ -463,6 +470,9 @@ $(function() {
       $("#adresseRelais").removeAttr( "hidden" );
       $('#adresseRelais p').removeAttr( "hidden" );
       $('#adresseRelais p').not("#adresseRelais p.relais"+$(this).val()).attr("hidden","");
+      
+      $('#infos5').html($('#adresseRelais p:not([hidden]) span.adresseShow').text());
+      $('#infos6').html($('#adresseRelais p:not([hidden]) span.fraiShow').text());
     } 
   });
 
@@ -553,18 +563,27 @@ $(function() {
 
 <script type="text/javascript">
     $("#downloadBr").click(function() {
-        var url = "pdf/br.php"; 
-        $.ajax({
+       /* var url = "pdf/br.php"; 
+        $body = $("body");
+        $body.addClass("loading");*/
+        $body = $("body");
+        $body.removeClass("loading");
+        $("#downloadBr").hide();
+        $(".downloadSuccess").fadeIn('1000');
+       /* $.ajax({
               type: "POST",
               url: url,
               success: function(data)
               {
-                  alert('success'); // show response from the php script.
+                  $body = $("body");
+                  $body.removeClass("loading");
+                  $("#downloadBr").hide();
+                  $(".downloadSuccess").fadeIn('1000');
               },
               error:function(data) {
-                 alert('error'); 
+                  console.log("data error");
               }
-            });
+            });*/
     });
     /*$("#downloadBr").submit(function(e) {
 

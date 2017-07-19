@@ -280,6 +280,7 @@
                       '<td>'+val.idCommande+'</td>'+
                       '<td>'+val.nomMaman+'</td>'+
                       '<td>'+val.prenom+'</td>'+
+                      '<td>'+val.maternite+'</td>'+
                       '<td>'+val.id_box+'</td>'+
                       '<td>'+val.GSM1+'</td>'+
                       '<td>'+val.naissance+'</td>'+

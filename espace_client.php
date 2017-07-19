@@ -8,17 +8,18 @@
     <div class="col-sm-3">
         <a href="#" class="nav-tabs-dropdown btn btn-block btn-primary">Tabs</a>
         <ul id="nav-tabs-wrapper" class="nav nav-tabs nav-pills nav-stacked well">
-          <li class="active"><a href="#vtab1" data-toggle="tab">Commander ma box</a></li>
+          <li <?php if(!isset($_SESSION['firstConnexion']) or !$_SESSION['firstConnexion']) echo 'class="active"'; ?>><a href="#vtab1" data-toggle="tab">Commander ma box</a></li>
           <li><a href="#vtab2" data-toggle="tab">Mon profil</a></li>
           <li><a href="#vtab4" data-toggle="tab">Historique de mes commandes</a></li>
           <li><a href="#vtab3" data-toggle="tab">Editer mon profil</a></li>
-          <li><a href="#" data-toggle="tab" OnClick="window.location.href='user/logout.php'">Déconnexion</a></li>
+          <li><a href="#vtab5" data-toggle="tab" >Changer mot de passe</a></li>
+          <li <?php if(isset($_SESSION['firstConnexion']) and $_SESSION['firstConnexion']) echo 'class="active"'; ?>><a href="#" data-toggle="tab" OnClick="window.location.href='user/logout.php'">Déconnexion</a></li>
           
         </ul>
     </div>
     <div class="col-sm-9">
         <div class="tab-content">
-            <div role="tabpanel" class="tab-pane fade in active" id="vtab1">
+            <div role="tabpanel" class="tab-pane fade in <?php if(!isset($_SESSION['firstConnexion']) or !$_SESSION['firstConnexion']) echo "active" ?>" id="vtab1">
                 <div class="row">
                     <div class="text-center boxReady">
                             <h2 class="eligibility_msg">
@@ -350,6 +351,51 @@
                         </table>
                 </div>
             </div>
+
+            <div role="tabpanel" class="tab-pane fade in <?php if(isset($_SESSION['firstConnexion']) and $_SESSION['firstConnexion']) echo "active" ?>" id="vtab5" >
+                <h3 style="text-align:center;">Changer mot de passe</h3>
+                <div class="myLogin2">
+        <h3>
+            <?php 
+                if(isset($_SESSION['result']) && !$_SESSION['result']['success']){
+                    echo $_SESSION['result']['response'];
+                    session_unset($_SESSION['result']['response']);
+                }
+
+             ?>
+        </h3>
+        
+                 <div class="content">
+                     <div class="loginpanel">
+                  <div class="txt">
+                    <input id="password" name="password" type="password" placeholder="Actuel mot de passe" />
+                    <label for="password" class="entypo-lock"></label>
+                  </div>
+                  <div class="txt">
+                    <input id="newPassword" name="newPassword" type="password" placeholder="Nouveau password" />
+                    <label for="newPassword" class="entypo-lock"></label>
+                  </div>    
+                  <div class="txt">
+                    <input id="newPasswordConf" name="newPasswordConf" type="password" placeholder="Confirmation" />
+                    <label for="newPasswordConf" class="entypo-lock"></label>
+                  </div>
+                  <p class="text-center error">
+                    <?php 
+                        if (isset($_SESSION['errorRegisterByEmail'])) {
+                            echo $_SESSION['errorRegisterByEmail'];
+                            session_unset($_SESSION['errorRegisterByEmail']);
+                        }
+                     ?>
+                  </p>
+                  <div class="buttons">
+                    <input type="submit" value="Changer le mot de passe" id="connect" style='color:white;font-size: 16px;' />
+                   
+                  </div>
+                 </div>
+                </div>
+          
+    </div>                
+            </div>
             <div role="tabpanel" class="tab-pane fade in" id="vtab4">
                 <h3>Mes commandes</h3>
                 <p>
@@ -365,16 +411,18 @@
                                     <th>Déscription</th>
                                     <th>type de Livraison</th>
                                     <th>Date de la commande</th>
+                                    <th>Bon de retrait</th>
                                 </tr>
                             </thead>
                                 <?php
                                     $mesCommandes = json_decode($mesCommandes, true);
                                     foreach ($mesCommandes['result'] as $key => $value) {
                                         $type='';
-                                        if($value['type']=="OX") $type="Chez Oumbox";
+                                        $hidden='hidden';
+                                        if($value['type']=="OX") {$type="Chez Oumbox";$hidden="";}
                                         if($value['type']=="SB") $type="SpeedBox";
                                         if($value['type']=="LD") $type="Livraison à domicile";
-                                        $row = '<tr><td>'.$value['id'].'</td><td>'.$value['name'].'</td><td>'.$value['description'].'</td><td>'.$type.'</td><td>'.$value['creationDate'].'</td></tr>';
+                                        $row = '<tr><td>'.$value['id'].'</td><td>'.$value['name'].'</td><td>'.$value['description'].'</td><td>'.$type.'</td><td>'.$value['creationDate'].'</td><td> <form method="POST" id="downloadBr" action="pdf/bonRetrait-Consult.php" style="text-align: center;" '.$hidden.' ><input type="hidden" name="lastEligibleToBox" value="'.$value['name'].'"/><input type="hidden" name="dateTimeCommande" value="'.$value['creationDate'].'"/><input type="submit" value="Télécharger" class="btn btn-info" style="float: left; margin-left: 0px;"></td> </form></tr>';
                                         echo $row;
                                     }
                                 ?>
@@ -580,41 +628,9 @@
                                                   dateFormat: 'yy-mm-dd',
                                                   minDate: new Date(year, month ,day-31),
                                                   maxDate: new Date(year, month ,day+31)
-                                                }).datepicker('setDate', new Date(naissance) );;
+                                                }).datepicker('setDate', new Date(naissance) );
 
-         naissance_input.datepicker(
-                //'setDate', new Date(naissance)
-               /*minDate: new Date(2017, 5 ,1-7),
-               maxDate: new Date(2017, 5 ,1+5)*/
-               /* todayHighlight: true,
-               
-                
-                clearBtn: true,
-                multidate: false,
-                multidateSeparator: ",",
-                toggleActive: true*/
-
-        );
-
-          naissance_input.datepicker(               
-               //'minDate', new Date(2017, 5 ,1-7)
-               /*maxDate: new Date(2017, 5 ,1+5)*/
-        );
-                              
-       /* naissance_input.datepicker(
-            /* minDate: new Date(year, month ,day-7 ),
-             maxDate: new Date(year, month ,day+7);
-             autoclose: true,
-                 todayHighlight: true,
-                
-                 minDate: new Date(2017, 5 ,1)-5,
-                 maxDate: new Date(2017, 5 ,1+5),
-                 clearBtn: true,
-                 multidate: false,
-                 multidateSeparator: ",",
-                 toggleActive: true
-           
-        );*/
+      
     }
 
     function updateBaby(baby) {
@@ -640,21 +656,15 @@
                     $('#maternite_'+baby.id).data('maternite',baby.maternite);
 
                     console.log($("#naissance_MATERNITE_view").val());
-                    if(data.eligible=="BOX1"){
+                   /* if(data.eligible=="BOX1"){
                         $("h2.eligibility_msg").text("Vous êtes éligible à la box  \"Je suis enceinte\" ");
                     }else if(data.eligible=="BOX2"){
                          $("h2.eligibility_msg").text("Vous êtes éligible à la box  \"Bébé est là!\" ");
                     }else if(data.eligible=="BOX3"){
                          $("h2.eligibility_msg").text("Vous êtes éligible à la box  \"Bébé grandit\" ");
                     }else{
-                         $("h2.eligibility_msg").text("Vous n'êtes éligible à aucune box pour le moment <br/>
-                                <ul>
-                                   <li style='line-height: 40px;  color=#ec7f8c;'>Critères d'éligibilité</li>
-                                   <li style='line-height: 40px;  color=#ec7f8c;'>Box rose (Je suis enceinte) : du 5ème au 8ème mois de grossesse</li>
-                                   <li style='line-height: 40px; color=#6fc7c2;'>Box vert (Bébé est là!) : de la naissance à 3 mois</li>
-                                   <li style='line-height: 40px; color=#8e6cac;'>Box mauve (Bébé grandit): de 6 à 9 mois</li>
-                                </ul>");
-                    }
+                         $("h2.eligibility_msg").text("Vous n'êtes éligible à aucune box pour le moment <br/><ul><li style='line-height: 40px;  color=#ec7f8c;'>Critères d'éligibilité</li><li style='line-height: 40px;  color=#ec7f8c;'>Box rose (Je suis enceinte) : du 5ème au 8ème mois de grossesse</li><li style='line-height: 40px; color=#6fc7c2;'>Box vert (Bébé est là!) : de la naissance à 3 mois</li><li style='line-height: 40px; color=#8e6cac;'>Box mauve (Bébé grandit): de 6 à 9 mois</li></ul>");
+                    }*/
                     $("#naissance_MATERNITE_view").text(baby.maternite);
 
                     $("#naissance_bebe_view").text(baby.naissance);
@@ -720,3 +730,47 @@
     });
 
 </script>
+
+<script>
+$("#connect").click(function() {
+
+        if(checkform()){
+            console.log("send form");
+            $.ajax({
+                url:'user/register.php',
+                type:'POST',
+                dataType: "json",
+                data:{password: $("#password").val(), newPassword:$("#newPassword").val()},
+                success: function(data) {   
+                    console.log(data);
+                    if(data['code']=="1" || data['code']=="3"|| data['code']=="0"){
+                        //$(".content").hide();
+                        $(".error").html(data['response']);
+
+                    }
+                    console.log(data['code']);
+                },
+                error: function(data){
+                    console.log("error "+data);
+                }
+            });
+        }
+        
+    });
+    function checkform() {
+        if($("#password").val() == "") {
+            $(".error").html("Saisissez votre mot de passe actuel");
+            return false;
+        }else if($("#newPassword").val() == ""){
+            $(".error").html("Saisissez le nouveau mot de passe");
+             return false;
+        }else if($("#newPassword").val() != $("#newPasswordConf").val()){
+            console.log($("#newPassword").val()+"-"+$("#password").val());
+            $(".error").html("Les deux mots de passe incorrect");
+             return false;
+        }else{
+            return true;
+        }
+       
+    }
+  </script>
