@@ -152,19 +152,18 @@ function exportLDcmd($data){
 	$objSheet = $objPHPExcel->getActiveSheet();
 	$objSheet->setTitle('Liste Produits Pères');
 
-	$objSheet->getStyle('A1:K1')->getFont()->setBold(true)->setSize(12);
+	$objSheet->getStyle('A1:J1')->getFont()->setBold(true)->setSize(12);
 
-	$objSheet->getCell('A1')->setValue('Id Maman');
-	$objSheet->getCell('B1')->setValue('Id Commande');
-	$objSheet->getCell('C1')->setValue('Nom');
-	$objSheet->getCell('D1')->setValue('Box');
-	$objSheet->getCell('E1')->setValue('GSM 1');
-	$objSheet->getCell('F1')->setValue('GSM 2');
-	$objSheet->getCell('G1')->setValue('Naissance Bébé');
-	$objSheet->getCell('H1')->setValue('Adresse');
-	$objSheet->getCell('I1')->setValue('Quartier');
-	$objSheet->getCell('J1')->setValue('Date');
-	$objSheet->getCell('K1')->setValue('Status');
+	$objSheet->getCell('A1')->setValue('Id Commande');
+	$objSheet->getCell('B1')->setValue('Nom');
+	$objSheet->getCell('C1')->setValue('Box');
+	$objSheet->getCell('D1')->setValue('GSM 1');
+	$objSheet->getCell('E1')->setValue('GSM 2');
+	$objSheet->getCell('F1')->setValue('Naissance Bébé');
+	$objSheet->getCell('G1')->setValue('Adresse');
+	$objSheet->getCell('H1')->setValue('Quartier');
+	$objSheet->getCell('I1')->setValue('Date');
+	$objSheet->getCell('J1')->setValue('Status');
 
 	foreach ($data as $key => $commande) {
 		$i = $key+2;
@@ -178,7 +177,6 @@ function exportLDcmd($data){
 		$objSheet->getCell('H'.$i)->setValue($commande[7]);
 		$objSheet->getCell('I'.$i)->setValue($commande[8]);
 		$objSheet->getCell('J'.$i)->setValue($commande[9]);
-		$objSheet->getCell('K'.$i)->setValue($commande[10]);
 	}
 
 	$objSheet->getColumnDimension('A')->setAutoSize(true);
@@ -191,7 +189,6 @@ function exportLDcmd($data){
 	$objSheet->getColumnDimension('H')->setAutoSize(true);
 	$objSheet->getColumnDimension('I')->setAutoSize(true);
 	$objSheet->getColumnDimension('J')->setAutoSize(true);
-	$objSheet->getColumnDimension('5')->setAutoSize(true);
 
 	$objWriter->save('../downloads/'.$name.'.xlsx');
 	$objPHPExcel->disconnectWorksheets();
@@ -268,16 +265,17 @@ function exportOXcmd($data){
 	$objSheet = $objPHPExcel->getActiveSheet();
 	$objSheet->setTitle('Liste Produits Pères');
 
-	$objSheet->getStyle('A1:H1')->getFont()->setBold(true)->setSize(12);
+	$objSheet->getStyle('A1:I1')->getFont()->setBold(true)->setSize(12);
 
 	$objSheet->getCell('A1')->setValue('Id Maman');
 	$objSheet->getCell('B1')->setValue('Id Commande');
 	$objSheet->getCell('C1')->setValue('Nom');
-	$objSheet->getCell('D1')->setValue('Box');
-	$objSheet->getCell('E1')->setValue('GSM');
-	$objSheet->getCell('F1')->setValue('Naissance bébé');
-	$objSheet->getCell('G1')->setValue('Date');
-	$objSheet->getCell('H1')->setValue('Status');
+	$objSheet->getCell('D1')->setValue('Prénom');
+	$objSheet->getCell('E1')->setValue('Box');
+	$objSheet->getCell('F1')->setValue('GSM');
+	$objSheet->getCell('G1')->setValue('Naissance bébé');
+	$objSheet->getCell('H1')->setValue('Date');
+	$objSheet->getCell('I1')->setValue('Status');
 
 	foreach ($data as $key => $commande) {
 		$i = $key+2;
@@ -289,6 +287,7 @@ function exportOXcmd($data){
 		$objSheet->getCell('F'.$i)->setValue($commande[5]);
 		$objSheet->getCell('G'.$i)->setValue($commande[6]);
 		$objSheet->getCell('H'.$i)->setValue($commande[7]);
+		$objSheet->getCell('I'.$i)->setValue($commande[8]);
 	}
 
 	$objSheet->getColumnDimension('A')->setAutoSize(true);
@@ -299,6 +298,7 @@ function exportOXcmd($data){
 	$objSheet->getColumnDimension('F')->setAutoSize(true);
 	$objSheet->getColumnDimension('G')->setAutoSize(true);
 	$objSheet->getColumnDimension('H')->setAutoSize(true);
+	$objSheet->getColumnDimension('I')->setAutoSize(true);
 
 	$objWriter->save('../downloads/'.$name.'.xlsx');
 	$objPHPExcel->disconnectWorksheets();
@@ -318,16 +318,18 @@ function exportCLcmd($data){
 	$objSheet = $objPHPExcel->getActiveSheet();
 	$objSheet->setTitle('Liste Produits Pères');
 
-	$objSheet->getStyle('A1:H1')->getFont()->setBold(true)->setSize(12);
+	$objSheet->getStyle('A1:J1')->getFont()->setBold(true)->setSize(12);
 
 	$objSheet->getCell('A1')->setValue('Id Maman');
 	$objSheet->getCell('B1')->setValue('Id Commande');
 	$objSheet->getCell('C1')->setValue('Nom');
-	$objSheet->getCell('D1')->setValue('Box');
-	$objSheet->getCell('E1')->setValue('GSM');
-	$objSheet->getCell('F1')->setValue('Naissance bébé');
-	$objSheet->getCell('G1')->setValue('Date');
-	$objSheet->getCell('H1')->setValue('Status');
+	$objSheet->getCell('D1')->setValue('Prénom');
+	$objSheet->getCell('E1')->setValue('Maternité');
+	$objSheet->getCell('F1')->setValue('Box');
+	$objSheet->getCell('G1')->setValue('GSM');
+	$objSheet->getCell('H1')->setValue('Naissance bébé');
+	$objSheet->getCell('I1')->setValue('Date');
+	$objSheet->getCell('J1')->setValue('Status');
 
 	foreach ($data as $key => $commande) {
 		$i = $key+2;
@@ -339,6 +341,8 @@ function exportCLcmd($data){
 		$objSheet->getCell('F'.$i)->setValue($commande[5]);
 		$objSheet->getCell('G'.$i)->setValue($commande[6]);
 		$objSheet->getCell('H'.$i)->setValue($commande[7]);
+		$objSheet->getCell('I'.$i)->setValue($commande[8]);
+		$objSheet->getCell('J'.$i)->setValue($commande[9]);
 	}
 
 	$objSheet->getColumnDimension('A')->setAutoSize(true);
@@ -349,6 +353,8 @@ function exportCLcmd($data){
 	$objSheet->getColumnDimension('F')->setAutoSize(true);
 	$objSheet->getColumnDimension('G')->setAutoSize(true);
 	$objSheet->getColumnDimension('H')->setAutoSize(true);
+	$objSheet->getColumnDimension('I')->setAutoSize(true);
+	$objSheet->getColumnDimension('J')->setAutoSize(true);
 
 	$objWriter->save('../downloads/'.$name.'.xlsx');
 	$objPHPExcel->disconnectWorksheets();
@@ -363,7 +369,7 @@ function exportAllcmd($data){
 	$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, "Excel2007");
 	$currencyFormat = '#,#0.## \€;[Red]-#,#0.## \€';
 	$numberFormat = '#,#0.##;[Red]-#,#0.##';
-	$name = 'liste_commandes_ox_'.date("Y-m-d_His");
+	$name = 'liste_commandes_all_'.date("Y-m-d_His");
 	$objSheet = $objPHPExcel->getActiveSheet();
 	$objSheet->setTitle('Liste Produits Pères');
 

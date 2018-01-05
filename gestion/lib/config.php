@@ -26,10 +26,10 @@ function getConnexionParams(){
 	
 	/*Local*/
 
-	$array['hote']		= 'localhost';
+/*	$array['hote']		= 'localhost';
 	$array['passDb'] 	= '';
 	$array['bd'] 		= 'oumdev_leads';
-	$array['user']		= 'root';
+	$array['user']		= 'root';*/
 	
 	/*Distant*/
 
@@ -40,10 +40,10 @@ function getConnexionParams(){
 	
 	/*oumtest*/
 	
-	/*$array['hote']		= 'sql.k4mshost.odns.fr';
+	$array['hote']		= 'sql.k4mshost.odns.fr';
 	$array['passDb'] 	= '!!oumb0x';
 	$array['bd'] 		= 'k4mshost_oubeta';
-	$array['user']		= 'k4mshost_oumdev';*/
+	$array['user']		= 'k4mshost_oumdev';
 
 	return $array;
 }

@@ -48,17 +48,20 @@ if(isset($_SESSION['eligibleToBox']) and $_SESSION['eligibleToBox']==0){
   <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Boogaloo">
   <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Economica:700,400italic">
 
-   
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/header.css">
+    <!-- end: CSS -->
   <link rel="stylesheet" type="text/css" href="css/demo.css" />
     <link rel="stylesheet" type="text/css" href="css/set1.css" />
   <link rel="stylesheet" type="text/css" href="css/component.css" />
   <link rel="stylesheet" type="text/css" href="css/style_common.css">
-  <link rel="stylesheet" type="text/css" href="css/style1.css"> 
+  <link rel="stylesheet" type="text/css" href="css/style1.css">
   <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/bootstrap-responsive.css" rel="stylesheet">
   <link href="css/style.css" rel="stylesheet">
-  <link href="css/header.css" rel="stylesheet">
-  <!-- end: CSS -->
+
+
+
 
   <style type="text/css">
     #map {
@@ -111,16 +114,21 @@ if(isset($_SESSION['eligibleToBox']) and $_SESSION['eligibleToBox']==0){
         height:     100%;
         max-height : 100%;
         width:      100%;
-        background: rgba( 255, 255, 255, .5 ) 
-                    url('http://sampsonresume.com/labs/pIkfp.gif') 
-                    50% 50% 
+        background: rgba( 255, 255, 255, .5 )
+                    url('http://sampsonresume.com/labs/pIkfp.gif')
+                    50% 50%
                     no-repeat;
+    }
+
+    body > div.bs-example > nav{
+        height:inherit;
+        box-shadow: none;
     }
 
     /* When the body has the loading class, we turn
        the scrollbar off with overflow:hidden */
     body.loading {
-        overflow: hidden;   
+        overflow: hidden;
     }
 
     /* Anytime the body has the loading class, our
@@ -142,7 +150,8 @@ if(isset($_SESSION['eligibleToBox']) and $_SESSION['eligibleToBox']==0){
 
 </head>
 <body>
-<div class="modal"></div>  
+<div class="modal"></div>
+<?php include('header3.php'); ?>
 <div class="register">
   <?php include('maBox-content.php'); ?>
 </div>

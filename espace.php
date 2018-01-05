@@ -18,7 +18,6 @@
 <!-- <link rel="stylesheet" type="text/css" href="css/style.css"> -->
 <!-- <link rel="stylesheet" type="text/css" href="css/component.css"> -->
 <!-- header -->
-<link rel="stylesheet" type="text/css" href="css/header.css">   
 <link rel="stylesheet" href="css/jquery-ui-1.9.2.custom.min.css">
 <!--[if lt IE 9]>
 <script src="assets/js/html5shiv.min.js"></script>
@@ -28,8 +27,14 @@
 
 <link rel="stylesheet" type="text/css" href="css/demo.css" />
    
-  
-   <link rel="stylesheet" href="css/login2.css">
+<link rel="stylesheet" href="css/login2.css">
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/header.css">
+    <link rel="stylesheet" type="text/css" href="css/component.css"/>
+    <link href="css/style.css" rel="stylesheet">
+
 <style type="text/css">
 .nav-pills>li.active>a, .nav-pills>li.active>a:hover, .nav-pills>li.active>a:focus {
     color: #fff;
@@ -37,12 +42,17 @@
 }
 .edit-client-div{
     margin-bottom: 20px;
+    font-size:15px;
 }
 #updateForm{
     margin-top: 25px;
 }
 .espace {
     margin-top: 25px;
+}
+
+.table{
+    font-size: 15px;
 }
 .hide-me{
     display: none;
@@ -194,7 +204,7 @@ h2 ul li:nth-child(4) {
 <body>
 
     <!-- <a class="scrollToTop" href="#"><i class="fa fa-angle-up"></i></a> -->
-    <?php include('header.php'); ?>
+    <?php include('header3.php'); ?>
     <div class="container espace">
         <h2>Espace membre</h2>
         <?php 

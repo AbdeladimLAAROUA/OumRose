@@ -175,6 +175,7 @@ session_start();
               <th>Prénom</th>
               <th>GSM</th>
               <th>Eligible</th>
+              <th>Status</th>
               <th>Actions</th>
             </tr>
             </thead>
@@ -188,6 +189,7 @@ session_start();
               <th>Prénom</th>
               <th>GSM</th>
               <th>Eligible</th>
+              <th>Status</th>
               <th width="10%">Actions</th>
             </tr>
             </tfoot>
@@ -330,13 +332,18 @@ session_start();
             <span id="creationDate" class="form-group infos_client text-blue"></span>
           </div>
         </div>
-	       <form id="blockUserForm" >
-	          <div class="row">
-	            <div class="col-xs-offset-9 col-xs-3">
-	              <button type="submit" class="btn btn-warning btn-lg blockUserButton" style="width: 100%;margin-bottom: 10px;"><span class="glyphicon"></span>Bloquer</button>
-	            </div>
-	          </div>
-	  	  </form>
+          <?php if ($_SESSION['role_a'] == 'admin') { ?>
+              <form id="blockUserForm">
+                  <div class="row">
+                      <div class="col-xs-offset-9 col-xs-3">
+                          <button type="submit" class="btn btn-warning btn-lg blockUserButton"
+                                  style="width: 100%;margin-bottom: 10px;"><span class="glyphicon"></span>Bloquer
+                          </button>
+                      </div>
+                  </div>
+              </form>
+          <?php } ?>
+
         <div class="row">
           <div class="col-xs-12">
             <div class="box box-danger">
@@ -427,7 +434,7 @@ session_start();
         <div id="alert_recover_ko" class="alert alert-warning hide-me">
           Quelque chose a mal tourné
         </div>
-        <form id="myForm">
+        <div id="myForm">
            <input id="updateLivraison" type="hidden" >
           <div class="row">
             <div class="col-xs-2">
@@ -583,9 +590,42 @@ session_start();
               <span id="creationDate_edit" class="form-group infos_client text-blue"></span>
             </div>
           </div>
-          
 
-          <!-- Bébé -->
+           <div class="row">
+          <div class="col-xs-12 bebeList">
+            <div class="box box-danger">
+              <div class="box-header with-border">
+                <h3 class="box-title">Liste des Bébés</h3>
+              </div>
+
+              <div class="box-body">
+                <table id="baby_table" class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th style="width: 10px">ID</th>
+                      <th>Prenom</th>
+                      <th>Sexe</th>
+                      <th>Naissance</th>
+                      <th>Maternité</th>
+                      <th>Gynécologue</th>
+                      <th>Modifier</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  </tbody>
+                </table>
+              </div>
+              <button type="button" class="btn btn-info btn-lg addBebe" style="width: 30%;margin-bottom: 10px;"><span class="glyphicon"></span>Nouveau bébé</button>
+            </div>
+          </div>
+        </div>
+          
+          <div class="box box-danger editBaby" hidden>
+           <div class="box-header with-border">
+                <h3 class="box-title">Modifier Bébé</h3>
+           </div>
+
+          <!-- Bébé edit-->
           <input type="hidden" id="id_bebe_edit"/>
           <div class="row">
              
@@ -685,40 +725,15 @@ session_start();
           </div>
           
 
-
+          </div>
 
 
           <div class="row">
             <div class="col-xs-12">
-              <button type="submit" class="btn btn-warning btn-lg" style="width: 100%;margin-bottom: 10px;"><span class="glyphicon glyphicon-ok-sign"></span>Modifier</button>
+              <button type="submit" class="btn btn-warning btn-lg myFromSubmit" style="width: 100%;margin-bottom: 10px;"><span class="glyphicon glyphicon-ok-sign"></span>Modifier</button>
             </div>
           </div>
-        </form>
-        <!-- <div class="row">
-          <div class="col-xs-12">
-            <div class="box box-danger">
-              <div class="box-header with-border">
-                <h3 class="box-title">Liste des Bébés</h3>
-              </div>
-
-              <div class="box-body">
-                <table id="baby_table" class="table table-bordered">
-                  <thead>
-                    <tr>
-                      <th style="width: 10px">ID</th>
-                      <th>Prenom</th>
-                      <th>Sexe</th>
-                      <th>Naissance</th>
-                      <th>Maternité</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div> -->
+        </div>
       </div>
     </div>
     <!-- /.modal-content --> 
@@ -983,7 +998,7 @@ session_start();
           </div>  
           <div class="row">
             <div class="col-xs-12">
-              <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;margin-bottom: 10px;"><span class="glyphicon glyphicon-ok-sign"></span>Créer</button>
+              <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;margin-bottom: 10px;"><span class="glyphicon glyphicon-ok-sign"></span>Créer (box 2 sera automatiquement commandée)</button>
             </div>
           </div>
         </form>
@@ -1019,6 +1034,18 @@ session_start();
 <script src="plugins/datepicker/bootstrap-datepicker.js"></script>
 
 <script src="dist/js/validator.min.js"></script>
-<script src="dist/js/list_2.js"></script>
+
+
+
+<?php
+if ($_SESSION['role_a'] == 'mgr') {
+    echo '<script src="dist/js/list_2.js"  data-role="mgr"></script>';
+} else if ($_SESSION['role_a'] == 'admin') {
+    echo '<script src="dist/js/list_2.js"  data-role="admin"></script>';
+} else {
+    echo '<script src="dist/js/list_2.js"  data-role="user"></script>';
+}
+?>
+
 <script type="text/javascript">
 </script>

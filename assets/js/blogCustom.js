@@ -5,7 +5,7 @@ jQuery(document).ready(function() {
     }, function() {
         $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeOut(200);
     });
-    // slick slider call 
+    // slick slider call
     $('.slick_slider').slick({
         dots: true,
         infinite: true,
@@ -16,12 +16,13 @@ jQuery(document).ready(function() {
         autoplaySpeed: 5000,
         cssEase: 'linear'
     });
-    // latest post slider call 
+    // latest post slider call
     $('.latest_postnav').newsTicker({
         row_height: 64,
         speed: 800,
         prevButton: $('#prev-button'),
-        nextButton: $('#next-button')
+        nextButton: $('#next-button'),
+        autostart: 0
     });
     jQuery(".fancybox-buttons").fancybox({
         prevEffect: 'none',

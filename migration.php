@@ -1,5 +1,8 @@
-<?php 
+<?php
 include('config.php');
+/* Migration form old oumbox db to new oumbox db */
+
+/* Step 2 */
  try
        {
           //function1();
@@ -69,7 +72,8 @@ function function2($conn){
     $stmt02->execute();
 
 
-    for ($i=1; $i <=3 ; $i++) { 
+    for ($i=1; $i <=3 ; $i++) {
+
       $stmt = $conn->prepare("SELECT c.id as id FROM leads l, customer c  where l.id=c.id_leads and REF_BOX".$i."!=''");
       $stmt->execute();
       
@@ -79,16 +83,18 @@ function function2($conn){
       if ($sameRowCount) {
           while ($row = $stmt->fetch(PDO::FETCH_ASSOC) and $row1 = $stmt1->fetch(PDO::FETCH_ASSOC)) {
 
-              $stmt2 = $conn->prepare("INSERT INTO commande(customer_id,product_id) 
-                                                          VALUES(:customer_id,:product_id)");
+              $stmt2 = $conn->prepare("INSERT INTO commande(customer_id,product_id,baby_id) 
+                                                          VALUES(:customer_id,:product_id,:baby_id)");
               $stmt2->bindparam(":customer_id", $row['id']);          
-              $stmt2->bindparam(":product_id", $row1['id']);          
+              $stmt2->bindparam(":baby_id", $row['id']);
+              $stmt2->bindparam(":product_id", $row1['id']);
               $stmt2->execute();         
           }
       }
+        echo "done ".$i;
     }
 
-    echo "done !";
+
    
 }
 

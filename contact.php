@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -131,7 +134,7 @@
 			<div class="row">
 			
 				<!-- start: Contact Info -->
-				<div class="span3 col-md-5">
+				<div class="col-md-4">
 					<div class="title"><h3>Contact</h3></div>
 					<p>
 						<b>Oumbox</b>
@@ -146,7 +149,7 @@
 						
 					</p>
 					<p>	
-						Tél.:
+						Tél.: 05 22 22 58 50
 					</p>
 					<p>
 						Email: contact@oumbox.com
@@ -158,9 +161,18 @@
 				<!-- end: Contact Info -->		
 
 				<!-- start: Contact Form -->
-				<div class="col-md-6">
+				<div class="col-md-4">
 					<div class="title"><h3>Contact formulaire</h3></div>
-
+                    <?php
+                    if(isset($_SESSION['messageContact'])){
+                        if ($_SESSION['messageContact']=="OK"){
+                            echo "<div style='margin: 10px;display: block;font-weight: bold;color: #6cc;'>
+                                    Votre message a été bien envoyé
+                                  </div>";
+                            session_unset($_SESSION['messageContact']);
+                        }
+                    }
+                    ?>
 					<!-- start: Contact Form -->
 					<div id="contact-form">
 
@@ -181,6 +193,16 @@
 									</div>
 								</div>
 
+                                <div class="clearfix">
+									<label for="subject"><span>Sujet:</span></label>
+                                    <select id="subject" name="subject" class="form-control" style="width:75%;">
+                                        <option value="1">Partenaire médical</option>
+                                        <option value="2">Annonceur</option>
+                                        <option value="3">Question général</option>
+                                    </select>
+								</div>
+
+
 								<div class="clearfix">
 									<label for="message"><span>Message:</span></label>
 									<div class="input">
@@ -199,6 +221,82 @@
 					<!-- end: Contact Form -->
 
 				</div>
+
+                <div class="col-md-4 col-xs-12 col-sm-12">
+
+                    <!-- start: Follow Us -->
+                    <h3>Suivez nous!</h3>
+                    <ul class="social-grid">
+                        <li>
+                            <div class="social-item">
+                                <div class="social-info-wrap">
+                                    <div class="social-info">
+                                        <div class="social-info-front social-twitter">
+                                            <a href="https://www.instagram.com/oumboxma/"></a>
+                                        </div>
+                                        <div class="social-info-back social-twitter-hover">
+                                            <a href="https://www.instagram.com/oumboxma/"></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="social-item">
+                                <div class="social-info-wrap">
+                                    <div class="social-info">
+                                        <div class="social-info-front social-facebook">
+                                            <a href="https://www.facebook.com/oumbox/"></a>
+                                        </div>
+                                        <div class="social-info-back social-facebook-hover">
+                                            <a href="https://www.facebook.com/oumbox/"></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <!-- <li>
+                            <div class="social-item">
+                                <div class="social-info-wrap">
+                                    <div class="social-info">
+                                        <div class="social-info-front social-dribbble">
+                                            <a href="http://dribbble.com"></a>
+                                        </div>
+                                        <div class="social-info-back social-dribbble-hover">
+                                            <a href="http://dribbble.com"></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li> -->
+                        <!-- <li>
+                            <div class="social-item">
+                                <div class="social-info-wrap">
+                                    <div class="social-info">
+                                        <div class="social-info-front social-flickr">
+                                            <a href="http://flickr.com"></a>
+                                        </div>
+                                        <div class="social-info-back social-flickr-hover">
+                                            <a href="http://flickr.com"></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li> -->
+                    </ul>
+                    <!-- end: Follow Us -->
+
+                    <!-- start: Newsletter -->
+                    <!-- <form id="newsletter">
+                        <h3>Newsletter</h3>
+                        <p>Please leave us your email</p>
+                        <label for="newsletter_input">@:</label>
+                        <input type="text" id="newsletter_input"/>
+                        <input type="submit" id="newsletter_submit" value="submit">
+                    </form> -->
+                    <!-- end: Newsletter -->
+
+                </div>
 				<!-- end: Contact Form -->
 
 				<!-- start: Social Sites -->

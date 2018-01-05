@@ -3,9 +3,84 @@ var oumboxModule = angular.module('oumboxModule',[]);
 oumboxModule.controller('oumboxController',function($scope,dataService) {   
     $scope.aa='khalid';
     $scope.partenaires = null;
+    $scope.options = [
+        {id:1, name:'--'},
+        {id:'Gynecologue', name:'Gynecologues'},
+        {id:'Clinique', name:'Cliniques'},
+        {id:'Pediatre', name:'Pediatres'},
+        {id:'Tout', name:'Tout'}
+    ];
     dataService.getData(function(dataResponse) {
+
+        var mySearch='0';
+        var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+            sURLVariables = sPageURL.split('&'),
+            sParameterName,
+            i;
+
+        for (i = 0; i < sURLVariables.length; i++) {
+            sParameterName = sURLVariables[i].split('=');
+
+            if (sParameterName[0] === 'search') {
+                mySearch = sParameterName[1] === undefined ? true : sParameterName[1]+'s';
+            }
+        }
+
+        var partenairesFiltre=[];
+        var partenairesFiltreGynecologue=[];
+        var partenairesFiltreClinique=[];
+        var partenairesFiltrePR=[];
+        var partenairesFiltrePediatres=[];
+
         $scope.partenaires = dataResponse['result'];
+
+
+        for (i = 0; i < dataResponse['result'].length; i++) {
+            var type= dataResponse['result'][i]['type'].toLowerCase();
+            if (type === 'gynecologues' || type === 'gynecologue') {
+                partenairesFiltreGynecologue.push(dataResponse['result'][i]);
+            }else if (type === 'cliniques' || type === 'clinique') {
+                partenairesFiltreClinique.push(dataResponse['result'][i]);
+            }else if (type === 'pediatres' || type === 'pediatre' || type === 'pédiatres' || type === 'pédiatre') {
+                partenairesFiltrePediatres.push(dataResponse['result'][i]);
+            }
+        }
+        $scope.partenairesFiltreGynecologue= partenairesFiltreGynecologue;
+        $scope.partenairesFiltreClinique=partenairesFiltreClinique;
+        $scope.partenairesFiltrePediatres= partenairesFiltrePediatres;
+
+
+        if(mySearch==='Médecins'){
+            $scope.partenairesFiltre=$scope.partenairesFiltreGynecologue;
+            $scope.partenairesFiltre.push($scope.partenairesFiltrePediatres);
+        }else if(mySearch==='Cliniques'){
+            $scope.partenairesFiltre=$scope.partenairesFiltreClinique;
+        }else{
+            $scope.partenairesFiltre= $scope.partenaires;
+        }
+
+
     });
+
+
+
+
+    $scope.update = function() {
+
+        if($scope.id==='Gynecologue'){
+            $scope.partenairesFiltre=$scope.partenairesFiltreGynecologue;
+        }else if($scope.id==='Clinique'){
+            $scope.partenairesFiltre=$scope.partenairesFiltreClinique;
+        }else if($scope.id==='Pediatre'){
+            $scope.partenairesFiltre=$scope.partenairesFiltrePediatres;
+        }else if($scope.id==='Tout'){
+            $scope.partenairesFiltre=$scope.partenaires;
+        }else {
+            console.log($scope.id);
+        }
+    }
+
+
 });
 oumboxModule.controller('oumboxControllerMaBox',function($scope,SBListeVilleService) {
 
@@ -29,9 +104,9 @@ oumboxModule.service('dataService', function($http) {
     this.getData = function(callbackFunc) {
         $http({
             method: 'POST',
-            
+
             params:{
-                methode:'getAllShop'
+                methode:'getAllActivatedShop'
             },
             url: 'gestion/lib/util.php'
            /* headers: {'Authorization': 'Token token=xxxxYYYYZzzz'}*/
@@ -40,7 +115,7 @@ oumboxModule.service('dataService', function($http) {
             for (var i = 0; i < data['result'].length; i++) {
               data['result'][i]['showName']='';
               data['result'][i]['showAdresse']='';
-            }; 
+            };
             callbackFunc(data);
             initMap(data['result']);
         }).error(function(){
@@ -169,4 +244,4 @@ function codeAddress() {
         alert("Geocode was not successful for the following reason: " + status);
       }
     });
-  }  
+  }

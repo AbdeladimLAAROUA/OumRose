@@ -1,12 +1,15 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html  ng-app="oumbox">
 <head>
 <meta charset="utf-8"/>
 <style>
 
-    
+
         <style>
-        
+
   h1{
     font-size: 30px;
     color: #fff;
@@ -101,7 +104,7 @@
         background: #6cc;
         width: 95%;
         margin: auto;
-       
+
       }
       .partenaires .description{
         width: 68%;
@@ -111,7 +114,7 @@
         font-size: 15px;
       }
       .searchPartnerList td{
-      
+
       }
       .separ1{
         height: 40px;
@@ -143,27 +146,37 @@
           background-color: #ef808c !important;
           border-color: #ef808c !important;
       }
+
+        @media (max-width: 991px) {
+            .tbl-content {
+                position: relative;
+                top: 10px;
+            }
+        }
+
+        [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+            display: none !important;
+        }
   /* for custom scrollbar for webkit browser*/
 
-  ::-webkit-scrollbar {
+ /* ::-webkit-scrollbar {
       width: 6px;
-  } 
-  ::-webkit-scrollbar-track {
-      -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
-  } 
-  ::-webkit-scrollbar-thumb {
-      -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
   }
+  ::-webkit-scrollbar-track {
+      -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  }
+  ::-webkit-scrollbar-thumb {
+      -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  }*/
 </style>
-  
+
   <link rel="stylesheet" type="text/css" href="css/component.css" />
-  <link href="css/bootstrap.css" rel="stylesheet">
-  <link href="css/bootstrap-responsive.css" rel="stylesheet">
   <link href="css/style.css" rel="stylesheet">
-  
+
   <!-- header -->
   <link rel="stylesheet" type="text/css" href="css/header.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
@@ -179,37 +192,24 @@
   
   <!-- <div style="text-align:center;"> <img src="img/logo.png"/></div> -->
   <h1 style="text-align:center;">Nos partenaires</h1>
-  <p class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-  tempor incididunt ut labore et dolore magna aliqua.</p>
+  <p class="description" style="text-align:center;font-size: 24px;">Les guides OUMBOX sont disponibles chez nos partenaires médicaux</p>
 
   <form class="searchPartner">
    
      <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-4 col-sm-6 col-xs-12">
            <label for="exampleInputName2">Nom</label>
-        <input type="text" class="form-control" id="myInput" onkeyup="myFunction()" > 
+            <input type="text" class="form-control" id="myInput" onkeyup="myFunction()" >
         </div>
 
-       <div class="col-md-4">
+       <div class="col-md-4 col-sm-6 col-xs-12">
          <label for="exampleInputName2">Adresse</label>
          <input type="text" class="form-control" id="adresse" onkeyup="myFunction2()">
        </div>
-       <!-- <div class="col-md-3">
-         <label>Ville</label>
-         <select id="ville" onchange="myFunction3()">
-           <option>--</option>
-           <option value="Casablaca">Casablaca</option>
-           <option value="Rabat">Rabat</option>
-           <option value="Tanger">Tanger</option>
-         </select>
 
-       </div> -->
-       <div class="col-md-4">
+       <div class="col-md-4 col-sm-12 col-xs-12">
         <label>Type</label>
-         <select id="types" onchange="myFunction4()">
-           <option>--</option>
-           <option>Médecin</option>
-           <option>Clinique</option>
+         <select id="types"  ng-model="id" ng-options="o.id as o.name for o in options" ng-change="update()">
          </select>
        </div>       
      </div>
@@ -220,28 +220,25 @@
     
   </form>
 
-  <div class="tbl-header" style="padding-right: 6px;">
-    <table cellpadding="0" cellspacing="0" border="0">
-      <thead>
-        <tr>
-          <th>Nom</th>
-          <th>Adresse</th>
-          <th>Fixe</th>
-          <th>Type</th>
-          <th>Localiser</th>
-        </tr>
-      </thead>
-    </table>
-  </div>
+
   <div class="tbl-content">
     <table cellpadding="0" cellspacing="0" border="0" id="myTable" class="searchPartnerList">
+        <thead style="background: rgba(255,255,255,0.3);">
+        <tr>
+            <th>Nom</th>
+            <th>Adresse</th>
+            <th>Fixe</th>
+            <th>Type</th>
+            <th>Localiser</th>
+        </tr>
+        </thead>
       <tbody>
-        <tr ng-repeat="partenaire in partenaires" >
-          <td>{{partenaire.Name}}</td>
-          <td>{{partenaire.adresse}}</td>
-          <td>{{partenaire.fixe}}</td>
-          <td>{{partenaire.type}}</td>
-          <td><button type="button" class="btn btn-primary locate" scroll-On-Click="{{ $index }}" > Localiser</button></td>
+        <tr ng-repeat="partenaire in partenairesFiltre" ng-cloak>
+          <td ng-cloak>{{partenaire.Name}}</td>
+          <td ng-cloak>{{partenaire.adresse}}</td>
+          <td ng-cloak>{{partenaire.fixe}}</td>
+          <td ng-cloak>{{partenaire.type}}</td>
+          <td><button type="button" class="btn btn-primary locate" scroll-On-Click="{{ $index }}" ng-cloak> Localiser</button></td>
         </tr>       
       </tbody>
     </table>
@@ -263,7 +260,7 @@
 <div id="map" ></div>
 <div class="separ2">
   <div class="Nom"></div>
-  <div class="adresse">77bis bd Abdelmoumen, Casablanca. Sur RDV</div>
+  <div class="adresse"></div>
 </div>
     
   
@@ -301,13 +298,27 @@
    
 <script type="text/javascript" src="js/jquery-1.8.2.js"></script>
 <script type="text/javascript">
+    var getUrlParameter = function getUrlParameter(sParam) {
+        var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+            sURLVariables = sPageURL.split('&'),
+            sParameterName,
+            i;
 
+        for (i = 0; i < sURLVariables.length; i++) {
+            sParameterName = sURLVariables[i].split('=');
+
+            if (sParameterName[0] === sParam) {
+                return sParameterName[1] === undefined ? true : sParameterName[1];
+            }
+        }
+    };
   $(".btn").click(function() {
 
       $('html,body').animate({
           scrollTop: $("#map").offset().top},
           'slow');
   });
+
 </script>
 <script>
 function myFunction() {
@@ -365,13 +376,15 @@ function myFunction3() {
     }       
   }*/
 }
-function myFunction4() {
+function myFunction4(search) {
   
   var table, tr, td, i;
 
   var e = document.getElementById("types");
-  var type = e.options[e.selectedIndex].text;
-  
+  var type = e.options[e.selectedIndex].text+'s';
+  if(search !=''){
+      type=search;
+  }
   table = document.getElementById("myTable");
   tr = table.getElementsByTagName("tr");
   for (i = 0; i < tr.length; i++) {
@@ -387,15 +400,13 @@ function myFunction4() {
   }
 }
 
-
-
-
 </script>
-    <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.5.2/angular.min.js"></script>
-     <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBrZqwoiE2SFo32PmyTGZo3D-jvfw5Y10">
-    </script>
-    <script src="js/oumbox.js"></script>
-    
+<script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.5.2/angular.min.js"></script>
+ <script async defer
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBrZqwoiE2SFo32PmyTGZo3D-jvfw5Y10">
+</script>
+<script src="js/oumbox.js"></script>
+
+
 </body>
 </html>

@@ -103,11 +103,32 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <?php if ($_SESSION['role_a']=='admin'){
         ?>
           <li class="active"><a href="#main"><i class="fa fa-link"></i> <span>Tableau de bord</span></a></li>
+
         <?php } ?>
        <!--  <li><a href="#listClient"><i class="fa fa-link"></i> <span>Clients</span></a></li> -->
-        
-        <li><a id="gestionClient" href="#gestionClient"><i class="fa fa-link"></i> <span>Clients</span></a></li>
-        
+
+
+          <?php if ($_SESSION['role_a'] == 'user') { ?>
+              <li><a href="#gestionClient">Trouver la maman</a></li>
+          <?php } ?>
+
+          <?php if ($_SESSION['role_a'] == 'admin' or $_SESSION['role_a'] == 'mgr') { ?>
+          <li class="treeview">
+              <a href=""><i class="fa fa-link"></i> <span>Membres</span>
+                  <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+              </a>
+              <ul class="treeview-menu">
+                  <li><a href="#membersEnabled">Membre activé</a></li>
+                  <li><a href="#membersDisabled">Membre désactvié</a></li>
+              </ul>
+          </li>
+          <?php } ?>
+
+          <?php if ($_SESSION['role_a'] == 'admin'){?>
+          <li class="active"><a href="#findMembers"><i class="fa fa-link"></i> <span>Trouver des membres</span></a></li>
+           <?php } ?>
 
       <!--   <li class="treeview">
           <a href=""><i class="fa fa-link"></i> <span>Clients</span>
@@ -144,19 +165,23 @@ scratch. This page gets rid of all links and provides the needed markup only.
         
 
         <?php if ($_SESSION['role_a']=='mgr') { ?>
-         <!--  <li><a href="#commandeSB"><i class="fa fa-link"></i> <span>Speed box</span></a></li>
+          <!--<li><a href="#commandeSB"><i class="fa fa-link"></i> <span>Speed box</span></a></li>
           <li><a href="#commandeLD"><i class="fa fa-link"></i> <span>Livraison à domicile</span></a></li>
-          <li><a href="#commandeOX"><i class="fa fa-link"></i> <span>Livraison Oumbox</span></a></li> -->
+          <li><a href="#commandeOX"><i class="fa fa-link"></i> <span>Livraison Oumbox</span></a></li>-->
           
         <?php } ?>
 
         <?php if ($_SESSION['role_a']=='admin') { ?>
-          <li><a href="#listBaby"><i class="fa fa-link"></i> <span>Liste des bébés</span></a></li>
+         <!-- <li><a href="#listBaby"><i class="fa fa-link"></i> <span>Liste des bébés</span></a></li>-->
         <?php } ?>
          
          <?php if ($_SESSION['role_a']=='admin') { ?>
-        <li><a href="#listArticle"><i class="fa fa-link"></i> <span>Liste des articles</span></a></li>
+       <!-- <li><a href="#listArticle"><i class="fa fa-link"></i> <span>Liste des articles</span></a></li>-->
         <?php } ?>
+
+          <?php if ($_SESSION['role_a'] == 'admin') { ?>
+              <li><a href="#listPartners"><i class="fa fa-link"></i> <span>Liste des partenaires</span></a></li>
+          <?php } ?>
 
         <?php if ($_SESSION['role_a']=='admin') { ?>
         <li><a href="#gestionBlog"><i class="fa fa-link"></i> <span>Gestion du Blog</span></a></li>
@@ -307,7 +332,7 @@ if($_SESSION['role_a']=='mgr' or $_SESSION['role_a']=='user'){
 <script type="text/javascript">
         $("#main").attr("href", "#gestionClient");
         var href = $('#gestionClient').attr('href');
-        window.location.href = href;
+        window.location.href = "#gestionClient";
 
 </script>
 <?php

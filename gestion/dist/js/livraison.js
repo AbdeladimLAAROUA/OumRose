@@ -154,7 +154,7 @@
         //$('#loading-image').popup('show');
       },
       complete: function(){
-        //setTimeout(function(){$('#loading-image').popup('hide');},250);
+        //setTimeout(function(){$('#loading-image').popup('hide');},250);setTimeout(function(){$('#loading-image_wrapper').popup('hide');},250);
       },
       success: function(data, textStatus, jqXHR) {
         // console.log(data.result);
@@ -167,9 +167,10 @@
                       '<button class="btn btn-default btn-xs action" data-type="livraison" data-id="'+val.idLivraison+'" data-toggle="modal" data-target="#livraison" ><span class="glyphicon glyphicon-ok"></span></button>'+
                       '</td>';
           if(role=="mgr"){
-            actions=  '<td width="8%" align="center">'+
+            actions=  '<td width="10%" align="center">'+
                       '<button class="btn btn-default btn-xs action" data-type="view" data-id="'+val.idMaman+'" data-toggle="modal" data-target="#view" ><span class="glyphicon glyphicon-eye-open"></span></button>'+
-                      '<button class="btn btn-success btn-xs action" data-type="livraison" data-id="'+val.idLivraison+'" data-toggle="modal" data-target="#livraison" ><span class="glyphicon glyphicon-ok"></span></button>'+
+                '<button class="btn btn-primary btn-xs action" data-type="edit" data-id="' + val.idLivraison + '" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button>' +
+                '<button class="btn btn-success btn-xs action" data-type="livraison" data-id="'+val.idLivraison+'" data-toggle="modal" data-target="#livraison" ><span class="glyphicon glyphicon-ok"></span></button>'+
                       '</td>';
           }
           var newRow = '<tr id="client_'+val.id+'">'+
@@ -207,7 +208,7 @@
         //$('#loading-image').popup('show');
       },
       complete: function(){
-        //setTimeout(function(){$('#loading-image').popup('hide');},250);
+        //setTimeout(function(){$('#loading-image').popup('hide');},250);setTimeout(function(){$('#loading-image_wrapper').popup('hide');},250);
       },
       success: function(data, textStatus, jqXHR) {
         // console.log(data.result);
@@ -220,8 +221,9 @@
                       '<button class="btn btn-default btn-xs action" data-type="livraison" data-id="'+val.idLivraison+'" data-toggle="modal" data-target="#livraison" ><span class="glyphicon glyphicon-ok"></span></button>'+
                       '</td>';
           if(role=="mgr"){
-            actions=  '<td width="8%" align="center">'+
+            actions=  '<td width="10%" align="center">'+
                       '<button class="btn btn-default btn-xs action" data-type="view" data-id="'+val.idMaman+'" data-toggle="modal" data-target="#view" ><span class="glyphicon glyphicon-eye-open"></span></button>'+
+                        '<button class="btn btn-primary btn-xs action" data-type="edit" data-id="' + val.idLivraison + '" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button>' +
                       '<button class="btn btn-success btn-xs action" data-type="livraison" data-id="'+val.idLivraison+'" data-toggle="modal" data-target="#livraison" ><span class="glyphicon glyphicon-ok"></span></button>'+
                       '</td>';
           }
@@ -257,7 +259,7 @@
         //$('#loading-image').popup('show');
       },
       complete: function(){
-        //setTimeout(function(){$('#loading-image').popup('hide');},250);
+        //setTimeout(function(){$('#loading-image').popup('hide');},250);setTimeout(function(){$('#loading-image_wrapper').popup('hide');},250);
       },
       success: function(data, textStatus, jqXHR) {
         // console.log(data.result);
@@ -270,9 +272,10 @@
                       '<button class="btn btn-default btn-xs action" data-type="livraison" data-id="'+val.idLivraison+'" data-toggle="modal" data-target="#livraison" ><span class="glyphicon glyphicon-ok"></span></button>'+
                       '</td>';
           if(role=="mgr"){
-            actions=  '<td width="8%" align="center">'+
+            actions=  '<td width="10%" align="center">'+
                       '<button class="btn btn-default btn-xs action" data-type="view" data-id="'+val.idMaman+'" data-toggle="modal" data-target="#view" ><span class="glyphicon glyphicon-eye-open"></span></button>'+
-                      '<button class="btn btn-success btn-xs action" data-type="livraison" data-id="'+val.idLivraison+'" data-toggle="modal" data-target="#livraison" ><span class="glyphicon glyphicon-ok"></span></button>'+
+                '<button class="btn btn-primary btn-xs action" data-type="edit" data-id="' + val.idLivraison + '" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button>' +
+                '<button class="btn btn-success btn-xs action" data-type="livraison" data-id="'+val.idLivraison+'" data-toggle="modal" data-target="#livraison" ><span class="glyphicon glyphicon-ok"></span></button>'+
                       '</td>';
           }
           var newRow = '<tr id="client_id'+val.id+'">'+
@@ -308,7 +311,7 @@
         //$('#loading-image').popup('show');
       },
       complete: function(){
-        //setTimeout(function(){$('#loading-image').popup('hide');},250);
+        //setTimeout(function(){$('#loading-image').popup('hide');},250);setTimeout(function(){$('#loading-image_wrapper').popup('hide');},250);
       },
       success: function(data, textStatus, jqXHR) {
         // console.log(data.result);
@@ -321,8 +324,9 @@
                       '<button class="btn btn-default btn-xs action" data-type="livraison" data-id="'+val.idLivraison+'" data-toggle="modal" data-target="#livraison" ><span class="glyphicon glyphicon-ok"></span></button>'+
                       '</td>';
           if(role=="mgr"){
-            actions=  '<td width="8%" align="center">'+
+            actions=  '<td width="10%" align="center">'+
                       '<button class="btn btn-default btn-xs action" data-type="view" data-id="'+val.idMaman+'" data-toggle="modal" data-target="#view" ><span class="glyphicon glyphicon-eye-open"></span></button>'+
+                      '<button class="btn btn-primary btn-xs action" data-type="edit" data-id="' + val.idLivraison + '" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button>' +
                       '<button class="btn btn-success btn-xs action" data-type="livraison" data-id="'+val.idLivraison+'" data-toggle="modal" data-target="#livraison" ><span class="glyphicon glyphicon-ok"></span></button>'+
                       '</td>';
           }
@@ -360,7 +364,7 @@
         //$('#loading-image').popup('show');
       },
       complete: function(){
-       // setTimeout(function(){$('#loading-image').popup('hide');},250);
+       // setTimeout(function(){$('#loading-image').popup('hide');},250);setTimeout(function(){$('#loading-image_wrapper').popup('hide');},250);
       },
       success: function(data, textStatus, jqXHR) {
         // console.log(data.result);
@@ -373,8 +377,9 @@
                       '<button class="btn btn-default btn-xs action" data-type="livraison" data-id="'+val.idLivraison+'" data-toggle="modal" data-target="#livraison" ><span class="glyphicon glyphicon-ok"></span></button>'+
                       '</td>';
           if(role=="mgr"){
-            actions=  '<td width="8%" align="center">'+
+            actions=  '<td width="10%" align="center">'+
                       '<button class="btn btn-default btn-xs action" data-type="view" data-id="'+val.idMaman+'" data-toggle="modal" data-target="#view" ><span class="glyphicon glyphicon-eye-open"></span></button>'+
+                      '<button class="btn btn-primary btn-xs action" data-type="edit" data-id="' + val.idLivraison + '" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button>' +
                       '<button class="btn btn-success btn-xs action" data-type="livraison" data-id="'+val.idLivraison+'" data-toggle="modal" data-target="#livraison" ><span class="glyphicon glyphicon-ok"></span></button>'+
                       '</td>';
           }
@@ -428,7 +433,7 @@
             $('#loading-image').popup('show');
           },
           complete: function(){
-            setTimeout(function(){$('#loading-image').popup('hide');},250);
+            setTimeout(function(){$('#loading-image').popup('hide');},250);setTimeout(function(){$('#loading-image_wrapper').popup('hide');},250);
           },
           success: function(data, textStatus, jqXHR) {
             $('.infos_client').text('');
@@ -465,91 +470,11 @@
                     '</tr>';
                   $("#baby_table tbody").append(newRow);
                 });
-              }
-              var eligible = client.eligible;
-              $("#box_table tbody").empty();
-              var commandes = data.result.commandes;
-              var box = data.result.box;
 
-              var box1="Non commandé";
-              var style1="style=''";
-              var ref1="Réf : ";
-              var box2="Non commandé";
-              var style2="style=''";
-              var ref2="Réf : ";
-              var box3="Non commandé";
-              var style3="style=''";
-              var ref3="Réf : ";
-             
-              if(eligible=='BOX1' && box.length==0){
-                    $('#AddCommandeForm').removeAttr( "hidden");
-                    commanderBoxType='1';
-              }if(eligible=='BOX2' && box.length==0){
-                    $('#AddCommandeForm').removeAttr( "hidden");
-                    commanderBoxType='2';
-              }if(eligible=='BOX3' && box.length==0){
-                    $('#AddCommandeForm').removeAttr( "hidden");
-                    commanderBoxType='3';
-              }
-              for (var i = 0; i < box.length; i++) {
-                  if(box[i]['id_box']=='1'){
-                    box1="Commandé";
-                    ref1="Réf : "+box[i]['RefBox'];
-                    for (var j = 0; j < commandes.length; j++) {
-                       if(commandes[j]['id_box']=='1' && commandes[j]['status']=='Livré'){
-                         style1="style='background-color:#6cc;color:white;font-weight: bold;'";
-                         box1="Commandé et livré"
-                       }
-                     }
-                  }
-                  if(box[i]['id_box']=='2'){
-                    box2="Commandé";
-                    ref2="Réf : "+box[i]['RefBox'];
-                    for (var j = 0; j < commandes.length; j++) {
-                       if(commandes[j]['id_box']=='2' && commandes[j]['status']=='Livré'){
-                         style2="style='background-color:#6cc;color:white;font-weight: bold;'";
-                         box2="Commandé et livré"
-                       }
-                     }
-                  }
-                  if(box[i]['id_box']=='3'){
-                    box3="Commandé";
-                    ref3="Réf : "+box[i]['RefBox'];
-                    for (var j = 0; j < commandes.length; j++) {
-                       if(commandes[j]['id_box']=='3' && commandes[j]['status']=='Livré'){
-                         style3="style='background-color:#6cc;color:white;font-weight: bold;'";
-                         box3="Commandé et livré"
-                       }
-                     }
-                  }
-                  
+                  commandesTable(babies, data, eligible);
+
               }
 
-               if(eligible=='BOX1' && box1=="Non commandé"){
-                    $('#AddCommandeForm').removeAttr( "hidden");
-                    commanderBoxType='1';
-               }else if(eligible=='BOX2' && box2=="Non commandé"){
-                    $('#AddCommandeForm').removeAttr( "hidden");
-                    commanderBoxType='2';
-               }else if(eligible=='BOX3' && box3=="Non commandé"){
-                    $('#AddCommandeForm').removeAttr( "hidden");
-                    commanderBoxType='3';
-               }
-
-                var newRow = '<tr>'+
-                    '<td '+style1+'>'+box1+'</td>'+
-                    '<td '+style2+'>'+box2+'</td>'+
-                    '<td '+style3+'>'+box3+'</td>'+
-                    '</tr>';
-                  $("#box_table tbody").append(newRow); 
-
-                  var ref = '<tr>'+
-                    '<td '+style1+'>'+ref1+'</td>'+
-                    '<td '+style2+'>'+ref2+'</td>'+
-                    '<td '+style3+'>'+ref3+'</td>'+
-                    '</tr>';
-                  $("#box_table tbody").append(ref);
-            
             }
           },
           error: function (jqXHR, textStatus, errorThrown) {
@@ -569,7 +494,7 @@
             $('#loading-image').popup('show');
           },
           complete: function(){
-            setTimeout(function(){$('#loading-image').popup('hide');},250);
+            setTimeout(function(){$('#loading-image').popup('hide');},250);setTimeout(function(){$('#loading-image_wrapper').popup('hide');},250);
           },
           success: function(data, textStatus, jqXHR) {
             
@@ -595,7 +520,7 @@
             $('#loading-image').popup('show');
           },
           complete: function(){
-            setTimeout(function(){$('#loading-image').popup('hide');},250);
+              setTimeout(function(){$('#loading-image_wrapper').popup('hide');},250);setTimeout(function(){$('#loading-image_wrapper').popup('hide');},250);
           },
           success: function(data, textStatus, jqXHR) {
             // $.validate();
@@ -621,7 +546,7 @@
                      $('#loading-image').popup('show');
                    },
                    complete: function(){
-                     setTimeout(function(){$('#loading-image').popup('hide');},250);
+                     setTimeout(function(){$('#loading-image').popup('hide');},250);setTimeout(function(){$('#loading-image_wrapper').popup('hide');},250);
                    },
                    success: function(data, textStatus, jqXHR) {
                     
@@ -671,7 +596,7 @@
                     $('#loading-image').popup('show');
                   },
                   complete: function(){
-                    setTimeout(function(){$('#loading-image').popup('hide');},250);
+                    setTimeout(function(){$('#loading-image').popup('hide');},250);setTimeout(function(){$('#loading-image_wrapper').popup('hide');},250);
                   },
                   success: function(data, textStatus, jqXHR) {
                     
@@ -745,7 +670,7 @@
             $('#loading-image').popup('show');
           },
           complete: function(){
-            setTimeout(function(){$('#loading-image').popup('hide');},250);
+            setTimeout(function(){$('#loading-image').popup('hide');},250);setTimeout(function(){$('#loading-image_wrapper').popup('hide');},250);
           },
           success: function(data, textStatus, jqXHR) {
             $('.livraisonStatus'+id).html('Livré');
@@ -812,7 +737,7 @@
             $('#loading-image').popup('show');
           },
           complete: function(){
-            setTimeout(function(){$('#loading-image').popup('hide');},250);
+            setTimeout(function(){$('#loading-image').popup('hide');},250);setTimeout(function(){$('#loading-image_wrapper').popup('hide');},250);
           },
           success: function(data, textStatus, jqXHR) {
             $('.infos_client').text('');
@@ -851,87 +776,7 @@
               $("#box_table tbody").empty();
               var eligible = client.eligible;
               $("#box_table tbody").empty();
-              var commandes = data.result.commandes;
-              var box = data.result.box;
-
-              var box1="Non commandé";
-              var style1="style=''";
-              var ref1="Réf : ";
-              var box2="Non commandé";
-              var style2="style=''";
-              var ref2="Réf : ";
-              var box3="Non commandé";
-              var style3="style=''";
-              var ref3="Réf : ";
-             
-              if(eligible=='BOX1' && box.length==0){
-                    $('#AddCommandeForm').removeAttr( "hidden");
-                    commanderBoxType='1';
-              }if(eligible=='BOX2' && box.length==0){
-                    $('#AddCommandeForm').removeAttr( "hidden");
-                    commanderBoxType='2';
-              }if(eligible=='BOX3' && box.length==0){
-                    $('#AddCommandeForm').removeAttr( "hidden");
-                    commanderBoxType='3';
-              }
-              for (var i = 0; i < box.length; i++) {
-                  if(box[i]['id_box']=='1'){
-                    box1="Commandé";
-                    ref1="Réf : "+box[i]['RefBox'];
-                    for (var j = 0; j < commandes.length; j++) {
-                       if(commandes[j]['id_box']=='1' && commandes[j]['status']=='Livré'){
-                         style1="style='background-color:#6cc;color:white;font-weight: bold;'";
-                         box1="Commandé et livré"
-                       }
-                     }
-                  }
-                  if(box[i]['id_box']=='2'){
-                    box2="Commandé";
-                    ref2="Réf : "+box[i]['RefBox'];
-                    for (var j = 0; j < commandes.length; j++) {
-                       if(commandes[j]['id_box']=='2' && commandes[j]['status']=='Livré'){
-                         style2="style='background-color:#6cc;color:white;font-weight: bold;'";
-                         box2="Commandé et livré"
-                       }
-                     }
-                  }
-                  if(box[i]['id_box']=='3'){
-                    box3="Commandé";
-                    ref3="Réf : "+box[i]['RefBox'];
-                    for (var j = 0; j < commandes.length; j++) {
-                       if(commandes[j]['id_box']=='3' && commandes[j]['status']=='Livré'){
-                         style3="style='background-color:#6cc;color:white;font-weight: bold;'";
-                         box3="Commandé et livré"
-                       }
-                     }
-                  }
-                  
-              }
-
-               if(eligible=='BOX1' && box1=="Non commandé"){
-                    $('#AddCommandeForm').removeAttr( "hidden");
-                    commanderBoxType='1';
-               }else if(eligible=='BOX2' && box2=="Non commandé"){
-                    $('#AddCommandeForm').removeAttr( "hidden");
-                    commanderBoxType='2';
-               }else if(eligible=='BOX3' && box3=="Non commandé"){
-                    $('#AddCommandeForm').removeAttr( "hidden");
-                    commanderBoxType='3';
-               }
-
-                var newRow = '<tr>'+
-                    '<td '+style1+'>'+box1+'</td>'+
-                    '<td '+style2+'>'+box2+'</td>'+
-                    '<td '+style3+'>'+box3+'</td>'+
-                    '</tr>';
-                  $("#box_table tbody").append(newRow); 
-
-                  var ref = '<tr>'+
-                    '<td '+style1+'>'+ref1+'</td>'+
-                    '<td '+style2+'>'+ref2+'</td>'+
-                    '<td '+style3+'>'+ref3+'</td>'+
-                    '</tr>';
-                  $("#box_table tbody").append(ref);
+                commandesTable(babies,data,eligible);
             
             
             }
@@ -953,7 +798,7 @@
             $('#loading-image').popup('show');
           },
           complete: function(){
-            setTimeout(function(){$('#loading-image').popup('hide');},250);
+            setTimeout(function(){$('#loading-image').popup('hide');},250);setTimeout(function(){$('#loading-image_wrapper').popup('hide');},250);
           },
           success: function(data, textStatus, jqXHR) {
             
@@ -979,7 +824,7 @@
             $('#loading-image').popup('show');
           },
           complete: function(){
-            setTimeout(function(){$('#loading-image').popup('hide');},250);
+            setTimeout(function(){$('#loading-image').popup('hide');},250);setTimeout(function(){$('#loading-image_wrapper').popup('hide');},250);
           },
           success: function(data, textStatus, jqXHR) {
             // $.validate();
@@ -1005,7 +850,7 @@
                      $('#loading-image').popup('show');
                    },
                    complete: function(){
-                     setTimeout(function(){$('#loading-image').popup('hide');},250);
+                     setTimeout(function(){$('#loading-image').popup('hide');},250);setTimeout(function(){$('#loading-image_wrapper').popup('hide');},250);
                    },
                    success: function(data, textStatus, jqXHR) {
                     
@@ -1055,7 +900,7 @@
                     $('#loading-image').popup('show');
                   },
                   complete: function(){
-                    setTimeout(function(){$('#loading-image').popup('hide');},250);
+                    setTimeout(function(){$('#loading-image').popup('hide');},250);setTimeout(function(){$('#loading-image_wrapper').popup('hide');},250);
                   },
                   success: function(data, textStatus, jqXHR) {
                     
@@ -1131,7 +976,7 @@
             $('#loading-image').popup('show');
           },
           complete: function(){
-            setTimeout(function(){$('#loading-image').popup('hide');},250);
+            setTimeout(function(){$('#loading-image').popup('hide');},250);setTimeout(function(){$('#loading-image_wrapper').popup('hide');},250);
           },
           success: function(data, textStatus, jqXHR) {
             console.log('done');
@@ -1167,7 +1012,7 @@
             $('#loading-image').popup('show');
           },
           complete: function(){
-            setTimeout(function(){$('#loading-image').popup('hide');},250);
+            setTimeout(function(){$('#loading-image').popup('hide');},250);setTimeout(function(){$('#loading-image_wrapper').popup('hide');},250);
           },
           success: function(data, textStatus, jqXHR) {
             $('.infos_client').text('');
@@ -1208,89 +1053,7 @@
               $("#box_table tbody").empty();
                 var eligible = client.eligible;
               $("#box_table tbody").empty();
-              var commandes = data.result.commandes;
-              var box = data.result.box;
-
-              var box1="Non commandé";
-              var style1="style=''";
-              var ref1="Réf : ";
-              var box2="Non commandé";
-              var style2="style=''";
-              var ref2="Réf : ";
-              var box3="Non commandé";
-              var style3="style=''";
-              var ref3="Réf : ";
-             
-              if(eligible=='BOX1' && box.length==0){
-                    $('#AddCommandeForm').removeAttr( "hidden");
-                    commanderBoxType='1';
-              }if(eligible=='BOX2' && box.length==0){
-                    $('#AddCommandeForm').removeAttr( "hidden");
-                    commanderBoxType='2';
-              }if(eligible=='BOX3' && box.length==0){
-                    $('#AddCommandeForm').removeAttr( "hidden");
-                    commanderBoxType='3';
-              }
-              for (var i = 0; i < box.length; i++) {
-                  if(box[i]['id_box']=='1'){
-                    box1="Commandé";
-                    ref1="Réf : "+box[i]['RefBox'];
-                    for (var j = 0; j < commandes.length; j++) {
-                       if(commandes[j]['id_box']=='1' && commandes[j]['status']=='Livré'){
-                         style1="style='background-color:#6cc;color:white;font-weight: bold;'";
-                         box1="Commandé et livré"
-                       }
-                     }
-                  }
-                  if(box[i]['id_box']=='2'){
-                    box2="Commandé";
-                    ref2="Réf : "+box[i]['RefBox'];
-                    for (var j = 0; j < commandes.length; j++) {
-                       if(commandes[j]['id_box']=='2' && commandes[j]['status']=='Livré'){
-                         style2="style='background-color:#6cc;color:white;font-weight: bold;'";
-                         box2="Commandé et livré"
-                       }
-                     }
-                  }
-                  if(box[i]['id_box']=='3'){
-                    box3="Commandé";
-                    ref3="Réf : "+box[i]['RefBox'];
-                    for (var j = 0; j < commandes.length; j++) {
-                       if(commandes[j]['id_box']=='3' && commandes[j]['status']=='Livré'){
-                         style3="style='background-color:#6cc;color:white;font-weight: bold;'";
-                         box3="Commandé et livré"
-                       }
-                     }
-                  }
-                  
-              }
-
-               if(eligible=='BOX1' && box1=="Non commandé"){
-                    $('#AddCommandeForm').removeAttr( "hidden");
-                    commanderBoxType='1';
-               }else if(eligible=='BOX2' && box2=="Non commandé"){
-                    $('#AddCommandeForm').removeAttr( "hidden");
-                    commanderBoxType='2';
-               }else if(eligible=='BOX3' && box3=="Non commandé"){
-                    $('#AddCommandeForm').removeAttr( "hidden");
-                    commanderBoxType='3';
-               }
-
-                var newRow = '<tr>'+
-                    '<td '+style1+'>'+box1+'</td>'+
-                    '<td '+style2+'>'+box2+'</td>'+
-                    '<td '+style3+'>'+box3+'</td>'+
-                    '</tr>';
-                  $("#box_table tbody").append(newRow); 
-
-                  var ref = '<tr>'+
-                    '<td '+style1+'>'+ref1+'</td>'+
-                    '<td '+style2+'>'+ref2+'</td>'+
-                    '<td '+style3+'>'+ref3+'</td>'+
-                    '</tr>';
-                  $("#box_table tbody").append(ref);
-            
-            
+                commandesTable(babies,data,eligible);
             }
           },
           error: function (jqXHR, textStatus, errorThrown) {
@@ -1310,7 +1073,7 @@
             $('#loading-image').popup('show');
           },
           complete: function(){
-            setTimeout(function(){$('#loading-image').popup('hide');},250);
+            setTimeout(function(){$('#loading-image').popup('hide');},250);setTimeout(function(){$('#loading-image_wrapper').popup('hide');},250);
           },
           success: function(data, textStatus, jqXHR) {
             
@@ -1336,7 +1099,7 @@
             $('#loading-image').popup('show');
           },
           complete: function(){
-            setTimeout(function(){$('#loading-image').popup('hide');},250);
+            setTimeout(function(){$('#loading-image').popup('hide');},250);setTimeout(function(){$('#loading-image_wrapper').popup('hide');},250);
           },
           success: function(data, textStatus, jqXHR) {
             // $.validate();
@@ -1362,7 +1125,7 @@
                      $('#loading-image').popup('show');
                    },
                    complete: function(){
-                     setTimeout(function(){$('#loading-image').popup('hide');},250);
+                     setTimeout(function(){$('#loading-image').popup('hide');},250);setTimeout(function(){$('#loading-image_wrapper').popup('hide');},250);
                    },
                    success: function(data, textStatus, jqXHR) {
                     
@@ -1412,7 +1175,7 @@
                     $('#loading-image').popup('show');
                   },
                   complete: function(){
-                    setTimeout(function(){$('#loading-image').popup('hide');},250);
+                    setTimeout(function(){$('#loading-image').popup('hide');},250);setTimeout(function(){$('#loading-image_wrapper').popup('hide');},250);
                   },
                   success: function(data, textStatus, jqXHR) {
                     
@@ -1488,7 +1251,7 @@
             $('#loading-image').popup('show');
           },
           complete: function(){
-            setTimeout(function(){$('#loading-image').popup('hide');},250);
+            setTimeout(function(){$('#loading-image').popup('hide');},250);setTimeout(function(){$('#loading-image_wrapper').popup('hide');},250);
           },
           success: function(data, textStatus, jqXHR) {
             console.log('done');
@@ -1523,7 +1286,7 @@
             $('#loading-image').popup('show');
           },
           complete: function(){
-            setTimeout(function(){$('#loading-image').popup('hide');},250);
+            setTimeout(function(){$('#loading-image').popup('hide');},250);setTimeout(function(){$('#loading-image_wrapper').popup('hide');},250);
           },
           success: function(data, textStatus, jqXHR) {
             $('.infos_client').text('');
@@ -1564,89 +1327,7 @@
               $("#box_table tbody").empty();
                 var eligible = client.eligible;
               $("#box_table tbody").empty();
-              var commandes = data.result.commandes;
-              var box = data.result.box;
-
-              var box1="Non commandé";
-              var style1="style=''";
-              var ref1="Réf : ";
-              var box2="Non commandé";
-              var style2="style=''";
-              var ref2="Réf : ";
-              var box3="Non commandé";
-              var style3="style=''";
-              var ref3="Réf : ";
-             
-              if(eligible=='BOX1' && box.length==0){
-                    $('#AddCommandeForm').removeAttr( "hidden");
-                    commanderBoxType='1';
-              }if(eligible=='BOX2' && box.length==0){
-                    $('#AddCommandeForm').removeAttr( "hidden");
-                    commanderBoxType='2';
-              }if(eligible=='BOX3' && box.length==0){
-                    $('#AddCommandeForm').removeAttr( "hidden");
-                    commanderBoxType='3';
-              }
-              for (var i = 0; i < box.length; i++) {
-                  if(box[i]['id_box']=='1'){
-                    box1="Commandé";
-                    ref1="Réf : "+box[i]['RefBox'];
-                    for (var j = 0; j < commandes.length; j++) {
-                       if(commandes[j]['id_box']=='1' && commandes[j]['status']=='Livré'){
-                         style1="style='background-color:#6cc;color:white;font-weight: bold;'";
-                         box1="Commandé et livré"
-                       }
-                     }
-                  }
-                  if(box[i]['id_box']=='2'){
-                    box2="Commandé";
-                    ref2="Réf : "+box[i]['RefBox'];
-                    for (var j = 0; j < commandes.length; j++) {
-                       if(commandes[j]['id_box']=='2' && commandes[j]['status']=='Livré'){
-                         style2="style='background-color:#6cc;color:white;font-weight: bold;'";
-                         box2="Commandé et livré"
-                       }
-                     }
-                  }
-                  if(box[i]['id_box']=='3'){
-                    box3="Commandé";
-                    ref3="Réf : "+box[i]['RefBox'];
-                    for (var j = 0; j < commandes.length; j++) {
-                       if(commandes[j]['id_box']=='3' && commandes[j]['status']=='Livré'){
-                         style3="style='background-color:#6cc;color:white;font-weight: bold;'";
-                         box3="Commandé et livré"
-                       }
-                     }
-                  }
-                  
-              }
-
-               if(eligible=='BOX1' && box1=="Non commandé"){
-                    $('#AddCommandeForm').removeAttr( "hidden");
-                    commanderBoxType='1';
-               }else if(eligible=='BOX2' && box2=="Non commandé"){
-                    $('#AddCommandeForm').removeAttr( "hidden");
-                    commanderBoxType='2';
-               }else if(eligible=='BOX3' && box3=="Non commandé"){
-                    $('#AddCommandeForm').removeAttr( "hidden");
-                    commanderBoxType='3';
-               }
-
-                var newRow = '<tr>'+
-                    '<td '+style1+'>'+box1+'</td>'+
-                    '<td '+style2+'>'+box2+'</td>'+
-                    '<td '+style3+'>'+box3+'</td>'+
-                    '</tr>';
-                  $("#box_table tbody").append(newRow); 
-
-                  var ref = '<tr>'+
-                    '<td '+style1+'>'+ref1+'</td>'+
-                    '<td '+style2+'>'+ref2+'</td>'+
-                    '<td '+style3+'>'+ref3+'</td>'+
-                    '</tr>';
-                  $("#box_table tbody").append(ref);
-            
-            
+                commandesTable(babies,data,eligible);
             }
           },
           error: function (jqXHR, textStatus, errorThrown) {
@@ -1666,7 +1347,7 @@
             $('#loading-image').popup('show');
           },
           complete: function(){
-            setTimeout(function(){$('#loading-image').popup('hide');},250);
+            setTimeout(function(){$('#loading-image').popup('hide');},250);setTimeout(function(){$('#loading-image_wrapper').popup('hide');},250);
           },
           success: function(data, textStatus, jqXHR) {
             
@@ -1692,7 +1373,7 @@
             $('#loading-image').popup('show');
           },
           complete: function(){
-            setTimeout(function(){$('#loading-image').popup('hide');},250);
+            setTimeout(function(){$('#loading-image').popup('hide');},250);setTimeout(function(){$('#loading-image_wrapper').popup('hide');},250);
           },
           success: function(data, textStatus, jqXHR) {
             // $.validate();
@@ -1718,7 +1399,7 @@
                      $('#loading-image').popup('show');
                    },
                    complete: function(){
-                     setTimeout(function(){$('#loading-image').popup('hide');},250);
+                     setTimeout(function(){$('#loading-image').popup('hide');},250);setTimeout(function(){$('#loading-image_wrapper').popup('hide');},250);
                    },
                    success: function(data, textStatus, jqXHR) {
                     
@@ -1768,7 +1449,7 @@
                     $('#loading-image').popup('show');
                   },
                   complete: function(){
-                    setTimeout(function(){$('#loading-image').popup('hide');},250);
+                    setTimeout(function(){$('#loading-image').popup('hide');},250);setTimeout(function(){$('#loading-image_wrapper').popup('hide');},250);
                   },
                   success: function(data, textStatus, jqXHR) {
                     
@@ -1844,7 +1525,7 @@
             $('#loading-image').popup('show');
           },
           complete: function(){
-            setTimeout(function(){$('#loading-image').popup('hide');},250);
+            setTimeout(function(){$('#loading-image').popup('hide');},250);setTimeout(function(){$('#loading-image_wrapper').popup('hide');},250);
           },
           success: function(data, textStatus, jqXHR) {
             console.log('done');
@@ -1881,7 +1562,7 @@
             $('#loading-image').popup('show');
           },
           complete: function(){
-            setTimeout(function(){$('#loading-image').popup('hide');},250);
+            setTimeout(function(){$('#loading-image').popup('hide');},250);setTimeout(function(){$('#loading-image_wrapper').popup('hide');},250);
           },
           success: function(data, textStatus, jqXHR) {
             $('.infos_client').text('');
@@ -1919,89 +1600,7 @@
                   $("#baby_table tbody").append(newRow);
                 });
               }
-              $("#box_table tbody").empty();
-              var commandes = data.result.commandes;
-              var box = data.result.box;
-
-              var box1="Non commandé";
-              var style1="style=''";
-              var ref1="Réf : ";
-              var box2="Non commandé";
-              var style2="style=''";
-              var ref2="Réf : ";
-              var box3="Non commandé";
-              var style3="style=''";
-              var ref3="Réf : ";
-             
-              if(eligible=='BOX1' && box.length==0){
-                    $('#AddCommandeForm').removeAttr( "hidden");
-                    commanderBoxType='1';
-              }if(eligible=='BOX2' && box.length==0){
-                    $('#AddCommandeForm').removeAttr( "hidden");
-                    commanderBoxType='2';
-              }if(eligible=='BOX3' && box.length==0){
-                    $('#AddCommandeForm').removeAttr( "hidden");
-                    commanderBoxType='3';
-              }
-              for (var i = 0; i < box.length; i++) {
-                  if(box[i]['id_box']=='1'){
-                    box1="Commandé";
-                    ref1="Réf : "+box[i]['RefBox'];
-                    for (var j = 0; j < commandes.length; j++) {
-                       if(commandes[j]['id_box']=='1' && commandes[j]['status']=='Livré'){
-                         style1="style='background-color:#6cc;color:white;font-weight: bold;'";
-                         box1="Commandé et livré"
-                       }
-                     }
-                  }
-                  if(box[i]['id_box']=='2'){
-                    box2="Commandé";
-                    ref2="Réf : "+box[i]['RefBox'];
-                    for (var j = 0; j < commandes.length; j++) {
-                       if(commandes[j]['id_box']=='2' && commandes[j]['status']=='Livré'){
-                         style2="style='background-color:#6cc;color:white;font-weight: bold;'";
-                         box2="Commandé et livré"
-                       }
-                     }
-                  }
-                  if(box[i]['id_box']=='3'){
-                    box3="Commandé";
-                    ref3="Réf : "+box[i]['RefBox'];
-                    for (var j = 0; j < commandes.length; j++) {
-                       if(commandes[j]['id_box']=='3' && commandes[j]['status']=='Livré'){
-                         style3="style='background-color:#6cc;color:white;font-weight: bold;'";
-                         box3="Commandé et livré"
-                       }
-                     }
-                  }
-                  
-              }
-
-               if(eligible=='BOX1' && box1=="Non commandé"){
-                    $('#AddCommandeForm').removeAttr( "hidden");
-                    commanderBoxType='1';
-               }else if(eligible=='BOX2' && box2=="Non commandé"){
-                    $('#AddCommandeForm').removeAttr( "hidden");
-                    commanderBoxType='2';
-               }else if(eligible=='BOX3' && box3=="Non commandé"){
-                    $('#AddCommandeForm').removeAttr( "hidden");
-                    commanderBoxType='3';
-               }
-
-                var newRow = '<tr>'+
-                    '<td '+style1+'>'+box1+'</td>'+
-                    '<td '+style2+'>'+box2+'</td>'+
-                    '<td '+style3+'>'+box3+'</td>'+
-                    '</tr>';
-                  $("#box_table tbody").append(newRow); 
-
-                  var ref = '<tr>'+
-                    '<td '+style1+'>'+ref1+'</td>'+
-                    '<td '+style2+'>'+ref2+'</td>'+
-                    '<td '+style3+'>'+ref3+'</td>'+
-                    '</tr>';
-                  $("#box_table tbody").append(ref);
-            
+              commandesTable(babies,data,eligible);
             }
           },
           error: function (jqXHR, textStatus, errorThrown) {
@@ -2021,7 +1620,7 @@
             $('#loading-image').popup('show');
           },
           complete: function(){
-            setTimeout(function(){$('#loading-image').popup('hide');},250);
+            setTimeout(function(){$('#loading-image').popup('hide');},250);setTimeout(function(){$('#loading-image_wrapper').popup('hide');},250);
           },
           success: function(data, textStatus, jqXHR) {
             
@@ -2047,7 +1646,7 @@
             $('#loading-image').popup('show');
           },
           complete: function(){
-            setTimeout(function(){$('#loading-image').popup('hide');},250);
+            setTimeout(function(){$('#loading-image').popup('hide');},250);setTimeout(function(){$('#loading-image_wrapper').popup('hide');},250);
           },
           success: function(data, textStatus, jqXHR) {
             // $.validate();
@@ -2073,7 +1672,7 @@
                      $('#loading-image').popup('show');
                    },
                    complete: function(){
-                     setTimeout(function(){$('#loading-image').popup('hide');},250);
+                     setTimeout(function(){$('#loading-image').popup('hide');},250);setTimeout(function(){$('#loading-image_wrapper').popup('hide');},250);
                    },
                    success: function(data, textStatus, jqXHR) {
                     
@@ -2123,7 +1722,7 @@
                     $('#loading-image').popup('show');
                   },
                   complete: function(){
-                    setTimeout(function(){$('#loading-image').popup('hide');},250);
+                    setTimeout(function(){$('#loading-image').popup('hide');},250);setTimeout(function(){$('#loading-image_wrapper').popup('hide');},250);
                   },
                   success: function(data, textStatus, jqXHR) {
                     
@@ -2199,7 +1798,7 @@
             $('#loading-image').popup('show');
           },
           complete: function(){
-            setTimeout(function(){$('#loading-image').popup('hide');},250);
+            setTimeout(function(){$('#loading-image').popup('hide');},250);setTimeout(function(){$('#loading-image_wrapper').popup('hide');},250);
           },
           success: function(data, textStatus, jqXHR) {
             $('.livraisonStatus'+id).html('Livré');
@@ -2234,7 +1833,7 @@ $('#ville_commande_edit').change(function () {
        $('#loading-image').popup('show');
      },
      complete: function(){
-       setTimeout(function(){$('#loading-image').popup('hide');},250);
+       setTimeout(function(){$('#loading-image').popup('hide');},250);setTimeout(function(){$('#loading-image_wrapper').popup('hide');},250);
      },
      success: function(data, textStatus, jqXHR) {
        
@@ -2354,12 +1953,24 @@ gestion();
               $('#edit').modal('toggle');
               $('#alert_recover_ok').css('visibility','hidden');
             }, 2000);
+              swal({
+                  title: "Success",
+                  text: "OK",
+                  type: "success",
+                  timer: 2000,
+                  showConfirmButton: false
+              });
           }else{
             $('#alert_recover_ko').css('visibility','visible').fadeIn(1500);
             setTimeout(function(){
               $('#edit').modal('toggle');
               $('#alert_recover_ko').css('visibility','hidden');
             }, 2000);
+              swal(
+                  'Oops...',
+                  'Une erreur s\'est produite!',
+                  'error'
+              )
           }
 
         },
@@ -2373,6 +1984,113 @@ gestion();
  });
 
 
+ function commandesTable(babies,data,eligible){
+     $('#box_table tbody').empty();
+     for (var b = 0; b < babies.length; b++) {
+
+         var commandes = data.result.commandes[b];
+         var box = data.result.box[b];
+
+
+         var box1 = "Non commandé";
+         var style1 = "style=''";
+         var ref1 = "Réf : ";
+         var box2 = "Non commandé";
+         var style2 = "style=''";
+         var ref2 = "Réf : ";
+         var box3 = "Non commandé";
+         var style3 = "style=''";
+         var ref3 = "Réf : ";
+
+         //if(eligible=='BOX1' && box.length==0){
+         if (eligible == 'BOX1' && role != 'user') {
+             $('#AddCommandeForm').removeAttr("hidden");
+             commanderBoxType = '1';
+             commanderBoxBebe = babies[b]['id'];
+             //}if(eligible=='BOX2' && box.length==0){
+         }
+         if (eligible == 'BOX2') {
+             materniteFinal = babies[b]['MATERNITE'];
+             $('#AddCommandeForm').removeAttr("hidden");
+             if (materniteFinal == '') {
+                 $('#addCommandeButton').attr("disabled", "disabled").button('refresh');
+             } else {
+                 $('#addCommandeButton').removeAttr("disabled");
+             }
+             commanderBoxType = '2';
+             commanderBoxBebe = babies[b]['id'];
+
+             // }if(eligible=='BOX3' && box.length==0){
+         }
+         if (eligible == 'BOX3' && role != 'user') {
+             $('#AddCommandeForm').removeAttr("hidden");
+             commanderBoxType = '3';
+             commanderBoxBebe = babies[b]['id'];
+         }
+
+
+         for (var i = 0; i < box.length; i++) {
+             if (box[i]['id_box'] == '1') {
+                 box1 = "Commandé";
+                 ref1 = "Réf : " + box[i]['RefBox'];
+                 for (var j = 0; j < commandes.length; j++) {
+                     if (commandes[j]['id_box'] == '1' && commandes[j]['status'] == 'Livré') {
+                         style1 = "style='background-color:#6cc;color:white;font-weight: bold;'";
+                         box1 = "Commandé et livré"
+                     }
+                 }
+             }
+             if (box[i]['id_box'] == '2') {
+                 box2 = "Commandé";
+                 ref2 = "Réf : " + box[i]['RefBox'];
+                 for (var j = 0; j < commandes.length; j++) {
+                     if (commandes[j]['id_box'] == '2' && commandes[j]['status'] == 'Livré') {
+                         style2 = "style='background-color:#6cc;color:white;font-weight: bold;'";
+                         box2 = "Commandé et livré"
+                     }
+                 }
+             }
+             if (box[i]['id_box'] == '3') {
+                 box3 = "Commandé";
+                 ref3 = "Réf : " + box[i]['RefBox'];
+                 for (var j = 0; j < commandes.length; j++) {
+                     if (commandes[j]['id_box'] == '3' && commandes[j]['status'] == 'Livré') {
+                         style3 = "style='background-color:#6cc;color:white;font-weight: bold;'";
+                         box3 = "Commandé et livré"
+                     }
+                 }
+             }
+
+         }
+
+         /*    if(eligible=='BOX1' && box1=="Non commandé"){
+          $('#AddCommandeForm').removeAttr( "hidden");
+          commanderBoxType='1';
+          }else if(eligible=='BOX2' && box2=="Non commandé"){
+          $('#AddCommandeForm').removeAttr( "hidden");
+          commanderBoxType='2';
+          }else if(eligible=='BOX3' && box3=="Non commandé"){
+          $('#AddCommandeForm').removeAttr( "hidden");
+          commanderBoxType='3';
+          }*/
+
+
+         var newRow = '<tr>' +
+             '<td ' + style1 + '>' + box1 + '</td>' +
+             '<td ' + style2 + '>' + box2 + '</td>' +
+             '<td ' + style3 + '>' + box3 + '</td>' +
+             '</tr>';
+         $("#box_table tbody").append(newRow);
+
+         var ref = '<tr>' +
+             '<td ' + style1 + '>' + ref1 + '</td>' +
+             '<td ' + style2 + '>' + ref2 + '</td>' +
+             '<td ' + style3 + '>' + ref3 + '</td>' +
+             '</tr>';
+         $("#box_table tbody").append(ref);
+     }
+
+ }
 
 });
 

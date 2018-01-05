@@ -5,6 +5,9 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta property="og:title" content="Checklist sac à langer">
+    <meta property="og:image" content="http://beta.oumbox.com/img/thumbnail/sac.jpg">
+    <meta property="og:url" content="http://beta.oumbox.com/blogContent-bb4.php">
 <!-- <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css"> -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="assets/css/blogFont-awesome.min.css">
@@ -40,6 +43,14 @@
 <!-- <div id="preloader">
   <div id="status">&nbsp;</div>
 </div> -->
+<div class="a2a_kit a2a_kit_size_32 a2a_floating_style a2a_vertical_style"
+     data-a2a-title="Comment prévenir la listériose et la toxoplasmose?" style="left:0px; top:150px;">
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+</div>
+<script async src="https://static.addtoany.com/menu/page.js"></script>
 <a class="scrollToTop" href="#"><i class="fa fa-angle-up"></i></a>
 <?php include('header3.php'); ?>
 <div class="containerr">

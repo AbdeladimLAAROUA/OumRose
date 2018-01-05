@@ -1490,7 +1490,7 @@ a {
   transition: 0.5s;
 }
 a:hover, a:active, a:focus {
-  color: white; /*#4fd2c2*/
+  color: #6cc; /*#4fd2c2*/
   outline: none;
 }
 

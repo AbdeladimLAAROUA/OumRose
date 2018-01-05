@@ -4,7 +4,7 @@
         
 
       <li id="libaby0"  >
-        <div id="headbaby" class="collapsible-header teal lighten-2 white-text waves-effect waves-light active"><!-- <i class="material-icons">child_care</i>  -->Inscription</div>
+        <div id="headbaby" class="collapsible-header teal lighten-2 white-text waves-effect waves-light active" style="font-size: 25px;"><!-- <i class="material-icons">child_care</i>  -->Inscription</div>
             <div class="collapsible-body" style="display: block;">
             <div class="row">
              <div class="input-field col s12" >
@@ -15,11 +15,11 @@
             <div class="input-field col s6">
               <span class="micons-padlock prefix"></span>
               <input id="password" type="password" name="PASSWORD" pattern=".{2,}" minlength="6" class="validate" required="required" aria-required="true">
-              <label id="labelPassword" for="password" data-error="invalide" class="">Password</label>
+              <label id="labelPassword" for="password" data-error="invalide" class="">Mot de passe</label>
             </div>
             <div class="input-field col s6">
               <input id="passconf" name="passconf" type="password" class="validate" required="required" aria-required="true">
-              <label id="labelPassconf" for="passconf" data-error="Password incorrect" class="">Confirmation</label>
+              <label id="labelPassconf" for="passconf" data-error="Password incorrect" class="">Confirmation du mot de passe</label>
             </div>
             <!-- <div class="sparator">
               <label>Ou</label>
@@ -90,9 +90,9 @@
           <!-- <input id="city" name="VILLE" type="text" pattern=".{3,}" minlength="3" required="required" class="validate" aria-required="true"> -->
           <select id="ville" name="VILLE" class="initialized" required="required" aria-required="true">
             <option value="0" disabled="" selected="">Ville</option>
-            <?php 
+            <?php
               include('config.php');
-              $villes = getAllCities1($conn);
+              $villes = getAllCities2($conn);
               foreach ($villes as $key => $ville) {
              ?>
                 <option value="<?php echo $ville['id'] ?>"><?php echo $ville['name'] ?></option>
@@ -103,9 +103,22 @@
           <span>Champ obligatoire</span>
         </div>
         <div class="input-field col s4">
-          <input id="zip" name="CP" type="text" pattern="\d{1}" required="required" aria-required="true">
-          <label id="labelZip"  for="zip" data-error="Nombre invalide" data-success="" class="">Nombre d'enfant</label>
-         </div>
+          <!-- <input id="zip" name="CP" type="text" pattern="\d{1}" required="required" aria-required="true"> -->
+          <select id="zip" name="CP" class="initialized" style="display: none;">
+            <option value="" disabled="" selected="">Nombre d'enfant</option>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+          </select>
+          <!-- <label id="labelZip"  for="zip" data-error="Nombre invalide" data-success="" class="">Nombre d'enfant</label> -->
+        </div>
          <div class="input-field col s6">
 
           <input id="mom1" type="radio" name="TYPE" value="enceinte" class="validate" required="required" onchange="update_baby()" aria-required="true">
@@ -151,7 +164,7 @@
       <div class="input-field col s7" id="divmat">
       <span class="fa fa-hospital-o prefix"></span>
       <input id="mat" name="MATERNITE" type="text" pattern=".{5,}" minlength="5" class="validate">
-      <label for="mat" data-error="nom incomplet">Maternité</label>
+      <label for="mat" data-error="nom incomplet">Clinique</label>
       </div>
 
 
@@ -236,16 +249,16 @@
  <div id="modal1" class="modal">
     <div class="modal-content">
       <h4>Important</h4>
-      <p>Veuillez vous assurez que toutes les informations renseignées sont exactes.<br>Toute fausse information communiquée lors de votre inscription remettra en cause votre éligibilité au programme #Oumbox.</p>
+      <p>Veuillez vous assurer que toutes les informations renseignées sont exactes.<br>Toute fausse information communiquée lors de votre inscription remettra en cause votre éligibilité au programme #Oumbox.</p>
     </div>
     <div class="modal-footer">
-      <a href="#" class=" modal-action modal-close waves-effect waves-light btn lighten-1">Accepter</a>
+      <a class=" modal-action modal-close waves-effect waves-light btn lighten-1">Accepter</a >
     </div>
   </div>
 
   <div id="modal2" class="modal">
     <div class="modal-content">
-      <h3>Votre demande a été envoyé avec succès</h3>
+      <h3>DERNIERE ETAPE POUR VALIDER VOTRE INSCRIPTION</h3>
       <p><br>
       Afin de compléter votre inscription, vous allez recevoir un email de vérification qui contient un lien afin de vérifier votre adresse email et sera suivi d'un second email contenant vos informations d'identification. 
       </p>
@@ -547,6 +560,7 @@ $("#myForm").submit(function(e) {
 
         if(checkForm() && $('#ville').val()!=0){
         console.log("form valide");
+        console.log($("#myForm").serialize());
         $.ajax(
         { type:"POST",
           url:"tools/sendform.php", //replace with full url

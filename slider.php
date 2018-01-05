@@ -30,6 +30,9 @@
             /*remove responsive code if you don't want the slider scales while window resizing*/
             function ScaleSlider() {
                 var refSize = jssor_1_slider.$Elmt.parentNode.clientWidth;
+                if(refSize && refSize< 768){
+                    refSize-=40;
+                }
                 if (refSize) {
                     refSize = Math.min(refSize, 1920);
                     jssor_1_slider.$ScaleWidth(refSize);
@@ -146,7 +149,7 @@
                 </div>
             </div> -->
             <div>
-        	   <iframe width="100%" height="100%" src="https://www.youtube.com/embed/SjVvk6KFpBw?rel=0&autoplay=0">
+        	   <iframe width="100%" height="100%" src="https://www.youtube.com/embed/54Rm6ymFvRE?rel=0&autoplay=0">
 </iframe>
         	    
         	</div>

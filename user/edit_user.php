@@ -1,5 +1,6 @@
 <?php
 include('../config.php');
+include('../gestion/lib/util.php');
 
 if (isset($_POST['nom']) and isset($_POST['prenom']) 
 	and isset($_POST['naissance']) and isset($_POST['gsm']) and isset($_POST['id']) 
@@ -13,7 +14,14 @@ if (isset($_POST['nom']) and isset($_POST['prenom'])
 	$user['adresse']=htmlspecialchars($_POST['adresse']);
 	$user['ville']=htmlspecialchars($_POST['ville']);
 	$user['cp']=htmlspecialchars($_POST['cp']);
-	echo updateClient_u($conn,$user);
+
+	$response= updateClient_u($conn,$user);
+
+    $user = getSendInBlueUser($user['id']);
+    if ($user['status'] === 'approved') {
+        sindinblue1($user);
+    }
+    echo $response;
 
 }else{
 	echo "0";

@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <!-- saved from url=(0018)http://oumbox.com/ -->
 <html style="padding-right: 0px;"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -25,7 +28,8 @@
       <link type="text/css" rel="stylesheet" href="register/materialize.min.css" media="screen,projection">
       <link type="text/css" rel="stylesheet" href="register/micons.css" media="screen,projection">
        <link rel="stylesheet" href="register/icon" as="style" onload="this.rel=&#39;stylesheet&#39;">
-       <link rel="stylesheet" href="register/font-awesome.min.css" as="style" onload="this.rel=&#39;stylesheet&#39;">
+      <!-- <link rel="stylesheet" href="register/font-awesome.min.css" as="style" onload="this.rel=&#39;stylesheet&#39;">-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
         <noscript></noscript>
     <script>
     /*! loadCSS: load a CSS file asynchronously. [c]2016 @scottjehl, Filament Group, Inc. Licensed MIT */

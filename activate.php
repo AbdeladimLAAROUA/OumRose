@@ -57,10 +57,12 @@ if (isset($_GET["id"])) {
     if ($user!=null) {
       $_SESSION['nom']=$user["nom"];
       getBoxEligibility($user,$conn);
-      $sql = "UPDATE `customer` SET  `status` =  'approved' WHERE `id` = :id";
+      $sql = "UPDATE `customer` SET  `status` =  'approved', `expiration` =NOW() WHERE `id` = :id";
       $stmt = $conn->prepare($sql);
       $stmt->bindValue(":id", $user['id']);
       $stmt->execute();
+
+      sindinblue($user);
       $msg = "Your account has been activated.";
       $msgType = "success";
       include('emails/emailService.php');
@@ -125,5 +127,6 @@ function getBoxEligibility($user,$conn){
     $_SESSION['result1']=$info;
     $_SESSION['eligibleToBox']=$info["box"];
 }
+
 
  ?>

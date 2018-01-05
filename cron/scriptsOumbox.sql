@@ -61,6 +61,11 @@ order by c.id ASC, box2 DESC
 
 
 
+/* Migration form old oumbox db to new oumbox db */
+
+/* Step 1 */
+
+
 DELETE FROM baby where 1;
 DELETE FROM `customer` WHERE 1;
 ALTER TABLE baby AUTO_INCREMENT = 1;
@@ -74,16 +79,6 @@ INSERT INTO baby(customer_id,naissance,prenom,sexe,MATERNITE,GYNECO,naissance_en
 SELECT c.id,NAISSANCE_BEBE,PRENOM_BEBE,SEXE_BEBE,MATERNITE,GYNECO,NAISSANCE_ENFANT,PRENOM_ENFANT,SEXE_ENFANT
 FROM   leads l, customer c 
 where l.id=c.id_leads;
-
-
-
-
-
-
-
-
-
-
 
 DELIMITER $$
 DROP PROCEDURE IF EXISTS updateProducts$$
@@ -128,18 +123,16 @@ DELIMITER ;
 call updateProducts();
 
 
+SELECT
+  (SELECT COUNT(*) FROM product WHERE `id_box`=1) as product1Count,
+  (SELECT COUNT(*) FROM leads WHERE REF_BOX1!='') as leadsproduct1Count,
+  (SELECT COUNT(*) FROM product WHERE `id_box`=2) as product2Count,
+  (SELECT COUNT(*) FROM leads WHERE  REF_BOX2!='') as leadsproduct2Count,
+  (SELECT COUNT(*) FROM product WHERE `id_box`=3) as product3Count,
+  (SELECT COUNT(*) FROM leads WHERE REF_BOX3!='') as leadsproduct3Count;
 
 
-
-
-SELECT count(*) FROM `product` WHERE `id_box`=1 ORDER BY `id`;
-select count(*) from leads where REF_BOX1!='';
-
-SELECT count(*) FROM `product` WHERE `id_box`=2 ORDER BY `id`;
-select count(*) from leads where REF_BOX2!='';
-
-SELECT count(*) FROM `product` WHERE `id_box`=3 ORDER BY `id`;
-select count(*) from leads where REF_BOX3!='';
+/*Step 2 => migration.php*/
 
 
 

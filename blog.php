@@ -1,3 +1,14 @@
+<?php
+session_start();
+$posts='';
+if(isset($_GET['id'])){
+    $id=htmlspecialchars($_GET['id']);
+    include('gestion/lib/util.php');
+    $post = json_decode(getPostById($id), true);
+    $post = $post['result'];
+    print_r($post);
+}
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,9 +28,14 @@
 <link rel="stylesheet" type="text/css" href="assets/css/blogStyle.css">
 
 
-<link rel="stylesheet" type="text/css" href="css/style.css">
-<link rel="stylesheet" type="text/css" href="css/component.css">
+<!--<link rel="stylesheet" type="text/css" href="css/style.css">
+<link rel="stylesheet" type="text/css" href="css/component.css">-->
 <!-- header -->
+
+
+    <link rel="stylesheet" type="text/css" href="css/header.css">
+    <link rel="stylesheet" type="text/css" href="css/component.css"/>
+    <link href="css/style.css" rel="stylesheet">
 
 <!--[if lt IE 9]>
 <script src="assets/js/html5shiv.min.js"></script>
@@ -43,9 +59,9 @@
 <!-- <a class="scrollToTop" href="#"><i class="fa fa-angle-up"></i></a> -->
 <?php include('header3.php'); ?>
 <div class="containerr">
-  
-  
-  
+
+
+
   <section id="newsSection">
   </section>
   <section id="sliderSection">
@@ -165,7 +181,7 @@
                   <div class="media wow fadeInDown"> <a href="blogContent-bb3.php" class="media-left"> <img alt="" src="img/repas bb.jpg"> </a>
                     <div class="media-body"> <a href="blogContent-bb3.php" class="catg_title">Checklist équipement repas de bébé</a> </div>
                   </div>
-                </li> 
+                </li>
               </ul>
             </div>
           </div>
@@ -178,10 +194,10 @@
                 </ul>
               </div>
           <div class="fashion_technology_area">
-            
-            
+
+
           </div>
-          
+
         </div>
       </div>
       <div class="col-lg-4 col-md-4 col-sm-4">
@@ -210,7 +226,7 @@
                 </div>
               </li>
             </ul>
-             
+
           </div>
 
           <div class="single_sidebar wow fadeInDown">
@@ -226,33 +242,34 @@
       </div>
     </div>
   </section>
-  
+
 </div>
 
 <!-- <script src="assets/js/bootstrap.min.js"></script>
-<script src="assets/js/jquery.min.js"></script> --> 
+<script src="assets/js/jquery.min.js"></script> -->
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-<script src="assets/js/blogWow.min.js"></script> 
- 
-<script src="assets/js/blogSlick.min.js"></script> 
-<script src="assets/js/blogJquery.li-scroller.1.0.js"></script> 
-<script src="assets/js/blogJquery.newsTicker.min.js"></script> 
-<script src="assets/js/blogJquery.fancybox.pack.js"></script> 
+<script src="assets/js/blogWow.min.js"></script>
+
+<script src="assets/js/blogSlick.min.js"></script>
+<script src="assets/js/blogJquery.li-scroller.1.0.js"></script>
+<script src="assets/js/blogJquery.newsTicker.min.js"></script>
+<script src="assets/js/blogJquery.fancybox.pack.js"></script>
 <script src="assets/js/blogCustom.js"></script>
+<script src="assets/js/selectChange.js"></script>
 
 
 
 <script type="text/javascript">
   $(".pagination li:nth-child(3) > a,.pagination li:nth-child(4) > a").click(function(){
-    
+
     $(".single_post_content_right li:nth-child(1) > div > a > img").attr("src", "img/sortie bb.jpg");
     $(".single_post_content_right li:nth-child(1) > div > a").attr("href", "blogContent-bb2.php");
-    $(".single_post_content_right li:nth-child(1) > div > div > a").attr("href", "blogContent-bb2.php"); 
-     
+    $(".single_post_content_right li:nth-child(1) > div > div > a").attr("href", "blogContent-bb2.php");
+
     $(".single_post_content_right li:nth-child(2) > div > a > img").attr("src", "img/bebe-change.jpeg");
     $(".single_post_content_right li:nth-child(2) > div > a").attr("href", "blogContent-bb1.php");
     $(".single_post_content_right li:nth-child(2) > div > div > a").attr("href", "blogContent-bb1.php");
@@ -267,7 +284,7 @@
 
 
   $(".pagination li:nth-child(2) > a,.pagination li:nth-child(1) > a").click(function(){
-    
+
     $(".single_post_content_right li:nth-child(1) > div > a > img").attr("src", "img/allaitement.jpg");
     $(".single_post_content_right li:nth-child(1) > div > a").attr("href", "blogContent-bb7.php");
     $(".single_post_content_right li:nth-child(1) > div > div > a").attr("href", "blogContent-bb7.php");
@@ -275,7 +292,7 @@
     $(".single_post_content_right li:nth-child(2) > div > a > img").attr("src", "img/jeux-eveil.jpg");
     $(".single_post_content_right li:nth-child(2) > div > a").attr("href", "blogContent-bb6.php");
     $(".single_post_content_right li:nth-child(2) > div > div > a").attr("href", "blogContent-bb6.php");
-   
+
 
     $(".single_post_content_right > ul > li:nth-child(1)").show();
     $(".single_post_content_right > ul > li:nth-child(2)").show();

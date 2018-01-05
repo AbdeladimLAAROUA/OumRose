@@ -3,10 +3,26 @@ include('../gestion/lib/util.php');
 $livraison['type']="OX";
 $livraison['user']="client";
 $myLivraison = addLivraison($livraison);
+$_SESSION['validity'] = date('d/m/Y', strtotime('+1 months'));
+
+//params to show in the email
+$typeBox = 'Box je suis enceinte';
+if($_SESSION['lastEligibleToBox']==1){
+    $typeBox = 'Box bébé est là';
+}else if($_SESSION['lastEligibleToBox'] == 2){
+    $typeBox = 'Box bébé grandit';
+}
+$dateCommande = date('d/m/Y');
+$validity = $_SESSION['validity'];
+$name = $_SESSION['nomComplet'];
+$livraisonType= $_SESSION['livraisonType'];
+$livraisonAdresse= $_SESSION['livraisonAdresse'];
+
+include ("../emails/newOrder.php");
 
 
 include("mpdf/mpdf.php");
-$mpdf=new mPDF('win-1252','A3','','',15,10,16,10,10,10);//A4 page in portrait for landscape add -L.
+$mpdf=new mPDF('win-1252','A4','','',15,10,16,10,10,10);//A4 page in portrait for landscape add -L.
 
 $mpdf->useOnlyCoreFonts = true;    // false is default
 $mpdf->SetDisplayMode('fullpage');
@@ -24,7 +40,7 @@ $mpdf->WriteHTML($html);
 
 
 //$mpdf->Output("bonderetrait.pdf","D");
-$mpdf->Output("bonderetrait.pdf","I");
+$mpdf->Output("bonderetrait.pdf","D");
 
 /*header('Location:../bonRetrait.php');*/
 

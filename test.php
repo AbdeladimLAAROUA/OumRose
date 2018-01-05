@@ -1,7 +1,4 @@
-<script type="text/javascript">
- /* var myDate = new Date(30600);
-  console.log(myDate);*/
-</script>
+
 
 <?php
 
@@ -12,12 +9,12 @@ echo date('d/m/Y', strtotime('+1 months',$time));*/
 
 //echo date("Y-m-d H:i:s",strtotime(date("Y-m-d H:i:s")."+2 days"));
 
-$villes = array("Agadir", "Assilah","Casablanca", "Meknes","El Jadida", "Fes",
+/*$villes = array("Agadir", "Assilah","Casablanca", "Meknes","El Jadida", "Fes",
                 "Kenitra", "Larache","Marrakech", "Mohammedia",
                 "Rabat", "Sala Al Jadida","Sale", "Settat",
-                "Tanger", "Temara");
+                "Tanger", "Temara");*/
 
-echo in_array("Agadir",$villes);
+//echo in_array("Agadir",$villes);
  
   /*echo $today = date("ymd");*/
   // Date d'aujourd'hui
@@ -263,7 +260,7 @@ function secondsToTime($seconds) {
 
  <?php
 
-$servername = "localhost";
+/*$servername = "localhost";
 $username = "root";
 $password = "";
 $dbname="oumdev_leads";
@@ -305,8 +302,32 @@ function getAllRelais($conn){
            echo $e->getMessage();
        }
        return  $relais;
-}
+}*/
 
+ function sindinblue($sindinblueUser)
+ {
+     // add user to sendinblue
+     require_once('Mailin.php');
 
+     $mailin = new Mailin("https://api.sendinblue.com/v2.0", "YUAxmzIyZSO4EJw9");
+
+     $data = array("email" => $sindinblueUser["email"],
+         "attributes" => $sindinblueUser,
+         "listid" => array(128)   //FormCSS list
+     );
+     $res = $mailin->create_update_user($data);
+     if ($res['code'] == 'success') {
+         return true;
+     } else {
+         return false;
+     }
+ }
+
+ $sindinblueUser['email']='khalid.essalhi@gmail.com';
+ $sindinblueUser['eligiblezzz']='18';
+ $sindinblueUser['eligible']='18';
+ console.log(sindinblue($sindinblueUser));
 
  ?>
+
+

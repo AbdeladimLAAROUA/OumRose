@@ -32,8 +32,8 @@
 <a class="scrollToTop" href="#"><i class="fa fa-angle-up"></i></a>
 <?php include('header.php'); ?>
 <div class="containerr">
-  
-  
+
+
   
   <section id="newsSection">
 
@@ -106,6 +106,18 @@
           <li>Mangez de la viande bien cuite</li>
           <li>Lavez-vous les mains avant chaque repas et après avoir manipulé de la viande crue, des crudités avec de la terre.</li>
         </ul>
+
+          <div class="a2a_kit a2a_kit_size_32 a2a_floating_style a2a_vertical_style"
+               data-a2a-url="http://beta.oumbox.com/blogContent-g6.php"
+               data-a2a-title="Comment prévenir la listériose et la toxoplasmose?" style="left:0px; top:150px;">
+              <a class="a2a_button_facebook"></a>
+              <a class="a2a_button_twitter"></a>
+              <a class="a2a_button_google_plus"></a>
+              <a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+          </div>
+
+          <script async src="https://static.addtoany.com/menu/page.js"></script>
+
       </div>
       <div class="col-lg-4 col-md-4 col-sm-4">
         <aside class="right_content">
@@ -128,7 +140,7 @@
                 </div>
               </li>
               <li>
-                <div class="media wow fadeInDown"> <a href="blogContent.php" class="media-left"><img alt="" src="img/baby-ultrasound.jpeg"></a>
+                <div class="media wow fadeInDown"> <a href="blogContent.php" class="media-left"><img alt="" src="img/baby-ultrasound1.jpeg"></a>
                   <div class="media-body"> <a href="blogContent.php" class="catg_title">3 échographies essentielles</a> </div>
                 </div>
               </li>
@@ -159,5 +171,7 @@
 <script src="assets/js/blogJquery.newsTicker.min.js"></script> 
 <script src="assets/js/blogJquery.fancybox.pack.js"></script> 
 <script src="assets/js/blogCustom.js"></script>
+<script src="assets/js/selectChange.js"></script>
+
 </body>
 </html>

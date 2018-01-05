@@ -2,7 +2,8 @@
 session_start();
 include('../config.php');
 $user=getUser($conn,$_SESSION['client_id']);
-//$validity = date('d/m/Y', strtotime('+1 months'));
+$validity = $_SESSION['validity'];
+
  ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office"><head><meta http-equiv="X-UA-Compatible" content="IE=edge" /><meta name="viewport" content="width=device-width, initial-scale=1" /><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><meta name="apple-mobile-web-app-capable" content="yes" /><meta name="apple-mobile-web-app-status-bar-style" content="black" /><meta name="format-detection" content="telephone=no" /><title>IMPORTANT: Votre box vous attend!</title><link href="https://fonts.googleapis.com/icon?family=Roboto" rel="stylesheet" type="text/css" /><style type="text/css">
         /* Resets */

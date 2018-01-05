@@ -1899,6 +1899,9 @@ body > div.section1 > section > h2{
 	padding: 16px 50px !important;
 	border-radius: 32px !important;
 }
+.lastArticles img{
+	height: 340px;
+}
 iframe.video video{
 
 }

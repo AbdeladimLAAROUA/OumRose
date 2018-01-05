@@ -4,41 +4,41 @@
 	    <div class="timeline-content-day">
 	        <div class="timeline-line"></div>
 	        <div id="programme1" class="timeline-content-item" >
-	            <span>Enceinte : 3 à 7 mois</span>
+	            <span>Enceinte : 3 à 9 mois</span>
 	            <div class="timeline-content-item-reveal">
 	                <a href="oxProgramme.php">
 	                    <img src="img/guide1.png">
-	                    <span>Guide "Mon journal de Grossesse"</span>
+	                    <span class="programe-description">Guide "Mon journal de Grossesse"</span>
 	                </a>
 	            </div>
 	        </div>
 
 	        <div id="programme2" class="timeline-content-item" >
-	            <span>Enceinte : 3 à 7 mois</span>
+	            <span>Enceinte : 5 à 9 mois</span>
 	            <div class="timeline-content-item-reveal">
 	                <a href="oxProgramme.php">
 	                    <img src="img/guide1box.png">
-	                    <span>Box "Je suis enceinte" </span>
+	                    <span class="programe-description">Box "Je suis enceinte" </span>
 	                </a>
 	            </div>
 	        </div>
 
 	        <div id="programme3" class="timeline-content-item" >
-	            <span>Bébé : de la naissance à 2 mois</span>
+	            <span>Bébé : de la naissance à 5 mois</span>
 	            <div class="timeline-content-item-reveal">
 	                <a href="oxProgramme.php">
 	                    <img src="img/guide2box.png">
-	                    <span>Guide + Box "Bébé est là!"</span>
+	                    <span class="programe-description">Guide + Box "Bébé est là!"</span>
 	                </a>
 	            </div>
 	        </div>
 
 	        <div id="programme4" class="timeline-content-item" > <!-- data-timeline="hour-11" -->
-	            <span>Bébé : 6 à 8 mois</span>
+	            <span>Bébé : 6 à 12 mois</span>
 	            <div class="timeline-content-item-reveal">
 	                <a href="oxProgramme.php">
 	                    <img src="img/guide3box.png">
-	                    <span>Box "Bébé grandit"</span>
+	                    <span class="programe-description">Box "Bébé grandit"</span>
 	                </a>
 	            </div>
 	        </div>        
@@ -47,60 +47,31 @@
 </div>
 
 	<script type="text/javascript">
-		/*$(".timeline-wrapper .timeline-content-item > span").on("mouseenter mouseleave", function(e){
-		  $(this).parent().addClass("active");
-		   setTimeout(function(){
-		        $('.timeline-wrapper .timeline-content-item.active').removeClass('active');}, 2000);
-		});*/
+        var enable = true;
+		if(enable){
+            var slideCount = 4;
+            var currentID = 1;
+            var previousId = 4;
 
-		/*for (var i = 0; i < 1000000; i++) {
-			$("#programme1").addClass("active");
-		    setTimeout(function(){
-		        $('#programme1').removeClass('active');}, 2000);
+            $('#programme' + currentID).addClass("active");
+            $('#programme' + currentID + ' > span').css("display", "none");
+            setInterval(function () {
 
-		    $("#programme2").addClass("active");
-		    setTimeout(function(){
-		        $('#programme2').removeClass('active');}, 2000);
-		};*/
+                var nextID = currentID + 1;
+                if (nextID > slideCount) {
+                    nextID = 1;
+                    previousId = 3;
+                }
+                $('#programme' + currentID).addClass("active");
+                $('#programme' + currentID + ' > span').css("display", "none");
 
-		/*function animate() {
-		        $("#programme1").addClass("active");
-		    setTimeout(function(){
-		        $('#programme1').removeClass('active');}, 2000);
+                $('#programme' + nextID).removeClass("active");
+                $('#programme' + nextID + ' > span').css("display", "");
 
-		    $("#programme2").addClass("active");
-		    setTimeout(function(){
-		        $('#programme2').removeClass('active');}, 2000);
-		    animate();
-		    }
-		    animate();*/
-
-		/* $(".timeline-wrapper .timeline-content-item > span").on("mouseenter mouseleave", function(e){
-		   $(".timeline-wrapper .timeline-content-item.active").removeClass("active");
-		   $(this).parent().delay(3000).addClass("active");
-		 });*/
-
-		var slideCount = 4;
-		var currentID = 1;
-		var previousId =4;
-		
-		$('#programme' + currentID).addClass("active");
-		//Processing
-		setInterval(function(){
-		    var nextID = currentID + 1;
-		    if (nextID > slideCount) {
-		        nextID = 1;
-		        previousId=3;
-		    }
-		    $('#programme' + currentID).addClass("active");
-		    $('#programme' + currentID + ' > span').css("display","none");
-		   
-		    $('#programme' + nextID).removeClass("active");
-		    $('#programme' + nextID + ' > span').css("display","");
-
-		    $('#programme' + previousId).removeClass("active");
-		    $('#programme' + previousId + ' > span').css("display","");
-		    previousId=currentID;
-		    currentID = nextID;
-		},3000);
+                $('#programme' + previousId).removeClass("active");
+                $('#programme' + previousId + ' > span').css("display", "");
+                previousId = currentID;
+                currentID = nextID;
+            }, 3000);
+        }
 	</script>

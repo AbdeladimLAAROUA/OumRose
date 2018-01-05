@@ -41,7 +41,7 @@ $(function () {
 	
 	$("#add_post_btn").on("click", function() {
 
-		tinymce.init({
+		/*tinymce.init({
 			selector: "#description_post",
 			setup: function (editor) {
 				editor.on('change', function () {
@@ -55,7 +55,7 @@ $(function () {
 				"insertdatetime media table contextmenu paste"
 			],
 			toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image preview"
-		});
+		});*/
 		
 		tinymce.init({
 			selector: "#contenu_post",
@@ -87,7 +87,7 @@ $(function () {
 			var res = addCat(cat);
 			if(res.status == 'success'){
 				var id = res.inserted_id;
-				$('#alert_recover_ok_add_cat').css('visibility','visible').fadeIn(1500);
+				$('#alert_recover_ok_add_cat').css('display','none').fadeIn(1500);
 
 				table_cat.row.add([
 					id,
@@ -98,14 +98,49 @@ $(function () {
 
 				setTimeout(function(){
 					$('#add_cat').modal('toggle');
-					$('#alert_recover_ok_add_cat').css('visibility','hidden');
+					$('#alert_recover_ok_add_cat').css('display','none')
 				}, 2000);
 			}else{
-				$('#alert_recover_ko_add_cat').css('visibility','visible').fadeIn(1500);
+				$('#alert_recover_ko_add_cat').css('display','none').fadeIn(1500);
 
 				setTimeout(function(){
 					$('#add_cat').modal('toggle');
-					$('#alert_recover_ko_add_cat').css('visibility','hidden');
+					$('#alert_recover_ko_add_cat').css('display','none')
+				}, 2000);
+			}
+		}
+	})
+
+	$('#addTagForm').validator().on('submit', function (e) {
+		if (e.isDefaultPrevented()) {
+			// handle the invalid form...
+			console.log("parent handle the invalid form...");
+		} else {
+			// everything looks good!
+			console.log("parent everything looks good!");
+			var cat = getTagFromView();
+			var res = addTag(cat);
+			if(res.status == 'success'){
+				var id = res.inserted_id;
+				$('#alert_recover_ok_add_tag').css('display','none').fadeIn(1500);
+
+				table_cat.row.add([
+					id,
+					cat.catTitle,
+					'<button class="btn btn-primary btn-xs action" data-type="edit_cat" data-id="'+id+'" data-toggle="modal" data-target="#edit_cat" ><span class="glyphicon glyphicon-pencil"></span></button>'+
+					'<button class="btn btn-danger btn-xs action" data-type="delete_cat" data-id="'+id+'" data-toggle="modal" data-target="#delete_cat" ><span class="glyphicon glyphicon-trash"></span></button>'
+				]).draw(false);
+
+				setTimeout(function(){
+					$('#add_tag').modal('toggle');
+					$('#alert_recover_ok_add_tag').css('display','none')
+				}, 2000);
+			}else{
+				$('#alert_recover_ko_add_tag').css('display','none').fadeIn(1500);
+
+				setTimeout(function(){
+					$('#add_tag').modal('toggle');
+					$('#alert_recover_ko_add_tag').css('display','none')
 				}, 2000);
 			}
 		}
@@ -121,20 +156,20 @@ $(function () {
 			var cat = getCatFromViewEdit();
 			var res = updateCat(cat);
 			if(res.result == 'success'){
-				$('#alert_recover_ok_edit_cat').css('visibility','visible').fadeIn(1500);
+				$('#alert_recover_ok_edit_cat').css('display','none').fadeIn(1500);
 
 				$('#cat_'+cat.id+' td:nth-child(2)').html(cat.catTitle);
 
 				setTimeout(function(){
 					$('#edit_cat').modal('toggle');
-					$('#alert_recover_ok_edit_cat').css('visibility','hidden');
+					$('#alert_recover_ok_edit_cat').css('display','none')
 				}, 2000);
 			}else{
-				$('#alert_recover_ko_edit_cat').css('visibility','visible').fadeIn(1500);
+				$('#alert_recover_ko_edit_cat').css('display','none').fadeIn(1500);
 
 				setTimeout(function(){
 					$('#edit_cat').modal('toggle');
-					$('#alert_recover_ko_edit_cat').css('visibility','hidden');
+					$('#alert_recover_ko_edit_cat').css('display','none')
 				}, 2000);
 			}
 		}
@@ -146,7 +181,8 @@ $(function () {
 			console.log("handle the invalid form...");
 		} else {
 			// everything looks good!
-			console.log("everything looks good!");
+            e.preventDefault();
+			console.log("everything looks good !?");
 
 			var catArray = [];
 			$("#cat_div input:checkbox[name=categorie]:checked").each(function(){
@@ -162,15 +198,21 @@ $(function () {
 			if(catArray.length == 0){
 				alert('Veuillez choisir une catégorie ou plus !');
 			}else{
-				var desc 	= get_editor_content('description_post');
+
+                var formData = new FormData($("#addImageForm")[0]);
+                console.log($("#addImageForm"));
+                console.log(formData);
+                var file_name= AjaxRequestNoProcess(formData);
+				var desc 	= $('#description_post').val();
 				var content = get_editor_content('contenu_post');
 				var title 	= $('#title_post').val();
-				var post 	= {'title':title,'desc':desc,'content':content,'catArray':catArray};
+				var image 	= file_name;
+				var post 	= {'title':title,'desc':desc,'content':content,'catArray':catArray,'image':image};
 				var res		= addPost(post);
-				// console.log(res);
+
 				if(res.status == 'success'){
 					var id = res.inserted_id;
-					$('#alert_recover_ok_add_post').css('visibility','visible').fadeIn(1500);
+					$('#alert_recover_ok_add_post').css('display','none').fadeIn(1500);
 
 					// $( ".details-control" ).each(function( index ) {
 					// 	console.log( index + ": " + $( this ).text() );
@@ -181,14 +223,21 @@ $(function () {
 
 					setTimeout(function(){
 						$('#add_post').modal('toggle');
-						$('#alert_recover_ok_add_post').css('visibility','hidden');
-					}, 2000);
+						$('#alert_recover_ok_add_post').css('display','none')
+					}, 2000)
+                    swal({
+                        title: "Success",
+                        text: "OK",
+                        type: "success",
+                        timer: 2000,
+                        showConfirmButton: false
+                    });
 				}else{
-					$('#alert_recover_ko_add_post').css('visibility','visible').fadeIn(1500);
+					$('#alert_recover_ko_add_post').css('display','none').fadeIn(1500);
 
 					setTimeout(function(){
 						$('#add_post').modal('toggle');
-						$('#alert_recover_ko_add_post').css('visibility','hidden');
+						$('#alert_recover_ko_add_post').css('display','none')
 					}, 2000);
 				}
 			}
@@ -211,14 +260,14 @@ $(function () {
 			if(catArray.length == 0){
 				alert('Veuillez choisir une catégorie ou plus !');
 			}else{
-				var desc 	= get_editor_content('description_post_edit');
+				var desc 	= $('#description_post_edit').val();
 				var content = get_editor_content('contenu_post_edit');
 				var title 	= $('#title_post_edit').val();
 				var post 	= {'title':title,'desc':desc,'content':content,'catArray':catArray, 'postId':id_post};
 				var res		= updatePost(post);
 				var status  = res.status;
 				if($(catArray).not(arrCats).length === 0 && $(arrCats).not(catArray).length === 0){
-					alert("The same !!");
+					console.log("The same !!");
 				}else{
 					var etat, diff = [];
 					if(catArray.length > arrCats.length){
@@ -247,20 +296,34 @@ $(function () {
 
 				if(status == 'success'){
 					var id = res.inserted_id;
-					$('#alert_recover_ok_edit_post').css('visibility','visible').fadeIn(1500);
+					$('#alert_recover_ok_edit_post').css('display','none').fadeIn(2000);
 
 					resetCatsPostsTable();
-
+                    swal({
+                        title: "Success",
+                        text: "OK",
+                        type: "success",
+                        timer: 2000,
+                        showConfirmButton: false
+                    });
+                    alert('here');
 					setTimeout(function(){
 						$('#edit_post').modal('toggle');
-						$('#alert_recover_ok_edit_post').css('visibility','hidden');
+						$('#alert_recover_ok_edit_post').css('display','none')
 					}, 2000);
 				}else{
-					$('#alert_recover_ko_edit_post').css('visibility','visible').fadeIn(1500);
+                    swal({
+                        title: "Success",
+                        text: "OK",
+                        type: "success",
+                        timer: 2000,
+                        showConfirmButton: false
+                    });
+					$('#alert_recover_ok_edit_post').css('display','none').fadeIn(2000);
 
 					setTimeout(function(){
 						$('#edit_post').modal('toggle');
-						$('#alert_recover_ko_edit_post').css('visibility','hidden');
+						$('#alert_recover_ok_edit_post').css('display','none')
 					}, 2000);
 				}
 			}
@@ -323,7 +386,7 @@ $(function () {
 					arrCats.push(val.catID);
 				});
 
-				tinymce.init({
+				/*tinymce.init({
 					selector: "#description_post_edit",
 					setup: function (editor) {
 						editor.on('change', function () {
@@ -337,7 +400,7 @@ $(function () {
 						"insertdatetime media table contextmenu paste"
 					],
 					toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
-				});
+				});*/
 				
 				tinymce.init({
 					selector: "#contenu_post_edit",
@@ -434,6 +497,11 @@ function addCat(cat) {
 	res = AjaxRequest(obj);
 	return res;
 }
+function addTag(tag) {
+	var res,obj = {'methode' : 'addTag', 'tag': tag };
+	res = AjaxRequest(obj);
+	return res;
+}
 
 function updateCat(cat) {
 	var res,obj = {'methode' : 'updateCat', 'cat': cat };
@@ -510,6 +578,7 @@ function deletePostCatUp(id_post,id_cat) {
 
 function AjaxRequest(obj) {
 	var res = null;
+    console.log(obj);
 	$.ajax({
 		url : "./lib/util.php",
 		dataType: "json",
@@ -517,7 +586,7 @@ function AjaxRequest(obj) {
 		data : obj,
 		async : false,
 		success: function(data, textStatus, jqXHR) {
-			//console.log(data);
+			console.log(data);
 			res = data;
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
@@ -529,8 +598,35 @@ function AjaxRequest(obj) {
 	return res;
 }
 
+function AjaxRequestNoProcess(obj) {
+    var res = null;
+    $.ajax({
+        type: "POST",
+        url: "./lib/uploadImage.php",
+        data: obj,
+        cache: false,
+        contentType: false,
+        processData: false,
+        async:false,
+        success: function (data, textStatus, jqXHR) {
+            console.log(data);
+            res=data;
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR);
+            console.log(textStatus);
+            console.log(errorThrown);
+        }
+    });
+    return res;
+}
+
 function getCatFromView(){
 	var name = $('#nom_add_cat').val();
+	return {'catTitle':name};
+}
+function getTagFromView(){
+	var name = $('#nom_add_tag').val();
 	return {'catTitle':name};
 }
 
@@ -585,11 +681,28 @@ function addCatList(id_div){
 	var cats = getAllCats()['result'];
 
 	$(id_div).empty();
+    $("#tag_div").empty();
+    $("#edit_tag_div").empty();
 
 	$.each(cats, function(key, val) {
-		var checkbox = '<div class="checkbox"><label><input type="checkbox" name="categorie" value="'+val.catID+'">'+val.catTitle+'</label></div>';
-		$(id_div).append(checkbox);
-		// console.log(val);
+        var checkbox = '<div class="checkbox"><label><input type="checkbox" name="categorie" value="' + val.catID + '">' + val.catTitle + '</label></div>';
+        $(id_div).append(checkbox);
+
+		/*if(val.type==="cat"){
+            var checkbox = '<div class="checkbox"><label><input type="checkbox" name="categorie" value="' + val.catID + '">' + val.catTitle + '</label></div>';
+            $(id_div).append(checkbox);
+		}else{
+            var checkbox = '<div class="checkbox"><label><input type="checkbox" name="categorie" value="' + val.catID + '">' + val.catTitle + '</label></div>';
+            $("#tag_div").append(checkbox);
+            $("#edit_tag_div").append(checkbox);
+		}*/
+
+	});
+
+
+
+	$.each(cats, function(key, val) {
+
 	});
 }
 

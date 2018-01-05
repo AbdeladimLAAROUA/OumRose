@@ -2,6 +2,10 @@
 <html>
 <head>
 <title>Oumbox</title>
+    <meta property="og:title" content="Checklist équipement repas de bébé">
+    <meta property="og:image" content="http://beta.oumbox.com/img/thumbnail/repas_bb.jpg">
+    <meta property="og:url" content="http://beta.oumbox.com/blogContent-bb3.php">
+
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -137,7 +141,9 @@
            <li>Bavoirs</li>
         </ul>
        
-       
+       <?php
+       include ('shareContent.php');
+       ?>
       </div>
       <div class="col-lg-4 col-md-4 col-sm-4">
         <aside class="right_content">

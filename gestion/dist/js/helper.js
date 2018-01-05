@@ -23,7 +23,7 @@ app.config(function($routeProvider) {
         templateUrl : "pages/views/eligibleBox3.html"
     })
     .when("/allCommande", {
-        templateUrl : "pages/views/allCommande.html"
+        templateUrl : "pages/views/commandes.php"
     })
     .when("/commandeSB", {
         templateUrl : "pages/views/commandeSB.php"
@@ -51,7 +51,19 @@ app.config(function($routeProvider) {
     })
     .when("/gestionClient", {
         templateUrl : "pages/views/listClient_2.php"
-    })    
+    })
+    .when("/membersEnabled", {
+        templateUrl : "pages/views/listClientEnabled.php"
+    })
+    .when("/membersDisabled", {
+        templateUrl : "pages/views/listClientDisabled.php"
+    })
+    .when("/findMembers", {
+        templateUrl : "pages/views/findMembers.php"
+    })
+    .when("/listPartners", {
+    templateUrl : "pages/views/listPartners.php"
+    })
     .otherwise({
         redirectTo: '/main'
     });

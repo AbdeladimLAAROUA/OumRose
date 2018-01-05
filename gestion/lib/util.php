@@ -2,190 +2,206 @@
 session_start();
 //include('config.php');
 function db_connect(){
-	$params = getConnexionParams();
+    $params = getConnexionParams();
 
-	$hote		=$params['hote'];
-	$passDb 	=$params['passDb'];
-	$bd 		=$params['bd'];
-	$user		=$params['user'];
+    $hote		=$params['hote'];
+    $passDb 	=$params['passDb'];
+    $bd 		=$params['bd'];
+    $user		=$params['user'];
 
-	$connexion = new PDO('mysql:host='.$hote.';dbname='.$bd.';charset=utf8', $user, $passDb);
+    $connexion = new PDO('mysql:host='.$hote.';dbname='.$bd.';charset=utf8', $user, $passDb);
 
-	return $connexion;
+    return $connexion;
 }
 
 function getConnexionParams(){
-	$array = array();
+    $array = array();
 
-	/*Local Kindy*/
+    /*Local Kindy*/
 
-	/*$array['hote']		= 'localhost';
-	$array['passDb'] 	= 'S3cr3T%44';
-	$array['bd'] 		= 'oumdev_leads';
-	$array['user']		= 'root';
-	*/
-	/*Local*/
+    /*$array['hote']		= 'localhost';
+    $array['passDb'] 	= 'S3cr3T%44';
+    $array['bd'] 		= 'oumdev_leads';
+    $array['user']		= 'root';
+    */
+    /*Local*/
 
-	$array['hote']		= 'localhost';
-	$array['passDb'] 	= '';
-	$array['bd'] 		= 'oumdev_leads';
-	$array['user']		= 'root';
-	
-	/*Distant*/
+    	/*$array['hote']		= 'localhost';
+        $array['passDb'] 	= '';
+        $array['bd'] 		= 'oumdev_leads';
+        $array['user']		= 'root';*/
 
-/*	$array['hote']		= 'localhost';
-	$array['passDb'] 	= 'oumdev';
-	$array['bd'] 		= 'id709237_oumdev_leads';
-	$array['user']		= 'id709237_oumdev';*/
-	
-	/*oumtest*/
-	
-	/*$array['hote']		= 'sql.k4mshost.odns.fr';
-	$array['passDb'] 	= '!!oumb0x';
-	$array['bd'] 		= 'k4mshost_oumbeta';
-	$array['user']		= 'k4mshost_oumdev';*/
+    /*Distant*/
 
-	/*oumtest*/
-	
-	/*$array['hote']		= 'sql.k4mshost.odns.fr';
-	$array['passDb'] 	= '!!oumb0x';
-	$array['bd'] 		= 'k4mshost_oumbeta';
-	$array['user']		= 'k4mshost_oumdev';*/
+    /*	$array['hote']		= 'localhost';
+        $array['passDb'] 	= 'oumdev';
+        $array['bd'] 		= 'id709237_oumdev_leads';
+        $array['user']		= 'id709237_oumdev';*/
 
-	return $array;
+    /*oumtest*/
+
+    /*$array['hote']		= 'sql.k4mshost.odns.fr';
+    $array['passDb'] 	= '!!oumb0x';
+    $array['bd'] 		= 'k4mshost_oumbeta';
+    $array['user']		= 'k4mshost_oumdev';*/
+
+    /*oumtest*/
+
+    $array['hote']		= 'bdd.k4mshost.odns.fr';
+    $array['passDb'] 	= '!!oumb0x';
+    $array['bd'] 		= 'k4mshost_oumbeta';
+    $array['user']		= 'k4mshost_oumdev';
+
+    return $array;
 }
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-	if(isset($_REQUEST['methode'])){
-		if($_REQUEST['methode'] == 'getCustomerType'){
-			echo getCustomerType();
-		}else if($_REQUEST['methode'] == 'getCustomerAgeRange'){
-			echo getCustomerAgeRange();
-		}else if($_REQUEST['methode'] == 'getCustomerVille'){
-			echo getCustomerVille();
-		}else if($_REQUEST['methode'] == 'getBabySex'){
-			echo getBabySex();
-		}else if($_REQUEST['methode'] == 'getClientDash'){
-			echo getClientDash();
-		}else if($_REQUEST['methode'] == 'getBabyDash'){
-			echo getBabyDash();
-		}else if($_REQUEST['methode'] == 'getAllClient2'){
-			echo getAllClient2();
-		}else if($_REQUEST['methode'] == 'getClient'){
-			echo getClient($_REQUEST['id']);
-		}else if($_REQUEST['methode'] == 'getClient2'){
-			echo getClient2($_REQUEST['id']);
-		}else if($_REQUEST['methode'] == 'deleteFullClient'){
-			echo deleteFullClient($_REQUEST['id']);
-		}else if($_REQUEST['methode'] == 'getAllCities'){
-			echo getAllCities();
-		}else if($_REQUEST['methode'] == 'getAllTypeMoms'){
-			echo getAllTypeMoms();
-		}else if($_REQUEST['methode'] == 'createClient'){
-			echo createClient($_REQUEST['client']);
-		}else if($_REQUEST['methode'] == 'updateClient'){
-			echo updateClient($_REQUEST['client'],$_REQUEST['baby']);
-		}else if($_REQUEST['methode'] == 'blockUser'){
-			echo blockUser($_REQUEST['id']);
-		}else if($_REQUEST['methode'] == 'getAllBox'){
-			echo getAllBox();
-		}else if($_REQUEST['methode'] == 'getAllProduct'){
-			echo getAllProduct();
-		}else if($_REQUEST['methode'] == 'getAllShop'){
-			echo getAllShop();
-		}else if($_REQUEST['methode'] == 'getBoxById'){
-			echo getBoxById($_REQUEST['id']);
-		}else if($_REQUEST['methode'] == 'getProductById'){
-			echo getProductById($_REQUEST['id']);
-		}else if($_REQUEST['methode'] == 'addProduct'){
-			echo addProduct($_REQUEST['product']);
-		}else if($_REQUEST['methode'] == 'addBox'){
-			echo addBox($_REQUEST['box']);
-		}else if($_REQUEST['methode'] == 'deleteBox'){
-			echo deleteBox($_REQUEST['id']);
-		}else if($_REQUEST['methode'] == 'deleteProduct'){
-			echo deleteProduct($_REQUEST['id']);
-		}else if($_REQUEST['methode'] == 'updateBox'){
-			echo updateBox($_REQUEST['box']);
-		}else if($_REQUEST['methode'] == 'updateProduct'){
-			echo updateProduct($_REQUEST['product']);
-		}else if($_REQUEST['methode'] == 'getAllCats'){
-			echo getAllCats();
-		}else if($_REQUEST['methode'] == 'getCatById'){
-			echo getCatById($_REQUEST['id']);
-		}else if($_REQUEST['methode'] == 'addCat'){
-			echo addCat($_REQUEST['cat']);
-		}else if($_REQUEST['methode'] == 'updateCat'){
-			echo updateCat($_REQUEST['cat']);
-		}else if($_REQUEST['methode'] == 'deleteCat'){
-			echo deleteCat($_REQUEST['id']);
-		}else if($_REQUEST['methode'] == 'getNumberPostsByCat'){
-			echo getNumberPostsByCat();
-		}else if($_REQUEST['methode'] == 'getPostsByCatId'){
-			echo getPostsByCatId($_REQUEST['id']);
-		}else if($_REQUEST['methode'] == 'addPost'){
-			echo addPost($_REQUEST['post']);
-		}else if($_REQUEST['methode'] == 'deletePost'){
-			echo deletePost($_REQUEST['id']);
-		}else if($_REQUEST['methode'] == 'getCatsByPostId'){
-			echo getCatsByPostId($_REQUEST['id']);
-		}else if($_REQUEST['methode'] == 'getPostById'){
-			echo getPostById($_REQUEST['id']);
-		}else if($_REQUEST['methode'] == 'updatePost'){
-			echo updatePost($_REQUEST['post']);
-		}else if($_REQUEST['methode'] == 'addPostCat'){
-			echo addPostCat($_REQUEST['id_post'],$_REQUEST['id_cat']);
-		}else if($_REQUEST['methode'] == 'deleteCatPost'){
-			echo deleteCatPost($_REQUEST['id_post']);
-		}else if($_REQUEST['methode'] == 'deletePostCatUp'){
-			echo deleteCatPostUpdatePost($_REQUEST['id_post'],$_REQUEST['id_cat']);
-		}else if($_REQUEST['methode'] == 'updateVilles'){
-			echo updateVilles();
-		}else if($_REQUEST['methode'] == 'updateRelais'){
-			echo updateRelais($_REQUEST['relais']);
-		}else if($_REQUEST['methode'] == 'getRelaisListByVille'){
-			echo getRelaisListByVille($_REQUEST['id_ville']);
-		}else if($_REQUEST['methode'] == 'getRelaisById'){
-			echo getRelaisById($_REQUEST['id_relais']);
-		}else if($_REQUEST['methode'] == 'addLivraison'){
-			echo addLivraison($_REQUEST['livraison']);
-		}else if($_REQUEST['methode'] == 'updateLivraison'){
-			echo updateLivraison($_REQUEST['livraison']);
-		}else if($_REQUEST['methode'] == 'isUserAlreadyExist'){
-			echo isUserAlreadyExist($_REQUEST['email']);
-		}else if($_REQUEST['methode'] == 'getCurrentUser'){
-			echo getCurrentUser();
-		}else if($_REQUEST['methode'] == 'getCommandesLD'){
-			echo getCommandesLD();
-		}else if($_REQUEST['methode'] == 'getCommandesOX'){
-			echo getCommandesOX();
-		}else if($_REQUEST['methode'] == 'getCommandesCL'){
-			echo getCommandesCL();
-		}else if($_REQUEST['methode'] == 'getCommandesSB'){
-			echo getCommandesSB();
-		}else if($_REQUEST['methode'] == 'getAllCommandes'){
-			echo getAllCommandes();
-		}else if($_REQUEST['methode'] == 'getAllCommandes2'){
-			echo getAllCommandes2();
-		}else if($_REQUEST['methode'] == 'getAllCommandeByCus'){
-			echo getAllCommandeByCus($_REQUEST['id_cus']);
-		}else if($_REQUEST['methode'] == 'updateBaby'){
-			echo updateBaby($_REQUEST['baby']);
-		}else if($_REQUEST['methode'] == 'searchUser'){
-			echo searchUser($_REQUEST['user']);
-		}else if($_REQUEST['methode'] == 'getLivraison'){
-			echo getLivraison($_REQUEST['id']);
-		}else if($_REQUEST['methode'] == 'getAllQuartiers'){
-			echo getAllQuartiers();
-		}else if($_REQUEST['methode'] == 'deleteCommande'){
-			echo deleteCommande($_REQUEST['id']);
-		}else if($_REQUEST['methode'] == 'emailOrGsmAlreadyExists'){
-			echo emailOrGsmAlreadyExists($_REQUEST['email'],$_REQUEST['gsm']);
-		}else{
-			echo json_encode(array('result'=>'method_not_exist'));
-		}
-	}else{
-		echo json_encode(array('result'=>'no_method_selected'));
-	}
+    if(isset($_REQUEST['methode'])){
+        if($_REQUEST['methode'] == 'getCustomerType'){
+            echo getCustomerType();
+        }else if($_REQUEST['methode'] == 'getCustomerAgeRange'){
+            echo getCustomerAgeRange();
+        }else if($_REQUEST['methode'] == 'getCustomerVille'){
+            echo getCustomerVille();
+        }else if($_REQUEST['methode'] == 'getBabySex'){
+            echo getBabySex();
+        }else if($_REQUEST['methode'] == 'getClientDash'){
+            echo getClientDash();
+        }else if($_REQUEST['methode'] == 'getBabyDash'){
+            echo getBabyDash();
+        }else if($_REQUEST['methode'] == 'getAllClient2'){
+            echo getAllClient2();
+        }else if($_REQUEST['methode'] == 'getClient'){
+            echo getClient($_REQUEST['id']);
+        }else if($_REQUEST['methode'] == 'getPartner'){
+            echo getPartner($_REQUEST['id']);
+        }else if($_REQUEST['methode'] == 'getClient2'){
+            echo getClient2($_REQUEST['id']);
+        }else if($_REQUEST['methode'] == 'deleteFullClient'){
+            echo deleteFullClient($_REQUEST['id']);
+        }else if($_REQUEST['methode'] == 'getAllCities'){
+            echo getAllCities();
+        }else if($_REQUEST['methode'] == 'getAllCitiesOx'){
+            echo getAllCitiesOx();
+        }else if($_REQUEST['methode'] == 'getAllTypeMoms'){
+            echo getAllTypeMoms();
+        }else if($_REQUEST['methode'] == 'createClient'){
+            echo createClient($_REQUEST['client']);
+        }else if($_REQUEST['methode'] == 'createPartner'){
+            echo createPartner($_REQUEST['partner']);
+        }else if($_REQUEST['methode'] == 'updateClient'){
+            echo updateClient($_REQUEST['client'],$_REQUEST['baby']);
+        }else if($_REQUEST['methode'] == 'updatePartner'){
+            echo updatePartner($_REQUEST['partner']);
+        }else if($_REQUEST['methode'] == 'blockUser'){
+            echo blockUser($_REQUEST['id']);
+        }else if($_REQUEST['methode'] == 'getAllBox'){
+            echo getAllBox();
+        }else if($_REQUEST['methode'] == 'getAllProduct'){
+            echo getAllProduct();
+        }else if($_REQUEST['methode'] == 'getAllShop'){
+            echo getAllShop();
+        }else if($_REQUEST['methode'] == 'getAllActivatedShop'){
+            echo getAllActivatedShop();
+        }else if($_REQUEST['methode'] == 'getBoxById'){
+            echo getBoxById($_REQUEST['id']);
+        }else if($_REQUEST['methode'] == 'getProductById'){
+            echo getProductById($_REQUEST['id']);
+        }else if($_REQUEST['methode'] == 'getPostsDetailsByCatId'){
+            echo getPostsDetailsByCatId($_REQUEST['id']);
+        }else if($_REQUEST['methode'] == 'addProduct'){
+            echo addProduct($_REQUEST['product']);
+        }else if($_REQUEST['methode'] == 'addBox'){
+            echo addBox($_REQUEST['box']);
+        }else if($_REQUEST['methode'] == 'deleteBox'){
+            echo deleteBox($_REQUEST['id']);
+        }else if($_REQUEST['methode'] == 'deleteProduct'){
+            echo deleteProduct($_REQUEST['id']);
+        }else if($_REQUEST['methode'] == 'updateBox'){
+            echo updateBox($_REQUEST['box']);
+        }else if($_REQUEST['methode'] == 'updateProduct'){
+            echo updateProduct($_REQUEST['product']);
+        }else if($_REQUEST['methode'] == 'getAllCats'){
+            echo getAllCats();
+        }else if($_REQUEST['methode'] == 'getCatById'){
+            echo getCatById($_REQUEST['id']);
+        }else if($_REQUEST['methode'] == 'addCat'){
+            echo addCat($_REQUEST['cat']);
+        }else if($_REQUEST['methode'] == 'addTag'){
+            echo addTag($_REQUEST['tag']);
+        }else if($_REQUEST['methode'] == 'updateCat'){
+            echo updateCat($_REQUEST['cat']);
+        }else if($_REQUEST['methode'] == 'deleteCat'){
+            echo deleteCat($_REQUEST['id']);
+        }else if($_REQUEST['methode'] == 'getNumberPostsByCat'){
+            echo getNumberPostsByCat();
+        }else if($_REQUEST['methode'] == 'getPostsByCatId'){
+            echo getPostsByCatId($_REQUEST['id']);
+        }else if($_REQUEST['methode'] == 'addPost'){
+            echo addPost($_REQUEST['post']);
+        }else if($_REQUEST['methode'] == 'deletePost'){
+            echo deletePost($_REQUEST['id']);
+        }else if($_REQUEST['methode'] == 'getCatsByPostId'){
+            echo getCatsByPostId($_REQUEST['id']);
+        }else if($_REQUEST['methode'] == 'getPostById'){
+            echo getPostById($_REQUEST['id']);
+        }else if($_REQUEST['methode'] == 'updatePost'){
+            echo updatePost($_REQUEST['post']);
+        }else if($_REQUEST['methode'] == 'addPostCat'){
+            echo addPostCat($_REQUEST['id_post'],$_REQUEST['id_cat']);
+        }else if($_REQUEST['methode'] == 'deleteCatPost'){
+            echo deleteCatPost($_REQUEST['id_post']);
+        }else if($_REQUEST['methode'] == 'deletePostCatUp'){
+            echo deleteCatPostUpdatePost($_REQUEST['id_post'],$_REQUEST['id_cat']);
+        }else if($_REQUEST['methode'] == 'updateVilles'){
+            echo updateVilles();
+        }else if($_REQUEST['methode'] == 'updateRelais'){
+            echo updateRelais($_REQUEST['relais']);
+        }else if($_REQUEST['methode'] == 'getRelaisListByVille'){
+            echo getRelaisListByVille($_REQUEST['id_ville']);
+        }else if($_REQUEST['methode'] == 'getRelaisById'){
+            echo getRelaisById($_REQUEST['id_relais']);
+        }else if($_REQUEST['methode'] == 'addLivraison'){
+            echo addLivraison($_REQUEST['livraison']);
+        }else if($_REQUEST['methode'] == 'updateLivraison'){
+            echo updateLivraison($_REQUEST['livraison']);
+        }else if($_REQUEST['methode'] == 'isUserAlreadyExist'){
+            echo isUserAlreadyExist($_REQUEST['email']);
+        }else if($_REQUEST['methode'] == 'getCurrentUser'){
+            echo getCurrentUser();
+        }else if($_REQUEST['methode'] == 'getCommandesLD'){
+            echo getCommandesLD();
+        }else if($_REQUEST['methode'] == 'getCommandesOX'){
+            echo getCommandesOX();
+        }else if($_REQUEST['methode'] == 'getCommandesCL'){
+            echo getCommandesCL();
+        }else if($_REQUEST['methode'] == 'getCommandesSB'){
+            echo getCommandesSB();
+        }else if($_REQUEST['methode'] == 'getAllCommandes'){
+            echo getAllCommandes();
+        }else if($_REQUEST['methode'] == 'getAllCommandes2'){
+            echo getAllCommandes2();
+        }else if($_REQUEST['methode'] == 'getAllCommandeByCus'){
+            echo getAllCommandeByCus($_REQUEST['id_cus']);
+        }else if($_REQUEST['methode'] == 'updateBaby'){
+            echo updateBaby($_REQUEST['baby']);
+        }else if($_REQUEST['methode'] == 'searchUser'){
+            echo searchUser($_REQUEST['user']);
+        }else if($_REQUEST['methode'] == 'getLivraison'){
+            echo getLivraison($_REQUEST['id']);
+        }else if($_REQUEST['methode'] == 'getAllQuartiers'){
+            echo getAllQuartiers();
+        }else if($_REQUEST['methode'] == 'deleteCommande'){
+            echo deleteCommande($_REQUEST['id']);
+        }else if($_REQUEST['methode'] == 'emailOrGsmAlreadyExists'){
+            echo emailOrGsmAlreadyExists($_REQUEST['email'],$_REQUEST['gsm']);
+        }else if($_REQUEST['methode'] == 'getCustomerCoulumns'){
+            echo getCustomerCoulumns();
+        }else{
+            echo json_encode(array('result'=>'method_not_exist'));
+        }
+    }else{
+        echo json_encode(array('result'=> $_REQUEST));
+    }
 }
 
 // $id = 216;
@@ -199,177 +215,209 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 // echo addProduct($res);
 
 function loginGestion($email,$password){
-	$array = array();
-	try {
-		$connexion = db_connect();
-		$resultats = $connexion->prepare("SELECT * FROM user WHERE email=:email and password =:password");
+    $array = array();
+    try {
+        $connexion = db_connect();
+        $resultats = $connexion->prepare("SELECT * FROM user WHERE email=:email and password =:password");
 
-    	$resultats->bindParam(':email', $email);
-    	$resultats->bindParam(':password', $password);
+        $resultats->bindParam(':email', $email);
+        $resultats->bindParam(':password', $password);
 
-		$resultats->execute();
+        $resultats->execute();
 
-		$resultats->setFetchMode(PDO::FETCH_OBJ);
-		$resultat = $resultats->fetch();
+        $resultats->setFetchMode(PDO::FETCH_OBJ);
+        $resultat = $resultats->fetch();
 
-		if($resultats->rowCount() > 0){
-			$_SESSION['UserId'] = $resultat->id;
-			$_SESSION['name'] 	= $resultat->nom;
-			$_SESSION['role_a'] = $resultat->role;
-			$array['result'] 	= true;
-			$array['infos'] 	= $resultat;
-		}else{
-			$array['result'] 	= false;
-			$array['infos'] 	= 'Not_Found';
-		}
-	} catch (Exception $e) {
-		$array['result'] 	= false;
-		$array['infos'] 	= 'Exception';
-	}
-	
-	$connexion = null;
-	return json_encode($array);	
+        if($resultats->rowCount() > 0){
+            $_SESSION['UserId'] = $resultat->id;
+            $_SESSION['name'] 	= $resultat->nom;
+            $_SESSION['role_a'] = $resultat->role;
+            $array['result'] 	= true;
+            $array['infos'] 	= $resultat;
+        }else{
+            $array['result'] 	= false;
+            $array['infos'] 	= 'Not_Found';
+        }
+    } catch (Exception $e) {
+        $array['result'] 	= false;
+        $array['infos'] 	= 'Exception';
+    }
+
+    $connexion = null;
+    return json_encode($array);
 }
 
 function getAllCities(){
-	  $array = array();
-	 try
-       {
-       	  $conn = db_connect();
-          $stmt = $conn->prepare("SELECT * FROM ville order by name");
-          $stmt->execute();
-          $villes = array();
-          $villes1=array();
-          $villes2=array();
-          if ($stmt->execute()) {
-              while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                  if($row['name']=='Casablanca' or $row['name']=='Rabat' or $row['name']=='Marrakech'){
+    $array = array();
+    try
+    {
+        $conn = db_connect();
+        $stmt = $conn->prepare("SELECT * FROM ville order by name");
+        $stmt->execute();
+        $villes = array();
+        $villes1=array();
+        $villes2=array();
+        if ($stmt->execute()) {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                if($row['name']=='Casablanca' or $row['name']=='Rabat' or $row['name']=='Marrakech'){
                     $villes1[] = $row;
-                  }else{
-                     $villes2[] = $row;
-                  }
-              }
-              $villes=array_merge($villes1, $villes2);
-			  $array['result'] = $villes;
-          }
-       }
-       catch(PDOException $e)
-       {
-       	   $array['result'] = 0;
-           echo $e->getMessage();
-       }
-	
-	$conn = null;
-	return json_encode($array);	
+                }else{
+                    $villes2[] = $row;
+                }
+            }
+            $villes=array_merge($villes1, $villes2);
+            $array['result'] = $villes;
+        }
+    }
+    catch(PDOException $e)
+    {
+        $array['result'] = 0;
+        echo $e->getMessage();
+    }
+
+    $conn = null;
+    return json_encode($array);
+}
+function getAllCitiesOx(){
+    $array = array();
+    try
+    {
+        $conn = db_connect();
+        $stmt = $conn->prepare("SELECT * FROM villeOx order by name");
+        $stmt->execute();
+        $villes = array();
+        $villes1=array();
+        $villes2=array();
+        if ($stmt->execute()) {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                if($row['name']=='Casablanca' or $row['name']=='Rabat' or $row['name']=='Marrakech'){
+                    $villes1[] = $row;
+                }else{
+                    $villes2[] = $row;
+                }
+            }
+            $villes=array_merge($villes1, $villes2);
+            $array['result'] = $villes;
+        }
+    }
+    catch(PDOException $e)
+    {
+        $array['result'] = 0;
+        echo $e->getMessage();
+    }
+
+    $conn = null;
+    return json_encode($array);
 }
 
 function getAllTypeMoms(){
-	$array = array();
-	try {
-		$connexion = db_connect();
-		$resultats = $connexion->prepare("SELECT DISTINCT type FROM customer");
+    $array = array();
+    try {
+        $connexion = db_connect();
+        $resultats = $connexion->prepare("SELECT DISTINCT type FROM customer");
 
-		$resultats->execute();
+        $resultats->execute();
 
-		$resultats->setFetchMode(PDO::FETCH_OBJ);
-		$resultat = $resultats->fetchAll();
-		$array['result'] = $resultat;
-	} catch (Exception $e) {
-		$array['result'] = 0;
-	}
-	
-	$connexion = null;
-	return json_encode($array);	
+        $resultats->setFetchMode(PDO::FETCH_OBJ);
+        $resultat = $resultats->fetchAll();
+        $array['result'] = $resultat;
+    } catch (Exception $e) {
+        $array['result'] = 0;
+    }
+
+    $connexion = null;
+    return json_encode($array);
 }
 
 function getCustomerType(){
-	$array = array();
-	try {
-		$connexion = db_connect();
-		$resultats = $connexion->prepare("SELECT type, ROUND(COUNT(*) / (SELECT COUNT(*) FROM `customer`) *100) AS poucentage , COUNT(*) AS nbr FROM `customer` GROUP BY type");
+    $array = array();
+    try {
+        $connexion = db_connect();
+        $resultats = $connexion->prepare("SELECT type, ROUND(COUNT(*) / (SELECT COUNT(*) FROM `customer`) *100) AS poucentage , COUNT(*) AS nbr FROM `customer` GROUP BY type");
 
-		$resultats->execute();
+        $resultats->execute();
 
-		$resultats->setFetchMode(PDO::FETCH_OBJ);
-		$resultat = $resultats->fetchAll();
-		$array['result'] = $resultat;
-	} catch (Exception $e) {
-		$array['result'] = 0;
-	}
-	
-	$connexion = null;
-	return json_encode($array);	
+        $resultats->setFetchMode(PDO::FETCH_OBJ);
+        $resultat = $resultats->fetchAll();
+        $array['result'] = $resultat;
+    } catch (Exception $e) {
+        $array['result'] = 0;
+    }
+
+    $connexion = null;
+    return json_encode($array);
 }
 
 function getCustomerAgeRange(){
-	$array = array();
-	try {
-		$connexion = db_connect();
-		$resultats = $connexion->prepare("SELECT COUNT(*) as nbr, CASE WHEN age >=0 AND age <=18 THEN '00-18' WHEN age >=19 AND age <=20 THEN '19-20' WHEN age >=21 AND age <=25 THEN '21-25' WHEN age >=26 AND age <=30 THEN '26-30' WHEN age >=31 AND age <=35 THEN '31-35' WHEN age >=36 AND age <=40 THEN '36-40' WHEN age >=40 THEN '40+' END AS ageband FROM ( SELECT YEAR(NOW()) - YEAR(`naissance`) as age FROM `customer` ) t group by ageband Order by ageband");
+    $array = array();
+    try {
+        $connexion = db_connect();
+        $resultats = $connexion->prepare("SELECT COUNT(*) as nbr, CASE WHEN age >=0 AND age <=18 THEN '00-18' WHEN age >=19 AND age <=20 THEN '19-20' WHEN age >=21 AND age <=25 THEN '21-25' WHEN age >=26 AND age <=30 THEN '26-30' WHEN age >=31 AND age <=35 THEN '31-35' WHEN age >=36 AND age <=40 THEN '36-40' WHEN age >=40 THEN '40+' END AS ageband FROM ( SELECT YEAR(NOW()) - YEAR(`naissance`) as age FROM `customer` ) t group by ageband Order by ageband");
 
-		$resultats->execute();
+        $resultats->execute();
 
-		$resultats->setFetchMode(PDO::FETCH_OBJ);
-		$resultat = $resultats->fetchAll();
-		$array['result'] = $resultat;
-	} catch (Exception $e) {
-		$array['result'] = 0;
-	}
-	
-	$connexion = null;
-	return json_encode($array);	
+        $resultats->setFetchMode(PDO::FETCH_OBJ);
+        $resultat = $resultats->fetchAll();
+        $array['result'] = $resultat;
+    } catch (Exception $e) {
+        $array['result'] = 0;
+    }
+
+    $connexion = null;
+    return json_encode($array);
 }
 
 function getCustomerVille(){
-	$array = array();
-	try {
-		$connexion = db_connect();
-		$resultats = $connexion->prepare("SELECT v.name, ROUND(COUNT(*) / (SELECT COUNT(*) FROM `customer`) *100) AS poucentage , COUNT(*) AS nbr FROM `customer` c INNER JOIN ville v ON c.Ville_id = v.id GROUP BY Ville_id");
+    $array = array();
+    try {
+        $connexion = db_connect();
+        $resultats = $connexion->prepare("SELECT v.name, ROUND(COUNT(*) / (SELECT COUNT(*) FROM `customer`) *100) AS poucentage , COUNT(*) AS nbr FROM `customer` c INNER JOIN ville v ON c.Ville_id = v.id GROUP BY Ville_id");
 
-		$resultats->execute();
+        $resultats->execute();
 
-		$resultats->setFetchMode(PDO::FETCH_OBJ);
-		$resultat = $resultats->fetchAll();
-		$array['result'] = $resultat;
-	} catch (Exception $e) {
-		$array['result'] = 0;
-	}
-	
-	$connexion = null;
-	return json_encode($array);	
+        $resultats->setFetchMode(PDO::FETCH_OBJ);
+        $resultat = $resultats->fetchAll();
+        $array['result'] = $resultat;
+    } catch (Exception $e) {
+        $array['result'] = 0;
+    }
+
+    $connexion = null;
+    return json_encode($array);
 }
 
 function getBabySex(){
-	$array = array();
-	try {
-		$connexion = db_connect();
-		$resultats = $connexion->prepare("SELECT sexe, ROUND(COUNT(*) / (SELECT COUNT(*) FROM `baby`) *100) AS poucentage , COUNT(*) AS nbr FROM `baby` GROUP BY sexe");
+    $array = array();
+    try {
+        $connexion = db_connect();
+        $resultats = $connexion->prepare("SELECT sexe, ROUND(COUNT(*) / (SELECT COUNT(*) FROM `baby`) *100) AS poucentage , COUNT(*) AS nbr FROM `baby` GROUP BY sexe");
 
-		$resultats->execute();
+        $resultats->execute();
 
-		$resultats->setFetchMode(PDO::FETCH_OBJ);
-		$resultat = $resultats->fetchAll();
-		$array['result'] = $resultat;
-	} catch (Exception $e) {
-		$array['result'] = 0;
-	}
-	
-	$connexion = null;
-	return json_encode($array);	
+        $resultats->setFetchMode(PDO::FETCH_OBJ);
+        $resultat = $resultats->fetchAll();
+        $array['result'] = $resultat;
+    } catch (Exception $e) {
+        $array['result'] = 0;
+    }
+
+    $connexion = null;
+    return json_encode($array);
 }
 
 function getCommandesLD(){
 
-	$array = array();
-	try {
-		$connexion = db_connect();
-		$sql =
-			"SELECT  cust.id as 'idMaman', cust.nom as 'nomMaman', cust.prenom, cust.gsm as 'GSM1',
+    $array = array();
+    try {
+        $connexion = db_connect();
+        $sql =
+            "SELECT  cust.id as 'idMaman', cust.nom as 'nomMaman', cust.prenom, cust.gsm as 'GSM1',
 			l.gsm as 'GSM2',b.naissance,co.creationDate,p.id_box,co.id as 'idCommande',
 			 l.type as 'typeLivraison', l.adresseLivraison, l.quartier,l.status,l.id as 'idLivraison',l.creationDate
 			 from  commande co, customer cust, product p, livraison l, baby b
 			 where 
 			 cust.id=co.customer_id and
+			 b.id=co.baby_id and
              p.id=co.product_id and
              l.commande_id=co.id and
              b.customer_id=cust.id and
@@ -377,34 +425,35 @@ function getCommandesLD(){
              co.deleted=0
             order by l.creationDate and l.status='Non livré' DESC
              ";
-		$resultats = $connexion->prepare($sql);
+        $resultats = $connexion->prepare($sql);
 
-		$resultats->execute();
+        $resultats->execute();
 
-		$resultats->setFetchMode(PDO::FETCH_OBJ);
-		$resultat = $resultats->fetchAll();
-	
-		$array['result'] = $resultat;
-	} catch (Exception $e) {
-		$array['result'] = 0;
-	}
-	
-	$connexion = null;
-	return json_encode($array);	
+        $resultats->setFetchMode(PDO::FETCH_OBJ);
+        $resultat = $resultats->fetchAll();
+
+        $array['result'] = $resultat;
+    } catch (Exception $e) {
+        $array['result'] = 0;
+    }
+
+    $connexion = null;
+    return json_encode($array);
 
 }
 function getCommandesOX(){
 
-	$array = array();
-	try {
-		$connexion = db_connect();
-		$sql =
-			"SELECT  cust.id as 'idMaman', cust.nom as 'nomMaman', cust.prenom, cust.gsm as 'GSM1',
-			l.gsm as 'GSM2',b.naissance,co.creationDate,p.id_box,co.id as 'idCommande',
+    $array = array();
+    try {
+        $connexion = db_connect();
+        $sql =
+            "SELECT  cust.id as 'idMaman', cust.nom as 'nomMaman', cust.prenom, cust.gsm as 'GSM1',
+			 l.gsm as 'GSM2',b.naissance,co.creationDate,p.id_box,co.id as 'idCommande',
 			 l.type as 'typeLivraison', l.adresseLivraison, l.quartier,l.status,l.id as 'idLivraison', l.creationDate
 			 from  commande co, customer cust, product p, livraison l, baby b
 			 where 
 			 cust.id=co.customer_id and
+			 b.id=co.baby_id and 	
              p.id=co.product_id and
              l.commande_id=co.id and
              b.customer_id=cust.id and
@@ -412,33 +461,34 @@ function getCommandesOX(){
              co.deleted=0
              order by l.creationDate and l.status='Non livré' DESC
              ";
-		$resultats = $connexion->prepare($sql);
+        $resultats = $connexion->prepare($sql);
 
-		$resultats->execute();
+        $resultats->execute();
 
-		$resultats->setFetchMode(PDO::FETCH_OBJ);
-		$resultat = $resultats->fetchAll();
-	
-		$array['result'] = $resultat;
-	} catch (Exception $e) {
-		$array['result'] = 0;
-	}
-	
-	$connexion = null;
-	return json_encode($array);	
+        $resultats->setFetchMode(PDO::FETCH_OBJ);
+        $resultat = $resultats->fetchAll();
+
+        $array['result'] = $resultat;
+    } catch (Exception $e) {
+        $array['result'] = 0;
+    }
+
+    $connexion = null;
+    return json_encode($array);
 
 }function getCommandesCL(){
 
-	$array = array();
-	try {
-		$connexion = db_connect();
-		$sql =
-			"SELECT  cust.id as 'idMaman', cust.nom as 'nomMaman', cust.prenom, cust.gsm as 'GSM1',
+    $array = array();
+    try {
+        $connexion = db_connect();
+        $sql =
+            "SELECT  cust.id as 'idMaman', cust.nom as 'nomMaman', cust.prenom, cust.gsm as 'GSM1',
 			l.gsm as 'GSM2',b.naissance,co.creationDate,p.id_box,co.id as 'idCommande',maternite,
 			 l.type as 'typeLivraison', l.adresseLivraison, l.quartier,l.status,l.id as 'idLivraison', l.creationDate
 			 from  commande co, customer cust, product p, livraison l, baby b
 			 where 
 			 cust.id=co.customer_id and
+			 b.id=co.baby_id and
              p.id=co.product_id and
              l.commande_id=co.id and
              b.customer_id=cust.id and
@@ -446,35 +496,36 @@ function getCommandesOX(){
              co.deleted=0
              order by l.creationDate and l.status='Non livré' DESC
              ";
-		$resultats = $connexion->prepare($sql);
+        $resultats = $connexion->prepare($sql);
 
-		$resultats->execute();
+        $resultats->execute();
 
-		$resultats->setFetchMode(PDO::FETCH_OBJ);
-		$resultat = $resultats->fetchAll();
-	
-		$array['result'] = $resultat;
-	} catch (Exception $e) {
-		$array['result'] = 0;
-	}
-	
-	$connexion = null;
-	return json_encode($array);	
+        $resultats->setFetchMode(PDO::FETCH_OBJ);
+        $resultat = $resultats->fetchAll();
+
+        $array['result'] = $resultat;
+    } catch (Exception $e) {
+        $array['result'] = 0;
+    }
+
+    $connexion = null;
+    return json_encode($array);
 
 }
 function getCommandesSB(){
 
-	$array = array();
-	try {
-		$connexion = db_connect();
-		$sql =
-			"SELECT cust.id as 'idMaman', cust.nom as 'nomMaman', cust.prenom, cust.GSM as 
+    $array = array();
+    try {
+        $connexion = db_connect();
+        $sql =
+            "SELECT cust.id as 'idMaman', cust.nom as 'nomMaman', cust.prenom, cust.GSM as 
 			'GSM1',l.gsm as 'GSM2', b.naissance,co.creationDate,p.id_box,co.id as 'idCommande',
 			r.nom as 'pointRelais',v.name as'Ville',l.status,l.id as 'idLivraison',l.creationDate
 			from livraison l, commande co, customer cust, relais r, ville v,baby b,product p
 			where 
 			l.commande_id=co.id and 
 			cust.id=co.customer_id and 
+			b.id=co.baby_id and
 			l.shop_id=r.id_relais and 
 			v.id=r.id_ville and
 			b.customer_id=cust.id and
@@ -483,34 +534,35 @@ function getCommandesSB(){
 			co.deleted=0
 			order by l.creationDate and l.status='Non livré' DESC";
 
-		$resultats = $connexion->prepare($sql);
+        $resultats = $connexion->prepare($sql);
 
-		$resultats->execute();
+        $resultats->execute();
 
-		$resultats->setFetchMode(PDO::FETCH_OBJ);
-		$resultat = $resultats->fetchAll();
-	
-		$array['result'] = $resultat;
-	} catch (Exception $e) {
-		$array['result'] = 0;
-	}
-	
-	$connexion = null;
-	return json_encode($array);	
+        $resultats->setFetchMode(PDO::FETCH_OBJ);
+        $resultat = $resultats->fetchAll();
+
+        $array['result'] = $resultat;
+    } catch (Exception $e) {
+        $array['result'] = 0;
+    }
+
+    $connexion = null;
+    return json_encode($array);
 
 }
 function getAllCommandes(){
 
-	$array = array();
-	try {
-		$connexion = db_connect();
-		$sql =
-			"SELECT  cust.id as 'idMaman', cust.nom as 'nomMaman', cust.prenom, cust.gsm as 'GSM1',
+    $array = array();
+    try {
+        $connexion = db_connect();
+        $sql =
+            "SELECT  cust.id as 'idMaman', cust.nom as 'nomMaman', cust.prenom, cust.gsm as 'GSM1',
 			l.gsm as 'GSM2',b.naissance,co.creationDate,
 			 l.type as 'typeLivraison', l.adresseLivraison, l.quartier,l.creationDate
 			 from  commande co, customer cust, product p, livraison l, baby b
 			 where 
 			 cust.id=co.customer_id and
+			 b.id=co.baby_id and
              p.id=co.product_id and
              l.commande_id=co.id and
              b.customer_id=cust.id and
@@ -518,311 +570,350 @@ function getAllCommandes(){
              co.deleted=0
              order by l.creationDate and l.status='Non livré' DESC
              ";
-		$resultats = $connexion->prepare($sql);
+        $resultats = $connexion->prepare($sql);
 
-		$resultats->execute();
+        $resultats->execute();
 
-		$resultats->setFetchMode(PDO::FETCH_OBJ);
-		$resultat = $resultats->fetchAll();
-	
-		$array['result'] = $resultat;
-	} catch (Exception $e) {
-		$array['result'] = 0;
-	}
-	
-	$connexion = null;
-	return json_encode($array);	
+        $resultats->setFetchMode(PDO::FETCH_OBJ);
+        $resultat = $resultats->fetchAll();
+
+        $array['result'] = $resultat;
+    } catch (Exception $e) {
+        $array['result'] = 0;
+    }
+
+    $connexion = null;
+    return json_encode($array);
 
 }
 function getAllCommandes2(){
 
-	$array = array();
-	try {
-		$connexion = db_connect();
-		$sql =
-			"SELECT  cust.id as 'idMaman', cust.nom as 'nomMaman', cust.prenom, cust.gsm as 'GSM1',
+    $array = array();
+    try {
+        $connexion = db_connect();
+        $sql =
+            "SELECT  cust.id as 'idMaman', cust.nom as 'nomMaman', cust.prenom, cust.gsm as 'GSM1',
 			l.gsm as 'GSM2',b.naissance,co.creationDate,l.status,commande_id as 'idCommande',p.id_box,
 			 l.type as 'typeLivraison', l.adresseLivraison, l.quartier,l.id as 'idLivraison',l.creationDate
 			 from  commande co, customer cust, product p, livraison l, baby b
 			 where 
 			 cust.id=co.customer_id and
+			 b.id=co.baby_id and
              p.id=co.product_id and
              l.commande_id=co.id and
              b.customer_id=cust.id and
              co.deleted=0
              order by l.creationDate and l.status='Non livré' DESC
              ";
-		$resultats = $connexion->prepare($sql);
+        $resultats = $connexion->prepare($sql);
 
-		$resultats->execute();
+        $resultats->execute();
 
-		$resultats->setFetchMode(PDO::FETCH_OBJ);
-		$resultat = $resultats->fetchAll();
-	
-		$array['result'] = $resultat;
-	} catch (Exception $e) {
-		$array['result'] = 0;
-	}
-	
-	$connexion = null;
-	return json_encode($array);	
+        $resultats->setFetchMode(PDO::FETCH_OBJ);
+        $resultat = $resultats->fetchAll();
+
+        $array['result'] = $resultat;
+    } catch (Exception $e) {
+        $array['result'] = 0;
+    }
+
+    $connexion = null;
+    return json_encode($array);
 
 }
 
 function getClientDash(){
-	$array = array();
-	try {
-		$connexion = db_connect();
-		$resultats = $connexion->prepare("SELECT c.id,c.nom,c.prenom,c.gsm,YEAR(NOW()) - YEAR(c.naissance) as age,v.name FROM `customer` c INNER JOIN ville v ON c.Ville_id = v.id ORDER BY c.creationDate DESC LIMIT 5");
+    $array = array();
+    try {
+        $connexion = db_connect();
+        $resultats = $connexion->prepare("SELECT c.id,c.nom,c.prenom,c.gsm,YEAR(NOW()) - YEAR(c.naissance) as age,v.name FROM `customer` c INNER JOIN ville v ON c.Ville_id = v.id ORDER BY c.creationDate DESC LIMIT 5");
 
-		$resultats->execute();
+        $resultats->execute();
 
-		$resultats->setFetchMode(PDO::FETCH_OBJ);
-		$resultat = $resultats->fetchAll();
-		$array['result'] = $resultat;
-	} catch (Exception $e) {
-		$array['result'] = 0;
-	}
-	
-	$connexion = null;
-	return json_encode($array);	
+        $resultats->setFetchMode(PDO::FETCH_OBJ);
+        $resultat = $resultats->fetchAll();
+        $array['result'] = $resultat;
+    } catch (Exception $e) {
+        $array['result'] = 0;
+    }
+
+    $connexion = null;
+    return json_encode($array);
 }
 
 function getBabyDash(){
-	$array = array();
-	try {
-		$connexion = db_connect();
-		$resultats = $connexion->prepare("SELECT b.id, b.naissance, b.prenom, b.sexe, c.nom, c.type FROM baby b INNER JOIN customer c ON c.id = b.customer_id WHERE sexe != 'NULL' ORDER BY b.id DESC LIMIT 5");
+    $array = array();
+    try {
+        $connexion = db_connect();
+        $resultats = $connexion->prepare("SELECT b.id, b.naissance, b.prenom, b.sexe, c.nom, c.type FROM baby b INNER JOIN customer c ON c.id = b.customer_id WHERE sexe != 'NULL' ORDER BY b.id DESC LIMIT 5");
 
-		$resultats->execute();
+        $resultats->execute();
 
-		$resultats->setFetchMode(PDO::FETCH_OBJ);
-		$resultat = $resultats->fetchAll();
-		$array['result'] = $resultat;
-	} catch (Exception $e) {
-		$array['result'] = 0;
-	}
-	
-	$connexion = null;
-	return json_encode($array);	
+        $resultats->setFetchMode(PDO::FETCH_OBJ);
+        $resultat = $resultats->fetchAll();
+        $array['result'] = $resultat;
+    } catch (Exception $e) {
+        $array['result'] = 0;
+    }
+
+    $connexion = null;
+    return json_encode($array);
 }
 
 function getAllClient(){
-	$array = array();
-	try {
-		$connexion = db_connect();
-		$resultats = $connexion->prepare("SELECT c.id,c.nom, c.prenom, c.email, c.gsm,YEAR(NOW()) - YEAR(c.naissance) as age, c.adresse, v.name FROM customer c INNER JOIN ville v ON c.Ville_id = v.id");
+    $array = array();
+    try {
+        $connexion = db_connect();
+        $resultats = $connexion->prepare("SELECT c.id,c.nom, c.prenom, c.email, c.gsm,YEAR(NOW()) - YEAR(c.naissance) as age, c.adresse, v.name FROM customer c INNER JOIN ville v ON c.Ville_id = v.id");
 
-		$resultats->execute();
+        $resultats->execute();
 
-		$resultats->setFetchMode(PDO::FETCH_OBJ);
-		$resultat = $resultats->fetchAll();
-		
+        $resultats->setFetchMode(PDO::FETCH_OBJ);
+        $resultat = $resultats->fetchAll();
 
-		
-		 
-              /*for ($i = 0; $i < count($resultat); $i++) {
-              	 $boxList[] = $getCommandeByClient($resultat[i]['id']);
 
-              	 $box1="Non commandé";
-              	 $box2="Non commandé";
-              	 $box3="Non commandé";
-              	 
-              	 if(in_array('1', $boxList)){
-              	   $box1="commandé";
-              	 }if(in_array('2', $boxList)){
-              	   $box2="commandé";
-              	 }if(in_array('3', $boxList)){
-              	   $box3="commandé";
-				}
-				$resultats[i]['refBox1']=$box1;
-				$resultats[i]['refBox2']=$box2;
-				$resultats[i]['refBox3']=$box3;
-          }*/
 
-		$array['result'] = $resultat;
-	} catch (Exception $e) {
-		$array['result'] = 0;
-	}
-	
-	$connexion = null;
-	return json_encode($array);	
+
+        /*for ($i = 0; $i < count($resultat); $i++) {
+             $boxList[] = $getCommandeByClient($resultat[i]['id']);
+
+             $box1="Non commandé";
+             $box2="Non commandé";
+             $box3="Non commandé";
+
+             if(in_array('1', $boxList)){
+               $box1="commandé";
+             }if(in_array('2', $boxList)){
+               $box2="commandé";
+             }if(in_array('3', $boxList)){
+               $box3="commandé";
+          }
+          $resultats[i]['refBox1']=$box1;
+          $resultats[i]['refBox2']=$box2;
+          $resultats[i]['refBox3']=$box3;
+    }*/
+
+        $array['result'] = $resultat;
+    } catch (Exception $e) {
+        $array['result'] = 0;
+    }
+
+    $connexion = null;
+    return json_encode($array);
 }
 
 
 function getAllClient2(){
-	$array = array();
-	try {
-		$connexion = db_connect();
-		$resultats = $connexion->prepare("SELECT c.id,c.nom, c.prenom, c.email, c.gsm,YEAR(NOW()) - YEAR(c.naissance) as age, c.adresse, ville FROM customer c");
+    $array = array();
+    try {
+        $connexion = db_connect();
+        $resultats = $connexion->prepare("SELECT c.id,c.nom, c.prenom, c.email, c.gsm,YEAR(NOW()) - YEAR(c.naissance) as age, c.adresse, ville FROM customer c");
 
-		$resultats->execute();
+        $resultats->execute();
 
-		$resultats->setFetchMode(PDO::FETCH_OBJ);
-		$resultat = $resultats->fetchAll();
-		
-		//Récupérer la liste des commande
-		$sql =  "SELECT c.id,id_box
+        $resultats->setFetchMode(PDO::FETCH_OBJ);
+        $resultat = $resultats->fetchAll();
+
+        //Récupérer la liste des commande
+        $sql =  "SELECT c.id,id_box
 				from customer c, commande co, product p, livraison l 
 				where c.id=co.customer_id and p.id=co.product_id and  l.commande_id=co.id and  co.deleted=0";
-		$commandes = $connexion->prepare($sql);
+        $commandes = $connexion->prepare($sql);
 
-		$commandes->execute();
+        $commandes->execute();
 
-		$commandes->setFetchMode(PDO::FETCH_OBJ);
-		$commandes = $commandes->fetchAll();
-	
-		$array['commandes'] = $commandes;
-		
-		$array['result'] = $resultat;
+        $commandes->setFetchMode(PDO::FETCH_OBJ);
+        $commandes = $commandes->fetchAll();
 
-	} catch (Exception $e) {
-		$array['result'] = 0;
-		$array['commandes'] = 0;
-	}
-	
-	$connexion = null;
-	return json_encode($array);	
+        $array['commandes'] = $commandes;
+
+        $array['result'] = $resultat;
+
+    } catch (Exception $e) {
+        $array['result'] = 0;
+        $array['commandes'] = 0;
+    }
+
+    $connexion = null;
+    return json_encode($array);
 }
 
 
 function getClientWithEligibility(){
-	$array = array();
-	try {
-		$connexion = db_connect();
-		$resultats = $connexion->prepare("SELECT *, CASE WHEN age >=-3 AND age <=0 THEN 'BOX1' WHEN age >=1 AND age <=3 THEN 'BOX2' WHEN age >=6 AND age <=9 THEN 'BOX3' ELSE 'NON_ELIGIBLE' END AS eleg FROM ( SELECT *,PERIOD_DIFF(DATE_FORMAT(NOW(),'%Y%m'),DATE_FORMAT(naissance,'%Y%m')) as age FROM baby ) t INNER JOIN customer c ON c.id = t.customer_id INNER JOIN ville v ON c.Ville_id = v.id");
+    $array = array();
+    try {
+        $connexion = db_connect();
+        $resultats = $connexion->prepare("SELECT *, CASE WHEN age >=-3 AND age <=0 THEN 'BOX1' WHEN age >=1 AND age <=3 THEN 'BOX2' WHEN age >=6 AND age <=9 THEN 'BOX3' ELSE 'NON_ELIGIBLE' END AS eleg FROM ( SELECT *,PERIOD_DIFF(DATE_FORMAT(NOW(),'%Y%m'),DATE_FORMAT(naissance,'%Y%m')) as age FROM baby ) t INNER JOIN customer c ON c.id = t.customer_id INNER JOIN ville v ON c.Ville_id = v.id");
 
-		$resultats->execute();
+        $resultats->execute();
 
-		$resultats->setFetchMode(PDO::FETCH_OBJ);
-		
-		$array['result'] = $resultat;
-	} catch (Exception $e) {
-		$array['result'] = 0;
-	}
-	
-	$connexion = null;
-	return json_encode($array);	
+        $resultats->setFetchMode(PDO::FETCH_OBJ);
+
+        $array['result'] = $resultat;
+    } catch (Exception $e) {
+        $array['result'] = 0;
+    }
+
+    $connexion = null;
+    return json_encode($array);
 }
 
 function getClient($id){
-	$array = array();
-	try {
-		$connexion = db_connect();
-		//$resultats = $connexion->prepare("SELECT *,c.id as id_client,c.creationDate as creationDateClient FROM customer c INNER JOIN ville v ON c.Ville_id = v.id WHERE c.id = :id");
-		$resultats = $connexion->prepare("SELECT *,c.id as id_client,c.creationDate as creationDateClient, ville as 'name' FROM customer c where id=:id");
-    	
-    	$resultats->bindParam(':id', $id);
+    $array = array();
+    try {
+        $connexion = db_connect();
+        //$resultats = $connexion->prepare("SELECT *,c.id as id_client,c.creationDate as creationDateClient FROM customer c INNER JOIN ville v ON c.Ville_id = v.id WHERE c.id = :id");
+        $resultats = $connexion->prepare("SELECT *,c.id as id_client,c.creationDate as creationDateClient, ville as 'name' FROM customer c where id=:id");
 
-		$resultats->execute();
+        $resultats->bindParam(':id', $id);
 
-		$resultats->setFetchMode(PDO::FETCH_OBJ);
-		$resultat = $resultats->fetchAll();
-		$array['result']['client'] = $resultat;
+        $resultats->execute();
 
-		
-		//liste des bébé
-		$resultatsBaby = $connexion->prepare("SELECT * FROM baby WHERE customer_id = :id");
-    	
-    	$resultatsBaby->bindParam(':id', $id);
+        $resultats->setFetchMode(PDO::FETCH_OBJ);
+        $resultat = $resultats->fetchAll();
+        $array['result']['client'] = $resultat;
 
-		$resultatsBaby->execute();
 
-		$resultatsBaby->setFetchMode(PDO::FETCH_OBJ);
-		$resultatBaby = $resultatsBaby->fetchAll();
-		$array['result']['baby'] = $resultatBaby;
+        //liste des bébé
+        $resultatsBaby = $connexion->prepare("SELECT * FROM baby WHERE customer_id = :id order by ordre");
 
-		//liste des commandes 
-		// requete particulière pour les anciens commandes!
-		$stmt = $connexion->prepare("SELECT product_id FROM commande where customer_id=:id and  deleted=0");
-          $stmt->execute(array(':id'=>$id));
-          $clientCommandesId = array();
-          if ($stmt->execute()) {
-              while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                  $clientCommandesId[] = $row['product_id'];
-              }
-          }
-           $boxList = array();
-          if( count($clientCommandesId)){
-               $qMarks = str_repeat('?,', count($clientCommandesId) - 1) . '?';
-            $sth = $connexion->prepare("SELECT * FROM product WHERE id IN ($qMarks)");
-           
-           
-            
-            if ($sth->execute($clientCommandesId)) {
-                while ($row = $sth->fetch(PDO::FETCH_ASSOC)) {
-                    $boxList[] = $row;		
+        $resultatsBaby->bindParam(':id', $id);
+
+        $resultatsBaby->execute();
+
+        $resultatsBaby->setFetchMode(PDO::FETCH_OBJ);
+        $resultatBaby = $resultatsBaby->fetchAll();
+        $array['result']['baby'] = $resultatBaby;
+
+        //liste des commandes
+        // requete particulière pour les anciens commandes!
+
+        $boxList = array();
+        $commandes=array();
+        foreach ($resultatBaby as $key => $baby) {
+            $array[$key]=$baby->id;
+            $stmt = $connexion->prepare("SELECT product_id FROM commande where customer_id=:id and baby_id=:baby_id and deleted=0");
+            $stmt->execute(array(':id'=>$id,':baby_id'=>$baby->id));
+
+            $clientCommandesId = array();
+            if ($stmt->execute()) {
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    $clientCommandesId[] = $row['product_id'];
                 }
             }
+
+            if( count($clientCommandesId)){
+                $qMarks = str_repeat('?,', count($clientCommandesId) - 1) . '?';
+                $sth = $connexion->prepare("SELECT * FROM product WHERE id IN ($qMarks)");
+
+
+
+                if ($sth->execute($clientCommandesId)) {
+                    while ($row = $sth->fetch(PDO::FETCH_ASSOC)) {
+                        $boxList[$key][] = $row;
+                    }
+                }
+            }else{
+                $boxList[$key]['id_box']='0';
+            }
+
+            // liste des livraison
+            $stmt = $connexion->prepare("SELECT id_box,l.status
+				from customer c, commande co, livraison l,product p
+				where c.id=co.customer_id and  co.product_id=p.id and l.commande_id = co.id and c.id=:id and co.baby_id=:baby_id and co.deleted=0");
+
+            $stmt->execute(array(':id'=>$id,':baby_id'=>$baby->id));
+
+            $stmt->setFetchMode(PDO::FETCH_OBJ);
+            $commandes[$key] = $stmt->fetchAll();
         }
 
 
-        // liste des livraison 
-        $stmt = $connexion->prepare("SELECT id_box,l.status
-				from customer c, commande co, livraison l,product p
-				where c.id=co.customer_id and  co.product_id=p.id and l.commande_id = co.id and c.id=:id and  co.deleted=0");
-         
-         $commandes=$stmt->execute(array(':id'=>$id));
-        $stmt->setFetchMode(PDO::FETCH_OBJ);
-		$commandes = $stmt->fetchAll();
 
-         $test=$commandes;
-        
 
-            $array['result']['box']= $boxList;
-            $array['result']['commandes']= $commandes;
 
-	} catch (Exception $e) {
-		$array['result'] = 0;
-	}
-	
-	$connexion = null;
-	return json_encode($array);	
+
+
+        $array['result']['box']= $boxList;
+        $array['result']['commandes']= $commandes;
+
+    } catch (Exception $e) {
+        $array['result'] = 0;
+    }
+
+    $connexion = null;
+    return json_encode($array);
+}
+
+
+
+//get partner by id
+
+function getPartner($id)
+{
+    $array = array();
+    try {
+        $connexion = db_connect();
+        //$resultats = $connexion->prepare("SELECT *,c.id as id_client,c.creationDate as creationDateClient FROM customer c INNER JOIN ville v ON c.Ville_id = v.id WHERE c.id = :id");
+        $resultats = $connexion->prepare("SELECT * FROM shop where id=:id");
+
+        $resultats->bindParam(':id', $id);
+
+        $resultats->execute();
+
+        $resultats->setFetchMode(PDO::FETCH_OBJ);
+        $resultat = $resultats->fetchAll();
+        $array['result'] = $resultat;
+        $connexion = null;
+        return json_encode($array);
+    } catch (Exception $e) {
+        $array['result'] = 0;
+    }
 }
 
 function getClient2($id){
-	$array = array();
-	try {
-		$connexion = db_connect();
-		$resultats = $connexion->prepare("SELECT *,c.id as id_client,c.creationDate as creationDateClient FROM customer c where id=:id");
-    	
-    	$resultats->bindParam(':id', $id);
+    $array = array();
+    try {
+        $connexion = db_connect();
+        $resultats = $connexion->prepare("SELECT *,c.id as id_client,c.creationDate as creationDateClient FROM customer c where id=:id");
 
-		$resultats->execute();
+        $resultats->bindParam(':id', $id);
 
-		$resultats->setFetchMode(PDO::FETCH_OBJ);
-		$resultat = $resultats->fetchAll();
-		$array['result']['client'] = $resultat;
+        $resultats->execute();
 
-		
-		//liste des bébé
-		$resultatsBaby = $connexion->prepare("SELECT * FROM baby WHERE customer_id = :id");
-    	
-    	$resultatsBaby->bindParam(':id', $id);
+        $resultats->setFetchMode(PDO::FETCH_OBJ);
+        $resultat = $resultats->fetchAll();
+        $array['result']['client'] = $resultat;
 
-		$resultatsBaby->execute();
 
-		$resultatsBaby->setFetchMode(PDO::FETCH_OBJ);
-		$resultatBaby = $resultatsBaby->fetchAll();
-		$array['result']['baby'] = $resultatBaby;
+        //liste des bébé
+        $resultatsBaby = $connexion->prepare("SELECT * FROM baby WHERE customer_id = :id");
 
-		//liste des commandes 
-		// requete particulière pour les anciens commandes!
-		$stmt = $connexion->prepare("SELECT product_id FROM commande where customer_id=:id and deleted=0");
-          $stmt->execute(array(':id'=>$id));
-          $clientCommandesId = array();
-          if ($stmt->execute()) {
-              while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                  $clientCommandesId[] = $row['product_id'];
-              }
-          }
-           $boxList = array();
-          if( count($clientCommandesId)){
-               $qMarks = str_repeat('?,', count($clientCommandesId) - 1) . '?';
+        $resultatsBaby->bindParam(':id', $id);
+
+        $resultatsBaby->execute();
+
+        $resultatsBaby->setFetchMode(PDO::FETCH_OBJ);
+        $resultatBaby = $resultatsBaby->fetchAll();
+        $array['result']['baby'] = $resultatBaby;
+
+        //liste des commandes
+        // requete particulière pour les anciens commandes!
+        $stmt = $connexion->prepare("SELECT product_id FROM commande where customer_id=:id and deleted=0");
+        $stmt->execute(array(':id'=>$id));
+        $clientCommandesId = array();
+        if ($stmt->execute()) {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $clientCommandesId[] = $row['product_id'];
+            }
+        }
+        $boxList = array();
+        if( count($clientCommandesId)){
+            $qMarks = str_repeat('?,', count($clientCommandesId) - 1) . '?';
             $sth = $connexion->prepare("SELECT id_box FROM product WHERE id IN ($qMarks)");
-           
-           
-            
+
+
+
             if ($sth->execute($clientCommandesId)) {
                 while ($row = $sth->fetch(PDO::FETCH_ASSOC)) {
                     $boxList[] = $row['id_box'];
@@ -833,46 +924,46 @@ function getClient2($id){
         }
 
 
-        // liste des livraison 
+        // liste des livraison
         $stmt = $connexion->prepare("SELECT id_box,l.status
 				from customer c, commande co, livraison l,product p
 				where c.id=co.customer_id and  co.product_id=p.id and l.commande_id = co.id and c.id=:id and  co.deleted=0");
-         
-         $commandes=$stmt->execute(array(':id'=>$id));
+
+        $commandes=$stmt->execute(array(':id'=>$id));
         $stmt->setFetchMode(PDO::FETCH_OBJ);
-		$commandes = $stmt->fetchAll();
+        $commandes = $stmt->fetchAll();
 
-         $test=$commandes;
-        
+        $test=$commandes;
 
-            $array['result']['box']= $boxList;
-            $array['result']['commandes']= $commandes;
 
-	} catch (Exception $e) {
-		$array['result'] = 0;
-	}
-	
-	$connexion = null;
-	return json_encode($array);	
+        $array['result']['box']= $boxList;
+        $array['result']['commandes']= $commandes;
+
+    } catch (Exception $e) {
+        $array['result'] = 0;
+    }
+
+    $connexion = null;
+    return json_encode($array);
 }
 
 function getCommandeByClient($id){
-	try {
-		$stmt = $connexion->prepare("SELECT product_id FROM commande where customer_id=:id and  deleted=0");
-          $stmt->execute(array(':id'=>$id));
-          $clientCommandesId = array();
-          if ($stmt->execute()) {
-              while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                  $clientCommandesId[] = $row['product_id'];
-              }
-          }
-           $boxList = array();
-          if( count($clientCommandesId)){
-               $qMarks = str_repeat('?,', count($clientCommandesId) - 1) . '?';
+    try {
+        $stmt = $connexion->prepare("SELECT product_id FROM commande where customer_id=:id and  deleted=0");
+        $stmt->execute(array(':id'=>$id));
+        $clientCommandesId = array();
+        if ($stmt->execute()) {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $clientCommandesId[] = $row['product_id'];
+            }
+        }
+        $boxList = array();
+        if( count($clientCommandesId)){
+            $qMarks = str_repeat('?,', count($clientCommandesId) - 1) . '?';
             $sth = $connexion->prepare("SELECT id_box FROM product WHERE id IN ($qMarks)");
-           
-           
-            
+
+
+
             if ($sth->execute($clientCommandesId)) {
                 while ($row = $sth->fetch(PDO::FETCH_ASSOC)) {
                     $boxList[] = $row['id_box'];
@@ -883,304 +974,418 @@ function getCommandeByClient($id){
         }
 
         return $boxList;
-	} catch (Exception $e) {
-		
-	}
+    } catch (Exception $e) {
+
+    }
 }
 
 function deleteFullClient($id){
-	$array = array();
+    $array = array();
 
-	try {
-		$connexion = db_connect();
+    try {
+        $connexion = db_connect();
 
-		/*$stmt = $connexion->prepare("DELETE FROM baby WHERE customer_id = :id");
-		$stmt->bindParam(':id', $id);
-		$stmt->execute();
-		$count_baby = $stmt->rowCount();*/
+        /*$stmt = $connexion->prepare("DELETE FROM baby WHERE customer_id = :id");
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        $count_baby = $stmt->rowCount();*/
 
-		$stmt = $connexion->prepare("UPDATE  customer SET status='deleted' where id = :id");
-		$stmt->bindParam(':id', $id);
-		$stmt->execute();
-		$count_customer = $stmt->rowCount();
-		/*if($count_baby == 1 && $count_customer == 1){
-			$array['result'] = 'ok';
-		}*/
-		if($stmt->execute()){
-			$array['result'] = 'ok';
-		}
+        $stmt = $connexion->prepare("UPDATE  customer SET status='deleted' where id = :id");
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        $count_customer = $stmt->rowCount();
+        /*if($count_baby == 1 && $count_customer == 1){
+            $array['result'] = 'ok';
+        }*/
+        if($stmt->execute()){
+            $array['result'] = 'ok';
+        }
 
-	} catch (Exception $e) {
-		$array['result'] = 'ko';
-	}
-	
-	$connexion = null;
-	return json_encode($array);	
+    } catch (Exception $e) {
+        $array['result'] = 'ko';
+    }
+
+    $connexion = null;
+    return json_encode($array);
 }
 
 function createClient($client){
-	$array = array();
+    $array = array();
 
-	$array['nom'] = $client['nom'];
-	$array['prenom'] = $client['prenom'];
-	$array['email'] = $client['email'];
-	$array['gsm'] = $client['gsm'];
-	$array['naissance'] = $client['dof'];
-	$array['adresse'] = $client['adresse'];
-	$array['cp'] = $client['cp'];
-	$array['type'] = $client['type'];
-	$array['ville_id'] = $client['ville_id'];
-	
-
-	$villeName  = getCityById($client['ville_id']);
-	$token 		= bin2hex(openssl_random_pseudo_bytes(32));
-	$password 	= bin2hex(openssl_random_pseudo_bytes(4));
-	$expiration	= date("Y-m-d H:i:s",strtotime(date("Y-m-d H:i:s")." +3 months"));
-	
-
-	$array['token'] = $token;
-	$array['expiration'] = $expiration;
-	$array['password'] = $password;
+    $array['nom'] = $client['nom'];
+    $array['prenom'] = $client['prenom'];
+    $array['email'] = $client['email'];
+    $array['gsm'] = $client['gsm'];
+    $array['naissance'] = $client['dof'];
+    $array['adresse'] = $client['adresse'];
+    $array['cp'] = $client['cp'];
+    $array['type'] = $client['type'];
+    $array['ville_id'] = $client['ville_id'];
 
 
-	try {
-		$connexion = db_connect();
+    $villeName  = getCityById($client['ville_id']);
+    $token 		= bin2hex(openssl_random_pseudo_bytes(32));
+    $password 	= bin2hex(openssl_random_pseudo_bytes(4));
+    $expiration	= date("Y-m-d H:i:s",strtotime(date("Y-m-d H:i:s")." +3 months"));
 
-		$stmt = $connexion->prepare("INSERT INTO customer(nom,prenom,email,password,gsm,naissance,adresse,CP,type,ville_id,ville,eligible,createdBy,token,expiration) 
+
+    $array['token'] = $token;
+    $array['expiration'] = $expiration;
+    $array['password'] = $password;
+
+
+    try {
+        $connexion = db_connect();
+
+        $stmt = $connexion->prepare("INSERT INTO customer(nom,prenom,email,password,gsm,naissance,adresse,CP,type,ville_id,ville,eligible,createdBy,token,expiration) 
 												VALUES(:nom,:prenom,:email,:password,:gsm,:naissance,:adresse,:cp,:type,:ville_id,:ville,:eligible,:user,:token,:expiration)");
-		
-		
-		$stmt->bindValue(':nom', $client['nom']);
-		$stmt->bindValue(':prenom', $client['prenom']);
-		$stmt->bindValue(':email', $client['email']);
-		$stmt->bindValue(':password', $password);
-		$stmt->bindValue(':gsm', $client['gsm']);
-		$stmt->bindValue(':naissance', $client['dof']);
-		$stmt->bindValue(':adresse', $client['adresse']);
-		$stmt->bindValue(':cp', $client['cp']);
-		$stmt->bindValue(':type', $client['type']);
-		$stmt->bindValue(':ville_id', $client['ville_id']);
-		$stmt->bindValue(':ville', $villeName['name']);
-		$stmt->bindValue(':eligible', eligible($client['naissance_bebe']));
-		$stmt->bindValue(':user', '1');
-		$stmt->bindValue(':token', $token);
-		$stmt->bindValue(':expiration', $expiration);
-		
-		
-		
-		
-		$idClient='';
-		if($stmt->execute()) {
-			
-			$idClient = $connexion->lastInsertId();
-			$array['idClient'] = $idClient;
 
-			$stmt = $connexion->prepare("INSERT INTO baby ( sexe, prenom,naissance, gyneco,maternite,customer_id) 
+
+        $stmt->bindValue(':nom', $client['nom']);
+        $stmt->bindValue(':prenom', $client['prenom']);
+        $stmt->bindValue(':email', $client['email']);
+        $stmt->bindValue(':password', $password);
+        $stmt->bindValue(':gsm', $client['gsm']);
+        $stmt->bindValue(':naissance', $client['dof']);
+        $stmt->bindValue(':adresse', $client['adresse']);
+        $stmt->bindValue(':cp', $client['cp']);
+        $stmt->bindValue(':type', $client['type']);
+        $stmt->bindValue(':ville_id', $client['ville_id']);
+        $stmt->bindValue(':ville', $villeName['name']);
+        $stmt->bindValue(':eligible', eligible($client['naissance_bebe']));
+        $stmt->bindValue(':user', '1');
+        $stmt->bindValue(':token', $token);
+        $stmt->bindValue(':expiration', $expiration);
+
+
+
+
+        $idClient='';
+        if($stmt->execute()) {
+
+            $idClient = $connexion->lastInsertId();
+            $array['idClient'] = $idClient;
+
+            $stmt = $connexion->prepare("INSERT INTO baby ( sexe, prenom,naissance, gyneco,maternite,customer_id) 
 													VALUES(:sexe,:prenom,:naissance,:gyneco,:maternite,:customer_id)");
-			
-			
-			$stmt->bindValue(':sexe', $client['sexe_bebe']);
-			$stmt->bindValue(':prenom', $client['prenom_bebe']);
-			$stmt->bindValue(':naissance', $client['naissance_bebe']);
-			$stmt->bindValue(':maternite', $client['maternite']);
-			$stmt->bindValue(':gyneco', $client['gyneco']);
-			$stmt->bindValue(':customer_id', $idClient);
-			
-			
-			if($stmt->execute()) {
-				$array['result'] = 'success';
-			}else{
-				$array['result'] = 'failed2';
-			}
-			
-		} else {
-			$array['result'] = 'failed2';
-		}
 
 
-		// ajouter une livraison 
-		$livraison['user']="admin";
-		$livraison['id_box']="2";
-		$livraison['idClient']=$idClient;
-		$livraison['status']='Livré';
-		$livraison['type']= strtoupper('C'.$client['maternite'][0]);
+            $stmt->bindValue(':sexe', $client['sexe_bebe']);
+            $stmt->bindValue(':prenom', $client['prenom_bebe']);
+            $stmt->bindValue(':naissance', $client['naissance_bebe']);
+            $stmt->bindValue(':maternite', $client['maternite']);
+            $stmt->bindValue(':gyneco', $client['gyneco']);
+            $stmt->bindValue(':customer_id', $idClient);
 
-		addLivraison($livraison);
 
-	} catch (Exception $e) {
-		$array['result'] = 'ko';
-	}
-	
-	$connexion = null;
+            if($stmt->execute()) {
+                $array['result'] = 'success';
+            }else{
+                $array['result'] = 'failed2';
+            }
 
-	return json_encode($array);	
+        } else {
+            $array['result'] = 'failed2';
+        }
+
+
+        // ajouter une livraison
+        $livraison['user']="admin";
+        $livraison['id_box']="2";
+        $livraison['idClient']=$idClient;
+        $livraison['status']='Livré';
+        $livraison['type']= strtoupper('C'.$client['maternite'][0]);
+
+        addLivraison($livraison);
+
+    } catch (Exception $e) {
+        $array['result'] = $e->getMessage();
+    }
+
+    $connexion = null;
+
+    return json_encode($array);
+}
+
+
+function createPartner($partner){
+    $array = array();
+
+    $array['name'] = $partner['name'];
+    $array['adresse'] = $partner['adresse'];
+    $array['fixe'] = $partner['fixe'];
+    $array['type'] = $partner['type'];
+    $array['status'] = $partner['status'];
+    $array['lng'] = $partner['lng'];
+    $array['lat'] = $partner['lat'];
+
+
+
+
+    try {
+        $connexion = db_connect();
+
+        $stmt = $connexion->prepare("INSERT INTO shop(Name,adresse,status,type,fixe,lng,lat) 
+												VALUES(:name,:adresse,:status,:type,:fixe,:lng,:lat)");
+
+
+        $stmt->bindValue(':name', $partner['name']);
+        $stmt->bindValue(':adresse', $partner['adresse']);
+        $stmt->bindValue(':status', $partner['status']);
+        $stmt->bindValue(':type', $partner['type']);
+        $stmt->bindValue(':fixe', $partner['fixe']);
+        $stmt->bindValue(':lng', $partner['lng']);
+        $stmt->bindValue(':lat', $partner['lat']);
+
+        if ($stmt->execute()) {
+            $array['status'] = 'OK';
+        } else {
+            $array['result'] = $stmt->errorInfo();
+        }
+
+
+    } catch (Exception $e) {
+        $array['result'] = 'ko';
+    }
+
+    $connexion = null;
+
+    return json_encode($array);
 }
 
 function updateClient($client,$baby){
-	$array = array();
+    $array = array();
 
-	$array['id'] = $client['id'];
-	$array['nom'] = $client['nom'];
-	$array['prenom'] = $client['prenom'];
-	$array['email'] = $client['email'];
-	$array['gsm'] = $client['gsm'];
-	$array['naissance'] = $client['dof'];
-	$array['adresse'] = $client['adresse'];
-	$array['cp'] = $client['cp'];
-	$array['cp'] = $client['cp'];
-	$array['type'] = $client['type'];
-	$array['Ville_id'] = $client['ville'];
-
-
-
-	/*$array['idBebe'] = $baby['id'];
-	$array['prenomBebe'] = $baby['prenomBebe'];
-	*/
-
-
-	try {
-		$connexion = db_connect();
-
-		$stmt = $connexion->prepare("UPDATE customer SET nom = :nom,prenom = :prenom,email = :email,gsm = :gsm,naissance = :naissance,adresse = :adresse,CP = :cp,type = :type,Ville_id = :Ville_id, eligible = :eligible WHERE id = :id ");
-		
-		$stmt->bindValue(':id', $client['id']);
-		$stmt->bindValue(':nom', $client['nom']);
-		$stmt->bindValue(':prenom', $client['prenom']);
-		$stmt->bindValue(':email', $client['email']);
-		$stmt->bindValue(':gsm', $client['gsm']);
-		$stmt->bindValue(':naissance', $client['dof']);
-		$stmt->bindValue(':adresse', $client['adresse']);
-		$stmt->bindValue(':cp', $client['cp']);
-		$stmt->bindValue(':type', $client['type']);
-		$stmt->bindValue(':Ville_id', $client['ville']);
-		$stmt->bindValue(':eligible',eligible($baby['naissanceBebe']));
-
-		$a =$stmt->execute();
+    $array['id'] = $client['id'];
+    $array['nom'] = $client['nom'];
+    $array['prenom'] = $client['prenom'];
+    $array['email'] = $client['email'];
+    $array['gsm'] = $client['gsm'];
+    $array['naissance'] = $client['dof'];
+    $array['adresse'] = $client['adresse'];
+    $array['cp'] = $client['cp'];
+    $array['cp'] = $client['cp'];
+    $array['type'] = $client['type'];
+    $array['Ville_id'] = $client['ville'];
+    $array['ville'] = $client['ville_name'];
 
 
 
-		
-		$stmt1 = $connexion->prepare("UPDATE baby SET prenom = :prenom ,sexe = :sexe, MATERNITE = :maternite, GYNECO = :gyneco,naissance= :naissance WHERE id = :id ");
+    /*$array['idBebe'] = $baby['id'];
+    $array['prenomBebe'] = $baby['prenomBebe'];
+    */
 
-		$stmt1->bindValue(':id', $baby['id']);
-		$stmt1->bindValue(':prenom', $baby['prenomBebe']);
-		$stmt1->bindValue(':sexe', $baby['sexeBebe']);
-		$stmt1->bindValue(':maternite', $baby['maternite']);
-		$stmt1->bindValue(':gyneco', $baby['gyneco']);
-		$stmt1->bindValue(':naissance', $baby['naissanceBebe']);
 
-		$b=$stmt1->execute();
-		$eligible='';
-		if($b){
-					$today = new DateTime(date('Y-m-d'));
-					$naissance= new DateTime($baby['naissanceBebe']);
-					$interval = date_diff($today, $naissance);
-					$diffJours = $interval->format('%R%a days');
-					
-					if($diffJours>=7 && $diffJours<=146){
-						$eligible='BOX1';
-					}
-					else if($diffJours<=-7 && $diffJours>=-122){
-						$eligible='BOX2';
-					}
-					else if($diffJours<=-183 && $diffJours>=-305){
-						$eligible='BOX3';
-					}
-					$array['updateEligibilite']=updateEligibilite($client['id'],$eligible);
-		}
+    try {
+        $connexion = db_connect();
 
-		$array['addLivraison']=$client['livraison']['addLivraison'];
-		if($client['livraison']['addLivraison']=='true'){
-			$livraison['user']='admin';
-			$livraison['id_box']=$client['id_box'];
-			$livraison['idClient']=$client['id'];
-			$livraison['type']=$client['livraison']['type'];
-			$livraison['status']='Livré';
-			
-			$newEligible='BOX0'.$product['id_box'].'_COMMANDÉE';
-			$sql="UPDATE customer set eligible=:eligible where id=:id";
-			$statement = $connexion->prepare($sql);
-			$statement->bindValue(':eligible', $newEligible);
-			$statement->bindValue(':id', $client['id']);
-			$updated1 = $statement->execute();
+        $stmt = $connexion->prepare("UPDATE customer SET nom = :nom,prenom = :prenom,email = :email,gsm = :gsm,naissance = :naissance,adresse = :adresse,CP = :cp,type = :type,Ville_id = :Ville_id, ville = :ville WHERE id = :id ");
 
-			if(isset($client['livraison']['updateLivraison']) and $client['livraison']['updateLivraison']=='true'){
-				
-				$livraison['id']=getLastOrderNotDelivred($client['id']);
-				$array['idLivraison'] = $livraison['id'];
-				if($livraison['id']>0){
-					updateLivraison($livraison);
-				}else{
-					$b=false;
-				}
-				
-			}else{
-				addLivraison($livraison);
-			}
-			
-		}
+        $stmt->bindValue(':id', $client['id']);
+        $stmt->bindValue(':nom', $client['nom']);
+        $stmt->bindValue(':prenom', $client['prenom']);
+        $stmt->bindValue(':email', $client['email']);
+        $stmt->bindValue(':gsm', $client['gsm']);
+        $stmt->bindValue(':naissance', $client['dof']);
+        $stmt->bindValue(':adresse', $client['adresse']);
+        $stmt->bindValue(':cp', $client['cp']);
+        $stmt->bindValue(':type', $client['type']);
+        $stmt->bindValue(':Ville_id', $client['ville']);
+        $stmt->bindValue(':ville', $client['ville_name']);
+        //$stmt->bindValue(':eligible',eligible($baby['naissanceBebe']));
 
-		
+        $a =$stmt->execute();
 
-		if($a or $b) {
-			$array['result'] = 'success';
-		} else  {
-			$array['result'] = 'failed1';
-		}
-	
 
-		
-	} catch (Exception $e) {
-		$array['result'] = 'ko';
-	}
-	
-	$connexion = null;
 
-	return json_encode($array);	
+
+        $stmt1='';
+        if($baby['updateBebe']=='true'){
+            $stmt1 = $connexion->prepare("UPDATE baby SET prenom = :prenom ,sexe = :sexe, MATERNITE = :maternite, GYNECO = :gyneco,naissance= :naissance,naissance2=:naissance WHERE id = :id ");
+            $stmt1->bindValue(':id', $baby['id']);
+        }
+        else{
+            $stmt1 = $connexion->prepare("INSERT INTO baby(prenom,sexe, MATERNITE, GYNECO,naissance,naissance2, customer_id) values(:prenom,:sexe,:maternite,:gyneco,:naissance,:naissance,:customer_id)");
+            $stmt1->bindValue(':customer_id',  $client['id']);
+        }
+
+        $stmt1->bindValue(':prenom', $baby['prenomBebe']);
+        $stmt1->bindValue(':sexe', $baby['sexeBebe']);
+        $stmt1->bindValue(':maternite', $baby['maternite']);
+        $stmt1->bindValue(':gyneco', $baby['gyneco']);
+        $stmt1->bindValue(':naissance', $baby['naissanceBebe']);
+
+        $b=$stmt1->execute();
+
+        $array['addBebe']=$b;
+        $eligible='';
+        if($b){
+            //changer l'odre des bébé selon la date de naissance
+            $resultatsBaby = $connexion->prepare("UPDATE 
+										baby b 
+										INNER JOIN 
+										(
+										    SELECT 
+										        naissance,
+										        @rowNumber := @rowNumber + 1 AS rn
+										    FROM baby , (SELECT @rowNumber := 0) var
+										    where customer_id=:id
+										    ORDER BY naissance 
+										) AS t
+										ON b.naissance = t.naissance
+										SET b.ordre = t.rn
+										where customer_id=:id");
+
+            $resultatsBaby->bindParam(':id', $client['id']);
+
+            $array['babiesOrderUpdate']=$resultatsBaby->execute();
+
+            $array['updateEligibilite']=updateEligibiliteV1($client['id']);
+        }
+
+        $array['addLivraison']=$client['livraison']['addLivraison'];
+        if($client['livraison']['addLivraison']=='true'){
+
+            $livraison['user']='admin';
+            $livraison['id_box']=$client['id_box'];
+            $livraison['idClient']=$client['id'];
+            $livraison['baby_id']=$baby['id'];
+            $livraison['type']=$client['livraison']['type'];
+            $livraison['status']='Livré';
+
+            /*$newEligible='BOX0'.$product['id_box'].'_COMMANDÉE';
+            $sql="UPDATE customer set eligible=:eligible where id=:id";
+            $statement = $connexion->prepare($sql);
+            $statement->bindValue(':eligible', $newEligible);
+            $statement->bindValue(':id', $client['id']);
+            $updated1 = $statement->execute();*/
+
+            if(isset($client['livraison']['updateLivraison']) and $client['livraison']['updateLivraison']=='true'){
+
+                $livraison['id']=getLastOrderNotDelivred($client['id']);
+                $livraison['baby_id']=$baby['id'];
+                $array['idLivraison'] = $livraison['id'];
+                if($livraison['id']>0){
+                    $array['updateEligibilite']=updateLivraison($livraison);
+                }else{
+                    $b=false;
+                }
+
+            }else{
+                $array['addLivraison']=addLivraison($livraison);
+            }
+
+        }
+
+        $array['updateEligibilite']=updateEligibiliteV1($client['id']);
+
+        if($a or $b) {
+             $user= getSendInBlueUser($client['id']);
+             $array['user']= $user;
+             $user=getCustomrById($client['id']);
+            if($user['status']==='approved'){
+                sindinblue1($user);
+            }
+            $array['result'] = 'success';
+        } else  {
+            $array['result'] = 'failed1';
+        }
+
+
+
+    } catch (Exception $e) {
+        $array['result'] = 'ko';
+    }
+
+    $connexion = null;
+
+    return json_encode($array);
+}
+function updatePartner($partner){
+    $array = array();
+
+    $array['id'] = $partner['id'];
+    $array['name'] = $partner['name'];
+    $array['adresse'] = $partner['adresse'];
+    $array['fixe'] = $partner['fixe'];
+    $array['type'] = $partner['type'];
+    $array['status'] = $partner['status'];
+    $array['lng'] = $partner['lng'];
+    $array['lat'] = $partner['lat'];
+
+
+    try {
+        $connexion = db_connect();
+
+        $stmt = $connexion->prepare("UPDATE shop SET name = :name,adresse = :adresse,fixe = :fixe,type = :type,status = :status, lng = :lng, lat = :lat WHERE id = :id ");
+
+        $stmt->bindValue(':id', $partner['id']);
+        $stmt->bindValue(':name', $partner['name']);
+        $stmt->bindValue(':adresse', $partner['adresse']);
+        $stmt->bindValue(':fixe', $partner['fixe']);
+        $stmt->bindValue(':type', $partner['type']);
+        $stmt->bindValue(':status', $partner['status']);
+        $stmt->bindValue(':lng', $partner['lng']);
+        $stmt->bindValue(':lat', $partner['lat']);
+
+
+        if ($stmt->execute()) {
+            $array['status'] = 'OK';
+        } else {
+            $array['status'] = $stmt->errorInfo();
+        }
+
+    }catch (Exception $e) {
+        $array['status'] = 'ko';
+    }
+
+    $connexion = null;
+
+    return json_encode($array);
 }
 function blockUser($id){
-	$array = array();
+    $array = array();
 
-	$array['id'] = $id;
-	try {
-		$connexion = db_connect();
+    $array['id'] = $id;
+    try {
+        $connexion = db_connect();
 
-		$stmt = $connexion->prepare("UPDATE customer SET status = 'blocked' WHERE id = :id ");
-		
-		$stmt->bindValue(':id', $id);
+        $stmt = $connexion->prepare("UPDATE customer SET status = 'blocked' WHERE id = :id ");
 
-		$stmt->execute();
+        $stmt->bindValue(':id', $id);
 
-		if($stmt->execute()) {
-			$array['status'] = 'success';
-		} else  {
-			$array['status'] = 'failed';
-		}
-	
+        $stmt->execute();
 
-		
-	} catch (Exception $e) {
-		$array['status'] = 'ko';
-	}
-	
-	$connexion = null;
+        if($stmt->execute()) {
+            $array['status'] = 'success';
+        } else  {
+            $array['status'] = 'failed';
+        }
 
-	return json_encode($array);	
+
+
+    } catch (Exception $e) {
+        $array['status'] = 'ko';
+    }
+
+    $connexion = null;
+
+    return json_encode($array);
 }
 
 function updateEligibilite($id,$eligible){
-   try {
-    $connexion = db_connect();
-    $condition='';
-    if($eligible=="BOX1"){
-    	 $condition='b.naissance BETWEEN CURDATE()+ INTERVAL 7 DAY AND CURDATE() + INTERVAL 146 DAY and co.deleted=0 and p.id_box=1';
-    }else if($eligible=="BOX2"){
-    	 $condition='b.naissance BETWEEN CURDATE() - INTERVAL 122 DAY AND CURDATE()-INTERVAL 7 DAY and co.deleted=0 and p.id_box=2';
-    }else if($eligible=="BOX3"){
-    	 $condition='b.naissance BETWEEN CURDATE() - INTERVAL 305 DAY AND CURDATE()-INTERVAL 183 DAY and co.deleted=0 and p.id_box=3';
-    }
+    try {
+        $connexion = db_connect();
+        $condition='';
+        if($eligible=="BOX1"){
+            $condition='b.naissance BETWEEN CURDATE()+ INTERVAL 7 DAY AND CURDATE() + INTERVAL 146 DAY and co.deleted=0 and p.id_box=1';
+        }else if($eligible=="BOX2"){
+            $condition='b.naissance BETWEEN CURDATE() - INTERVAL 122 DAY AND CURDATE()-INTERVAL 7 DAY and co.deleted=0 and p.id_box=2';
+        }else if($eligible=="BOX3"){
+            $condition='b.naissance BETWEEN CURDATE() - INTERVAL 305 DAY AND CURDATE()-INTERVAL 183 DAY and co.deleted=0 and p.id_box=3';
+        }
 
-    $sql="UPDATE customer c1 set c1.eligible=:eligible where c1.id = :id and c1.id not in (
+        $sql="UPDATE customer c1 set c1.eligible=:eligible where c1.id = :id and c1.id not in (
 		SELECT  c.id
 		FROM    (select * from customer) as c
 		LEFT JOIN
@@ -1193,1458 +1398,1714 @@ function updateEligibilite($id,$eligible){
 		        baby b
 		ON b.customer_id=c.id
 		where ".$condition." and co.id is NULL);";
-	if($eligible==""){
-		$sql="UPDATE customer SET eligible = :eligible WHERE id = :id ";
-	}
+        if($eligible==""){
+            $sql="UPDATE customer SET eligible = :eligible WHERE id = :id ";
+        }
 
-	$array['sql']=$sql;
-    $stmt = $connexion->prepare($sql);
-    
-    $stmt->bindValue(':id', $id);
-    $stmt->bindValue(':eligible', $eligible);
+        $array['sql']=$sql;
+        $stmt = $connexion->prepare($sql);
+
+        $stmt->bindValue(':id', $id);
+        $stmt->bindValue(':eligible', $eligible);
 
 
-    if($stmt->execute()) {
-      $array['status'] = 'success';
-    } else  {
-      $array['status'] = 'error';
+        if($stmt->execute()) {
+            $array['status'] = 'success';
+        } else  {
+            $array['status'] = 'error';
+        }
+
+        $connexion = null;
+        return  $array['sql'];
+    } catch (Exception $e) {
+        $array['status'] = 'ko';
     }
-  
-   $connexion = null;
-    return  $array['sql'];
-  } catch (Exception $e) {
-    $array['status'] = 'ko';
-  }  
+}
+
+function updateEligibiliteV1($id){
+    try {
+        $connexion = db_connect();
+
+        include('requetes.php');
+        $a='';
+        foreach ($requetes as $key => $sql) {
+            $stmt = $connexion->prepare($sql);
+            $stmt->bindValue(':id', $id);
+            $a=$stmt->execute();
+            if(!$a){
+                break;
+            }
+        }
+
+        if($a) {
+            $array['status'] = 'success';
+        } else  {
+            $array['status'] = 'error';
+        }
+
+        $connexion = null;
+
+    } catch (Exception $e) {
+        $array['status'] = 'ko';
+    }
+    return  $array['status'];
 }
 
 function updateBaby($baby){
-	$array = array();
+    $array = array();
 
-	try {
-		$connexion = db_connect();
+    try {
+        $connexion = db_connect();
 
-		$stmt = $connexion->prepare("UPDATE `baby` SET `naissance`= :naissance,`prenom`= :prenom,`sexe`= :sexe,`MATERNITE`= :MATERNITE,`GYNECO`= :GYNECO WHERE `id`= :id");
-		
-		$stmt->bindValue(':id', $baby['id']);
-		$stmt->bindValue(':prenom', $baby['prenom']);
-		$stmt->bindValue(':sexe', $baby['sexe']);
-		$stmt->bindValue(':GYNECO', $baby['gyneco']);
-		$stmt->bindValue(':MATERNITE', $baby['maternite']);
-		$stmt->bindValue(':naissance', $baby['naissance']);
+        $stmt = $connexion->prepare("UPDATE `baby` SET `naissance`= :naissance,`prenom`= :prenom,`sexe`= :sexe,`MATERNITE`= :MATERNITE,`GYNECO`= :GYNECO WHERE `id`= :id");
 
-		$a = $stmt->execute();
+        $stmt->bindValue(':id', $baby['id']);
+        $stmt->bindValue(':prenom', $baby['prenom']);
+        $stmt->bindValue(':sexe', $baby['sexe']);
+        $stmt->bindValue(':GYNECO', $baby['gyneco']);
+        $stmt->bindValue(':MATERNITE', $baby['maternite']);
+        $stmt->bindValue(':naissance', $baby['naissance']);
 
-		$eligible='';
+        $a = $stmt->execute();
+
+        $eligible='';
 
 
-		$today = new DateTime(date('Y-m-d'));
-		$naissance= new DateTime($baby['naissance']);
-		$interval = date_diff($today, $naissance);
-		$diffJours = $interval->format('%R%a days');
-		
-		if($diffJours>=7 && $diffJours<=146){
-			$eligible='BOX1';
-			$_SESSION['eligibleToBox']=1;
-			$_SESSION['eligibility_msg']= "Vous êtes éligible à la box  \"Je suis enceinte\" ";
-		}
-		else if($diffJours<=-7 && $diffJours>=-122){
-			$eligible='BOX2';
-			$_SESSION['eligibleToBox']=2;
-			$_SESSION['eligibility_msg']="Vous êtes éligible à la box  \"Bébé est là!\" ";
-		}
-		else if($diffJours<=-183 && $diffJours>=-305){
-			$eligible='BOX3';
-			$_SESSION['eligibleToBox']=3;
-			$_SESSION['eligibility_msg']="Vous êtes éligible à la box  \"Bébé grandit\" ";
-		}else{
-			$_SESSION['eligibleToBox']=0;
-			$_SESSION['eligibility_msg']="Vous n'êtes éligible à aucune box pour le moment <br/>
+        $today = new DateTime(date('Y-m-d'));
+        $naissance= new DateTime($baby['naissance']);
+        $interval = date_diff($today, $naissance);
+        $diffJours = $interval->format('%R%a days');
+
+        if($diffJours>=7 && $diffJours<=146){
+            $eligible='BOX1';
+            $_SESSION['eligibleToBox']=1;
+            $_SESSION['eligibility_msg']= "Vous êtes éligible à la box  \"Je suis enceinte\" ";
+        }
+        else if($diffJours<=-7 && $diffJours>=-122){
+            $eligible='BOX2';
+            $_SESSION['eligibleToBox']=2;
+            $_SESSION['eligibility_msg']="Vous êtes éligible à la box  \"Bébé est là!\" ";
+        }
+        else if($diffJours<=-183 && $diffJours>=-305){
+            $eligible='BOX3';
+            $_SESSION['eligibleToBox']=3;
+            $_SESSION['eligibility_msg']="Vous êtes éligible à la box  \"Bébé grandit\" ";
+        }else{
+            $_SESSION['eligibleToBox']=0;
+            $_SESSION['eligibility_msg']="Vous n'êtes éligible à aucune box pour le moment <br/>
                                 <ul>
                                    <li style='line-height: 40px;  color=#ec7f8c;'>Critères d'éligibilité</li>
                                    <li style='line-height: 40px;  color=#ec7f8c;'>Box rose (Je suis enceinte) : du 5ème au 8ème mois de grossesse</li>
                                    <li style='line-height: 40px; color=#6fc7c2;'>Box vert (Bébé est là!) : de la naissance à 3 mois</li>
                                    <li style='line-height: 40px; color=#8e6cac;'>Box mauve (Bébé grandit): de 6 à 9 mois</li>
                                 </ul>";
-		}
-		$array['updateEligibilite']=updateEligibilite($baby['customer_id'],$eligible);
-		$array['eligible']=$eligible;
-		if($a) {
-			$array['result'] = 'success';
-		} else {
-			$array['result'] = 'failed';
-		}
-	} catch (Exception $e) {
-		$array['result'] = 'ko';
-	}
-	
-	$connexion = null;
+        }
+        //$array['updateEligibilite']=updateEligibilite($baby['customer_id'],$eligible);
+        $array['updateEligibilite']=updateEligibiliteV1($baby['customer_id']);
+        $user = getSendInBlueUser($baby['customer_id']);
+        if ($user['status'] === 'approved') {
+            sindinblue1($user);
+        }
+        $array['eligible']=$eligible;
+        if($a) {
+            $array['result'] = 'success';
+        } else {
+            $array['result'] = 'failed';
+        }
+    } catch (Exception $e) {
+        $array['result'] = 'ko';
+    }
 
-	return json_encode($array);	
+    $connexion = null;
+
+    return json_encode($array);
 }
 
 function deleteCommande($id){
-	$array = array();
+    $array = array();
 
-	try {
-		$connexion = db_connect();
+    try {
+        $connexion = db_connect();
 
-		$resultats = $connexion->prepare("SELECT co.id,p.id_box,co.customer_id,b.naissance FROM commande co INNER JOIN livraison l ON l.commande_id=co.id INNER JOIN product p ON co.product_id=p.id INNER JOIN customer c ON c.id=co.customer_id INNER JOIN baby b ON c.id=b.customer_id  where l.id=:id and co.deleted=0");
+        $resultats = $connexion->prepare("SELECT co.id,p.id_box,co.customer_id,b.naissance FROM commande co INNER JOIN livraison l ON l.commande_id=co.id INNER JOIN product p ON co.product_id=p.id INNER JOIN customer c ON c.id=co.customer_id INNER JOIN baby b ON c.id=b.customer_id  where l.id=:id and co.deleted=0");
 
-		$resultats->bindValue(':id', $id);
-		$resultats->execute();
+        $resultats->bindValue(':id', $id);
+        $resultats->execute();
 
-		$resultats->setFetchMode(PDO::FETCH_OBJ);
-		$commande = $resultats->fetchAll();
-		$commande_id = $commande[0]->id;
-		$id_box      = $commande[0]->id_box;
-		$customer_id      = $commande[0]->customer_id;
-		$naissanceBebe      = $commande[0]->naissance;
-		
-		
-		$stmt = $connexion->prepare("UPDATE `commande` SET `deleted`= 1 WHERE `id`= :id");
-		
-		$stmt->bindValue(':id', $commande_id);
-
-		$stmt->execute();
+        $resultats->setFetchMode(PDO::FETCH_OBJ);
+        $commande = $resultats->fetchAll();
+        $commande_id = $commande[0]->id;
+        $id_box      = $commande[0]->id_box;
+        $customer_id      = $commande[0]->customer_id;
+        $naissanceBebe      = $commande[0]->naissance;
 
 
-		$stmt = $connexion->prepare("UPDATE `livraison` SET `deleted`= 1 WHERE `id`= :id");
-		
-		$stmt->bindValue(':id', $id);
+        $stmt = $connexion->prepare("UPDATE `commande` SET `deleted`= 1 WHERE `id`= :id");
 
-		$a=$stmt->execute();
+        $stmt->bindValue(':id', $commande_id);
 
-
-		$eligible='';
+        $stmt->execute();
 
 
-		$today = new DateTime(date('Y-m-d'));
-		$naissance= new DateTime($naissanceBebe);
-		$interval = date_diff($today, $naissance);
-		$diffJours = $interval->format('%R%a days');
-		
-		if($diffJours>=7 && $diffJours<=146){
-			$eligible='BOX1';
-		}
-		else if($diffJours<=-7 && $diffJours>=-122){
-			$eligible='BOX2';
-		}
-		else if($diffJours<=-183 && $diffJours>=-305){
-			$eligible='BOX3';
-		}
+        $stmt = $connexion->prepare("UPDATE `livraison` SET `deleted`= 1 WHERE `id`= :id");
 
-		updateEligibilite($customer_id,$eligible);
+        $stmt->bindValue(':id', $id);
+
+        $a=$stmt->execute();
+
+        /*
+                $eligible='';
 
 
+                $today = new DateTime(date('Y-m-d'));
+                $naissance= new DateTime($naissanceBebe);
+                $interval = date_diff($today, $naissance);
+                $diffJours = $interval->format('%R%a days');
+
+                if($diffJours>=7 && $diffJours<=146){
+                    $eligible='BOX1';
+                }
+                else if($diffJours<=-7 && $diffJours>=-122){
+                    $eligible='BOX2';
+                }
+                else if($diffJours<=-183 && $diffJours>=-305){
+                    $eligible='BOX3';
+                }
+        */
+        updateEligibiliteV1($customer_id);
 
 
 
-		if($a) {
-			$array['result'] = 'ok';
-		} else {
-			$array['result'] = 'failed';
-		}
-	} catch (Exception $e) {
-		$array['result'] = 'ko';
-	}
-	
-	$connexion = null;
 
-	return json_encode($array);	
+
+        if($a) {
+            $array['result'] = 'ok';
+        } else {
+            $array['result'] = 'failed';
+        }
+    } catch (Exception $e) {
+        $array['result'] = 'ko';
+    }
+
+    $connexion = null;
+
+    return json_encode($array);
 }
 
 function getAllBox(){
-	$array = array();
-	try {
-		$connexion = db_connect();
-		$resultats = $connexion->prepare("SELECT * FROM box");
+    $array = array();
+    try {
+        $connexion = db_connect();
+        $resultats = $connexion->prepare("SELECT * FROM box");
 
-		$resultats->execute();
+        $resultats->execute();
 
-		$resultats->setFetchMode(PDO::FETCH_OBJ);
-		$resultat = $resultats->fetchAll();
-		$array['result'] = $resultat;
-	} catch (Exception $e) {
-		$array['result'] = 0;
-	}
-	
-	$connexion = null;
-	return json_encode($array);	
+        $resultats->setFetchMode(PDO::FETCH_OBJ);
+        $resultat = $resultats->fetchAll();
+        $array['result'] = $resultat;
+    } catch (Exception $e) {
+        $array['result'] = 0;
+    }
+
+    $connexion = null;
+    return json_encode($array);
 }
 
 function getAllProduct(){
-	$array = array();
-	try {
-		$connexion = db_connect();
-		$resultats = $connexion->prepare("SELECT *,p.id as id_product FROM product p INNER JOIN box b ON b.id = p.id_box INNER JOIN shop s ON p.id_shop = s.id");
+    $array = array();
+    try {
+        $connexion = db_connect();
+        $resultats = $connexion->prepare("SELECT *,p.id as id_product FROM product p INNER JOIN box b ON b.id = p.id_box INNER JOIN shop s ON p.id_shop = s.id");
 
-		$resultats->execute();
+        $resultats->execute();
 
-		$resultats->setFetchMode(PDO::FETCH_OBJ);
-		$resultat = $resultats->fetchAll();
-		$array['result'] = $resultat;
-	} catch (Exception $e) {
-		$array['result'] = 0;
-	}
-	
-	$connexion = null;
-	return json_encode($array);	
+        $resultats->setFetchMode(PDO::FETCH_OBJ);
+        $resultat = $resultats->fetchAll();
+        $array['result'] = $resultat;
+    } catch (Exception $e) {
+        $array['result'] = 0;
+    }
+
+    $connexion = null;
+    return json_encode($array);
 }
 
 function getAllShop(){
-	$array = array();
-	try {
-		$connexion = db_connect();
-		//$resultats = $connexion->prepare("SELECT s.*,s.id as id_shop, v.name as ville_name FROM `shop` s INNER JOIN ville v ON s.Ville_id = v.id");
-		$resultats = $connexion->prepare("SELECT * FROM `shop` where (type!='Points de retrait' or Name='Oumbox')");
+    $array = array();
+    try {
+        $connexion = db_connect();
+        //$resultats = $connexion->prepare("SELECT s.*,s.id as id_shop, v.name as ville_name FROM `shop` s INNER JOIN ville v ON s.Ville_id = v.id");
+        $resultats = $connexion->prepare("SELECT * FROM `shop` where (type!='Points de retrait' or Name='Oumbox')");
 
-		$resultats->execute();
+        $resultats->execute();
 
-		$resultats->setFetchMode(PDO::FETCH_OBJ);
-		$resultat = $resultats->fetchAll();
-		$array['result'] = $resultat;
-	} catch (Exception $e) {
-		$array['result'] = 0;
-	}
-	
-	$connexion = null;
-	return json_encode($array);	
+        $resultats->setFetchMode(PDO::FETCH_OBJ);
+        $resultat = $resultats->fetchAll();
+        $array['result'] = $resultat;
+    } catch (Exception $e) {
+        $array['result'] = 0;
+    }
+
+    $connexion = null;
+    return json_encode($array);
+}
+function getAllActivatedShop(){
+    $array = array();
+    try {
+        $connexion = db_connect();
+        //$resultats = $connexion->prepare("SELECT s.*,s.id as id_shop, v.name as ville_name FROM `shop` s INNER JOIN ville v ON s.Ville_id = v.id");
+        $resultats = $connexion->prepare("SELECT * FROM `shop` where (type!='Points de retrait' or Name='Oumbox') and status='active'");
+
+        $resultats->execute();
+
+        $resultats->setFetchMode(PDO::FETCH_OBJ);
+        $resultat = $resultats->fetchAll();
+        $array['result'] = $resultat;
+    } catch (Exception $e) {
+        $array['result'] = 0;
+    }
+
+    $connexion = null;
+    return json_encode($array);
 }
 
 function getBoxById($id){
-	$array = array();
-	try {
-		$connexion = db_connect();
-		$resultats = $connexion->prepare("SELECT * FROM `box`WHERE id = :id");
-    	
-    	$resultats->bindParam(':id', $id);
+    $array = array();
+    try {
+        $connexion = db_connect();
+        $resultats = $connexion->prepare("SELECT * FROM `box`WHERE id = :id");
 
-		$resultats->execute();
+        $resultats->bindParam(':id', $id);
 
-		$resultats->setFetchMode(PDO::FETCH_OBJ);
-		$resultat = $resultats->fetchAll();
-		$array['result'] = $resultat;
+        $resultats->execute();
 
-	} catch (Exception $e) {
-		$array['result'] = 0;
-	}
-	
-	$connexion = null;
-	return json_encode($array);
+        $resultats->setFetchMode(PDO::FETCH_OBJ);
+        $resultat = $resultats->fetchAll();
+        $array['result'] = $resultat;
+
+    } catch (Exception $e) {
+        $array['result'] = 0;
+    }
+
+    $connexion = null;
+    return json_encode($array);
 }
 
 function getLivraison($id){
-	$array = array();
-	try {
-		$connexion = db_connect();
-		$sql ="SELECT l.*, co.customer_id,r.id_ville,r.nom as 'relais',r.id_relais
+    $array = array();
+    try {
+        $connexion = db_connect();
+        $sql ="SELECT l.*, co.customer_id,r.id_ville,r.nom as 'relais',r.id_relais
 				FROM livraison l 
 				INNER JOIN commande co 
 				ON l.commande_id = co.id
 				LEFT JOIN relais r
 				ON shop_id = r.id_relais
 				WHERE l.id = :id and  co.deleted=0" ;
-		$resultats = $connexion->prepare($sql);
-    	
-    	$resultats->bindParam(':id', $id);
+        $resultats = $connexion->prepare($sql);
 
-		$resultats->execute();
+        $resultats->bindParam(':id', $id);
 
-		$resultats->setFetchMode(PDO::FETCH_OBJ);
-		$resultat = $resultats->fetchAll();
+        $resultats->execute();
 
-		$array['result'] = $resultat;
+        $resultats->setFetchMode(PDO::FETCH_OBJ);
+        $resultat = $resultats->fetchAll();
 
-	} catch (Exception $e) {
-		$array['result'] = 0;
-	}
-	
-	$connexion = null;
-	return json_encode($array);
+        $array['result'] = $resultat;
+
+    } catch (Exception $e) {
+        $array['result'] = 0;
+    }
+
+    $connexion = null;
+    return json_encode($array);
 }
 
 function getProductById($id){
-	$array = array();
-	try {
-		$connexion = db_connect();
-		$resultats = $connexion->prepare("SELECT *, p.id as id_product FROM `product` p INNER JOIN box b ON b.id = p.id_box INNER JOIN shop s ON s.id = p.id_shop WHERE p.id = :id");
-    	
-    	$resultats->bindParam(':id', $id);
+    $array = array();
+    try {
+        $connexion = db_connect();
+        $resultats = $connexion->prepare("SELECT *, p.id as id_product FROM `product` p INNER JOIN box b ON b.id = p.id_box INNER JOIN shop s ON s.id = p.id_shop WHERE p.id = :id");
 
-		$resultats->execute();
+        $resultats->bindParam(':id', $id);
 
-		$resultats->setFetchMode(PDO::FETCH_OBJ);
-		$resultat = $resultats->fetchAll();
-		$array['result'] = $resultat;
+        $resultats->execute();
 
-	} catch (Exception $e) {
-		$array['result'] = 0;
-	}
-	
-	$connexion = null;
-	return json_encode($array);
+        $resultats->setFetchMode(PDO::FETCH_OBJ);
+        $resultat = $resultats->fetchAll();
+        $array['result'] = $resultat;
+
+    } catch (Exception $e) {
+        $array['result'] = 0;
+    }
+
+    $connexion = null;
+    return json_encode($array);
 }
 
 function addProduct($product){
-	$array = array();
-	try {
-		$connexion = db_connect();
-		$sql = "INSERT INTO `product`(`id_box`, `id_shop`, `RefBox`) VALUES (:id_box, :id_shop, :RefBox)";
-		
-		//Prepare our statement.
-		$statement = $connexion->prepare($sql);
-		
-		//Bind our values to our parameters (we called them :make and :model).
-		$statement->bindValue(':id_box', $product['id_box']);
-		$statement->bindValue(':id_shop', $product['id_shop']);
-		$statement->bindValue(':RefBox', $product['refProduct']);
-		 
-		//Execute the statement and insert our values.
-		$inserted = $statement->execute();
-		 
-		//Because PDOStatement::execute returns a TRUE or FALSE value,
-		//we can easily check to see if our insert was successful.
-		if($inserted){
-			$indertedId = $connexion->lastInsertId();
-			$array['inserted_id'] = $indertedId;
-			$array['result'] = 1;
-		}
+    $array = array();
+    try {
+        $connexion = db_connect();
+        $sql = "INSERT INTO `product`(`id_box`, `id_shop`, `RefBox`) VALUES (:id_box, :id_shop, :RefBox)";
 
-	} catch (Exception $e) {
-		$array['result'] = 0;
-	}
-	
-	$connexion = null;
-	return json_encode($array);
+        //Prepare our statement.
+        $statement = $connexion->prepare($sql);
+
+        //Bind our values to our parameters (we called them :make and :model).
+        $statement->bindValue(':id_box', $product['id_box']);
+        $statement->bindValue(':id_shop', $product['id_shop']);
+        $statement->bindValue(':RefBox', $product['refProduct']);
+
+        //Execute the statement and insert our values.
+        $inserted = $statement->execute();
+
+        //Because PDOStatement::execute returns a TRUE or FALSE value,
+        //we can easily check to see if our insert was successful.
+        if($inserted){
+            $indertedId = $connexion->lastInsertId();
+            $array['inserted_id'] = $indertedId;
+            $array['result'] = 1;
+        }
+
+    } catch (Exception $e) {
+        $array['result'] = 0;
+    }
+
+    $connexion = null;
+    return json_encode($array);
 }
 
 function addProduct2($product){
-	$array = array();
-	try {
-		$connexion = db_connect();
-		$sql = "INSERT INTO `product`(`id_box`) VALUES (:id_box)";
-		
-		//Prepare our statement.
-		$statement = $connexion->prepare($sql);
-		
-		//Bind our values to our parameters (we called them :make and :model).
-		$statement->bindValue(':id_box', $product['id_box']);
-		 
-		//Execute the statement and insert our values.
-		$inserted = $statement->execute();
-		 
-		//Because PDOStatement::execute returns a TRUE or FALSE value,
-		//we can easily check to see if our insert was successful.
-		if($inserted){
-			$indertedId = $connexion->lastInsertId();
-			$array['inserted_id'] = $indertedId;
-			$array['result'] = 1;
-			return $indertedId;
-		}
+    $array = array();
+    try {
+        $connexion = db_connect();
+        $sql = "INSERT INTO `product`(`id_box`) VALUES (:id_box)";
 
-	} catch (Exception $e) {
-		$array['result'] = 0;
-	}
-	
-	$connexion = null;
+        //Prepare our statement.
+        $statement = $connexion->prepare($sql);
+
+        //Bind our values to our parameters (we called them :make and :model).
+        $statement->bindValue(':id_box', $product['id_box']);
+
+        //Execute the statement and insert our values.
+        $inserted = $statement->execute();
+
+        //Because PDOStatement::execute returns a TRUE or FALSE value,
+        //we can easily check to see if our insert was successful.
+        if($inserted){
+            $indertedId = $connexion->lastInsertId();
+            $array['inserted_id'] = $indertedId;
+            $array['result'] = 1;
+            return $indertedId;
+        }
+
+    } catch (Exception $e) {
+        $array['result'] = 0;
+    }
+
+    $connexion = null;
 }
 
 function addBox($box){
-	$array = array();
-	try {
-		$connexion = db_connect();
-		$sql = "INSERT INTO `box` (`name`, `debut`, `fin`, `description`) VALUES (:name, :debut, :fin, :description)";
-		
-		//Prepare our statement.
-		$statement = $connexion->prepare($sql);
-		
-		//Bind our values to our parameters (we called them :make and :model).
-		$statement->bindValue(':name', $box['name']);
-		$statement->bindValue(':debut', $box['debut']);
-		$statement->bindValue(':fin', $box['fin']);
-		$statement->bindValue(':description', $box['description']);
-		 
-		//Execute the statement and insert our values.
-		$inserted = $statement->execute();
-		 
-		//Because PDOStatement::execute returns a TRUE or FALSE value,
-		//we can easily check to see if our insert was successful.
-		if($inserted){
-			$indertedId = $connexion->lastInsertId();
-			$array['inserted_id'] = $indertedId;
-			$array['result'] = 1;
-		}
+    $array = array();
+    try {
+        $connexion = db_connect();
+        $sql = "INSERT INTO `box` (`name`, `debut`, `fin`, `description`) VALUES (:name, :debut, :fin, :description)";
 
-	} catch (Exception $e) {
-		$array['result'] = 0;
-	}
-	
-	$connexion = null;
-	return json_encode($array);
+        //Prepare our statement.
+        $statement = $connexion->prepare($sql);
+
+        //Bind our values to our parameters (we called them :make and :model).
+        $statement->bindValue(':name', $box['name']);
+        $statement->bindValue(':debut', $box['debut']);
+        $statement->bindValue(':fin', $box['fin']);
+        $statement->bindValue(':description', $box['description']);
+
+        //Execute the statement and insert our values.
+        $inserted = $statement->execute();
+
+        //Because PDOStatement::execute returns a TRUE or FALSE value,
+        //we can easily check to see if our insert was successful.
+        if($inserted){
+            $indertedId = $connexion->lastInsertId();
+            $array['inserted_id'] = $indertedId;
+            $array['result'] = 1;
+        }
+
+    } catch (Exception $e) {
+        $array['result'] = 0;
+    }
+
+    $connexion = null;
+    return json_encode($array);
 }
 
 function updateBox($box){
-	$array = array();
+    $array = array();
 
-	try {
-		$connexion = db_connect();
+    try {
+        $connexion = db_connect();
 
-		$stmt = $connexion->prepare("UPDATE `box` SET `name`= :name,`debut`= :debut,`fin`= :fin,`description`= :description WHERE id = :id ");
-		
-		$stmt->bindValue(':id', $box['id']);
-		$stmt->bindValue(':name', $box['name']);
-		$stmt->bindValue(':debut', $box['debut']);
-		$stmt->bindValue(':fin', $box['fin']);
-		$stmt->bindValue(':description', $box['description']);
+        $stmt = $connexion->prepare("UPDATE `box` SET `name`= :name,`debut`= :debut,`fin`= :fin,`description`= :description WHERE id = :id ");
 
-		$stmt->execute();
+        $stmt->bindValue(':id', $box['id']);
+        $stmt->bindValue(':name', $box['name']);
+        $stmt->bindValue(':debut', $box['debut']);
+        $stmt->bindValue(':fin', $box['fin']);
+        $stmt->bindValue(':description', $box['description']);
 
-		if($stmt->rowCount()) {
-			$array['result'] = 'success';
-		} else {
-			$array['result'] = 'failed';
-		}
-	} catch (Exception $e) {
-		$array['result'] = 'ko';
-	}
-	
-	$connexion = null;
+        $stmt->execute();
 
-	return json_encode($array);	
+        if($stmt->rowCount()) {
+            $array['result'] = 'success';
+        } else {
+            $array['result'] = 'failed';
+        }
+    } catch (Exception $e) {
+        $array['result'] = 'ko';
+    }
+
+    $connexion = null;
+
+    return json_encode($array);
 }
 
 function updateProduct($product){
-	$array = array();
+    $array = array();
 
-	try {
-		$connexion = db_connect();
+    try {
+        $connexion = db_connect();
 
-		$stmt = $connexion->prepare("UPDATE `product` SET `id_box`= :id_box,`id_shop`= :id_shop,`RefBox`= :RefBox WHERE id = :id ");
-		
-		$stmt->bindValue(':id', $product['id']);
-		$stmt->bindValue(':id_box', $product['id_box']);
-		$stmt->bindValue(':id_shop', $product['id_shop']);
-		$stmt->bindValue(':RefBox', $product['RefBox']);
+        $stmt = $connexion->prepare("UPDATE `product` SET `id_box`= :id_box,`id_shop`= :id_shop,`RefBox`= :RefBox WHERE id = :id ");
 
-		$stmt->execute();
+        $stmt->bindValue(':id', $product['id']);
+        $stmt->bindValue(':id_box', $product['id_box']);
+        $stmt->bindValue(':id_shop', $product['id_shop']);
+        $stmt->bindValue(':RefBox', $product['RefBox']);
 
-		if($stmt->rowCount()) {
-			$array['result'] = 'success';
-		} else {
-			$array['result'] = 'failed';
-		}
-	} catch (Exception $e) {
-		$array['result'] = 'ko';
-	}
-	
-	$connexion = null;
+        $stmt->execute();
 
-	return json_encode($array);	
+        if($stmt->rowCount()) {
+            $array['result'] = 'success';
+        } else {
+            $array['result'] = 'failed';
+        }
+    } catch (Exception $e) {
+        $array['result'] = 'ko';
+    }
+
+    $connexion = null;
+
+    return json_encode($array);
 }
 
 function deleteBox($id){
-	$array = array();
-	$array['result'] = 0;
+    $array = array();
+    $array['result'] = 0;
 
-	try {
-		$connexion = db_connect();
+    try {
+        $connexion = db_connect();
 
-		$stmt = $connexion->prepare("DELETE FROM `box` WHERE id = :id");
-		$stmt->bindParam(':id', $id);
-		$stmt->execute();
-		$count = $stmt->rowCount();
+        $stmt = $connexion->prepare("DELETE FROM `box` WHERE id = :id");
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        $count = $stmt->rowCount();
 
-		if($count == 1){
-			$array['result'] = 1;
-		}
+        if($count == 1){
+            $array['result'] = 1;
+        }
 
-	} catch (Exception $e) {
-		$array['result'] = 0;
-	}
-	
-	$connexion = null;
-	return json_encode($array);	
+    } catch (Exception $e) {
+        $array['result'] = 0;
+    }
+
+    $connexion = null;
+    return json_encode($array);
 }
 
 function deleteProduct($id){
-	$array = array();
-	$array['result'] = 0;
+    $array = array();
+    $array['result'] = 0;
 
-	try {
-		$connexion = db_connect();
+    try {
+        $connexion = db_connect();
 
-		$stmt = $connexion->prepare("DELETE FROM `product` WHERE id = :id");
-		$stmt->bindParam(':id', $id);
-		$stmt->execute();
-		$count = $stmt->rowCount();
+        $stmt = $connexion->prepare("DELETE FROM `product` WHERE id = :id");
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        $count = $stmt->rowCount();
 
-		if($count == 1){
-			$array['result'] = 1;
-		}
+        if($count == 1){
+            $array['result'] = 1;
+        }
 
-	} catch (Exception $e) {
-		$array['result'] = 0;
-	}
-	
-	$connexion = null;
-	return json_encode($array);	
+    } catch (Exception $e) {
+        $array['result'] = 0;
+    }
+
+    $connexion = null;
+    return json_encode($array);
 }
 
 function getAllCats(){
-	$array = array();
+    $array = array();
 
-	try {
-		$connexion = db_connect();
-		$resultats = $connexion->prepare("SELECT * FROM `blog_cats`");
+    try {
+        $connexion = db_connect();
+        $resultats = $connexion->prepare("SELECT * FROM `blog_cats`");
 
-		$resultats->execute();
+        $resultats->execute();
 
-		$resultats->setFetchMode(PDO::FETCH_OBJ);
-		$resultat = $resultats->fetchAll();
-		$array['status'] = 'success';
-		$array['result'] = $resultat;
-	} catch (Exception $e) {
-		$array['status'] = 'failed';
-		$array['result'] = 0;
-	}
-	
-	$connexion = null;
-	return json_encode($array);	
+        $resultats->setFetchMode(PDO::FETCH_OBJ);
+        $resultat = $resultats->fetchAll();
+        $array['status'] = 'success';
+        $array['result'] = $resultat;
+    } catch (Exception $e) {
+        $array['status'] = 'failed';
+        $array['result'] = 0;
+    }
+
+    $connexion = null;
+    return json_encode($array);
 }
 
 function getCatById($id){
-	$array = array();
+    $array = array();
 
-	try {
-		$connexion = db_connect();
-		$resultats = $connexion->prepare("SELECT * FROM `blog_cats` WHERE catID = :id");
-		
-		$resultats->bindParam(':id', $id);
+    try {
+        $connexion = db_connect();
+        $resultats = $connexion->prepare("SELECT * FROM `blog_cats` WHERE catID = :id");
 
-		$resultats->execute();
+        $resultats->bindParam(':id', $id);
 
-		$resultats->setFetchMode(PDO::FETCH_OBJ);
-		$resultat = $resultats->fetchAll();
-		$array['status'] = 'success';
-		$array['result'] = $resultat;
+        $resultats->execute();
 
-	} catch (Exception $e) {
-		$array['result'] = 0;
-		$array['status'] = 'failed';
-	}
+        $resultats->setFetchMode(PDO::FETCH_OBJ);
+        $resultat = $resultats->fetchAll();
+        $array['status'] = 'success';
+        $array['result'] = $resultat;
 
-	$connexion = null;
-	return json_encode($array);
+    } catch (Exception $e) {
+        $array['result'] = 0;
+        $array['status'] = 'failed';
+    }
+
+    $connexion = null;
+    return json_encode($array);
 }
 
 function addCat($cat){
-	$array = array();
-	$catSlug = slug($cat['catTitle']);
+    $array = array();
+    $catSlug = slug($cat['catTitle']);
 
-	try {
-		$connexion = db_connect();
-		$sql = "INSERT INTO `blog_cats`(`catTitle`, `catSlug`) VALUES (:catTitle, :catSlug)";
-		
-		//Prepare our statement.
-		$statement = $connexion->prepare($sql);
-		
-		//Bind our values to our parameters (we called them :make and :model).
-		$statement->bindValue(':catTitle', $cat['catTitle']);
-		$statement->bindValue(':catSlug', $catSlug);
-		 
-		//Execute the statement and insert our values.
-		$inserted = $statement->execute();
-		 
-		//Because PDOStatement::execute returns a TRUE or FALSE value,
-		//we can easily check to see if our insert was successful.
-		if($inserted){
-			$indertedId = $connexion->lastInsertId();
-			$array['status'] = 'success';
-			$array['inserted_id'] = $indertedId;
-		}
+    try {
+        $connexion = db_connect();
+        $sql = "INSERT INTO `blog_cats`(`catTitle`, `catSlug`) VALUES (:catTitle, :catSlug)";
 
-	} catch (Exception $e) {
-		$array['status'] = 'failed';
-	}
-	
-	$connexion = null;
-	return json_encode($array);
+        //Prepare our statement.
+        $statement = $connexion->prepare($sql);
+
+        //Bind our values to our parameters (we called them :make and :model).
+        $statement->bindValue(':catTitle', $cat['catTitle']);
+        $statement->bindValue(':catSlug', $catSlug);
+
+        //Execute the statement and insert our values.
+        $inserted = $statement->execute();
+
+        //Because PDOStatement::execute returns a TRUE or FALSE value,
+        //we can easily check to see if our insert was successful.
+        if($inserted){
+            $indertedId = $connexion->lastInsertId();
+            $array['status'] = 'success';
+            $array['inserted_id'] = $indertedId;
+        }
+
+    } catch (Exception $e) {
+        $array['status'] = 'failed';
+    }
+
+    $connexion = null;
+    return json_encode($array);
+}
+function addTag($tag){
+    $cat = $tag;
+    $array = array();
+    $catSlug = slug($cat['catTitle']);
+
+    try {
+        $connexion = db_connect();
+        $sql = "INSERT INTO `blog_cats`(`catTitle`, `catSlug`, `type`) VALUES (:catTitle, :catSlug,'tag')";
+
+        //Prepare our statement.
+        $statement = $connexion->prepare($sql);
+
+        //Bind our values to our parameters (we called them :make and :model).
+        $statement->bindValue(':catTitle', $cat['catTitle']);
+        $statement->bindValue(':catSlug', $catSlug);
+
+        //Execute the statement and insert our values.
+        $inserted = $statement->execute();
+
+        //Because PDOStatement::execute returns a TRUE or FALSE value,
+        //we can easily check to see if our insert was successful.
+        if($inserted){
+            $indertedId = $connexion->lastInsertId();
+            $array['status'] = 'success';
+            $array['inserted_id'] = $indertedId;
+        }
+
+    } catch (Exception $e) {
+        $array['status'] = 'failed';
+    }
+
+    $connexion = null;
+    return json_encode($array);
+}
+
+
+function getCatTags($cat){
+    $array = array();
+
+    try {
+        $connexion = db_connect();
+        $sql = "SELECT bc.catTitle,bc.catID FROM blog_post_cats bpc INNER JOIN `blog_cats` bc ON bpc.catID = bc.catID 
+                where bpc.postID in (
+                  SELECT postID
+                  FROM `blog_post_cats` bpc2
+                  WHERE bpc2.catID = :cat )
+                  AND bpc.catID != :cat
+                ";
+
+        //Prepare our statement.
+        $statement = $connexion->prepare($sql);
+
+
+        $statement->bindParam(':cat', $cat);
+
+        $statement->execute();
+
+        $statement->setFetchMode(PDO::FETCH_OBJ);
+        $resultat = $statement->fetchAll();
+        $array['status'] = 'success';
+        $array['result'] = $resultat;
+
+
+
+    } catch (Exception $e) {
+        $array['status'] = 'failed';
+    }
+
+    $connexion = null;
+    return json_encode($array);
+}
+function getBabyByCustIdAndOrdre($customer_id,$ordre){
+    $id_bebe='0';
+    try {
+        $connexion = db_connect();
+        $resultats = $connexion->prepare("SELECT id FROM  baby where customer_id=:customer_id and ordre=:ordre");
+        $resultats->bindParam(':customer_id', $customer_id);
+        $resultats->bindParam(':ordre', $ordre);
+        $resultats->execute();
+        $resultats->setFetchMode(PDO::FETCH_OBJ);
+
+        $id_bebe = $resultats->fetchColumn();
+
+    } catch (Exception $e) {
+
+    }
+
+    $connexion = null;
+    return $id_bebe;
+}
+function getOrdreBabyEligible($id){
+    $id_bebe='0';
+    $ordre='0';
+    try {
+        $connexion = db_connect();
+        $resultats = $connexion->prepare("SELECT eligible FROM  customer where id=:id");
+        $resultats->bindParam(':id', $id);
+        $resultats->execute();
+        $resultats->setFetchMode(PDO::FETCH_OBJ);
+
+        $eligible = $resultats->fetchColumn();
+        $ordre=substr($eligible, -1);
+        //$ordre=$eligible[strlen($eligible)-1];
+    } catch (Exception $e) {
+
+    }
+
+    $connexion = null;
+    return $ordre;
 }
 function addLivraison($livraison){
-	$array = array();
-	$connexion = db_connect();
-	if($livraison['user']=="admin"){
-		// ajouter une livraison 
+    $array = array();
+    $connexion = db_connect();
+    if($livraison['user']=="admin"){
+        // ajouter une livraison
 
-		//ajouter d'abord un produit
-		
-		$today = date("dmY");
-		$RefBox =  $today.$livraison['type'].$livraison['idClient'];
+        //ajouter d'abord un produit
 
-		$product['id_box']=$livraison['id_box'];
-		$product['refProduct']=$RefBox;
-		$product['id_shop']=1;
+        $today = date("dmY");
+        $RefBox =  $today.$livraison['type'].$livraison['idClient'];
 
-		$insertedProduct = json_decode(addProduct($product),true);
-		
-		//ajouter ensuite une commande
-		$commande['BC']="default";
-		$commande['product_id']  = $insertedProduct['inserted_id'];
-		$commande['customer_id']  = $livraison['idClient'];
-		$resultJS = addCommande($commande);
-		$result = json_decode($resultJS,true);
-		$id_commande = $result['inserted_id'];
-		$sql = "INSERT INTO livraison (commande_id, type,status) 
-		VALUES (:commande_id, :type,:status)";
-		//Prepare our statement.
-		$statement = $connexion->prepare($sql);
-		
-		$statement->bindValue(':commande_id', $id_commande);
-		$statement->bindValue(':status', $livraison['status']);
-		$statement->bindValue(':type', $livraison['type']);
-		//Execute the statement and insert our values.
-		$inserted = $statement->execute();
+        //$product['id_box']=$livraison['id_box'];
+        $product['id_box']=$livraison['id_box'];
+        $product['refProduct']=$RefBox;
+        $product['id_shop']=1;
 
+        $insertedProduct = json_decode(addProduct($product),true);
 
-		
+        //ajouter ensuite une commande
+        $commande['BC']="default";
+        $commande['product_id']  = $insertedProduct['inserted_id'];
+        $commande['customer_id']  = $livraison['idClient'];
+        $array['livraison_baby_id']=getOrdreBabyEligible($livraison['idClient']);
+        $commande['baby_id']  = getBabyByCustIdAndOrdre($livraison['idClient'],$array['livraison_baby_id']);
+        $array['baby_id']=$commande['baby_id'];
+        $resultJS = addCommande($commande);
+        $result = json_decode($resultJS,true);
+        $id_commande = $result['inserted_id'];
+        $sql = "INSERT INTO livraison (commande_id, type,status) VALUES (:commande_id, :type,:status)";
+        //Prepare our statement.
+        $statement = $connexion->prepare($sql);
 
-		$newEligible='BOX0'.$livraison['id_box'].'_COMMANDÉE';
-		$sql="UPDATE customer set eligible=:eligible where id=:id";
-		$statement = $connexion->prepare($sql);
-		$statement->bindValue(':eligible', $newEligible);
-		$statement->bindValue(':id', $livraison['idClient']);
-		$updated1 = $statement->execute();
+        $statement->bindValue(':commande_id', $id_commande);
+        $statement->bindValue(':status', $livraison['status']);
+        $statement->bindValue(':type', $livraison['type']);
+        //Execute the statement and insert our values.
+        $inserted = $statement->execute();
 
 
-		$array['result'] = 'success';
 
-	}
-	else{
-		$product['id_box']=$_SESSION['eligibleToBox'];
-		$_SESSION['lastEligibleToBox']=$_SESSION['eligibleToBox'];
-		$_SESSION['eligibleToBox']=0;// le client n'est plus éligible 
-		$idProduct = addProduct2($product);
+        updateEligibiliteV1($livraison['idClient']);
 
-		$commande['BC']="default";
-		$commande['product_id']  = $idProduct;
-		$commande['customer_id'] = $_SESSION['client_id'];
-		$resultJS = addCommande($commande);
-		$result = json_decode($resultJS,true);
-		$id_commande = $result['inserted_id'];
+        $array['result'] = 'success';
 
-		try {
-			
-			$sql="";
-			if($livraison['type']=='OX'){
-				$sql = "INSERT INTO livraison (commande_id, type) 
+    }
+    else{
+        $product['id_box']=$_SESSION['eligibleToBox'];
+        $_SESSION['lastEligibleToBox']=$_SESSION['eligibleToBox'];
+        $_SESSION['eligibleToBox']=0;// le client n'est plus éligible
+        $idProduct = addProduct2($product);
+
+        $commande['BC']="default";
+        $commande['product_id']  = $idProduct;
+        $commande['customer_id'] = $_SESSION['client_id'];
+        $commande['baby_id']  = getBabyByCustIdAndOrdre($_SESSION['client_id'],getOrdreBabyEligible($_SESSION['client_id']));
+        $array['baby_id']=$commande['baby_id'];
+        $resultJS = addCommande($commande);
+        $result = json_decode($resultJS,true);
+        $id_commande = $result['inserted_id'];
+        $array['commande_id']=$id_commande;
+
+        try {
+
+            $sql="";
+            if($livraison['type']=='OX'){
+                $sql = "INSERT INTO livraison (commande_id, type) 
 				VALUES (:commande_id, 'OX')";
-			}
-			else if($livraison['relais']=='NULL'){
-				$sql = "INSERT INTO livraison (adresseLivraison, commande_id, type, quartier,gsm) 
-				VALUES (:adresseLivraison, :commande_id, :type, :quartier,:gsm)";	
-			}
-			else{
-				$sql = "INSERT INTO livraison (adresseLivraison,shop_id, commande_id, type, quartier,gsm) 
-				VALUES (:adresseLivraison, :shop_id, :commande_id, :type, :quartier,:gsm)";	
-			}
-			//Prepare our statement.
-			$statement = $connexion->prepare($sql);
-			
-			$statement->bindValue(':commande_id', $id_commande);
-			if($livraison['type']!='OX'){
-				
-				//Bind our values to our parameters (we called them :make and :model).
-			
-				if($livraison['relais']!='NULL')
-				$statement->bindValue(':shop_id', $livraison['relais']);
-				
-				$statement->bindValue(':adresseLivraison', $livraison['adresse']);
-				$statement->bindValue(':type', $livraison['type']);
-				$statement->bindValue(':quartier', $livraison['quartier']);
-				$statement->bindValue(':gsm', $livraison['gsm']);
-			}
+                $_SESSION['livraisonType']='OX';
+            }
+            else if($livraison['relais']=='NULL'){
+                $sql = "INSERT INTO livraison (adresseLivraison, commande_id, type, quartier,gsm) 
+				VALUES (:adresseLivraison, :commande_id, :type, :quartier,:gsm)";
+                $_SESSION['livraisonType'] = 'LD';
+                $_SESSION['livraisonAdresse'] = $livraison['adresse'];
+            }
+            else{
+                $sql = "INSERT INTO livraison (adresseLivraison,shop_id, commande_id, type, quartier,gsm) 
+				VALUES (:adresseLivraison, :shop_id, :commande_id, :type, :quartier,:gsm)";
+                $_SESSION['livraisonType'] = 'SB';
+                $_SESSION['livraisonAdresse'] = $livraison['adresse'];
+            }
+            //Prepare our statement.
+            $statement = $connexion->prepare($sql);
 
-		
-			 
-			//Execute the statement and insert our values.
-			$inserted1 = $statement->execute();
-			
-			$newEligible='BOX0'.$product['id_box'].'_COMMANDÉE';
-			$sql="UPDATE customer set eligible=:eligible where id=:id";
-			$statement = $connexion->prepare($sql);
-			$statement->bindValue(':eligible', $newEligible);
-			$statement->bindValue(':id', $_SESSION['client_id']);
-			$updated1 = $statement->execute();
+            $statement->bindValue(':commande_id', $id_commande);
+            if($livraison['type']!='OX'){
 
-			//Because PDOStatement::execute returns a TRUE or FALSE value,
-			//we can easily check to see if our insert was successful.
-			if($inserted1 and $updated1){
-				$indertedId = $connexion->lastInsertId();
-				$array['result'] = 'success';
-				$array['type'] = $livraison['type'];
-				$array['inserted_id'] = $indertedId;
-			}else{
-				echo 'error';
-			}
+                //Bind our values to our parameters (we called them :make and :model).
 
-		} catch (Exception $e) {
-			$array['status'] = 'failed';
-		}
-	}
-	
-	$connexion = null;
-	return json_encode($array);
+                if($livraison['relais']!='NULL')
+                    $statement->bindValue(':shop_id', $livraison['relais']);
+
+                $statement->bindValue(':adresseLivraison', $livraison['adresse']);
+                $statement->bindValue(':type', $livraison['type']);
+                $statement->bindValue(':quartier', $livraison['quartier']);
+                $statement->bindValue(':gsm', $livraison['gsm']);
+            }
+
+
+
+            //Execute the statement and insert our values.
+            $inserted1 = $statement->execute();
+
+            $newEligible='BOX0'.$product['id_box'].'_COMMANDÉE';
+            $sql="UPDATE customer set eligible=:eligible where id=:id";
+            $statement = $connexion->prepare($sql);
+            $statement->bindValue(':eligible', $newEligible);
+            $statement->bindValue(':id', $_SESSION['client_id']);
+            $updated1 = $statement->execute();
+
+            //Because PDOStatement::execute returns a TRUE or FALSE value,
+            //we can easily check to see if our insert was successful.
+            if($inserted1 and $updated1){
+                $indertedId = $connexion->lastInsertId();
+                $array['result'] = 'success';
+                $array['type'] = $livraison['type'];
+                $array['inserted_id'] = $indertedId;
+            }else{
+                echo 'error';
+            }
+
+        } catch (Exception $e) {
+            $array['status'] = 'failed';
+        }
+    }
+
+    $connexion = null;
+    return json_encode($array);
 }
 function updateLivraison($livraison){
-	$array = array();
+    $array = array();
 
-	try {
-		$connexion = db_connect();
-		$sql="";
+    try {
+        $connexion = db_connect();
+        $sql="";
 
-		$resultats = $connexion->prepare("SELECT c.customer_id,c.id,l.type from commande c,livraison l where l.commande_id = c.id and l.id=:id and l.status='Non livré' and  c.deleted=0");
-		$resultats->bindParam(':id', $livraison['id']);
-		$resultats->execute();
-		$resultats->setFetchMode(PDO::FETCH_OBJ);
-		$commande = $resultats->fetchAll();
+        $resultats = $connexion->prepare("SELECT c.customer_id,c.id,l.type from commande c,livraison l where l.commande_id = c.id and l.id=:id and l.status='Non livré' and  c.deleted=0");
+        $resultats->bindParam(':id', $livraison['id']);
+        $resultats->execute();
+        $resultats->setFetchMode(PDO::FETCH_OBJ);
+        $commande = $resultats->fetchAll();
 
 
 
-		if(!isset($livraison['type'])){
-			$livraison['type']=$commande[0]->type;
-		}
+        if(!isset($livraison['type'])){
+            $livraison['type']=$commande[0]->type;
+        }
 
-		$today = date("dmY");
-		$RefBox =  $today.$livraison['type'].$commande[0]->customer_id;
-		$sql='';
-		if(isset($livraison['quartier']) and isset($livraison['adresse']) and isset($livraison['relais'])  )
-		$sql = "UPDATE livraison set type=:type,status=:status, quartier=:quartier,adresseLivraison=:adresse,shop_id=:relais where id=:id";		
-		else
-		$sql = "UPDATE livraison set type=:type,status=:status where id=:id";		
-		//Prepare our statement.
-		$statement = $connexion->prepare($sql);
-		
-		$statement->bindValue(':id', $livraison['id']);		 
-		$statement->bindValue(':status', $livraison['status']);		
-		$statement->bindValue(':type', $livraison['type']);		
-		if(isset($livraison['quartier']) and isset($livraison['adresse']) and isset($livraison['relais'])  ){
-			$statement->bindValue(':quartier', $livraison['quartier']);		
-			$statement->bindValue(':adresse', $livraison['adresse']);		
-			$statement->bindValue(':relais', $livraison['relais']);		
-		}
-			
- 
-		
-		//Execute the statement and insert our values.
-		$updated = $statement->execute();	
+        $today = date("dmY");
+        $RefBox =  $today.$livraison['type'].$commande[0]->customer_id;
+        $sql='';
+        if(isset($livraison['quartier']) and isset($livraison['adresse']) and isset($livraison['relais'])  )
+            $sql = "UPDATE livraison set type=:type,status=:status, quartier=:quartier,adresseLivraison=:adresse,shop_id=:relais where id=:id";
+        else
+            $sql = "UPDATE livraison set type=:type,status=:status where id=:id";
+        //Prepare our statement.
+        $statement = $connexion->prepare($sql);
 
-		if($updated){
-			$array['status'] = 'success';
-		}else{
-			echo 'error';
-		}
-		
-		if($array['status'] == 'success' and $livraison['status']=="Livré"){
-			$sql = "UPDATE product p 
+        $statement->bindValue(':id', $livraison['id']);
+        $statement->bindValue(':status', $livraison['status']);
+        $statement->bindValue(':type', $livraison['type']);
+        if(isset($livraison['quartier']) and isset($livraison['adresse']) and isset($livraison['relais'])  ){
+            $statement->bindValue(':quartier', $livraison['quartier']);
+            $statement->bindValue(':adresse', $livraison['adresse']);
+            $statement->bindValue(':relais', $livraison['relais']);
+        }
+
+
+
+        //Execute the statement and insert our values.
+        $updated = $statement->execute();
+
+        if($updated){
+            $array['status'] = 'success';
+        }else{
+            echo 'error';
+        }
+
+        if($array['status'] == 'success' and $livraison['status']=="Livré"){
+            $sql = "UPDATE product p 
 			JOIN commande co ON p.id=co.product_id 
 			JOIN customer c ON c.id=co.customer_id 
 			set RefBox=:RefBox
 			where customer_id=:customer_id
 			and co.id=:commande_id and  co.deleted=0
 			";
-			//Prepare our statement.
-			$statement = $connexion->prepare($sql);
-			
-			$statement->bindValue(':RefBox', $RefBox);		 	
-			$statement->bindValue(':customer_id', $commande[0]->customer_id);		 	
-			$statement->bindValue(':commande_id', $commande[0]->id);		 	
+            //Prepare our statement.
+            $statement = $connexion->prepare($sql);
 
-			
-			//Execute the statement and insert our values.
-			$updated = $statement->execute();
-			
-			//Because PDOStatement::execute returns a TRUE or FALSE value,
-			//we can easily check to see if our insert was successful.
-			if($updated){
-				$array['status'] = 'success';
-			}else{
-				echo 'error';
-			}
-		}
+            $statement->bindValue(':RefBox', $RefBox);
+            $statement->bindValue(':customer_id', $commande[0]->customer_id);
+            $statement->bindValue(':commande_id', $commande[0]->id);
 
 
-	} catch (Exception $e) {
-		$array['status'] = 'failed';
-	}
-	
-	$connexion = null;
-	return json_encode($array);
+            //Execute the statement and insert our values.
+            $updated = $statement->execute();
+
+            //Because PDOStatement::execute returns a TRUE or FALSE value,
+            //we can easily check to see if our insert was successful.
+            if($updated){
+                $array['status'] = 'success';
+            }else{
+                echo 'error';
+            }
+        }
+
+
+    } catch (Exception $e) {
+        $array['status'] = 'failed';
+    }
+
+    $connexion = null;
+    return json_encode($array);
 }
 function addCommande($commande){
-	$array = array();
+    $array = array();
 
-	try {
-		$connexion = db_connect();
-		$sql = "INSERT INTO commande(customer_id, product_id, BC) VALUES (:customer_id, :product_id, :BC)";
-		
-		//Prepare our statement.
-		$statement = $connexion->prepare($sql);
-		
-		//Bind our values to our parameters (we called them :make and :model).
-		$statement->bindValue(':customer_id', $commande['customer_id']);
-		$statement->bindValue(':product_id', $commande['product_id']);
-		$statement->bindValue(':BC', $commande['BC']);
-		 
+    try {
+        $connexion = db_connect();
+        $sql = "INSERT INTO commande(customer_id, product_id, BC,baby_id) VALUES (:customer_id, :product_id, :BC,:baby_id)";
 
-		//Execute the statement and insert our values.
-		$inserted = $statement->execute();
-		 
+        //Prepare our statement.
+        $statement = $connexion->prepare($sql);
 
-		//Because PDOStatement::execute returns a TRUE or FALSE value,
-		//we can easily check to see if our insert was successful.
-		if($inserted){
-			$indertedId = $connexion->lastInsertId();
-			$array['status'] = 'success';
-			$array['inserted_id'] = $indertedId;
-		}
+        //Bind our values to our parameters (we called them :make and :model).
+        $statement->bindValue(':customer_id', $commande['customer_id']);
+        $statement->bindValue(':product_id', $commande['product_id']);
+        $statement->bindValue(':BC', $commande['BC']);
+        $statement->bindValue(':baby_id', $commande['baby_id']);
 
-	} catch (Exception $e) {
-		$array['status'] = 'failed';
-	}
-	
-	$connexion = null;
-	return json_encode($array);
+
+        //Execute the statement and insert our values.
+        $inserted = $statement->execute();
+
+
+        //Because PDOStatement::execute returns a TRUE or FALSE value,
+        //we can easily check to see if our insert was successful.
+        if($inserted){
+            $indertedId = $connexion->lastInsertId();
+            $array['status'] = 'success';
+            $array['inserted_id'] = $indertedId;
+        }
+
+    } catch (Exception $e) {
+        $array['status'] = 'failed';
+    }
+
+    $connexion = null;
+    return json_encode($array);
 }
 
 function updateCat($cat){
-	$array = array();
-	$catSlug = slug($cat['catTitle']);
+    $array = array();
+    $catSlug = slug($cat['catTitle']);
 
-	try {
-		$connexion = db_connect();
+    try {
+        $connexion = db_connect();
 
-		$stmt = $connexion->prepare("UPDATE `blog_cats` SET `catTitle` = :catTitle,`catSlug` = :catSlug WHERE catID = :id ");
-		
-		$stmt->bindValue(':id', $cat['id']);
-		$stmt->bindValue(':catTitle', $cat['catTitle']);
-		$stmt->bindValue(':catSlug', $catSlug);
+        $stmt = $connexion->prepare("UPDATE `blog_cats` SET `catTitle` = :catTitle,`catSlug` = :catSlug WHERE catID = :id ");
 
-		$stmt->execute();
+        $stmt->bindValue(':id', $cat['id']);
+        $stmt->bindValue(':catTitle', $cat['catTitle']);
+        $stmt->bindValue(':catSlug', $catSlug);
 
-		if($stmt->rowCount()) {
-			$array['result'] = 'success';
-		} else {
-			$array['result'] = 'failed';
-		}
-	} catch (Exception $e) {
-		$array['result'] = 'failed';
-	}
-	
-	$connexion = null;
+        $stmt->execute();
 
-	return json_encode($array);	
+        if($stmt->rowCount()) {
+            $array['result'] = 'success';
+        } else {
+            $array['result'] = 'failed';
+        }
+    } catch (Exception $e) {
+        $array['result'] = 'failed';
+    }
+
+    $connexion = null;
+
+    return json_encode($array);
 }
 
 function deleteCat($id){
-	$array = array();
-	$array['result'] = 0;
+    $array = array();
+    $array['result'] = 0;
 
-	try {
-		$connexion = db_connect();
+    try {
+        $connexion = db_connect();
 
-		$stmt = $connexion->prepare("DELETE FROM `blog_cats` WHERE catID = :id");
-		$stmt->bindParam(':id', $id);
-		$stmt->execute();
-		$count = $stmt->rowCount();
+        $stmt = $connexion->prepare("DELETE FROM `blog_cats` WHERE catID = :id");
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        $count = $stmt->rowCount();
 
-		if($count == 1){
-			$array['result'] = 'success';
-		}else{
-			$array['result'] = 'failed';
-		}
-	} catch (Exception $e) {
-		$array['result'] = 'failed';
-	}
-	
-	$connexion = null;
-	return json_encode($array);	
+        if($count == 1){
+            $array['result'] = 'success';
+        }else{
+            $array['result'] = 'failed';
+        }
+    } catch (Exception $e) {
+        $array['result'] = 'failed';
+    }
+
+    $connexion = null;
+    return json_encode($array);
 }
 
 function getNumberPostsByCat(){
-	$array = array();
-	try {
-		$connexion = db_connect();
-		$resultats = $connexion->prepare("SELECT bc.catID, bc.catTitle, COUNT(*) as nombre FROM `blog_post_cats` bpc INNER JOIN `blog_cats` bc ON bpc.catID = bc.catID GROUP BY bc.catID");
-		$resultats->execute();
-		$resultats->setFetchMode(PDO::FETCH_OBJ);
-		$resultat = $resultats->fetchAll();
-		$array['result'] = $resultat;
-		$array['status'] = 'success';
-	} catch (Exception $e) {
-		$array['status'] = 'failed';
-	}
-	
-	$connexion = null;
-	return json_encode($array);	
+    $array = array();
+    try {
+        $connexion = db_connect();
+        $resultats = $connexion->prepare("SELECT bc.catID, bc.catTitle, COUNT(*) as nombre FROM `blog_post_cats` bpc INNER JOIN `blog_cats` bc ON bpc.catID = bc.catID GROUP BY bc.catID");
+        $resultats->execute();
+        $resultats->setFetchMode(PDO::FETCH_OBJ);
+        $resultat = $resultats->fetchAll();
+        $array['result'] = $resultat;
+        $array['status'] = 'success';
+    } catch (Exception $e) {
+        $array['status'] = 'failed';
+    }
+
+    $connexion = null;
+    return json_encode($array);
 }
 
 function getPostsByCatId($id){
-	$array = array();
-	try {
-		$connexion = db_connect();
-		$resultats = $connexion->prepare("SELECT bps.postID, bps.postTitle, bps.postDate FROM `blog_posts_seo` bps INNER JOIN `blog_post_cats` bpc ON bps.postID = bpc.postID WHERE bpc.catID = :id");
-		$resultats->bindParam(':id', $id);
-		$resultats->execute();
-		$resultats->setFetchMode(PDO::FETCH_OBJ);
-		$resultat = $resultats->fetchAll();
-		$array['result'] = $resultat;
-		$array['status'] = 'success';
-	} catch (Exception $e) {
-		$array['status'] = 'failed';
-	}
-	
-	$connexion = null;
-	return json_encode($array);	
+    $array = array();
+    try {
+        $connexion = db_connect();
+        $resultats = $connexion->prepare("SELECT bps.postID, bps.postTitle, bps.postDate FROM `blog_posts_seo` bps INNER JOIN `blog_post_cats` bpc ON bps.postID = bpc.postID WHERE bpc.catID = :id");
+        $resultats->bindParam(':id', $id);
+        $resultats->execute();
+        $resultats->setFetchMode(PDO::FETCH_OBJ);
+        $resultat = $resultats->fetchAll();
+        $array['result'] = $resultat;
+        $array['status'] = 'success';
+    } catch (Exception $e) {
+        $array['status'] = 'failed';
+    }
+
+    $connexion = null;
+    return json_encode($array);
+}
+function getPostsDetailsByCatId($id){
+    $array = array();
+    try {
+        $connexion = db_connect();
+        $resultats = $connexion->prepare("SELECT bps.postID, bps.postTitle, bps.postDate, bps.postDesc, bps.image FROM `blog_posts_seo` bps INNER JOIN `blog_post_cats` bpc ON bps.postID = bpc.postID WHERE bpc.catID = :id ORDER BY bps.postDate DESC");
+        $resultats->bindParam(':id', $id);
+        $resultats->execute();
+        $resultats->setFetchMode(PDO::FETCH_OBJ);
+        $resultat = $resultats->fetchAll();
+        $array['result'] = $resultat;
+        $array['status'] = 'success';
+    } catch (Exception $e) {
+        $array['status'] = 'failed';
+    }
+
+    $connexion = null;
+    return json_encode($array);
+}
+
+function searchPost($search)
+{
+    $array = array();
+    try {
+        $connexion = db_connect();
+        $resultats = $connexion->prepare("SELECT * FROM `blog_posts_seo` bps INNER JOIN `blog_post_cats` bpc ON bps.postID = bpc.postID INNER JOIN `blog_cats` bc ON bc.catID = bpc.catID 
+        WHERE bps.postCont LIKE :search or bps.postTitle LIKE :search or bps.postDesc LIKE :search or bc.catTitle LIKE :search  ORDER BY bps.postDate DESC");
+        $resultats->execute(array(':search' => '%'. $search.'%'));
+        $resultats->setFetchMode(PDO::FETCH_OBJ);
+        $resultat = $resultats->fetchAll();
+        $array['result'] = $resultat;
+        $array['status'] = 'success';
+    } catch (Exception $e) {
+        $array['status'] = 'failed';
+    }
+
+    $connexion = null;
+    return json_encode($array);
 }
 
 function addPost($post){
-	$array = array();
-	$postSlug = slug($post['title']);
+    $array = array();
+    $postSlug = slug($post['title']);
 
-	try {
-		$connexion = db_connect();
-		$sql = "INSERT INTO `blog_posts_seo`(`postTitle`, `postSlug`, `postDesc`, `postCont`) VALUES (:postTitle, :postSlug, :postDesc, :postCont)";
-		
-		//Prepare our statement.
-		$statement = $connexion->prepare($sql);
-		
-		//Bind our values to our parameters (we called them :make and :model).
-		$statement->bindValue(':postTitle', $post['title']);
-		$statement->bindValue(':postSlug', $postSlug);
-		$statement->bindValue(':postDesc', $post['desc']);
-		$statement->bindValue(':postCont', $post['content']);
-		 
-		//Execute the statement and insert our values.
-		$inserted = $statement->execute();
-		 
-		//Because PDOStatement::execute returns a TRUE or FALSE value,
-		//we can easily check to see if our insert was successful.
-		if($inserted){
-			$indertedId = $connexion->lastInsertId();
+    try {
+        $connexion = db_connect();
+        $sql = "INSERT INTO `blog_posts_seo`(`postTitle`, `postSlug`, `postDesc`, `postCont`,`image`) VALUES (:postTitle, :postSlug, :postDesc, :postCont,:image)";
 
-			foreach ($post['catArray'] as $catId) {
-				addPostCat($indertedId,$catId);
-			}
-			
-			$array['status'] = 'success';
-			$array['inserted_id'] = $indertedId;
-		}
+        //Prepare our statement.
+        $statement = $connexion->prepare($sql);
 
-	} catch (Exception $e) {
-		$array['status'] = 'failed';
-	}
-	
-	$connexion = null;
-	return json_encode($array);
+        //Bind our values to our parameters (we called them :make and :model).
+        $statement->bindValue(':postTitle', $post['title']);
+        $statement->bindValue(':postSlug', $postSlug);
+        $statement->bindValue(':postDesc', $post['desc']);
+        $statement->bindValue(':postCont', $post['content']);
+        $statement->bindValue(':image', $post['image']);
+
+        //Execute the statement and insert our values.
+        $inserted = $statement->execute();
+
+        //Because PDOStatement::execute returns a TRUE or FALSE value,
+        //we can easily check to see if our insert was successful.
+        if($inserted){
+            $indertedId = $connexion->lastInsertId();
+
+            foreach ($post['catArray'] as $catId) {
+                addPostCat($indertedId,$catId);
+            }
+
+            $array['status'] = 'success';
+            $array['inserted_id'] = $indertedId;
+        }
+
+    } catch (Exception $e) {
+        $array['status'] = 'failed';
+    }
+
+    $connexion = null;
+    return json_encode($array);
 }
 
 function addPostCat($postId, $catId){
-	$array = array();
-	try {
-		$connexion = db_connect();
-		$sql = "INSERT INTO `blog_post_cats`(`postID`, `catID`) VALUES (:postID,:catID)";
-		
-		//Prepare our statement.
-		$statement = $connexion->prepare($sql);
-		
-		//Bind our values to our parameters (we called them :make and :model).
-		$statement->bindValue(':postID', $postId);
-		$statement->bindValue(':catID', $catId);
-		 
-		//Execute the statement and insert our values.
-		$inserted = $statement->execute();
-		 
-		//Because PDOStatement::execute returns a TRUE or FALSE value,
-		//we can easily check to see if our insert was successful.
-		if($inserted){
-			// $indertedId = $connexion->lastInsertId();
-			// $array['inserted_id'] = $indertedId;
-			$array['result'] = 'success';
-		}
+    $array = array();
+    try {
+        $connexion = db_connect();
+        $sql = "INSERT INTO `blog_post_cats`(`postID`, `catID`) VALUES (:postID,:catID)";
 
-	} catch (Exception $e) {
-		$array['result'] = 0;
-	}
-	
-	$connexion = null;
-	return json_encode($array);
+        //Prepare our statement.
+        $statement = $connexion->prepare($sql);
+
+        //Bind our values to our parameters (we called them :make and :model).
+        $statement->bindValue(':postID', $postId);
+        $statement->bindValue(':catID', $catId);
+
+        //Execute the statement and insert our values.
+        $inserted = $statement->execute();
+
+        //Because PDOStatement::execute returns a TRUE or FALSE value,
+        //we can easily check to see if our insert was successful.
+        if($inserted){
+            // $indertedId = $connexion->lastInsertId();
+            // $array['inserted_id'] = $indertedId;
+            $array['result'] = 'success';
+        }
+
+    } catch (Exception $e) {
+        $array['result'] = 0;
+    }
+
+    $connexion = null;
+    return json_encode($array);
 }
 
 function deletePost($id){
-	$array = array();
-	$array['result'] = 0;
+    $array = array();
+    $array['result'] = 0;
 
-	try {
-		$connexion = db_connect();
+    try {
+        $connexion = db_connect();
 
-		$stmt = $connexion->prepare("DELETE FROM `blog_posts_seo` WHERE `postID` = :postID");
-		$stmt->bindParam(':postID', $id);
-		$stmt->execute();
-		$count = $stmt->rowCount();
+        $stmt = $connexion->prepare("DELETE FROM `blog_posts_seo` WHERE `postID` = :postID");
+        $stmt->bindParam(':postID', $id);
+        $stmt->execute();
+        $count = $stmt->rowCount();
 
-		if($count == 1){
-			$res = deleteCatPost($id);
-		}else{
-			$array['result'] 	= 'empty';
-			$res 				= json_encode($array);
-		}
-	} catch (Exception $e) {
-		$array['result'] 	= 'failed';
-		$res 				= json_encode($array);
-	}
-	
-	$connexion = null;
-	return $res;	
+        if($count == 1){
+            $res = deleteCatPost($id);
+        }else{
+            $array['result'] 	= 'empty';
+            $res 				= json_encode($array);
+        }
+    } catch (Exception $e) {
+        $array['result'] 	= 'failed';
+        $res 				= json_encode($array);
+    }
+
+    $connexion = null;
+    return $res;
 }
 
 function deleteCatPost($id){
-	$array = array();
-	$array['result'] = 0;
+    $array = array();
+    $array['result'] = 0;
 
-	try {
-		$connexion = db_connect();
+    try {
+        $connexion = db_connect();
 
-		$stmtCat = $connexion->prepare("DELETE FROM `blog_post_cats` WHERE `postID` = :postID");
-		$stmtCat->bindParam(':postID', $id);
-		$stmtCat->execute();
-		$countCat = $stmtCat->rowCount();
-		if($countCat >= 1){
-			$array['result'] = 'success';
-		}else{
-			$array['result'] = 'failed';
-		}
-	} catch (Exception $e) {
-		$array['result'] = 'failed';
-	}
-	
-	$connexion = null;
-	return json_encode($array);	
+        $stmtCat = $connexion->prepare("DELETE FROM `blog_post_cats` WHERE `postID` = :postID");
+        $stmtCat->bindParam(':postID', $id);
+        $stmtCat->execute();
+        $countCat = $stmtCat->rowCount();
+        if($countCat >= 1){
+            $array['result'] = 'success';
+        }else{
+            $array['result'] = 'failed';
+        }
+    } catch (Exception $e) {
+        $array['result'] = 'failed';
+    }
+
+    $connexion = null;
+    return json_encode($array);
 }
 
 function deleteCatPostUpdatePost($idPost, $idCat){
-	$array = array();
-	$array['result'] = 0;
+    $array = array();
+    $array['result'] = 0;
 
-	try {
-		$connexion = db_connect();
+    try {
+        $connexion = db_connect();
 
-		$stmtCat = $connexion->prepare("DELETE FROM `blog_post_cats` WHERE `postID` = :postID AND `catID` = :catID");
-		$stmtCat->bindParam(':postID', $idPost);
-		$stmtCat->bindParam(':catID', $idCat);
-		$stmtCat->execute();
-		$countCat = $stmtCat->rowCount();
-		if($countCat >= 1){
-			$array['result'] = 'success';
-		}else{
-			$array['result'] = 'failed';
-		}
-	} catch (Exception $e) {
-		$array['result'] = 'failed';
-	}
-	
-	$connexion = null;
-	return json_encode($array);	
+        $stmtCat = $connexion->prepare("DELETE FROM `blog_post_cats` WHERE `postID` = :postID AND `catID` = :catID");
+        $stmtCat->bindParam(':postID', $idPost);
+        $stmtCat->bindParam(':catID', $idCat);
+        $stmtCat->execute();
+        $countCat = $stmtCat->rowCount();
+        if($countCat >= 1){
+            $array['result'] = 'success';
+        }else{
+            $array['result'] = 'failed';
+        }
+    } catch (Exception $e) {
+        $array['result'] = 'failed';
+    }
+
+    $connexion = null;
+    return json_encode($array);
 }
 
 function getCatsByPostId($id){
-	$array = array();
-	try {
-		$connexion = db_connect();
-		$resultats = $connexion->prepare("SELECT `catID` FROM `blog_post_cats` WHERE `postID` = :postID");
-		$resultats->bindParam(':postID', $id);
-		$resultats->execute();
-		$resultats->setFetchMode(PDO::FETCH_OBJ);
-		$resultat = $resultats->fetchAll();
+    $array = array();
+    try {
+        $connexion = db_connect();
+        $resultats = $connexion->prepare("SELECT `catID` FROM `blog_post_cats` WHERE `postID` = :postID");
+        $resultats->bindParam(':postID', $id);
+        $resultats->execute();
+        $resultats->setFetchMode(PDO::FETCH_OBJ);
+        $resultat = $resultats->fetchAll();
 
-		if($resultat > 0){
-			$array['result'] = $resultat;
-			$array['status'] = 'success';
-		}else{
-			$array['status'] = 'empty';
-		}
-	} catch (Exception $e) {
-		$array['status'] = 'failed';
-	}
-	
-	$connexion = null;
-	return json_encode($array);	
+        if($resultat > 0){
+            $array['result'] = $resultat;
+            $array['status'] = 'success';
+        }else{
+            $array['status'] = 'empty';
+        }
+    } catch (Exception $e) {
+        $array['status'] = 'failed';
+    }
+
+    $connexion = null;
+    return json_encode($array);
 }
 
 function getPostById($id){
-	$array = array();
-	try {
-		$connexion = db_connect();
-		$resultats = $connexion->prepare("SELECT * FROM `blog_posts_seo` WHERE `postID`= :postID");
-		$resultats->bindParam(':postID', $id);
-		$resultats->execute();
-		$resultats->setFetchMode(PDO::FETCH_OBJ);
-		$resultat = $resultats->fetchAll();
-		if($resultat > 0){
-			$array['result'] = $resultat;
-			$array['status'] = 'success';
-		}else{
-			$array['status'] = 'empty';			
-		}
-	} catch (Exception $e) {
-		$array['status'] = 'failed';
-	}
-	
-	$connexion = null;
-	return json_encode($array);	
+    $array = array();
+    try {
+        $connexion = db_connect();
+        $resultats = $connexion->prepare("SELECT * FROM blog_posts_seo bps, blog_post_cats bpc,blog_cats bc WHERE bpc.postID=bps.postID AND bc.catID=bpc.catID and bps.postID= :postID");
+        $resultats->bindParam(':postID', $id);
+        $resultats->execute();
+        $resultats->setFetchMode(PDO::FETCH_OBJ);
+        $resultat = $resultats->fetchAll();
+        if($resultat > 0){
+            $array['result'] = $resultat;
+            $array['status'] = 'success';
+        }else{
+            $array['status'] = 'empty';
+        }
+    } catch (Exception $e) {
+        $array['status'] = 'failed';
+    }
+
+    $connexion = null;
+    return json_encode($array);
 }
 
 function updatePost($post){
-	$array = array();
-	$postSlug = slug($post['title']);
+    $array = array();
+    $postSlug = slug($post['title']);
 
-	try {
-		$connexion = db_connect();
+    try {
+        $connexion = db_connect();
 
-		$stmt = $connexion->prepare("UPDATE `blog_posts_seo` SET `postTitle`= :postTitle, `postSlug`= :postSlug, `postDesc`= :postDesc, `postCont`= :postCont WHERE `postID` = :postID");
-		
-		$stmt->bindValue(':postTitle', $post['title']);
-		$stmt->bindValue(':postSlug', $postSlug);
-		$stmt->bindValue(':postDesc', $post['desc']);
-		$stmt->bindValue(':postCont', $post['content']);
-		$stmt->bindValue(':postID', $post['postId']);
+        $stmt = $connexion->prepare("UPDATE `blog_posts_seo` SET `postTitle`= :postTitle, `postSlug`= :postSlug, `postDesc`= :postDesc, `postCont`= :postCont WHERE `postID` = :postID");
 
-		$stmt->execute();
+        $stmt->bindValue(':postTitle', $post['title']);
+        $stmt->bindValue(':postSlug', $postSlug);
+        $stmt->bindValue(':postDesc', $post['desc']);
+        $stmt->bindValue(':postCont', $post['content']);
+        $stmt->bindValue(':postID', $post['postId']);
 
-		if($stmt->rowCount()) {
-			$array['result'] = 'success';
-		} else {
-			$array['result'] = 'failed';
-		}
-	} catch (Exception $e) {
-		$array['result'] = 'failed';
-	}
-	
-	$connexion = null;
+        $stmt->execute();
 
-	return json_encode($array);	
+        if($stmt->rowCount()) {
+            $array['result'] = 'success';
+        } else {
+            $array['result'] = 'failed';
+        }
+    } catch (Exception $e) {
+        $array['result'] = 'failed';
+    }
+
+    $connexion = null;
+
+    return json_encode($array);
 }
 
 function getAllCommandeByCus($id){
-	$array = array();
-	try {
-		$connexion = db_connect();
-		$resultats = $connexion->prepare("SELECT co.id, b.name, b.description, co.creationDate,l.type FROM commande co INNER JOIN customer cu ON co.customer_id = cu.id INNER JOIN livraison l ON l.commande_id = co.id INNER JOIN product pr ON co.product_id = pr.id INNER JOIN box b ON pr.id_box = b.id WHERE co.customer_id = :id_cus and  co.deleted=0");
-		$resultats->bindParam(':id_cus', $id);
-		$resultats->execute();
-		$resultats->setFetchMode(PDO::FETCH_OBJ);
-		$resultat = $resultats->fetchAll();
-		if($resultat > 0){
-			$array['result'] = $resultat;
-			$array['status'] = 'success';
-		}else{
-			$array['status'] = 'empty';			
-		}
-	} catch (Exception $e) {
-		$array['status'] = 'failed';
-	}
-	
-	$connexion = null;
-	return json_encode($array);	
+    $array = array();
+    try {
+        $connexion = db_connect();
+        $resultats = $connexion->prepare("SELECT co.id, b.name, b.description, co.creationDate,l.type FROM commande co INNER JOIN customer cu ON co.customer_id = cu.id INNER JOIN livraison l ON l.commande_id = co.id INNER JOIN product pr ON co.product_id = pr.id INNER JOIN box b ON pr.id_box = b.id WHERE co.customer_id = :id_cus and  co.deleted=0");
+        $resultats->bindParam(':id_cus', $id);
+        $resultats->execute();
+        $resultats->setFetchMode(PDO::FETCH_OBJ);
+        $resultat = $resultats->fetchAll();
+        if($resultat > 0){
+            $array['result'] = $resultat;
+            $array['status'] = 'success';
+        }else{
+            $array['status'] = 'empty';
+        }
+    } catch (Exception $e) {
+        $array['status'] = 'failed';
+    }
+
+    $connexion = null;
+    return json_encode($array);
 }
 
 function updateVilles(){
-	$array = array();
-	$villes=$_POST['villes'];
+    $array = array();
+    $villes=$_POST['villes'];
 
-	try {
-		$connexion = db_connect();
+    try {
+        $connexion = db_connect();
 
-		$stmt = $connexion->prepare('DELETE FROM ville where 1');
-		$stmt->execute();
-		$stmt = $connexion->prepare('ALTER TABLE ville AUTO_INCREMENT = 1');
-		$stmt->execute();
+        $stmt = $connexion->prepare('DELETE FROM ville where 1');
+        $stmt->execute();
+        $stmt = $connexion->prepare('ALTER TABLE ville AUTO_INCREMENT = 1');
+        $stmt->execute();
 
-		$stmt = $connexion->prepare('DELETE FROM relais where 1');
-		$stmt->execute();
+        $stmt = $connexion->prepare('DELETE FROM relais where 1');
+        $stmt->execute();
 
-		$stmt = $connexion->prepare('ALTER TABLE relais AUTO_INCREMENT = 1');
-		$stmt->execute();
+        $stmt = $connexion->prepare('ALTER TABLE relais AUTO_INCREMENT = 1');
+        $stmt->execute();
 
 
-		$requet="INSERT INTO ville (name)
+        $requet="INSERT INTO ville (name)
 				SELECT * FROM (SELECT :villeName) AS tmp
 				WHERE NOT EXISTS (
 				    SELECT name FROM ville WHERE name = :villeName
 				) LIMIT 1;";
-		foreach ($villes as $key => $villeName) {
-			$stmt = $connexion->prepare($requet);
+        foreach ($villes as $key => $villeName) {
+            $stmt = $connexion->prepare($requet);
 
-			echo $stmt->bindValue(':villeName', $villeName);
-			$stmt->execute();
+            echo $stmt->bindValue(':villeName', $villeName);
+            $stmt->execute();
 
-			if($stmt->rowCount()) {
-				$array['result'] = 'success';
-			} else {
-				$array['result'] = 'failed --> error';
-			}
-		}
-	} catch (Exception $e) {
-		$array['result'] = 'failed --> exception';
-	}
-	
-	$connexion = null;
+            if($stmt->rowCount()) {
+                $array['result'] = 'success';
+            } else {
+                $array['result'] = 'failed --> error';
+            }
+        }
+    } catch (Exception $e) {
+        $array['result'] = 'failed --> exception';
+    }
 
-	return json_encode($array);	
+    $connexion = null;
+
+    return json_encode($array);
 }
 function updateRelais($relais){
-	$array = array();
+    $array = array();
 
 
 
-	$array = $relais;
-	
-	$villeJS=getVilleIdByName($relais['ville']);
-	$ville = json_decode($villeJS,true);
-	$id_ville =  $ville['result'][0]['id'];
-	try {
-		$connexion = db_connect();
-		
+    $array = $relais;
 
-		$requet="INSERT INTO relais (gps_lat,gps_lng,nom,adresse,ouverture,fermeture,id_relais,id_ville)
+    $villeJS=getVilleIdByName($relais['ville']);
+    $ville = json_decode($villeJS,true);
+    $id_ville =  $ville['result'][0]['id'];
+    try {
+        $connexion = db_connect();
+
+
+        $requet="INSERT INTO relais (gps_lat,gps_lng,nom,adresse,ouverture,fermeture,id_relais,id_ville)
 					values(:gps_lat,:gps_lng,:nom,:adresse,:ouverture,:fermeture,:id_relais,:id_ville)";
-				  
-		foreach ($relais['relaisList'] as $key => $relaisElement) {
-			$ouverture = $relaisElement['horaires'][0][0]['ouverture'];
-			$fermeture = $relaisElement['horaires'][0][0]['fermeture'];
 
-			$dtF = new \DateTime('@0');
-			$dtT = new \DateTime("@$ouverture");
-			$ouverture= $dtF->diff($dtT)->format('%hH%I');
+        foreach ($relais['relaisList'] as $key => $relaisElement) {
+            $ouverture = $relaisElement['horaires'][0][0]['ouverture'];
+            $fermeture = $relaisElement['horaires'][0][0]['fermeture'];
 
-			$dtF = new \DateTime('@0');
-			$dtT = new \DateTime("@$fermeture");
-			$fermeture= $dtF->diff($dtT)->format('%hH%I');
+            $dtF = new \DateTime('@0');
+            $dtT = new \DateTime("@$ouverture");
+            $ouverture= $dtF->diff($dtT)->format('%hH%I');
 
-			$stmt = $connexion->prepare($requet);
+            $dtF = new \DateTime('@0');
+            $dtT = new \DateTime("@$fermeture");
+            $fermeture= $dtF->diff($dtT)->format('%hH%I');
 
-			$stmt->bindValue(':gps_lat', $relaisElement['gps_lat']);
-			$stmt->bindValue(':gps_lng', $relaisElement['gps_lng']);
-			$stmt->bindValue(':nom', $relaisElement['nom']);
-			$stmt->bindValue(':adresse', $relaisElement['adresse']);
-			$stmt->bindValue(':id_relais', $relaisElement['id']);
-			$stmt->bindValue(':id_ville', $id_ville);
-			$stmt->bindValue(':ouverture', $ouverture);
-			$stmt->bindValue(':fermeture', $fermeture);
-			$stmt->execute();
+            $stmt = $connexion->prepare($requet);
 
-			if($stmt->rowCount()) {
-				$array['result'] = 'success';
-			} else {
-				$array['result'] = 'failed --> error';
-			}
-		}
-	} catch (Exception $e) {
-		$array['result'] = 'failed --> exception';
-	}
-	
-	$connexion = null;
+            $stmt->bindValue(':gps_lat', $relaisElement['gps_lat']);
+            $stmt->bindValue(':gps_lng', $relaisElement['gps_lng']);
+            $stmt->bindValue(':nom', $relaisElement['nom']);
+            $stmt->bindValue(':adresse', $relaisElement['adresse']);
+            $stmt->bindValue(':id_relais', $relaisElement['id']);
+            $stmt->bindValue(':id_ville', $id_ville);
+            $stmt->bindValue(':ouverture', $ouverture);
+            $stmt->bindValue(':fermeture', $fermeture);
+            $stmt->execute();
 
-	return json_encode($array);	
+            if($stmt->rowCount()) {
+                $array['result'] = 'success';
+            } else {
+                $array['result'] = 'failed --> error';
+            }
+        }
+    } catch (Exception $e) {
+        $array['result'] = 'failed --> exception';
+    }
+
+    $connexion = null;
+
+    return json_encode($array);
 }
 
 function getCityById($id){
-      try
-       {
-       	  $connexion = db_connect();
-          $stmt = $connexion->prepare("SELECT * FROM ville where id=:id");
-          $stmt->execute(array(':id'=>$id));
-          $row = $stmt->fetch(PDO::FETCH_ASSOC);
-          $ville = $row;
-       }
-       catch(PDOException $e)
-       {
-           echo $e->getMessage();
-       }
-       return  $ville;
+    try
+    {
+        $connexion = db_connect();
+        $stmt = $connexion->prepare("SELECT * FROM villeOx where id=:id");
+        $stmt->execute(array(':id'=>$id));
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $ville = $row;
+    }
+    catch(PDOException $e)
+    {
+        echo $e->getMessage();
+    }
+    return  $ville;
+}
+function getCustomrById($id){
+    try
+    {
+        $connexion = db_connect();
+        $stmt = $connexion->prepare("SELECT * FROM customer where id=:id");
+        $stmt->execute(array(':id'=>$id));
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $ville = $row;
+    }
+    catch(PDOException $e)
+    {
+        echo $e->getMessage();
+    }
+    return  $ville;
+}
+function getSendInBlueUser($id){
+    try
+    {
+        $connexion = db_connect();
+        $stmt = $connexion->prepare("SELECT *, naissance as date_naissance FROM customer where id=:id and status='approved' ");
+        $stmt->execute(array(':id'=>$id));
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $customer = $row;
+
+
+        $resultats = $connexion->prepare("SELECT * FROM  baby where customer_id=:customer_id");
+        $resultats->bindParam(':customer_id', $id);
+        $resultats->execute();
+        $babies = $resultats->fetchAll();
+
+        $indice = 1;
+        foreach ($babies as $baby){
+            $babyIndice=$indice;
+            if($indice===1){
+                $babyIndice='';
+            }
+            $customer['NAISSANCE_BEBE'. $babyIndice]=$baby['naissance'];
+            $indice++;
+        }
+        $customer['GYNECO']= $babies[0]['GYNECO'];
+
+
+    }
+    catch(PDOException $e)
+    {
+        echo $e->getMessage();
+    }
+    return $customer;
 }
 
 function getVilleIdByName($name){
-	$array = array();
-	try {
-		$connexion = db_connect();
-		$resultats = $connexion->prepare("SELECT id FROM ville WHERE name= :name");
-		$resultats->bindParam(':name', $name);
-		$resultats->execute();
-		$resultats->setFetchMode(PDO::FETCH_OBJ);
-		$resultat = $resultats->fetchAll();
-		if($resultat > 0){
-			$array['result'] = $resultat;
-			$array['status'] = 'success';
-		}else{
-			$array['status'] = 'empty';			
-		}
-	} catch (Exception $e) {
-		$array['status'] = 'failed';
-	}
-	
-	$connexion = null;
-	return json_encode($array);	
+    $array = array();
+    try {
+        $connexion = db_connect();
+        $resultats = $connexion->prepare("SELECT id FROM ville WHERE name= :name");
+        $resultats->bindParam(':name', $name);
+        $resultats->execute();
+        $resultats->setFetchMode(PDO::FETCH_OBJ);
+        $resultat = $resultats->fetchAll();
+        if($resultat > 0){
+            $array['result'] = $resultat;
+            $array['status'] = 'success';
+        }else{
+            $array['status'] = 'empty';
+        }
+    } catch (Exception $e) {
+        $array['status'] = 'failed';
+    }
+
+    $connexion = null;
+    return json_encode($array);
 }
 
 function getAllQuartiers(){
-	$array = array();
-	try {
-		$connexion = db_connect();
-		$resultats = $connexion->prepare("SELECT * FROM quartier");
+    $array = array();
+    try {
+        $connexion = db_connect();
+        $resultats = $connexion->prepare("SELECT * FROM quartier");
 
-		$resultats->execute();
+        $resultats->execute();
 
-		$resultats->setFetchMode(PDO::FETCH_OBJ);
-		$resultat = $resultats->fetchAll();
-		$array['result'] = $resultat;
-	} catch (Exception $e) {
-		$array['result'] = 0;
-	}
-	
-	$connexion = null;
-	return json_encode($array);	
+        $resultats->setFetchMode(PDO::FETCH_OBJ);
+        $resultat = $resultats->fetchAll();
+        $array['result'] = $resultat;
+    } catch (Exception $e) {
+        $array['result'] = 0;
+    }
+
+    $connexion = null;
+    return json_encode($array);
 }
 
- function getCurrentUser(){
- 	$array = array();
-	
-	try {
-		$connexion = db_connect();
+function getCurrentUser(){
+    $array = array();
 
-		$resultats = $connexion->prepare("SELECT * FROM customer WHERE id=:id LIMIT 1");
-		$resultats->bindParam(':id', $_SESSION['client_id']);
-		$resultats->execute();
-		$resultats->setFetchMode(PDO::FETCH_OBJ);
-		$resultat = $resultats->fetchAll();
-		$array['result'] = $resultat;
-		$array['status'] = 'success';
-	} catch (Exception $e) {
-		$array['status'] = 'failed';
-	}
-	
-	$connexion = null;
-	return json_encode($array);	
-	
+    try {
+        $connexion = db_connect();
+
+        $resultats = $connexion->prepare("SELECT * FROM customer WHERE id=:id LIMIT 1");
+        $resultats->bindParam(':id', $_SESSION['client_id']);
+        $resultats->execute();
+        $resultats->setFetchMode(PDO::FETCH_OBJ);
+        $resultat = $resultats->fetchAll();
+        $array['result'] = $resultat;
+        $array['status'] = 'success';
+    } catch (Exception $e) {
+        $array['status'] = 'failed';
+    }
+
+    $connexion = null;
+    return json_encode($array);
+
 }
 function isUserAlreadyExist($email){
-	$array = array();
-	
-	try {
-		$connexion = db_connect();
+    $array = array();
 
-		$resultats = $connexion->prepare("SELECT id FROM customer WHERE email= :email");
-		$resultats->bindParam(':email', $email);
-		$resultats->execute();
-		$resultats->setFetchMode(PDO::FETCH_OBJ);
-		$resultat = $resultats->fetchAll();
+    try {
+        $connexion = db_connect();
 
-		if(count($resultat) > 0){
-			$array['result'] = $resultat;
-			$array['isUserAlreadyExist'] = true;
-			$array['status'] = 'success';
-		}else{
-			$array['status'] = 'empty';		
-			$array['isUserAlreadyExist'] = false;
-	
-		}
-	} catch (Exception $e) {
-		$array['status'] = 'failed';
-	}
-	
-	$connexion = null;
-	return json_encode($array);	
+        $resultats = $connexion->prepare("SELECT id FROM customer WHERE email= :email");
+        $resultats->bindParam(':email', $email);
+        $resultats->execute();
+        $resultats->setFetchMode(PDO::FETCH_OBJ);
+        $resultat = $resultats->fetchAll();
+
+        if(count($resultat) > 0){
+            $array['result'] = $resultat;
+            $array['isUserAlreadyExist'] = true;
+            $array['status'] = 'success';
+        }else{
+            $array['status'] = 'empty';
+            $array['isUserAlreadyExist'] = false;
+
+        }
+    } catch (Exception $e) {
+        $array['status'] = 'failed';
+    }
+
+    $connexion = null;
+    return json_encode($array);
 }
 
 function emailOrGsmAlreadyExists($email,$gsm){
-	$array = array();
-	
-	try {
-		$connexion = db_connect();
-		$response='';
-		
-		$resultats = $connexion->prepare("SELECT id FROM customer WHERE gsm= :gsm");
-		$resultats->bindParam(':gsm', $gsm);
-		$resultats->execute();
-		$resultats->setFetchMode(PDO::FETCH_OBJ);
-		$resultat = $resultats->fetchAll();
+    $array = array();
 
-		$array['isUserAlreadyExist'] = false;
-		if(count($resultat) > 0){
-			$array['result'] = $resultat;
-			$array['isUserAlreadyExist'] = true;
-			$array['status'] = 'success';
-			$array['response']='Téléphone déjà existant';
-		}else{
-			$array['status'] = 'success';	
-			$array['isUserAlreadyExist'] = false;
-	
-		}
-		if(!$array['isUserAlreadyExist']){
-			$resultats = $connexion->prepare("SELECT id FROM customer WHERE email= :email");
-			$resultats->bindParam(':email', $email);
-			$resultats->execute();
-			$resultats->setFetchMode(PDO::FETCH_OBJ);
-			$resultat = $resultats->fetchAll();
+    try {
+        $connexion = db_connect();
+        $response='';
 
-			if(count($resultat) > 0){
-				$array['result'] = $resultat;
-				$array['isUserAlreadyExist'] = true;
-				$array['status'] = 'success';
-				$array['response']='Email déjà existant';
-			}else{
-				$array['status'] = 'success';	
-				$array['isUserAlreadyExist'] = false;
-			
-			}
-		}
+        $resultats = $connexion->prepare("SELECT id FROM customer WHERE gsm= :gsm");
+        $resultats->bindParam(':gsm', $gsm);
+        $resultats->execute();
+        $resultats->setFetchMode(PDO::FETCH_OBJ);
+        $resultat = $resultats->fetchAll();
 
-	} catch (Exception $e) {
-		$array['status'] = 'failed';
-	}
-	
-	$connexion = null;
-	return json_encode($array);	
+        $array['isUserAlreadyExist'] = false;
+        if(count($resultat) > 0){
+            $array['result'] = $resultat;
+            $array['isUserAlreadyExist'] = true;
+            $array['status'] = 'success';
+            $array['response']='Téléphone déjà existant';
+        }else{
+            $array['status'] = 'success';
+            $array['isUserAlreadyExist'] = false;
+
+        }
+        if(!$array['isUserAlreadyExist']){
+            $resultats = $connexion->prepare("SELECT id FROM customer WHERE email= :email");
+            $resultats->bindParam(':email', $email);
+            $resultats->execute();
+            $resultats->setFetchMode(PDO::FETCH_OBJ);
+            $resultat = $resultats->fetchAll();
+
+            if(count($resultat) > 0){
+                $array['result'] = $resultat;
+                $array['isUserAlreadyExist'] = true;
+                $array['status'] = 'success';
+                $array['response']='Email déjà existant';
+            }else{
+                $array['status'] = 'success';
+                $array['isUserAlreadyExist'] = false;
+
+            }
+        }
+
+    } catch (Exception $e) {
+        $array['status'] = 'failed';
+    }
+
+    $connexion = null;
+    return json_encode($array);
 }
 
 function getRelaisListByVille($id){
-	$array = array();
-	try {
-		$connexion = db_connect();
-		$resultats = $connexion->prepare("SELECT * FROM `relais` WHERE `id_ville`= :id");
-		$resultats->bindParam(':id', $id);
-		$resultats->execute();
-		$resultats->setFetchMode(PDO::FETCH_OBJ);
-		$resultat = $resultats->fetchAll();
-		if($resultat > 0){
-			$array['result'] = $resultat;
-			$array['status'] = 'success';
-		}else{
-			$array['status'] = 'empty';			
-		}
-	} catch (Exception $e) {
-		$array['status'] = 'failed';
-	}
-	
-	$connexion = null;
-	return json_encode($array);	
+    $array = array();
+    try {
+        $connexion = db_connect();
+        $resultats = $connexion->prepare("SELECT * FROM `relais` WHERE `id_ville`= :id");
+        $resultats->bindParam(':id', $id);
+        $resultats->execute();
+        $resultats->setFetchMode(PDO::FETCH_OBJ);
+        $resultat = $resultats->fetchAll();
+        if($resultat > 0){
+            $array['result'] = $resultat;
+            $array['status'] = 'success';
+        }else{
+            $array['status'] = 'empty';
+        }
+    } catch (Exception $e) {
+        $array['status'] = 'failed';
+    }
+
+    $connexion = null;
+    return json_encode($array);
 }
 
 function getLastOrderNotDelivred($id){
-	$array = array();
-	$livraisonId='0';
-	try {
-		$connexion = db_connect();
-		$resultats = $connexion->prepare("SELECT l.id FROM `livraison` l
+    $array = array();
+    $livraisonId='0';
+    try {
+        $connexion = db_connect();
+        $resultats = $connexion->prepare("SELECT l.id FROM `livraison` l
 											JOIN commande co
 											ON l.commande_id=co.id
 											JOIN customer c
@@ -2652,128 +3113,166 @@ function getLastOrderNotDelivred($id){
 											where c.id=:id and l.status='Non livré'
 											order by l.id desc
 											limit 1");
-		$resultats->bindParam(':id', $id);
-		$resultats->execute();
-		$resultats->setFetchMode(PDO::FETCH_OBJ);
+        $resultats->bindParam(':id', $id);
+        $resultats->execute();
+        $resultats->setFetchMode(PDO::FETCH_OBJ);
 
-		$livraisonId = $resultats->fetchColumn();
+        $livraisonId = $resultats->fetchColumn();
 
-	} catch (Exception $e) {
-		
-	}
-	
-	$connexion = null;
-	return $livraisonId;	
+    } catch (Exception $e) {
+
+    }
+
+    $connexion = null;
+    return $livraisonId;
 }
 
 function eligible($naissanceBebe){
-        
-        $eligible='';
-        // Date d'aujourd'hui
-        $today = new DateTime(date('Y-m-d'));
 
-        $naissance= new DateTime($naissanceBebe);
-        
+    $eligible='';
+    // Date d'aujourd'hui
+    $today = new DateTime(date('Y-m-d'));
 
-        $interval = date_diff($today, $naissance);
+    $naissance= new DateTime($naissanceBebe);
 
-        $diffJours = $interval->format('%R%a days');
-        
-        if($diffJours>=7 && $diffJours<=146 ){
-                  $eligible='BOX1';
-        }
-        else if($diffJours<=-7 && $diffJours>=-122){
-               $eligible='BOX2';
-        }
-        else if($diffJours<=-183 && $diffJours>=-305 ){
-              $eligible='BOX3';
-        }
-        return $eligible;
+
+    $interval = date_diff($today, $naissance);
+
+    $diffJours = $interval->format('%R%a days');
+
+    if($diffJours>=7 && $diffJours<=146 ){
+        $eligible='BOX1';
+    }
+    else if($diffJours<=-7 && $diffJours>=-122){
+        $eligible='BOX2';
+    }
+    else if($diffJours<=-183 && $diffJours>=-305 ){
+        $eligible='BOX3';
+    }
+    return $eligible;
 }
 
 
 function searchUser($user){
-	$array = array();
-	try {
-		$connexion = db_connect();
-		$params = array();
-		$sql='SELECT c.id,c.nom,c.eligible, c.prenom, c.email, c.gsm,YEAR(NOW()) - YEAR(c.naissance) as age, c.adresse, ville FROM customer c where id>0 ';
-		if($user['email']!=''){
-			$sql.="and email LIKE :email ";
-			$params['email']='%'.$user['email'].'%';
-		}if($user['nom']!=''){
-			$sql.="and nom LIKE :nom ";
-			$params['nom']='%'.$user['nom'].'%';
-		}if($user['prenom']!=''){
-			$sql.="and prenom LIKE :prenom ";
-			$params['prenom']='%'.$user['prenom'].'%';
-		}if($user['gsm']!=''){
-			$gsm1 = $user['gsm'];
-			$regex = '/(\\d{2})(\\d{2})(\\d{2})(\\d{2})(\\d{2})/';
-			$gsm2 = preg_replace($regex, '$1 $2 $3 $4 $5', $gsm1);
-			$gsm3 = preg_replace($regex, '$1.$2.$3.$4.$5', $gsm1);
-			$sql.="and (gsm LIKE :gsm1 or gsm LIKE :gsm2 or gsm LIKE :gsm3 or gsm LIKE :gsm4 or gsm LIKE :gsm5) ";
-			$params['gsm1']='%'.$gsm1.'%';
-			$params['gsm2']='%'.$gsm2.'%';
-			$params['gsm3']='%'.$gsm3.'%';
-			$params['gsm4']='%'.substr($gsm2, 1).'%';
-			$params['gsm5']='%'.substr($gsm3, 1).'%';
-		}		
-		$sql.=" ORDER BY id DESC LIMIT 50";
-		$resultats = $connexion->prepare($sql);
-		$resultats->execute($params);
+    $array = array();
+    try {
+        $connexion = db_connect();
+        $params = array();
+        $sql='SELECT c.id,c.nom,c.eligible, c.prenom, c.email, c.gsm,YEAR(NOW()) - YEAR(c.naissance) as age, c.adresse,c.status, ville FROM customer c where id>0 ';
+        if($user['email']!=''){
+            $sql.="and email LIKE :email ";
+            $params['email']='%'.$user['email'].'%';
+        }if($user['nom']!=''){
+            $sql.="and nom LIKE :nom ";
+            $params['nom']='%'.$user['nom'].'%';
+        }if($user['prenom']!=''){
+            $sql.="and prenom LIKE :prenom ";
+            $params['prenom']='%'.$user['prenom'].'%';
+        }if($user['gsm']!=''){
+            $gsm1 = $user['gsm'];
+            $regex = '/(\\d{2})(\\d{2})(\\d{2})(\\d{2})(\\d{2})/';
+            $gsm2 = preg_replace($regex, '$1 $2 $3 $4 $5', $gsm1);
+            $gsm3 = preg_replace($regex, '$1.$2.$3.$4.$5', $gsm1);
+            $sql.="and (gsm LIKE :gsm1 or gsm LIKE :gsm2 or gsm LIKE :gsm3 or gsm LIKE :gsm4 or gsm LIKE :gsm5) ";
+            $params['gsm1']='%'.$gsm1.'%';
+            $params['gsm2']='%'.$gsm2.'%';
+            $params['gsm3']='%'.$gsm3.'%';
+            $params['gsm4']='%'.substr($gsm2, 1).'%';
+            $params['gsm5']='%'.substr($gsm3, 1).'%';
+        }
+        $sql.=" ORDER BY id DESC LIMIT 50";
+        $resultats = $connexion->prepare($sql);
+        $resultats->execute($params);
 
-		$resultats->setFetchMode(PDO::FETCH_OBJ);
-		$resultat = $resultats->fetchAll();
-		
-		//Récupérer la liste des commande
-		$sql =  "SELECT c.id,id_box
+        $resultats->setFetchMode(PDO::FETCH_OBJ);
+        $resultat = $resultats->fetchAll();
+
+        //Récupérer la liste des commande
+        $sql =  "SELECT c.id,id_box
 				from customer c, commande co, product p, livraison l 
 				where c.id=co.customer_id and p.id=co.product_id and  l.commande_id=co.id and  co.deleted=0 ";
-		$commandes = $connexion->prepare($sql);
+        $commandes = $connexion->prepare($sql);
 
-		$commandes->execute();
+        $commandes->execute();
 
-		$commandes->setFetchMode(PDO::FETCH_OBJ);
-		$commandes = $commandes->fetchAll();
-	
-		$array['commandes'] = $commandes;
-		
-		$array['result'] = $resultat;
+        $commandes->setFetchMode(PDO::FETCH_OBJ);
+        $commandes = $commandes->fetchAll();
 
-	} catch (Exception $e) {
-		$array['result'] = 0;
-		$array['commandes'] = 0;
-	}
-	
-	$connexion = null;
-	return json_encode($array);	
+        $array['commandes'] = $commandes;
+
+        $array['result'] = $resultat;
+
+    } catch (Exception $e) {
+        $array['result'] = 0;
+        $array['commandes'] = 0;
+    }
+
+    $connexion = null;
+    return json_encode($array);
+}
+
+function getCustomerCoulumns(){
+    $array = array();
+    try {
+        $connexion = db_connect();
+
+
+        //Récupérer la liste des commande
+        $sql =  "SELECT `COLUMN_NAME` FROM `INFORMATION_SCHEMA`.`COLUMNS` WHERE `TABLE_SCHEMA`='k4mshost_oumbeta' AND `TABLE_NAME`='customer'";
+        $columns = $connexion->prepare($sql);
+        $columns->execute();
+        $columns->setFetchMode(PDO::FETCH_OBJ);
+
+        $array['result'] = $columns->fetchAll();;
+
+    } catch (Exception $e) {
+        $array['result'] = 0;
+    }
+
+    $connexion = null;
+    return json_encode($array);
 }
 
 
+function sindinblue1($sindinblueUser){
+    // add user to sendinblue
+    require_once('Mailin.php');
+
+    $mailin = new Mailin("https://api.sendinblue.com/v2.0", "YUAxmzIyZSO4EJw9");
+
+    $data = array("email" => $sindinblueUser["email"],
+        "attributes" => $sindinblueUser,
+        "listid" => array(50)   //FormCSS list
+    );
+    $res = $mailin->create_update_user($data);
+    if ($res['code'] == 'success') {
+        return true;
+    } else {
+        return false;
+    }
+}
 
 
+function slug($text){
+    // replace non letter or digits by -
+    $text = preg_replace('~[^\\pL\d]+~u', '-', $text);
 
-function slug($text){ 
-	// replace non letter or digits by -
-	$text = preg_replace('~[^\\pL\d]+~u', '-', $text);
+    // trim
+    $text = trim($text, '-');
 
-	// trim
-	$text = trim($text, '-');
+    // transliterate
+    $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
 
-	// transliterate
-	$text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
+    // lowercase
+    $text = strtolower($text);
 
-	// lowercase
-	$text = strtolower($text);
+    // remove unwanted characters
+    $text = preg_replace('~[^-\w]+~', '', $text);
 
-	// remove unwanted characters
-	$text = preg_replace('~[^-\w]+~', '', $text);
+    if (empty($text))
+    {
+        return 'n-a';
+    }
 
-	if (empty($text))
-	{
-		return 'n-a';
-	}
-
-	return $text;
+    return $text;
 }

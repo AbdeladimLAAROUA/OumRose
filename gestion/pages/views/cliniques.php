@@ -225,32 +225,33 @@ session_start();
             </div>
             <!-- /.box -->
           </div>
-        </div><div class="row">
-          <div class="col-xs-12">
-            <div class="box box-danger">
-              <div class="box-header with-border">
-                <h3 class="box-title">Liste des commandes</h3>
-              </div>
-              <!-- /.box-header -->
-              <div class="box-body">
-                <table id="box_table" class="table table-bordered">
-                  <thead>
-                    <tr>
-                     <!--  <th style="width: 10px"></th> -->
-                      <th>Box 1 </th>
-                      <th>Box 2</th>
-                      <th>Box 3</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                  </tbody>
-                </table>
-              </div>
-              <!-- /.box-body -->
-            </div>
-            <!-- /.box -->
-          </div>
         </div>
+          <div class="row">
+              <div class="col-xs-12">
+                  <div class="box box-danger">
+                      <div class="box-header with-border">
+                          <h3 class="box-title">Liste des commandes</h3>
+                      </div>
+                      <!-- /.box-header -->
+                      <div class="box-body">
+                          <table id="box_table" class="table table-bordered">
+                              <thead>
+                              <tr>
+                                  <!--  <th style="width: 10px"></th> -->
+                                  <th>Box 1</th>
+                                  <th>Box 2</th>
+                                  <th>Box 3</th>
+                              </tr>
+                              </thead>
+                              <tbody>
+                              </tbody>
+                          </table>
+                      </div>
+                      <!-- /.box-body -->
+                  </div>
+                  <!-- /.box -->
+              </div>
+          </div>
 
 
         <!-- Ajouter une nouvelle commande -->

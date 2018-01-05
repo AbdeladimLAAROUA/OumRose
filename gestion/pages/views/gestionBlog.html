@@ -19,8 +19,8 @@ tr.shown td.details-control {
 .table_cat tbody{
   background-color: rgba(243, 18, 208, 0.16);
 }
-/*.i-am-centered { 
-  margin: auto; 
+/*.i-am-centered {
+  margin: auto;
   max-width: 300px;
 }*/
 </style>
@@ -75,7 +75,7 @@ tr.shown td.details-control {
                       </tr>
                       </thead>
                       <tbody>
-                        
+
                       </tbody>
                       <tfoot>
                       <tr>
@@ -100,7 +100,12 @@ tr.shown td.details-control {
                   <div class="box-body">
                     <div style="margin-bottom:20px;">
                       <button type="submit" id="add" class="btn btn-primary" data-type="add" data-toggle="modal" data-target="#add_cat">Ajouter une catégorie</button>
+                      <button type="submit" id="add_tagButton" class="btn btn-primary" data-type="add"
+                              data-toggle="modal"
+                              data-target="#add_tag">Ajouter une tag
+                      </button>
                     </div>
+
                     <table id="table_categories" class="table table-bordered table-striped">
                       <thead>
                       <tr>
@@ -110,7 +115,7 @@ tr.shown td.details-control {
                       </tr>
                       </thead>
                       <tbody>
-                        
+
                       </tbody>
                       <tfoot>
                       <tr>
@@ -134,7 +139,7 @@ tr.shown td.details-control {
     <!-- /.col -->
   </div>
   <!-- /.row -->
-  
+
 <div class="modal fade" id="add_cat" tabindex="-1" role="dialog" aria-labelledby="add_cat" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -163,7 +168,7 @@ tr.shown td.details-control {
                 <div class="help-block with-errors"></div>
               </div>
             </div>
-          </div> 
+          </div>
           <div class="row">
             <div class="col-xs-12">
               <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;margin-bottom: 10px;"><span class="glyphicon glyphicon-ok-sign"></span>Ajouter</button>
@@ -172,9 +177,50 @@ tr.shown td.details-control {
         </form>
       </div>
     </div>
-    <!-- /.modal-content --> 
+    <!-- /.modal-content -->
   </div>
-  <!-- /.modal-dialog --> 
+  <!-- /.modal-dialog -->
+</div>
+  <div class="modal fade" id="add_tag" tabindex="-1" role="dialog" aria-labelledby="add_tag" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+        <h4 class="modal-title custom_align" id="Heading">Ajouter une tag</h4>
+      </div>
+      <div class="modal-body">
+        <div id="alert_recover_ok_add_tag" class="alert alert-success hide-me">
+          Success
+        </div>
+        <div id="alert_recover_ko_add_tag" class="alert alert-warning hide-me">
+          Quelque chose a mal tourné
+        </div>
+        <form id="addTagForm">
+          <div class="row">
+            <div class="col-xs-2">
+              <div class="form-group">
+                <label>Nom</label>
+              </div>
+            </div>
+            <div class="form-group has-feedback col-xs-4">
+              <div class="input-group">
+                <input id="nom_add_tag" type="text" class="form-control" data-required-error="Entrez le nom" required>
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                <div class="help-block with-errors"></div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;margin-bottom: 10px;"><span class="glyphicon glyphicon-ok-sign"></span>Ajouter</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
 </div>
 
 <div class="modal fade" id="edit_cat" tabindex="-1" role="dialog" aria-labelledby="edit_cat" aria-hidden="true">
@@ -224,9 +270,9 @@ tr.shown td.details-control {
         </form>
       </div>
     </div>
-    <!-- /.modal-content --> 
+    <!-- /.modal-content -->
   </div>
-  <!-- /.modal-dialog --> 
+  <!-- /.modal-dialog -->
 </div>
 
 <div class="modal fade" id="delete_cat" tabindex="-1" role="dialog" aria-labelledby="delete_cat" aria-hidden="true">
@@ -244,9 +290,9 @@ tr.shown td.details-control {
         <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>Non</button>
       </div>
     </div>
-    <!-- /.modal-content --> 
+    <!-- /.modal-content -->
   </div>
-  <!-- /.modal-dialog --> 
+  <!-- /.modal-dialog -->
 </div>
 
 <div class="modal fade" id="add_post" tabindex="-1" role="dialog" aria-labelledby="add_post" aria-hidden="true">
@@ -263,6 +309,27 @@ tr.shown td.details-control {
         <div id="alert_recover_ko_add_post" class="alert alert-warning hide-me">
           Quelque chose a mal tourné
         </div>
+        <form id="addImageForm" enctype="multipart/form-data">
+          <div class="row">
+            <div class="col-xs-12">
+              <!-- <div class="form-group"> -->
+              <label>Image</label>
+              <!-- </div> -->
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="form-group has-feedback">
+                <div class="input-group col-xs-12">
+                  <input name="imagePost" id="image_post" type="file" size="10485760" class="form-control input-lg"
+                         required>
+                  <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                  <div class="help-block with-errors"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
         <form id="addPostForm">
           <div class="row">
             <div class="col-xs-12">
@@ -279,7 +346,7 @@ tr.shown td.details-control {
                   <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                   <div class="help-block with-errors"></div>
                 </div>
-              </div>              
+              </div>
             </div>
           </div>
           <div class="row">
@@ -293,7 +360,8 @@ tr.shown td.details-control {
             <div class="col-xs-12">
               <div class="form-group has-feedback">
                 <div class="input-group col-xs-12">
-                  <textarea id="description_post" data-required-error="Entrez la description" required></textarea>
+                  <input id="description_post" type="text" class="form-control input-lg" data-required-error="Entrez la description"
+                         required>
                   <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                   <div class="help-block with-errors"></div>
                 </div>
@@ -326,8 +394,11 @@ tr.shown td.details-control {
             </div>
           </div>
           <div class="row">
-            <div class="col-xs-12">
+            <div class="col-xs-12 col-md-6">
               <div id="cat_div" class="form-group"></div>
+            </div>
+            <div class="col-xs-12 col-md-6">
+              <div id="tag_div" class="form-group"></div>
             </div>
           </div>
           <div class="row">
@@ -338,9 +409,9 @@ tr.shown td.details-control {
         </form>
       </div>
     </div>
-    <!-- /.modal-content --> 
+    <!-- /.modal-content -->
   </div>
-  <!-- /.modal-dialog --> 
+  <!-- /.modal-dialog -->
 </div>
 
 <div class="modal fade" id="edit_post" tabindex="-1" role="dialog" aria-labelledby="edit_post" aria-hidden="true">
@@ -373,7 +444,7 @@ tr.shown td.details-control {
                   <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                   <div class="help-block with-errors"></div>
                 </div>
-              </div>              
+              </div>
             </div>
           </div>
           <div class="row">
@@ -387,7 +458,8 @@ tr.shown td.details-control {
             <div class="col-xs-12">
               <div class="form-group has-feedback">
                 <div class="input-group col-xs-12">
-                  <textarea id="description_post_edit" data-required-error="Entrez la description" required></textarea>
+                  <input id="description_post_edit" type="text" class="form-control input-lg"
+                         data-required-error="Entrez la description" required>
                   <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                   <div class="help-block with-errors"></div>
                 </div>
@@ -420,8 +492,11 @@ tr.shown td.details-control {
             </div>
           </div>
           <div class="row">
-            <div class="col-xs-12">
+            <div class="col-xs-12 col-md-6">
               <div id="edit_cat_div" class="form-group"></div>
+            </div>
+            <div class="col-xs-12 col-md-6">
+              <div id="edit_tag_div" class="form-group"></div>
             </div>
           </div>
           <div class="row">
@@ -432,9 +507,9 @@ tr.shown td.details-control {
         </form>
       </div>
     </div>
-    <!-- /.modal-content --> 
+    <!-- /.modal-content -->
   </div>
-  <!-- /.modal-dialog --> 
+  <!-- /.modal-dialog -->
 </div>
 
 <div class="modal fade" id="delete_post" tabindex="-1" role="dialog" aria-labelledby="delete_post" aria-hidden="true">
@@ -452,9 +527,9 @@ tr.shown td.details-control {
         <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>Non</button>
       </div>
     </div>
-    <!-- /.modal-content --> 
+    <!-- /.modal-content -->
   </div>
-  <!-- /.modal-dialog --> 
+  <!-- /.modal-dialog -->
 </div>
 
 <!-- Add content to the popup -->
@@ -479,7 +554,7 @@ tr.shown td.details-control {
 <script src="plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="plugins/datatables/dataTables.bootstrap.min.js"></script>
 <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
-
+<script src="dist/js/sweetalert.min.js"></script>
 <script src="dist/js/validator.min.js"></script>
 <script src="dist/js/gestionBlog.js"></script>
 <script type="text/javascript">

@@ -27,10 +27,10 @@ CKEDITOR.stylesSet.add( 'default', [
 	{ name: 'Heading 4',		element: 'h4' },
 	{ name: 'Heading 5',		element: 'h5' },
 	{ name: 'Heading 6',		element: 'h6' },
-	{ name: 'Preformatted Text',element: 'pre' },
+
 	{ name: 'Address',			element: 'address' },
 	*/
-
+    {name: 'Preformatted Text', element: 'p'},
 	{ name: 'Italic Title',		element: 'h2', styles: { 'font-style': 'italic' } },
 	{ name: 'Subtitle',			element: 'h3', styles: { 'color': '#aaa', 'font-style': 'italic' } },
 	{

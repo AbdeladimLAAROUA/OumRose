@@ -7,10 +7,10 @@ $password = "S3cr3T%44";
 $dbname="oumdev_leads";*/
 
 /*Local*/
-$servername = "localhost";
+/*$servername = "localhost";
 $username = "root";
 $password = "";
-$dbname="oumdev_leads";
+$dbname="oumdev_leads";*/
 
 /*Distant*/
 /*$servername = "essalhi-impr.000webhostapp.com";
@@ -24,10 +24,10 @@ $username = "k4mshost_oumdev";
 $password = "!!oumb0x";
 $dbname="k4mshost_oumdev";*/
 
-/*$servername = "sql.k4mshost.odns.fr";
+$servername = "sql.k4mshost.odns.fr";
 $username = "k4mshost_oumdev";
 $password = "!!oumb0x";
-$dbname="k4mshost_oumbeta";*/
+$dbname="k4mshost_oumbeta";
 
 
 try {
@@ -215,11 +215,11 @@ function getAllUsers($conn){
        }
        return  $users;
 }
-function getUserByEmail($conn,$email){
+function getUserById($conn,$id){
   try
   {  
-     $stmt = $conn->prepare("SELECT * FROM customer WHERE email=:email LIMIT 1");
-     $stmt->execute(array(':email'=>$email));
+     $stmt = $conn->prepare("SELECT * FROM customer WHERE id=:id LIMIT 1");
+     $stmt->execute(array(':id'=>id));
      $userRow=$stmt->fetch(PDO::FETCH_ASSOC);
 
     return $userRow;
@@ -228,6 +228,32 @@ function getUserByEmail($conn,$email){
   {
       echo $e->getMessage();
   }
+}
+function getArticle($conn,$id){
+
+    try {
+        $stmt = $conn->prepare("SELECT * FROM blog_posts_seo WHERE postID=:id LIMIT 1");
+        $stmt->execute(array(':id' => $id));
+        $article = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $article;
+    } catch (PDOException $e) {
+        echo $e->getMessage();
+    }
+
+
+}
+
+function getUserByEmail($conn, $email)
+{
+    try {
+        $stmt = $conn->prepare("SELECT * FROM customer WHERE email=:email LIMIT 1");
+        $stmt->execute(array(':email' => $email));
+        $userRow = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $userRow;
+    } catch (PDOException $e) {
+        echo $e->getMessage();
+    }
 }
 
 function getUser($conn,$id){
@@ -295,7 +321,32 @@ function getAllCities1($conn){
           $villes2=array();
           if ($stmt->execute()) {
               while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                  if($row['name']=='Casablanca' or $row['name']=='Rabat' or $row['name']=='Marrakech'){
+                  if(strtoupper($row['name'])=='CASABLANCA' or strtoupper($row['name'])=='RABAT' or strtoupper($row['name'])=='MARRAKECH'){
+                    $villes1[] = $row;
+                  }else{
+                     $villes2[] = $row;
+                  }
+              }
+              $villes=array_merge($villes1, $villes2);
+
+          }
+       }
+       catch(PDOException $e)
+       {
+           echo $e->getMessage();
+       }
+       return  $villes;
+}function getAllCities2($conn){
+  try
+       {
+          $stmt = $conn->prepare("SELECT * FROM villeOx order by name");
+          $stmt->execute();
+          $villes = array();
+          $villes1=array();
+          $villes2=array();
+          if ($stmt->execute()) {
+              while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                  if(strtoupper($row['name'])=='CASABLANCA' or strtoupper($row['name'])=='RABAT' or strtoupper($row['name'])=='MARRAKECH'){
                     $villes1[] = $row;
                   }else{
                      $villes2[] = $row;
@@ -314,7 +365,7 @@ function getAllCities1($conn){
 function getCityById1($conn,$id){
       try
        {
-          $stmt = $conn->prepare("SELECT * FROM ville where id=:id");
+          $stmt = $conn->prepare("SELECT * FROM villeOx where id=:id");
           $stmt->execute(array(':id'=>$id));
           $row = $stmt->fetch(PDO::FETCH_ASSOC);
           $ville = $row;
@@ -342,7 +393,7 @@ function getClientByToken($conn,$token){
 function getDisapprouvedClientByToken($conn,$token){
       try
        {
-          $stmt = $conn->prepare("SELECT * FROM customer where token=:token and expiration >= NOW() and status!='approved'");
+          $stmt = $conn->prepare("SELECT * FROM customer where token=:token and expiration >= NOW() and status='not_approved'");
           $stmt->execute(array(':token'=>$token));
           $row = $stmt->fetch(PDO::FETCH_ASSOC);
           $client = $row;
@@ -429,6 +480,8 @@ function updateEligibilite1($id,$eligible){
 
 
     if($stmt->execute()) {
+        $user = getUserById($id);
+        sindinblue($user);
       $array['status'] = 'success';
     } else  {
       $array['status'] = 'error';
@@ -489,7 +542,7 @@ function updateClient_u($conn,$client){
     $connexion = $conn;
 
     $stmt = $connexion->prepare("UPDATE customer SET nom = :nom,prenom = :prenom,gsm = :gsm,naissance = :naissance,adresse = :adresse,CP = :cp, ville = :ville WHERE id = :id ");
-    
+
     $stmt->bindValue(':id', $client['id']);
     $stmt->bindValue(':nom', $client['nom']);
     $stmt->bindValue(':prenom', $client['prenom']);
@@ -503,12 +556,13 @@ function updateClient_u($conn,$client){
 
     if($a) {
       $array['status'] = 'success';
+      ;
     } else  {
       $array['status'] = 'error';
     }
-  
 
-    
+
+
   } catch (Exception $e) {
     $array['status'] = 'ko';
   }
@@ -521,13 +575,17 @@ function updateClient_u($conn,$client){
 function updateToken($conn,$email,$token)
     {
        try
-       {  
+       {
 
           $stmt = $conn->prepare("UPDATE customer c SET c.token=:token, c.expiration=:expiration where email=:email and status='approved'");
           $stmt->bindparam(":token", $token);
           $stmt->bindparam(":email", $email);
           $stmt->bindparam(":expiration", date("Y-m-d H:i:s",strtotime(date("Y-m-d H:i:s")." +30 minutes")));
           $stmt->execute();
+
+          $user = getUserByEmail($conn, $email);
+          sindinblue($user);
+
          return $stmt;
        }
        catch(PDOException $e)
@@ -602,5 +660,24 @@ function fullEligible($conn,$user,$naissanceBebe){
          $eligible='3';
     }
     return $eligible;
+}
+
+function sindinblue($sindinblueUser)
+{
+    // add user to sendinblue
+    require_once('Mailin.php');
+
+    $mailin = new Mailin("https://api.sendinblue.com/v2.0", "YUAxmzIyZSO4EJw9");
+
+    $data = array("email" => $sindinblueUser["email"],
+        "attributes" => $sindinblueUser,
+        "listid" => array(128)   //FormCSS list
+    );
+    $res = $mailin->create_update_user($data);
+    if ($res['code'] == 'success') {
+        return true;
+    } else {
+        return false;
+    }
 }
 ?> 

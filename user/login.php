@@ -33,27 +33,31 @@ if(isset($_POST['email']) and isset($_POST['password']) ){
 
 		$diffJours = $interval->format('%R%a days');
 		
-		if($diffJours>=7 && $diffJours<=146 && !in_array("1", $boxList)){
-				$info["response"]="Chère Mme".$user['nom'].", vous êtes éligible à la box  \"Je suis enceinte\" ";
+		//if($diffJours>=7 && $diffJours<=146 && !in_array("1", $boxList)){
+		if($user['eligible']=='BOX1'){
+				$info["response"]="Chère Mme ".$user['nom'].", vous êtes éligible à la box  \"Je suis enceinte\" ";
 				$info["mCode"]=1;
 				$info["box"]=1;
 		}
-		else if($diffJours<=-7 && $diffJours>=-122 and !in_array("2", $boxList)){
+		//else if($diffJours<=-7 && $diffJours>=-122 and !in_array("2", $boxList)){
+		else if($user['eligible']=='BOX2'){
 				$info["response"]="Chère Mme ".$user['nom'].", vous êtes éligible à la box  \"Bébé est là!\" ";
 				$info["mCode"]=2;
 				$info["box"]=2;
 		}
-		else if($diffJours<=-183 && $diffJours>=-305 and !in_array("3", $boxList)){
-				$info["response"]="Chère Mme".$user['nom'].", vous êtes éligible à la box  \"Bébé grandit\" ";
+		//else if($diffJours<=-183 && $diffJours>=-305 and !in_array("3", $boxList)){
+		else if($user['eligible']=='BOX3'){
+				$info["response"]="Chère Mme ".$user['nom'].", vous êtes éligible à la box  \"Bébé grandit\" ";
 				$info["mCode"]=3;
 				$info["box"]=3;
 		}else{
-				$info["response"]= "Chère Mme".$user['nom'].", vous n'êtes éligible à aucune box pour le moment <br/>
-				<ul>
-				   <li>Box rose : </li>
-				   <li>Box vert : </li>
-				   <li>Box vert : </li>
-				</ul>";
+				$info["response"]= "Chère Mme ".$user['nom'].", vous n'êtes éligible à aucune box pour le moment <br/>
+				 <ul>
+                                   <li style='line-height: 40px;  color=#ec7f8c;'>Critères d'éligibilité</li>
+                                   <li style='line-height: 40px;  color=#ec7f8c;'>Box rose (Je suis enceinte) : du 5ème au 8ème mois de grossesse</li>
+                                   <li style='line-height: 40px; color=#6fc7c2;'>Box vert (Bébé est là!) : de la naissance à 3 mois</li>
+                                   <li style='line-height: 40px; color=#8e6cac;'>Box mauve (Bébé grandit): de 6 à 9 mois</li>
+                                </ul>";
 				$info["box"]=0;
 		}
 		

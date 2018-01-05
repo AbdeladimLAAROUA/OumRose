@@ -118,7 +118,7 @@ img:hover{opacity:0.75}
 .latest_post{float:left; display:inline; width:100%}
 .latest_post > h2{background:none repeat scroll 0 0 #6cc; color:#fff; font-family:'Oswald',sans-serif; font-size:18px; margin-top:5px; font-weight:400; margin-bottom:10px; margin-left:0; padding:0; position:relative; text-align:center; text-transform:uppercase}
 .latest_post > h2 span{padding:4px 10px}
-.latest_postnav{height:auto !important; margin-top:20px}
+.latest_postnav{height:400px !important; margin-top:20px}
 .latest_postnav li{margin-bottom:10px; float:left; width:100%}
 .latest_post_container{display:inline; float:left; height:430px; position:relative; width:100%}
 .latest_post_container:hover #prev-button, .latest_post_container:hover #next-button{display:block}

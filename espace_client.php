@@ -28,8 +28,17 @@
                                     include('config.php');
                                     $user['id']=$_SESSION['client_id'];
                                     $baby=getBaby($conn,$user);
-                                    $_SESSION['eligibleToBox'] = fullEligible($conn,$user,$baby['naissance']);
-                                    if($_SESSION['eligibleToBox']==0){
+                                    
+                                    // Si on a par exemple BOX1_BEBE2: client eligible pour la box 1 pour bebe 2
+                                    if(strpos(getUser($conn,$user['id'])['eligible'], 'BEBE')!=false){
+                                        $_SESSION['eligibleToBox'] =substr(getUser($conn,$user['id'])['eligible'], 3, 1);
+                                    }else{
+                                        $_SESSION['eligibleToBox']=0;
+                                    }
+
+
+                                   // $_SESSION['eligibleToBox'] = fullEligible($conn,$user,$baby['naissance']);
+                                    if($_SESSION['eligibleToBox']=='0'){
                                         echo "Chère Mme ".$_SESSION['nom'].", vous n'êtes éligible à aucune box pour le moment <br/>
                                 <ul>
                                    <li style='line-height: 40px;  color=#ec7f8c;'>Critères d'éligibilité</li>
@@ -38,20 +47,29 @@
                                    <li style='line-height: 40px; color=#8e6cac;'>Box mauve (Bébé grandit): de 6 à 9 mois</li>
                                 </ul>";
                                     }
-                                    else if(isset($_SESSION['eligibility_msg'])){
-                                        echo $_SESSION['eligibility_msg'];
+                                    else {
+                                       if($_SESSION['eligibleToBox']=='1'){
+                                            echo "Chère Mme ".$_SESSION['nom'].", vous êtes éligible à la box  \"Je suis enceinte\" ";
+                                       }
+                                       else if($_SESSION['eligibleToBox']=='2'){
+                                            echo "Chère Mme ".$_SESSION['nom'].", vous êtes éligible à la box  \"Bébé est là!\" ";
+                                       }
+                                       else if($_SESSION['eligibleToBox']=='3'){
+                                            echo "Chère Mme ".$_SESSION['nom'].", vous êtes éligible à la box  \"Bébé grandit\" ";
+                                       }
                                     }
                                 ?>
                             </h2>
                             <?php 
-                                if($_SESSION['eligibleToBox']!=0){
+                                if($_SESSION['eligibleToBox']!='0'){
+                                    
                              ?>
                             <div class="text-center">Choisissez la méthode de livraison qui vous convient :</div>
                             <?php } ?>
                             <img src="img/simulation guide+box oumbox.png" style="width: 75%;margin-top: 35px;">
                             </div>
                             <?php 
-                                if($_SESSION['eligibleToBox']!=0){
+                                if($_SESSION['eligibleToBox']!='0'){
                              ?>
                             <div class=" col-md-12 col-sm-12 col-xs-12 content">
                                 <p><span style="font-size:10.5pt;line-height:107%;font-family:Helvetica, sans-serif;background-image:initial;background-attachment:initial;background-size:initial;background-origin:initial;background-clip:initial;background-position:initial;background-repeat:initial;">
@@ -171,7 +189,7 @@
                         <?php echo $client['result']['client'][0]['ville']; ?>
                     </div>
                     <div class="col-xs-3">
-                        <strong>Code Postal</strong>
+                        <strong>Nombre d'enfants</strong>
                     </div>
                     <div class="col-xs-3 info" id="cpView">
                         <?php echo $client['result']['client'][0]['CP']; ?>
@@ -300,12 +318,12 @@
                             </div>
                         </div>
                         <div class="col-xs-2">
-                            <strong>Code Postal</strong>
+                            <strong>Nombre d'enfants</strong>
                         </div>
                         <div class="form-group has-feedback col-xs-4">
                             <div class="input-group">
                                 <div class="input-group">
-                                    <input type="number" name="cp" id="cp" class="form-control" value="<?php echo $client['result']['client'][0]['CP'];?>" data-error="Code Postale invalid">
+                                    <input type="number" name="cp" id="cp" class="form-control" value="<?php echo $client['result']['client'][0]['CP'];?>" data-error="Nombre d'enfants invalid">
                                 </div>
                                 <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
                                 <div class="help-block with-errors"></div>
@@ -427,6 +445,8 @@
                                     }
                                 ?>
                         </table>
+
+                Pour modifier ou annuler votre commande, prière de nous contacter: contact@oumbox.com ou 0522 22 58 50
                 </p>
             </div>
         </div>
@@ -735,7 +755,7 @@
 $("#connect").click(function() {
 
         if(checkform()){
-            console.log("send form");
+
             $.ajax({
                 url:'user/register.php',
                 type:'POST',
