@@ -2722,14 +2722,21 @@ function updatePost($post){
     try {
         $connexion = db_connect();
 
-        $stmt = $connexion->prepare("UPDATE `blog_posts_seo` SET `postTitle`= :postTitle, `postSlug`= :postSlug, `postDesc`= :postDesc, `postCont`= :postCont WHERE `postID` = :postID");
+        $request="UPDATE `blog_posts_seo` SET `postTitle`= :postTitle, `postSlug`= :postSlug, `postDesc`= :postDesc, `postCont`= :postCont";
+        if (isset($post['image'])) {
+            $request .= ", `image`= :image";
+        }
+        $request.=" WHERE `postID` = :postID";
+        $stmt = $connexion->prepare($request);
 
         $stmt->bindValue(':postTitle', $post['title']);
         $stmt->bindValue(':postSlug', $postSlug);
         $stmt->bindValue(':postDesc', $post['desc']);
         $stmt->bindValue(':postCont', $post['content']);
         $stmt->bindValue(':postID', $post['postId']);
-
+        if(isset($post['image'])){
+            $stmt->bindValue(':image', $post['image']);
+        }
         $stmt->execute();
 
         if($stmt->rowCount()) {
@@ -2872,6 +2879,7 @@ function updateRelais($relais){
 function getCityById($id){
     try
     {
+
         $connexion = db_connect();
         $stmt = $connexion->prepare("SELECT * FROM villeOx where id=:id");
         $stmt->execute(array(':id'=>$id));

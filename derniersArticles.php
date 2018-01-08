@@ -80,7 +80,7 @@ $postsBebe = $postsBebe['result'];
         </div>
         </div>
 
-    <div class="text-center"><a href="blog.php" style="margin:30px;" class="btn btn-rose text-uppercase btn-infos">+ d'articles</a>
+    <div class="text-center"><a href="blogGrossesse1.php?cat=8" style="margin:30px;" class="btn btn-rose text-uppercase btn-infos">+ d'articles</a>
 
     </div>
 

@@ -31,7 +31,8 @@ if (isset($_POST['email']) and isset($_POST['password'])) {
 		}	
 			
 	}
-}else if(isset($_POST['email_fp'])){
+}
+else if(isset($_POST['email_fp'])){
 	include('../config.php');
 	$email = htmlspecialchars($_POST['email_fp']);
 	$user = getUserByEmail($conn,$email);
@@ -94,7 +95,7 @@ $message1 = <<<EOT
     <body>
         <h4>Bonjour Mme $nom!</h4>
         <p>Pour valider votre inscription au programme Oumbox, cliquez sur le lien ci-dessous</p>
-        <p><a href="oumtest.k4mshost.odns.fr/activate.php?id=$myId">Cliquez ici pour activer</a></p>
+        <p><a href="beta.oumbox.com/activate.php?id=$myId">Cliquez ici pour activer</a></p>
         <p>Si vous avez reçu cet email par erreur, supprimez le simplement.</p>
     </body>
 </html>      

@@ -1,13 +1,13 @@
 <?php
 
- 
+require_once('../log/Logging.php');
+$log = new Logging("count post:" . count($_POST));
 
 // rapid check of number of fields
 if (count($_POST)>7){
-   
 
     //validate patterns
-    if (filter_var($_POST['EMAIL'], FILTER_VALIDATE_EMAIL) && 
+    if (filter_var($_POST['EMAIL'], FILTER_VALIDATE_EMAIL) &&
         preg_match('/^(19[6-9][0-9]|200[0-9])-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/',$_POST['DATE_NAISSANCE'])  &&
         preg_match('/^(201[5-9]|202[0-6])-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/',$_POST['NAISSANCE_BEBE'])  &&
         preg_match('/^(0|00\s?212\s?|\(?\+212\)?\s?(\(0\))?)[67]([\s\-\.]?[0-9]{2}){4}$/',$_POST['GSM']) &&
@@ -15,6 +15,8 @@ if (count($_POST)>7){
         mb_strlen($_POST['NOM']) >1 &&
         mb_strlen($_POST['PRENOM']) >1 &&
         mb_strlen($_POST['VILLE']) >0 ){
+
+
 
         // check optional fields
         if ( mb_strlen($_POST['ADRESSE'])>150 /*||
@@ -26,8 +28,8 @@ if (count($_POST)>7){
         header("Content-Type: text/plain; charset=UTF-8");
 
         include('../config.php');
-        $ville=getCityById($conn,$_POST['VILLE']);
-        
+        $ville=getCityById1($conn,$_POST['VILLE']);
+
         $customer['nom']=htmlspecialchars($_POST['NOM']);
         $customer['prenom']=htmlspecialchars($_POST['PRENOM']);
         $customer['email']=htmlspecialchars($_POST['EMAIL']);
@@ -40,24 +42,26 @@ if (count($_POST)>7){
         $customer['naissance']=htmlspecialchars($_POST['DATE_NAISSANCE']);
         $customer['cp']=htmlspecialchars($_POST['CP']);
 
+        new Logging("customer: " . print_r($customer));
+
 
         // include lib to make safe mysql request (avoid injections)
         require_once 'safemysql.class.php';
 
-        // connect to DB 
+        // connect to DB
 
-        /*$servername = "sql.k4mshost.odns.fr";
+        $servername = "bdd.k4mshost.odns.fr";
         $username = "k4mshost_oumdev";
         $password = "!!oumb0x";
-        $dbname="k4mshost_oumdev"; */
+        $dbname="k4mshost_oumbeta";
 
-        $servername = "localhost";
+        /*$servername = "localhost";
         $username = "root";
         $password = "";
-        $dbname="oumdev_leads";
+        $dbname="oumdev_leads";*/
 
 
-        
+
         $mydb = mysqli_connect($servername,$username,$password,$dbname);
         if (mysqli_connect_errno()) {
         //printf("Connect failed: %s\n", mysqli_connect_error());
@@ -71,38 +75,36 @@ if (count($_POST)>7){
 
 
         $data = $_POST;
-        echo '<pre>';
-        print_r($data);
-        echo '</pre>';
+
         $sql  = "INSERT INTO customer SET ?u";
-        
+
         $db->query($sql,$customer);
         $id = $db->insertId();
         $idUser=$id;
 
 
-        
+
 
         $baby["naissance"]=htmlspecialchars($_POST['NAISSANCE_BEBE']);
         $baby["MATERNITE"]=htmlspecialchars($_POST['MATERNITE']);
         $baby["GYNECO"]=htmlspecialchars($_POST['GYNECO']);
         $baby["customer_id"]=$id;
         $baby["sexe"]="undefined";
-        $baby["prenom"]="undefined";  
+        $baby["prenom"]="undefined";
         if($customer['type']=="maman"){
             $baby["sexe"]=htmlspecialchars($_POST['SEXE_BEBE']);
-            $baby["prenom"]=htmlspecialchars($_POST['PRENOM_BEBE']);   
+            $baby["prenom"]=htmlspecialchars($_POST['PRENOM_BEBE']);
         }
 
         $sql  = "INSERT INTO baby SET ?u";
-        
+
         $db->query($sql,$baby);
         $id = $db->insertId();
 
         mysqli_close($mydb);
         validateByEmail($idUser,$customer['nom']);
-         
-        
+
+
 
 
 
@@ -111,27 +113,10 @@ if (count($_POST)>7){
         $ok = TRUE;
         $info['SendingBlue'] = 'Non inscrit';
 
-        // Logging class initialization
 
-        require_once('../Logging.php');
-
-        $log = new Logging();
-
-        // set path and name of log file (optional)
-        $log->lfile('mylog.txt');
-
-        $log->lwrite($email);
-
-        // write message to the log file
-       
-
-        // close log file
-        $log->lclose();
-
-        $log->lwrite('SendForm Partie emails');
         if (!strstr($_POST["EMAIL"],"@nomail.com")){/*
 
-            // add user to sendinblue 
+            // add user to sendinblue
             require_once('Mailin.php');
 
             $mailin = new Mailin("https://api.sendinblue.com/v2.0","YUAxmzIyZSO4EJw9");
@@ -142,7 +127,7 @@ if (count($_POST)>7){
             );
             $res= $mailin->create_update_user($data);
 
-           
+
             $log->lwrite('SendForm avant d\'envoyer le message');
             if ($res['code']=='success'){
 
@@ -152,7 +137,7 @@ if (count($_POST)>7){
             $log->lwrite('SendForm message envoyé avec succès');
             // close log file
             $log->lclose();
-            
+
             }
             else{
                 $log->lwrite('SendForm echec d\'envoie du message');
@@ -173,10 +158,10 @@ if (count($_POST)>7){
         */}
 
         /*if ($ok){
-             
-        
+
+
                 // send notification mail internally
-            
+
         $res = notification_email(array_merge($_POST,$info));
               //  echo $res;
         }
@@ -241,7 +226,7 @@ $message1 = <<<EOT
     </head>
     <body>
         <h1>Bonjour $nom!</h1>
-        <p><a href="oumtest.k4mshost.odns.fr/activate.php?id=$myId">Cliquz ici pour confirmer votre inscription au programme</a>
+        <p><a href="beta.oumbox.com/activate.php?id=$myId">Cliquz ici pour confirmer votre inscription au programme</a>
         <p>Si vous avez reçu cet email par erreur, supprimez le simplement, vous n'allez pas être inscrit au programme si vous n'avez pas cliquer sur le lien ci-dessus</p>
     </body>
 </html>

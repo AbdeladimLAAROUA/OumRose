@@ -312,11 +312,9 @@ session_start();
             }
         }
     };
-  $(".btn").click(function() {
-
-      $('html,body').animate({
-          scrollTop: $("#map").offset().top},
-          'slow');
+  $(document).on("click",".locate",function() {
+      console.log("scroll");
+        $('html,body').animate({scrollTop: $("#map").offset().top},'slow');
   });
 
 </script>

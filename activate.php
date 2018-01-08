@@ -3,7 +3,6 @@ session_start();
 if (isset($_GET["id"])) {
   echo $_GET["id"];
   $id = intval(base64_decode($_GET["id"]));
-  echo "-".$id."-";
   include('config.php');
   $sql = "SELECT * from customer where id = :id";
   try {
@@ -23,7 +22,7 @@ if (isset($_GET["id"])) {
         $msg = "Your account has already been activated.";
         $msgType = "info";
         echo $msg;
-        //header('Location:login.php');
+        header('Location:login.php');
       } else {
         $sql = "UPDATE `customer` SET  `status` =  'approved' WHERE `id` = :id";
         $stmt = $conn->prepare($sql);
@@ -38,7 +37,7 @@ if (isset($_GET["id"])) {
           welcomeEmail($result[0],getBaby($conn,$result[0]));
         }*/
         $_SESSION['firstConnexion']=true;
-        //header('Location:login.php');
+        header('Location:login.php');
       }
     } else {
       $msg = "No account found";

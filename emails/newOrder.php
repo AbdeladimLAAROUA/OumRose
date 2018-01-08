@@ -19,7 +19,7 @@ $message1 = <<<EOT
                 </div><img src="http://oumbox.com/img/logo-l.png" alt="icon home" style="margin-bottom:30px;margin-top:20px" class="CToWUd">
             </div>
             <div style="padding:20px 30px 10px;color:#737373;font-family:sans-serif;font-weight:100;line-height:21px;font-size:15px">
-<p>Chère Mme khalid ESSALHI<br><br>Nous avons bien reçu la commande 100954 que vous avez effectué le $dateCommande.<br><br>
+<p>Chère Mme,<br><br>Nous avons bien reçu la commande 100954 que vous avez effectué le $dateCommande.<br><br>
 ------------------------------<wbr>------------------------<br>
 Type de la box : $typeBox<br>
 Type de la livraison : $livraisonType<br>

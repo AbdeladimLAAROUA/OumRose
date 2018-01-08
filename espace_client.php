@@ -140,58 +140,58 @@
                 ?>
                 </p>
                 <div class="row edit-client-div">
-                    <div class="col-xs-2">
+                    <div class="col-xs-6 col-sm-2">
                         <strong>Nom</strong>
                     </div>
-                    <div class="col-xs-4 info" id="nomView">
+                    <div class="col-xs-6 col-sm-4 info" id="nomView">
                         <?php echo $client['result']['client'][0]['nom']; ?>
                     </div>
-                    <div class="col-xs-3">
+                    <div class="col-xs-6 col-sm-2">
                         <strong>Prénom</strong>
                     </div>
-                    <div class="col-xs-3 info" id="prenomView">
+                    <div class="col-xs-6 col-sm-4 info" id="prenomView">
                         <?php echo $client['result']['client'][0]['prenom']; ?>
                     </div>
                 </div>
                 <div class="row edit-client-div">
-                    <div class="col-xs-2">
+                    <div class="col-xs-6 col-sm-2">
                         <strong>E-mail</strong>
                     </div>
-                    <div class="col-xs-4 info">
+                    <div class="col-xs-6 col-sm-4 info">
                         <?php echo $client['result']['client'][0]['email']; ?>
                     </div>
-                    <div class="col-xs-3">
+                    <div class="col-xs-6 col-sm-2">
                         <strong>Date de naissance</strong>
                     </div>
-                    <div class="col-xs-3 info" id="naissanceView">
+                    <div class="col-xs-6 col-sm-4 info" id="naissanceView">
                         <?php echo $client['result']['client'][0]['naissance']; ?>
                     </div>
                 </div>
                 <div class="row edit-client-div">
-                    <div class="col-xs-2">
+                    <div class="col-xs-6 col-sm-2">
                         <strong>GSM</strong>
                     </div>
-                    <div class="col-xs-4 info" id="gsmView">
+                    <div class="col-xs-6 col-sm-4 info" id="gsmView">
                         <?php echo $client['result']['client'][0]['gsm']; ?>
                     </div>
-                    <div class="col-xs-3">
+                    <div class="col-xs-6 col-sm-2">
                         <strong>Adresse</strong>
                     </div>
-                    <div class="col-xs-3 info" id="adresseView">
+                    <div class="col-xs-6 col-sm-4 info" id="adresseView">
                         <?php echo $client['result']['client'][0]['adresse']; ?>
                     </div>
                 </div>
                 <div class="row edit-client-div">
-                    <div class="col-xs-2">
+                    <div class="col-xs-6 col-sm-2">
                         <strong>Ville</strong>
                     </div>
-                    <div class="col-xs-4 info" id="villeView">
+                    <div class="col-xs-6 col-sm-4 info" id="villeView">
                         <?php echo $client['result']['client'][0]['ville']; ?>
                     </div>
-                    <div class="col-xs-3">
+                    <div class="col-xs-6 col-sm-2">
                         <strong>Nombre d'enfants</strong>
                     </div>
-                    <div class="col-xs-3 info" id="cpView">
+                    <div class="col-xs-6 col-sm-4 info" id="cpView">
                         <?php echo $client['result']['client'][0]['CP']; ?>
                     </div>
                 </div>
@@ -227,10 +227,10 @@
                     </div>
                     <input type="hidden" id="client_id" name="client_id"  value="<?php echo $client['result']['client'][0]['id']; ?>" />
                     <div class="row edit-client-div">
-                        <div class="col-xs-2">
+                        <div class="col-xs-6 col-sm-2">
                             <strong>Nom</strong>
                         </div>
-                        <div class="form-group has-feedback col-xs-4">
+                        <div class="form-group has-feedback col-xs-6 col-sm-4">
                             <div class="input-group">
                                 <div class="input-group">
                                     <input type="text" name="nom" id="nom" class="form-control" value="<?php echo $client['result']['client'][0]['nom'];?>" data-required-error="veuillez renseigner ce champ" data-error="Nom invalid" required>
@@ -239,10 +239,10 @@
                                 <div class="help-block with-errors"></div>
                             </div>
                         </div>
-                        <div class="col-xs-2">
+                        <div class="col-xs-6 col-sm-2">
                             <strong>Prénom</strong>
                         </div>
-                        <div class="form-group has-feedback col-xs-4">
+                        <div class="form-group has-feedback col-xs-6 col-sm-4">
                             <div class="input-group">
                                 <div class="input-group">
                                     <input type="text" name="prenom" id="prenom" class="form-control" value="<?php echo $client['result']['client'][0]['prenom'];?>" data-required-error="veuillez renseigner ce champ" data-error="Prénom invalid" required>
@@ -253,10 +253,10 @@
                         </div>
                     </div>
                     <div class="row edit-client-div">
-                        <div class="col-xs-2">
+                        <div class="col-xs-6 col-sm-2">
                             <strong>E-mail</strong>
                         </div>
-                        <div class="form-group has-feedback col-xs-4">
+                        <div class="form-group has-feedback col-xs-6 col-sm-4">
                             <div class="input-group">
                                 <div class="input-group">
                                     <input type="email" readOnly="true" name="email" id="email" class="form-control" value="<?php echo $client['result']['client'][0]['email'];?>" data-required-error="veuillez renseigner ce champ" data-error="E-mail invalid" required>
@@ -265,10 +265,10 @@
                                 <div class="help-block with-errors"></div>
                             </div>
                         </div>
-                        <div class="col-xs-2">
+                        <div class="col-xs-6 col-sm-2">
                             <strong>Date de naissance</strong>
                         </div>
-                        <div class="form-group has-feedback col-xs-4">
+                        <div class="form-group has-feedback col-xs-6 col-sm-4">
                             <div class="input-group">
                                 <div class="input-group">
                                     <input type="text" name="naissance" id="naissance" class="form-control" value="<?php echo $client['result']['client'][0]['naissance'];?>" pattern="^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$" data-required-error="veuillez renseigner ce champ" data-error="date invalid" required>
@@ -279,10 +279,10 @@
                         </div>
                     </div>
                     <div class="row edit-client-div">
-                        <div class="col-xs-2">
+                        <div class="col-xs-6 col-sm-2">
                             <strong>GSM</strong>
                         </div>
-                        <div class="form-group has-feedback col-xs-4">
+                        <div class="form-group has-feedback col-xs-6 col-sm-4">
                             <div class="input-group">
                                 <div class="input-group">
                                     <input type="text" name="gsm" id="gsm" class="form-control" value="<?php echo $client['result']['client'][0]['gsm'];?>"  pattern="^(?:(?:\+|00)212|0)\s*[1-9](?:[\s.-]*\d{2}){4}$" data-required-error="veuillez renseigner ce champ" data-error="GSM invalid" required>
@@ -291,10 +291,10 @@
                                 <div class="help-block with-errors"></div>
                             </div>
                         </div>
-                        <div class="col-xs-2">
+                        <div class="col-xs-6 col-sm-2">
                             <strong>Adresse</strong>
                         </div>
-                        <div class="form-group has-feedback col-xs-4">
+                        <div class="form-group has-feedback col-xs-6 col-sm-4">
                             <div class="input-group">
                                 <div class="input-group">
                                     <textarea type="text" name="adresse" id="adresse" class="form-control" rows="3" data-error="Champ invalid" ><?php echo $client['result']['client'][0]['adresse'];?></textarea>
@@ -305,10 +305,10 @@
                         </div>
                     </div>
                     <div class="row edit-client-div">
-                        <div class="col-xs-2">
+                        <div class="col-xs-6 col-sm-2">
                             <strong>Ville</strong>
                         </div>
-                        <div class="form-group has-feedback col-xs-4">
+                        <div class="form-group has-feedback col-xs-6 col-sm-4">
                             <div class="input-group">
                                 <div class="input-group">
                                     <input type="text" name="ville" id="ville" class="form-control" value="<?php echo $client['result']['client'][0]['ville'];?>" data-required-error="veuillez renseigner ce champ" data-error="Ville invalid" required>
@@ -317,10 +317,10 @@
                                 <div class="help-block with-errors"></div>
                             </div>
                         </div>
-                        <div class="col-xs-2">
+                        <div class="col-xs-6 col-sm-2">
                             <strong>Nombre d'enfants</strong>
                         </div>
-                        <div class="form-group has-feedback col-xs-4">
+                        <div class="form-group has-feedback col-xs-6 col-sm-4">
                             <div class="input-group">
                                 <div class="input-group">
                                     <input type="number" name="cp" id="cp" class="form-control" value="<?php echo $client['result']['client'][0]['CP'];?>" data-error="Nombre d'enfants invalid">

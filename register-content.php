@@ -89,7 +89,7 @@
           <span class="micons-building prefix"></span>
           <!-- <input id="city" name="VILLE" type="text" pattern=".{3,}" minlength="3" required="required" class="validate" aria-required="true"> -->
           <select id="ville" name="VILLE" class="initialized" required="required" aria-required="true">
-            <option value="0" disabled="" selected="">Ville</option>
+            <option value="0" disabled="" selected=>Ville</option>
             <?php
               include('config.php');
               $villes = getAllCities2($conn);
@@ -163,8 +163,8 @@
     </div>
       <div class="input-field col s7" id="divmat">
       <span class="fa fa-hospital-o prefix"></span>
-      <input id="mat" name="MATERNITE" type="text" pattern=".{5,}" minlength="5" class="validate">
-      <label for="mat" data-error="nom incomplet">Clinique</label>
+      <input id="mat" required="required" name="MATERNITE" type="text" pattern=".{5,}" minlength="5" class="validate">
+      <label id="labelMat" for="mat" data-error="nom incomplet">Clinique</label>
       </div>
 
 
@@ -505,14 +505,14 @@ $("#myForm").submit(function(e) {
     
     if($('#ville').val()==null || $('#ville').val()==0){
        $(".selectCity > span:nth-child(3)").css('display','unset');
-       console.log('1-ville val '+ $('#ville').val());   
     }else{
      $(".selectCity > span:nth-child(3)").css('display','none');
-        console.log('2-ville val '+ $('#ville').val()); 
     }
 
     $("#accouchement").addClass('invalid');
     $("#dateenfant").addClass('invalid');
+
+    $("#labelMat").addClass('active');
 
     $("label[for='accouchement']").addClass('active');
     $("label[for='labelDateenfant']").addClass('active');
@@ -526,13 +526,10 @@ $("#myForm").submit(function(e) {
       $("#divsex > div > span:nth-child(5)").css('display','unset');
     else
      $("#divsex > div > span:nth-child(5)").css('display','none');
+    $('#sexe').on('change', function () {
+        $("#divsex > div > span:nth-child(5)").css('display', 'none');
+    })
 
-   
-    
-
-   
-    
-    
     /*$("label[for='mat']").addClass('active');
     $("label[for='gyn']").addClass('active');*/
     
@@ -558,8 +555,9 @@ $("#myForm").submit(function(e) {
        submitHandler: function (form) {
       //  console.log('form ok');
 
-        if(checkForm() && $('#ville').val()!=0){
+        if(checkForm() && $('#ville option:selected').text()!=="Ville"){
         console.log("form valide");
+        console.log($('#ville option:selected').text());
         console.log($("#myForm").serialize());
         $.ajax(
         { type:"POST",
@@ -654,7 +652,13 @@ function checkForm(){
     result = false;
   } 
   // ensure the user accepted the conditions
-  if (!$('#accept').is(':checked')){
+    /*if (!($('#mom1').is(':checked') || $('#mom1').is(':checked'))){
+        $(".continueBtn").trigger("click");
+
+        $("li.active.maman").hasClass("hidden")
+        result = false;
+    }*/
+    else if (!$('#accept').is(':checked')){
     result=false;
     Materialize.toast("Veuillez accepter les conditions pour vous inscrire.",4000);
 
@@ -702,10 +706,6 @@ $(function() {
       $("#labelPassconf").addClass('active');
       $("#password").addClass('invalid');  
     }
-   
-
-
-       
       if ($("#password").val() != $("#passconf").val()) {
           $("#passconf").removeClass("valid").addClass("invalid");
            $("#labelPassconf").addClass("active");

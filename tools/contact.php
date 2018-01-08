@@ -1,20 +1,21 @@
 <?php
 session_start();
-if (isset($_POST['name']) and isset($_POST['email']) and isset($_POST['content'])) {
+if (isset($_POST['name']) and isset($_POST['email']) and isset($_POST['content']) and isset($_POST['subject'])) {
     $nom = htmlspecialchars($_POST['name']);
     $email = htmlspecialchars($_POST['email']);
     $content = htmlspecialchars($_POST['content']);
-    sendEmail($nom, $email, $content);
+    $subject = htmlspecialchars($_POST['subject']);
+    echo $subject;
+    sendEmail($nom, $email, $content, $subject);
     $_SESSION['messageContact'] = 'OK';
     header('Location:../contact.php');
 
 
 }
-function sendEmail($nom, $email, $content)
+function sendEmail($nom, $email, $content, $subject="contact")
 {
 
     $array = array();
-    $array['result'] = 0;
 
     try {
         $message1 = <<<EOT
@@ -43,7 +44,7 @@ EOT;
             "X-Mailer: PHP\n" .
             " boundary=\"{$mime_boundary}\"";
 
-        $subj = "Nouveau message";
+        $subj = $subject;
         //$to =$email;
         // $to =$_SESSION['email'];
         $to = "khalid.essalhi8@gmail.com";

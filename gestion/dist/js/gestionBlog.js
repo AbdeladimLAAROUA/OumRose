@@ -208,6 +208,7 @@ $(function () {
 				var title 	= $('#title_post').val();
 				var image 	= file_name;
 				var post 	= {'title':title,'desc':desc,'content':content,'catArray':catArray,'image':image};
+
 				var res		= addPost(post);
 
 				if(res.status == 'success'){
@@ -260,14 +261,38 @@ $(function () {
 			if(catArray.length == 0){
 				alert('Veuillez choisir une catégorie ou plus !');
 			}else{
+
+               /* var formData = new FormData($("#addImageForm")[0]);
+                console.log($("#addImageForm"));
+                console.log(formData);
+                var file_name = AjaxRequestNoProcess(formData);
+                var desc = $('#description_post').val();
+                var content = get_editor_content('contenu_post');
+                var title = $('#title_post').val();
+                var image = file_name;
+                var post = {'title': title, 'desc': desc, 'content': content, 'catArray': catArray, 'image': image};
+                var res = addPost(post);*/
+
+                var formData = new FormData($("#editImageForm")[0]);
+                var file_name = AjaxRequestNoProcess(formData);
+
 				var desc 	= $('#description_post_edit').val();
 				var content = get_editor_content('contenu_post_edit');
 				var title 	= $('#title_post_edit').val();
 				var post 	= {'title':title,'desc':desc,'content':content,'catArray':catArray, 'postId':id_post};
+                if (file_name !== "NO_IMG_UPLOADED") {
+                    post["image"] = file_name;
+                }
 				var res		= updatePost(post);
 				var status  = res.status;
 				if($(catArray).not(arrCats).length === 0 && $(arrCats).not(catArray).length === 0){
-					console.log("The same !!");
+                    swal({
+                        title: "Success",
+                        text: "OK",
+                        type: "success",
+                        timer: 2000,
+                        showConfirmButton: false
+                    });
 				}else{
 					var etat, diff = [];
 					if(catArray.length > arrCats.length){
@@ -307,6 +332,7 @@ $(function () {
                         showConfirmButton: false
                     });
                     alert('here');
+                    location.reload();
 					setTimeout(function(){
 						$('#edit_post').modal('toggle');
 						$('#alert_recover_ok_edit_post').css('display','none')
@@ -554,6 +580,7 @@ function deletePost(id) {
 function updatePost(post) {
 	var res,obj = {'methode' : 'updatePost', 'post': post};
 	res = AjaxRequest(obj);
+	console.log(res);
 	return res;
 }
 

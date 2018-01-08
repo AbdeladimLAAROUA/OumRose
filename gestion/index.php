@@ -52,6 +52,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <span class="logo-mini">O-B</span>
       <!-- logo for regular state and mobile devices -->
       <span class="logo-lg"><b>Oumbox</b></span>
+
     </a>
 
     <!-- Header Navbar -->
@@ -78,7 +79,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <img src="dist/img/default-avatar.png" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
-          <p>Khalid ESSALHI</p>
+          <p><?php echo $_SESSION['userInfos']["nom"]." ". $_SESSION['userInfos']["prenom"]; ?></p>
           <!-- Status -->
           <!-- <a href="#"><i class="fa fa-circle text-success"></i> Online</a> -->
         </div>
@@ -214,14 +215,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- /.content-wrapper -->
 
   <!-- Main Footer -->
-  <footer class="main-footer">
-    <!-- To the right -->
+ <!-- <footer class="main-footer">
     <div class="pull-right hidden-xs">
       Anything you want
     </div>
-    <!-- Default to the left -->
     <strong>Copyright &copy; 2016 <a href="#">Company</a>.</strong> All rights reserved.
-  </footer>
+  </footer>-->
 
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">

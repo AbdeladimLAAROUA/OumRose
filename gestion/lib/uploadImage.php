@@ -1,6 +1,7 @@
 <?php
 
 $array = array();
+$array['file_name']="";
 try {
     $valid_file = true;
     $message = '';
@@ -35,7 +36,7 @@ try {
             $array['result'] = $_FILES['imagePost']['error'];
         }
     }else{
-        $array['result'] = "aucune photo";
+        $array['file_name'] = "NO_IMG_UPLOADED";
     }
 } catch (PDOException $e) {
     $array['result'] = 0;

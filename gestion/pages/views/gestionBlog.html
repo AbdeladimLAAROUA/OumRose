@@ -428,6 +428,27 @@ tr.shown td.details-control {
         <div id="alert_recover_ko_edit_post" class="alert alert-warning hide-me">
           Quelque chose a mal tourné
         </div>
+        <form id="editImageForm" enctype="multipart/form-data">
+          <div class="row">
+            <div class="col-xs-12">
+              <!-- <div class="form-group"> -->
+              <label>Image</label>
+              <!-- </div> -->
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="form-group has-feedback">
+                <div class="input-group col-xs-12">
+                  <input name="imagePost" id="edit_image_post" type="file" size="10485760" class="form-control input-lg"
+                         required>
+                  <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                  <div class="help-block with-errors"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
         <form id="editPostForm">
           <div class="row">
             <div class="col-xs-12">

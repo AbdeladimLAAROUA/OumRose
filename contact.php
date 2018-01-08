@@ -169,8 +169,13 @@ session_start();
                             echo "<div style='margin: 10px;display: block;font-weight: bold;color: #6cc;'>
                                     Votre message a été bien envoyé
                                   </div>";
-                            session_unset($_SESSION['messageContact']);
+
+                        } else {
+                            echo "<div style='margin: 10px;display: block;font-weight: bold;color: red;'>
+                                    Veuillez remplir tous les champs
+                                  </div>";
                         }
+                        session_unset($_SESSION['messageContact']);
                     }
                     ?>
 					<!-- start: Contact Form -->
@@ -182,23 +187,24 @@ session_start();
 								<div class="clearfix">
 									<label for="name"><span>Name:</span></label>
 									<div class="input">
-										<input tabindex="1" size="18" id="name" name="name" type="text" value="">
+										<input tabindex="1" size="18" id="name" name="name" type="text" value="" required>
 									</div>
 								</div>
 
 								<div class="clearfix">
 									<label for="email"><span>Email:</span></label>
 									<div class="input">
-										<input tabindex="2" size="25" id="email" name="email" type="text" value="" class="input-xlarge">
+										<input tabindex="2" size="25" id="email" name="email" type="text" value="" class="input-xlarge"
+                                               required>
 									</div>
 								</div>
 
                                 <div class="clearfix">
 									<label for="subject"><span>Sujet:</span></label>
                                     <select id="subject" name="subject" class="form-control" style="width:75%;">
-                                        <option value="1">Partenaire médical</option>
-                                        <option value="2">Annonceur</option>
-                                        <option value="3">Question général</option>
+                                        <option value="Partenaire médical">Partenaire médical</option>
+                                        <option value="Annonceur">Annonceur</option>
+                                        <option value="Question général">Question général</option>
                                     </select>
 								</div>
 
@@ -206,7 +212,8 @@ session_start();
 								<div class="clearfix">
 									<label for="message"><span>Message:</span></label>
 									<div class="input">
-										<textarea tabindex="3" class="input-xlarge" id="message" name="content" rows="7"></textarea>
+										<textarea tabindex="3" class="input-xlarge" id="message" name="content" rows="7"
+                                                  required></textarea>
 									</div>
 								</div>
 

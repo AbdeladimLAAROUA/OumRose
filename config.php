@@ -24,7 +24,7 @@ $username = "k4mshost_oumdev";
 $password = "!!oumb0x";
 $dbname="k4mshost_oumdev";*/
 
-$servername = "sql.k4mshost.odns.fr";
+$servername = "bdd.k4mshost.odns.fr";
 $username = "k4mshost_oumdev";
 $password = "!!oumb0x";
 $dbname="k4mshost_oumbeta";
@@ -34,6 +34,7 @@ try {
   $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
   // set the PDO error mode to exception
   $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
 }
 catch(PDOException $e){
    

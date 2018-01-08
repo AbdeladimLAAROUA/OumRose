@@ -153,7 +153,8 @@ oumboxModule.directive('scrollOnClick', function() {
     restrict: 'A',
     link: function(scope, $elm,attrs) {
         $elm.on('click', function() {
-        $("body").animate({scrollTop: $("#map").offset().top}, "slow");
+        console.log("scroll");
+        //$("body").animate({scrollTop: $("#map").offset().top}, "slow");
         //console.log(attrs.scrollOnClick);
         var lat =scope.partenaires[attrs.scrollOnClick].lat;
         var lng =scope.partenaires[attrs.scrollOnClick].lng; 
